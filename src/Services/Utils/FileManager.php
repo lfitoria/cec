@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class FileManager {
 
-    private $targetDirectory;
     private $em;
     
     public function __construct(EntityManagerInterface $em)
@@ -65,6 +64,11 @@ class FileManager {
         }
 
         return $wasDeleted;
+    }
+    
+    public function fileExists(File $file, $targetDirectory) {
+        $filePath = $targetDirectory . $file->getFilename();
+        return (file_exists($filePath));
     }
 
 }

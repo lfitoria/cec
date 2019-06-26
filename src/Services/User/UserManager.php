@@ -53,11 +53,13 @@ class UserManager {
         $objCurrentDatetime = new \Datetime();
 
         try {
+            $role = $this->em->getRepository(RolesUsers::class)->find(1);
+            
             $objUser = new LdapUser();
             $objUser->setEmail($strEmail);
             $objUser->setCreationDate($objCurrentDatetime);
             $objUser->setLastLoginDate($objCurrentDatetime);
-
+            $objUser->setRole($role);
             // save data
             $this->em->persist($objUser);
             $this->em->flush();
