@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
 use App\Entity\ProjectRequest;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DefaultController extends AbstractController {
 
@@ -33,9 +34,9 @@ class DefaultController extends AbstractController {
     /**
      * @Route("/login", name="login")
      */
-    public function login(Request $request, AuthenticationUtils $authUtils) {
+    public function login(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils) {
         $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
-
+        $this->container = $container;
         // Checks if the login form has been submitted
         if ($request->getMethod() == 'POST') {
             // load Ldap service
