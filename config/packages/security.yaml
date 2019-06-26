@@ -6,8 +6,8 @@ security:
     providers:
         db_provider:
             entity:
-                class: 'App\Entity\User'
-                property: 'email'
+                class: 'App\Entity\LdapUser'
+                property: 'username'
         #main:
             #id: securityProvider
  

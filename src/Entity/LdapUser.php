@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * LdapUser
@@ -10,8 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="ldap_user")
  * @ORM\Entity
  */
-class LdapUser
-{
+class LdapUser implements UserInterface {
+
     /**
      * @var int
      *
@@ -27,6 +28,13 @@ class LdapUser
      * @ORM\Column(name="email", type="string", length=200, nullable=false)
      */
     private $email;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=200, nullable=false)
+     */
+    private $username;
 
     /**
      * @var string|null
@@ -122,6 +130,28 @@ class LdapUser
 
     function setDeletionDate(\DateTime $deletionDate) {
         $this->deletionDate = $deletionDate;
+    }
+
+    public function getUsername() {
+        return $this->username;
+    }
+
+    public function getPassword() {
+        return null;
+    }
+
+    public function getRoles() {
+        return [
+            $this->role->getDescription()
+        ];
+    }
+
+    public function getSalt() {
+        return '';
+    }
+
+    public function eraseCredentials() {
+        
     }
 
 }

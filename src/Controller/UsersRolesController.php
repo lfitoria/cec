@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * @Route("/users/roles")
  */
@@ -17,12 +17,16 @@ class UsersRolesController extends AbstractController
     /**
      * @Route("/", name="users_roles_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(ContainerInterface $container): Response
     {
+        $this->container = $container;
         $usersRoles = $this->getDoctrine()
             ->getRepository(UsersRoles::class)
             ->findAll();
-
+        
+        $objUserServ = $this->container->get('user_manager');
+        $objUserServ->loginAction(array("cedula" => "camacho.le@gmail.com"));
+                    
         return $this->render('users_roles/index.html.twig', [
             'users_roles' => $usersRoles,
         ]);
