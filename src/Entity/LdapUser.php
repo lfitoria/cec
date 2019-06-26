@@ -28,7 +28,7 @@ class LdapUser implements UserInterface {
      * @ORM\Column(name="email", type="string", length=200, nullable=false)
      */
     private $email;
-    
+
     /**
      * @var string
      *
@@ -154,4 +154,7 @@ class LdapUser implements UserInterface {
         
     }
 
+    function setUsername($username) {
+        $this->username = $username;
+    }
 }

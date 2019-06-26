@@ -60,6 +60,7 @@ class UserManager {
             $objUser->setEmail($strEmail);
             $objUser->setCreationDate($objCurrentDatetime);
             $objUser->setLastLoginDate($objCurrentDatetime);
+            $objUser->setUsername(explode(" ", $strEmail)[0]);
             $objUser->setRole($role);
             // save data
             $this->em->persist($objUser);
