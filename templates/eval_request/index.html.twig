@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EvalRequest index{% endblock %}
+
+{% block body %}
+    <h1>EvalRequest index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Category</th>
+                <th>Observations</th>
+                <th>Date</th>
+                <th>Current</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for eval_request in eval_requests %}
+            <tr>
+                <td>{{ eval_request.id }}</td>
+                <td>{{ eval_request.category }}</td>
+                <td>{{ eval_request.observations }}</td>
+                <td>{{ eval_request.date ? eval_request.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ eval_request.current ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('eval_request_show', {'id': eval_request.id}) }}">show</a>
+                    <a href="{{ path('eval_request_edit', {'id': eval_request.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('eval_request_new') }}">Create new</a>
+{% endblock %}

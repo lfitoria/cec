@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EvalRequest{% endblock %}
+
+{% block body %}
+    <h1>Create new EvalRequest</h1>
+
+    {{ include('eval_request/_form.html.twig') }}
+
+    <a href="{{ path('eval_request_index') }}">back to list</a>
+{% endblock %}
