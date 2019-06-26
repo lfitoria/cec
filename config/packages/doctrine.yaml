@@ -9,11 +9,11 @@ doctrine:
             collate: utf8mb4_unicode_ci
 
         #url: '%env(resolve:DATABASE_URL)%'
-        dbname: 'cec2'
+        dbname: 'cec'
         host: 'localhost'
         port: 3306
-        user: 'root'
-        password: ''
+        user: 'user_eldomo'
+        password: '$Domo_mysql_2019'
 
     orm:
         auto_generate_proxy_classes: true
