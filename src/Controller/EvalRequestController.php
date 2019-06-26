@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Services\Utils\FileUploader;
+use App\Services\Utils\FileManager;
 use App\Entity\EvalRequest;
 use App\Form\EvalRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,25 +31,21 @@ class EvalRequestController extends AbstractController {
     /**
      * @Route("/new", name="eval_request_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FileUploader $fileUploader): Response {
+    public function new(Request $request, FileManager $fileManager): Response {
         $evalRequest = new EvalRequest();
         $form = $this->createForm(EvalRequestType::class, $evalRequest);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
+
             $tempFiles = $form->get("fakeFiles")->getData();
+
+            $projectDir = $this->getParameter('brochures_directory');
             
-            $file = new \App\Entity\File();
-            foreach ($tempFiles as $tempFile) {
-                $projectDir = $this->getParameter('brochures_directory');
-               
-                $file = $fileUploader->upload($tempFile, $projectDir);
-                $evalRequest->addFile($file);
-                $em->persist($file);
-            }
-            
+            $files = $fileManager->uploadFiles($tempFiles, $projectDir);
+
+            $evalRequest->setFiles($files);
             $em->persist($evalRequest);
             $em->flush();
 
