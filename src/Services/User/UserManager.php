@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
 use App\Entity\LdapUser;
+use App\Entity\UsersRoles;
 // use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -53,11 +54,13 @@ class UserManager {
         $objCurrentDatetime = new \Datetime();
 
         try {
+            $role = $this->em->getRepository(UsersRoles::class)->find(1);
+            
             $objUser = new LdapUser();
             $objUser->setEmail($strEmail);
             $objUser->setCreationDate($objCurrentDatetime);
             $objUser->setLastLoginDate($objCurrentDatetime);
-
+            $objUser->setRole($role);
             // save data
             $this->em->persist($objUser);
             $this->em->flush();

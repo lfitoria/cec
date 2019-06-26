@@ -111,6 +111,11 @@ class EvalRequest
     {
         return $this->files;
     }
+    
+    public function setFiles($files)
+    {
+        $this->files = $files;
+    }
 
     function setId($id) {
         $this->id = $id;

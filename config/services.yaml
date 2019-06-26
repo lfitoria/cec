@@ -11,8 +11,16 @@ services:
         class: App\Services\Utils\Ldap
         arguments: ["@service_container"]
         public: true
-    
-    App\Services\Utils\FileUploader:
+    user_manager:
+        class: App\Services\User\UserManager
+        # arguments: ["@service_container"]
+        # public: true
+        # class: Services\User\UserManager     
+        arguments: ["@doctrine.orm.entity_manager", "@service_container", "@session"]     
+        # scope: request
+        public: true
+
+    App\Services\Utils\FileManager:
         
     # default configuration for services in *this* file
     _defaults:

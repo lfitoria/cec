@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
 use App\Entity\ProjectRequest;
 
-class DefaultController extends Controller {
+class DefaultController extends AbstractController {
 
     /**
      * @Route("/", name="default")
@@ -48,6 +48,8 @@ class DefaultController extends Controller {
             $arrViewData = json_decode($arrLoginResult, TRUE);
 
             // check Ldap login result
+
+            var_dump($arrLoginResult);
             if ($arrViewData['LOGIN'] == "OK") {
                 // user logged ok, then we redirect to the home page
                 $router = $this->get('router');
@@ -56,6 +58,7 @@ class DefaultController extends Controller {
                 return $this->redirect($url);
             }
         }
+
 
 
         return $this->render('default/login.html.twig', $arrViewData);
