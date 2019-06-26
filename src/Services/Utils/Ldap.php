@@ -37,6 +37,10 @@ class Ldap {
         $NOMBRE_USUARIO = $request->request->get('email');
         $CLAVE_USUARIO = $request->request->get('password');
 
+        // var_dump($NOMBRE_USUARIO);
+        // var_dump($CLAVE_USUARIO);
+        // die();
+
         // USUARIO LDAP CON PERMISO ESPECIAL DE LECTURA - SE LO ASIGNA EL CENTRO DE INFORMÁTICA
         $ldap['user'] = "sigpro.vinv";
         $ldap['pass'] = "Rx2tn.2bm4";
@@ -83,18 +87,27 @@ class Ldap {
             try {
                 $ldap['bind2'] = @ldap_bind($ldap['conn'], $ldap['dn3'], $CLAVE_USUARIO);
 
+                // var_dump($ldap);
+                // var_dump($ldap['bind2']);
+
+                // die();
+
                 if (!$ldap['bind2']) {
 
                     $this->arrLoginResult['ERROR'] = 'INVALID_CREDENTIALS';
                 } else {   // USUARIO AUTENTICADO CORRECTAMENTE.				
-                    $justthese = array("ou", "uid", "givenname", "ucrcarne", "mail", "ucrnescuela", "ucrrelacion"); //the attributes to pull, which is much more efficient than pulling all attributes if you don't do this
+                     $justthese = array();
+                    // $justthese = array("ou", "uid", "givenname", "ucrcarne", "mail", "ucrnescuela", "ucrrelacion"); //the attributes to pull, which is much more efficient than pulling all attributes if you don't do this
                     $ldap['result2'] = ldap_search($ldap['conn'], $ldap['dn2'], 'uid=' . $NOMBRE_USUARIO);
 
                     $data = ldap_get_entries($ldap['conn'], $ldap['result']);
                     
                     $this->arrLoginResult['USERNAME'] = ! empty($info[0]['name'][0]) ? $info[0]['name'][0] : NULL;
                     
-                    $objUserServ = $this->container->get('userManager');
+                    // var_dump($data);
+                    // die();
+                    
+                    $objUserServ = $this->container->get('user_manager');
                     $objUserServ->loginAction(array("cedula" => $data[0]["mail"][0]));
                 }
             } catch (Exception $e) {

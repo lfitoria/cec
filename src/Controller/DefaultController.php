@@ -48,6 +48,8 @@ class DefaultController extends Controller {
             $arrViewData = json_decode($arrLoginResult, TRUE);
 
             // check Ldap login result
+
+            var_dump($arrLoginResult);
             if ($arrViewData['LOGIN'] == "OK") {
                 // user logged ok, then we redirect to the home page
                 $router = $this->get('router');
@@ -56,6 +58,7 @@ class DefaultController extends Controller {
                 return $this->redirect($url);
             }
         }
+
 
 
         return $this->render('default/login.html.twig', $arrViewData);

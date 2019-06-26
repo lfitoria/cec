@@ -11,23 +11,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
 use App\Entity\LdapUser;
+// use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class UserManager {
 
     private $container, $em, $request, $session, $user;
 
-    public function __construct(EntityManager $em, ContainerInterface $container, Request $request, Session $session) {
+    public function __construct(EntityManager $em, ContainerInterface $container, SessionInterface $session) {
+        // $this->requestStack = $requestStack;
         $this->em = $em;
-        $this->request = $request;
+        // $this->request = $request;
         $this->container = $container;
         $this->session = $session;
     }
 
     // checks if user exists when login form has been submitted
     public function loginAction($strEmail) {
-        if (!$this->checkUserExists($strEmail)) {
+        if (!$this->checkUserExists($strEmail['cedula'])) {
             // create new user
-            $this->createUser($strEmail);
+            $this->createUser($strEmail['cedula']);
         }
 
         $this->createLoginSession();
