@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProjectRequest index{% endblock %}
+
+{% block body %}
+    <h1>ProjectRequest index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Code</th>
+                <th>State</th>
+                <th>ExtInstitutions</th>
+                <th>ExtInstitutionsAuthorization</th>
+                <th>PlaceOfStudy</th>
+                <th>InvolvesHumans</th>
+                <th>DocHumanInformation</th>
+                <th>ProjectUnit</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project_request in project_requests %}
+            <tr>
+                <td>{{ project_request.id }}</td>
+                <td>{{ project_request.title }}</td>
+                <td>{{ project_request.code }}</td>
+                <td>{{ project_request.state }}</td>
+                <td>{{ project_request.extInstitutions }}</td>
+                <td>{{ project_request.extInstitutionsAuthorization ? 'Yes' : 'No' }}</td>
+                <td>{{ project_request.placeOfStudy }}</td>
+                <td>{{ project_request.involvesHumans ? 'Yes' : 'No' }}</td>
+                <td>{{ project_request.docHumanInformation ? 'Yes' : 'No' }}</td>
+                <td>{{ project_request.projectUnit }}</td>
+                <td>
+                    <a href="{{ path('project_request_show', {'id': project_request.id}) }}">show</a>
+                    <a href="{{ path('project_request_edit', {'id': project_request.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('project_request_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ProjectRequest{% endblock %}
+
+{% block body %}
+    <h1>Create new ProjectRequest</h1>
+
+    {{ include('project_request/_form.html.twig') }}
+
+    <a href="{{ path('project_request_index') }}">back to list</a>
+{% endblock %}

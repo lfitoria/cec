@@ -24,8 +24,8 @@ class UsersRolesController extends AbstractController
             ->getRepository(UsersRoles::class)
             ->findAll();
         
-        //$objUserServ = $this->container->get('user_manager');
-        //$objUserServ->loginAction(array("cedula" => "camacho.le@gmail.com"));
+        $objUserServ = $this->container->get('user_manager');
+        $objUserServ->loginAction(array("cedula" => "lfitoria@eldomo.net"));
                     
         return $this->render('users_roles/index.html.twig', [
             'users_roles' => $usersRoles,
