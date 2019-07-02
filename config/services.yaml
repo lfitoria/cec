@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     brochures_directory: '%kernel.project_dir%\public\uploads\files'
+    email_attatchments_directory: '%kernel.project_dir%\public\uploads\email_attatchments'
 
 services:
     ldap:
@@ -21,6 +22,7 @@ services:
         public: true
 
     App\Services\Utils\FileManager:
+    App\Services\Utils\NotificationManager:    
         
     # default configuration for services in *this* file
     _defaults:
