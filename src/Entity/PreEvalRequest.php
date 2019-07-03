@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * PreEvalRequest
- *
+ * 
  * @ORM\Table(name="pre_eval_request", indexes={@ORM\Index(name="FK_pre_eval_status", columns={"status"}), @ORM\Index(name="FK_pre_eval_user", columns={"user_id"})})
  * @ORM\Entity
  */
