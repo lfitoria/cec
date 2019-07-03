@@ -28,29 +28,33 @@ class NotificationManager {
     
     private function configureEmail($emailData){
         $message = \Swift_Message::newInstance()
-                ->setSubject($emailData["subject"])
+                ->setSubject($emailData["subject"] ?? 'No subject')
                 ->setFrom($emailData["from"])
                 ->setContentType($emailData["contentType"] ?? 'text/html')
                 ->setTo($emailData["to"])
-                ->setBody($emailData["body"]);
+                ->setBody($emailData["body"] ?? 'No body');
         
         if ($emailData["bcc"]) {
             $message->setBcc($emailData["bcc"]);
         }
         if ($emailData["attatchments"]) {
-            $fileDir = $this->getParameter('email_attatchments_directory');
-            $files = $this->fileManager->uploadFiles($emailData["attatchments"], $fileDir);
-
-            foreach ($files as $file) {
-                $target_path = $fileDir . "\\" . $file->getFilename();
-                $message->attach(Swift_Attachment::fromPath($target_path));
-            }
-            $this->em->flush();
+            $this->attatchFiles($emailData["attatchments"], $message);
         }
         
         return $message;
     }
+    
+    private function attatchFiles($attatchments, $message){
+        $fileDir = $this->getParameter('email_attatchments_directory');
+        $files = $this->fileManager->uploadFiles($attatchments, $fileDir);
 
+        foreach ($files as $file) {
+            $target_path = $fileDir . "\\" . $file->getFilename();
+            $message->attach(Swift_Attachment::fromPath($target_path));
+        }
+        $this->em->flush();  
+    }
+    
     public function sendEmail($emailData) {
 
         $this->validateEmails([$emailData["from"], $emailData["to"]]);

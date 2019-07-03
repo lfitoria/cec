@@ -23,10 +23,12 @@ class UsersRolesController extends AbstractController
         $usersRoles = $this->getDoctrine()
             ->getRepository(UsersRoles::class)
             ->findAll();
-        
-        $objUserServ = $this->container->get('user_manager');
-        $objUserServ->loginAction(array("cedula" => "lfitoria@eldomo.net"));
+        $entityManager = $this->getDoctrine()->getManager('sip');
+        $test = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getExternalCollaborationByProject($entityManager, 'B0802');
                     
+    var_dump($test);
         return $this->render('users_roles/index.html.twig', [
             'users_roles' => $usersRoles,
         ]);

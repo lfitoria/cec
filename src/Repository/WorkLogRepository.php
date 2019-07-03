@@ -19,22 +19,27 @@ class WorkLogRepository extends ServiceEntityRepository
         parent::__construct($registry, WorkLog::class);
     }
 
-    // /**
-    //  * @return WorkLog[] Returns an array of WorkLog objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    public function getExternalCollaborationByProject($em, $project_id) {
+        $connection = $em->getConnection();
+        $statement = $connection->prepare("
+            SELECT
+                c.convenio as numero, c.nombre,
+                isnull(e.descrip,'') as entidad,
+                co.descrip as tipo,
+                isnull(xp.cuenta,'') cuenta, isnull(xp.monto,0) monto,
+                isnull(xp.descripcion,'') descripcion
+            FROM convenios c
+                LEFT JOIN  xproconvent xp on xp.convenio = c.convenio
+                LEFT JOIN codigos co on co.codigo = c.tipo
+                LEFT JOIN entidades e on e.entidad = xp.entidad
+            where
+                c.proyecto = '$project_id' and
+                co.tipo = 34;");
+        $statement->execute();
+
+        $results = $statement->fetchAll();
+        return $results;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?WorkLog

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EthicEvalRequest index{% endblock %}
+
+{% block body %}
+    <h1>EthicEvalRequest index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>AmountParticipants</th>
+                <th>InExCriteria</th>
+                <th>RecruitmentParticipants</th>
+                <th>CollectionInformation</th>
+                <th>RiskDeclaration</th>
+                <th>BenefitsForParticipant</th>
+                <th>BenefitsForPopulation</th>
+                <th>PrevisionsPrivacy</th>
+                <th>FutureUse</th>
+                <th>InformedConsent</th>
+                <th>InformedAssent</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ethic_eval_request in ethic_eval_requests %}
+            <tr>
+                <td>{{ ethic_eval_request.id }}</td>
+                <td>{{ ethic_eval_request.amountParticipants }}</td>
+                <td>{{ ethic_eval_request.inExCriteria }}</td>
+                <td>{{ ethic_eval_request.recruitmentParticipants }}</td>
+                <td>{{ ethic_eval_request.collectionInformation }}</td>
+                <td>{{ ethic_eval_request.riskDeclaration }}</td>
+                <td>{{ ethic_eval_request.benefitsForParticipant }}</td>
+                <td>{{ ethic_eval_request.benefitsForPopulation }}</td>
+                <td>{{ ethic_eval_request.previsionsPrivacy }}</td>
+                <td>{{ ethic_eval_request.futureUse }}</td>
+                <td>{{ ethic_eval_request.informedConsent ? 'Yes' : 'No' }}</td>
+                <td>{{ ethic_eval_request.informedAssent ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('ethic_eval_request_show', {'id': ethic_eval_request.id}) }}">show</a>
+                    <a href="{{ path('ethic_eval_request_edit', {'id': ethic_eval_request.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ethic_eval_request_new') }}">Create new</a>
+{% endblock %}

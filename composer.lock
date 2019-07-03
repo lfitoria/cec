@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d04694d4faf31416e11ec7e750fc86d",
+    "content-hash": "51c88668839ac38a068b6646fd873ca1",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1905,6 +1905,56 @@
                 "psr-3"
             ],
             "time": "2018-11-20T15:27:04+00:00"
+        },
+        {
+            "name": "realestateconz/mssql-bundle",
+            "version": "dev-master",
+            "target-dir": "Realestate/MssqlBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/realestateconz/MssqlBundle.git",
+                "reference": "4e646cd0ef1c6dfc6ded3b002d8069c68e5cca60"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/realestateconz/MssqlBundle/zipball/4e646cd0ef1c6dfc6ded3b002d8069c68e5cca60",
+                "reference": "4e646cd0ef1c6dfc6ded3b002d8069c68e5cca60",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "~2.2,>=2.2.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Realestate\\MssqlBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ken Golovin",
+                    "homepage": "https://github.com/pasinter"
+                },
+                {
+                    "name": "Realestate.co.nz",
+                    "homepage": "http://www.realestate.co.nz"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/realestateconz/MssqlBundle/contributors"
+                }
+            ],
+            "description": "Microsoft SQL Server Bundle for Symfony 2",
+            "keywords": [
+                "driver",
+                "mssql",
+                "sql server"
+            ],
+            "time": "2018-05-16T00:20:35+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -6817,7 +6867,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "realestateconz/mssql-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

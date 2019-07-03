@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EthicEvalRequest{% endblock %}
+
+{% block body %}
+    <h1>Create new EthicEvalRequest</h1>
+
+    {{ include('ethic_eval_request/_form.html.twig') }}
+
+    <a href="{{ path('ethic_eval_request_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,56 @@
+{{ form_start(form) }}
+<div>
+    <div class="form-group">
+        {{ form_label(form.amountParticipants) }}
+        {{ form_widget(form.amountParticipants) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form_help(form.amountParticipants) }}</small>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.inExCriteria) }}
+        {{ form_widget(form.inExCriteria) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form_help(form.inExCriteria) }}</small>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.recruitmentParticipants) }}
+        {{ form_widget(form.recruitmentParticipants) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form_help(form.recruitmentParticipants) }}</small>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.collectionInformation) }}
+        {{ form_widget(form.collectionInformation) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form_help(form.collectionInformation) }}</small>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.riskDeclaration) }}
+        {{ form_widget(form.riskDeclaration) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form_help(form.riskDeclaration) }}</small>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.benefitsForParticipant) }}
+        {{ form_widget(form.benefitsForParticipant) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form_help(form.benefitsForParticipant) }}</small>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.benefitsForPopulation) }}
+        {{ form_widget(form.benefitsForPopulation) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form_help(form.benefitsForPopulation) }}</small>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.previsionsPrivacy) }}
+        {{ form_widget(form.previsionsPrivacy) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form_help(form.previsionsPrivacy) }}</small>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.futureUse) }}
+        {{ form_widget(form.futureUse) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form_help(form.futureUse) }}</small>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.informedConsent) }}
+        {{ form_widget(form.informedConsent) }}
+        <small id="emailHelp" class="form-text text-muted">{{ form.informedConsent.vars.id }}</small>
+    </div>
+    
+</div>
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
