@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+
 /**
  * @Route("/project/request")
  */
@@ -36,8 +39,20 @@ class ProjectRequestController extends AbstractController
         $projectRequest = new ProjectRequest();
         $form = $this->createForm(ProjectRequestType::class, $projectRequest);
         $form->handleRequest($request);
+
+        // $form = $this->createFormBuilder($projectRequest)
+        //     ->add('title', TextType::class, ['label' => 'Titulo del proyecto'])
+        //     ->add('save', SubmitType::class, ['label' => 'Create Project'])
+        //     ->getForm();
         
-        
+
+        $data['principal_research'] = false;
+        $data['collaborating_researchers'] = array
+          (
+          array("Lorem 1","1-111-1111","correo@correo.com"),
+          array("Lorem 2","1-111-1112","correo@correo.com"),
+          array("Lorem 3","1-111-1113","correo@correo.com"),
+          );
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -50,6 +65,8 @@ class ProjectRequestController extends AbstractController
         return $this->render('project_request/new.html.twig', [
             'project_request' => $projectRequest,
             'form' => $form->createView(),
+            'no_value' => 'No value',
+            'data' => $data
         ]);
     }
 

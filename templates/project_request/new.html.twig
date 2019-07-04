@@ -2,10 +2,152 @@
 
 {% block title %}New ProjectRequest{% endblock %}
 
-{% block body %}
-    <h1>Create new ProjectRequest</h1>
+    {% block body %}
+        <h1>Create new ProjectRequest</h1>
 
-    {{ include('project_request/_form.html.twig') }}
+        {# {{ include('project_request/_form.html.twig') }} #}
+        {{ form_start(form) }}
+        <div class="row">
+            <i class="fa fa-calendar"></i> {{ form_label(form.title, 'Titulo') }}
+            {{ form_widget(form.title, {'attr': {'class': 'task_field'}}) }}
+            <small>{{ form_help(form.title) }}</small>
+            <div class="form-error">
+                {{ form_errors(form.title) }}
+            </div>
+        </div>
+        <div class="row">
+           <label for="principal_research">Nombre del investigador(a) principal:</label>
+           <input type="text" name="principal_research" value="{{data.principal_research|default("No encontrado")}}" placeholder="{{no_value}}" disabled>
+        </div>
+        <div class="row">
+           <label for="collaborating_researchers">Nombre(s) de investigador(es) colaborador(es):</label>
+           {# {{dump(data)}} #}
+           <table class="table table-striped text-center">
+                <thead>
+                    <th>Nombre</th>
+                    <th>Cédula</th>
+                    <th>Correo institucional</th>
+                </thead>
+                <tbody>
+            {% for item in data.collaborating_researchers %}
+                {# {{dump(item)}} #}
+               {#  <input type="text" name="collaborating_researchers" value="{{item.0}}" placeholder="{{item.0}}" disabled> #}
+                   <tr>
+                    <td>{{item.0}}</td>
+                    <td>{{item.1}}</td>
+                    <td>{{item.2}}</td>
+                   </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+           
+        </div>
+        <div class="row">
+           {# <label for="project_unit">Unidad base del proyecto:</label>
+           <input type="text" name="project_unit" value="{{data.project_unit|default("No encontrado")}}" placeholder="{{no_value}}" disabled> #}
+            {{ form_label(form.projectUnit, 'Unidad base del proyecto:') }}
+            {{ form_widget(form.projectUnit) }}
 
-    <a href="{{ path('project_request_index') }}">back to list</a>
-{% endblock %}
+        </div>
+        <div class="row">
+           <label for="collaborating_researchers">Otras unidades u instituciones de la UCR participantes:</label>
+           {# {{dump(data)}} #}
+           <ul>
+            {% if data.other_units is defined %}
+                {% for item in data.other_units %}
+                    <li>{{item.name}}</li>
+                {% endfor %}
+            {% else %}
+                <li>No encontrado</li>
+            {% endif %}
+
+            </ul>
+           
+        </div>
+        {# extInstitutions #}
+        <div class="row">
+            <i class="fa fa-calendar"></i> {{ form_label(form.extInstitutions, 'Otras instituciones externas públicas o privadas:') }}
+            {{ form_widget(form.extInstitutions, {'attr': {'class': 'extInstitutions'}}) }}
+            <small>{{ form_help(form.extInstitutions) }}</small>
+            <div class="form-error">
+                {{ form_errors(form.extInstitutions) }}
+            </div>
+        </div>
+        <div class="row">
+            {# <p>Autorización de la institución externa pública o privada:</p>
+            <label>
+                <input name="project_request[extInstitutionsAuthorization]" type="radio" value="1"> Si
+            </label>
+            <label>
+                <input name="project_request[extInstitutionsAuthorization]" type="radio" value="0" checked> No
+            </label> #}
+            {{ form_label(form.involvesHumans, 'Autorización de la institución externa pública o privada:') }}
+            {{ form_widget(form.extInstitutionsAuthorization) }}
+           
+        </div>
+        <div class="row">
+            <div class="boxone d-none">
+            {{ form_widget(form.fakeFilesOne, {'attr': {'class': 'file_field'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <i class="fa fa-calendar"></i> {{ form_label(form.placeOfStudy, 'Lugar donde se realizará el estudio (escuelas, comunidades, instituciones, colegios, etc):') }}
+            {{ form_widget(form.placeOfStudy, {'attr': {'class': 'placeOfStudy'}}) }}
+            <small>{{ form_help(form.placeOfStudy) }}</small>
+            <div class="form-error">
+                {{ form_errors(form.placeOfStudy) }}
+            </div>
+        </div>
+        <div class="row">
+            {# <p>La investigación involucra participantes humanos:</p>
+            <label>
+                <input name="project_request[involvesHumans]" type="radio" value="1" required> Si
+            </label>
+            <label>
+                <input name="project_request[involvesHumans]" type="radio" value="0" required> No
+            </label> #}
+            {{ form_label(form.involvesHumans, 'La investigación involucra participantes humanos:') }}
+           {{ form_widget(form.involvesHumans) }}
+        </div>
+        <div class="row">
+            {# <p>La investigación requiere revisar información documental de seres humanos:</p>
+            <label>
+                <input name="project_request[docHumanInformation]" type="radio" value="1" required> Si
+            </label>
+            <label>
+                <input name="project_request[docHumanInformation]" type="radio" value="0" required> No
+            </label> #}
+            {{ form_label(form.docHumanInformation, 'La investigación requiere revisar información documental de seres humanos:') }}
+           {{ form_widget(form.docHumanInformation) }}
+        </div>
+        <div class="row">
+            <p>Acta de la comisión científica o de la Comisión de TFG de grado o posgrado:</p>
+            {# {{ form_label(form.fakeFilesOne, 'Acta de la comisión científica o de la Comisión de TFG de grado o posgrado:') }} #}
+           {{ form_widget(form.fakeFilesTwo, {'attr': {'class': 'file_field'}}) }}
+           <p class="small font-italic"><span class="text-danger">*Campo obligatorio.</span> Permite la subida de archivos en formatos XXXXXXX, con un peso máximo de XXXMB</p>
+        </div>
+
+
+            
+            
+        
+
+
+        {{ form_end(form) }}
+
+        <a href="{{ path('project_request_index') }}">back to list</a>
+
+<script type="text/javascript">
+    $("input[type='radio']").change(function(){
+        console.log($(this).val());
+        if($(this).val() == 1) {
+            $(".boxone.d-none").removeClass("d-none");
+        }
+        if($(this).val() == 0) {
+            $(".boxone").addClass("d-none");
+        }
+    });
+
+</script>
+
+    {% endblock %}
