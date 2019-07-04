@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EthicEvalRequest{% endblock %}
+
+{% block body %}
+    <h1>EthicEvalRequest</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ethic_eval_request.id }}</td>
+            </tr>
+            <tr>
+                <th>AmountParticipants</th>
+                <td>{{ ethic_eval_request.amountParticipants }}</td>
+            </tr>
+            <tr>
+                <th>InExCriteria</th>
+                <td>{{ ethic_eval_request.inExCriteria }}</td>
+            </tr>
+            <tr>
+                <th>RecruitmentParticipants</th>
+                <td>{{ ethic_eval_request.recruitmentParticipants }}</td>
+            </tr>
+            <tr>
+                <th>CollectionInformation</th>
+                <td>{{ ethic_eval_request.collectionInformation }}</td>
+            </tr>
+            <tr>
+                <th>RiskDeclaration</th>
+                <td>{{ ethic_eval_request.riskDeclaration }}</td>
+            </tr>
+            <tr>
+                <th>BenefitsForParticipant</th>
+                <td>{{ ethic_eval_request.benefitsForParticipant }}</td>
+            </tr>
+            <tr>
+                <th>BenefitsForPopulation</th>
+                <td>{{ ethic_eval_request.benefitsForPopulation }}</td>
+            </tr>
+            <tr>
+                <th>PrevisionsPrivacy</th>
+                <td>{{ ethic_eval_request.previsionsPrivacy }}</td>
+            </tr>
+            <tr>
+                <th>FutureUse</th>
+                <td>{{ ethic_eval_request.futureUse }}</td>
+            </tr>
+            <tr>
+                <th>InformedConsent</th>
+                <td>{{ ethic_eval_request.informedConsent ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>InformedAssent</th>
+                <td>{{ ethic_eval_request.informedAssent ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ethic_eval_request_index') }}">back to list</a>
+
+    <a href="{{ path('ethic_eval_request_edit', {'id': ethic_eval_request.id}) }}">edit</a>
+
+    {{ include('ethic_eval_request/_delete_form.html.twig') }}
+{% endblock %}

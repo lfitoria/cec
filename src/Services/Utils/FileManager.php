@@ -66,7 +66,7 @@ class FileManager {
         return $wasDeleted;
     }
     
-    public function fileExists(File $file, $targetDirectory) {
+    private function fileExists(File $file, $targetDirectory) {
         $filePath = $targetDirectory . $file->getFilename();
         return (file_exists($filePath));
     }
