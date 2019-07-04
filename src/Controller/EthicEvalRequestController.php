@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Services\Utils\FileManager;
 
 /**
  * @Route("/ethic/eval/request")
@@ -22,7 +23,7 @@ class EthicEvalRequestController extends AbstractController
         $ethicEvalRequests = $this->getDoctrine()
             ->getRepository(EthicEvalRequest::class)
             ->findAll();
-
+        
         return $this->render('ethic_eval_request/index.html.twig', [
             'ethic_eval_requests' => $ethicEvalRequests,
         ]);
@@ -31,7 +32,7 @@ class EthicEvalRequestController extends AbstractController
     /**
      * @Route("/new", name="ethic_eval_request_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileManager $fileManager): Response
     {
         $ethicEvalRequest = new EthicEvalRequest();
         $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
@@ -39,6 +40,21 @@ class EthicEvalRequestController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            
+            $informedConsentUploadedFiles = $form->get("informedConsentFiles")->getData();
+            $informedAssentUploadedFiles = $form->get("informedAssentFiles")->getData();
+            $collectionInformationUploadedFiles = $form->get("collectionInformationFiles")->getData();
+
+            $projectDir = $this->getParameter('brochures_directory');
+            
+            $informedConsentFiles = $fileManager->uploadFiles($informedConsentUploadedFiles, $projectDir);
+            $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir);
+            $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir);
+
+            $ethicEvalRequest->setInformedConsentFiles($informedConsentFiles);
+            $ethicEvalRequest->setInformedAssentFiles($informedAssentFiles);
+            $ethicEvalRequest->setCollectionInformationFiles($collectionInformationFiles);
+            
             $entityManager->persist($ethicEvalRequest);
             $entityManager->flush();
 

@@ -1,0 +1,6 @@
+.inline-custom-radio .custom-radio{
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    margin-right: 1rem;
+}

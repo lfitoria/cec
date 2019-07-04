@@ -9,6 +9,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Criterion;
+use App\Repository\CriterionRepository;
 
 class EthicEvalRequestType extends AbstractType {
 
@@ -65,15 +68,41 @@ class EthicEvalRequestType extends AbstractType {
                         'No' => 0,
                     ),
                     'expanded' => true,
-                    'label' => 'Requiere consentimiento informado:'))
+                    'label' => 'Requiere consentimiento informado:',
+                    'help' => 'Esto aplica para las personas mayores de edad y los padres o representantes legales de menores de edad o de personas con capacidades cognitivas disminuidas.'))
                 ->add('informedAssent', ChoiceType::class, array(
                     'choices' => array(
                         'Sí' => 1,
                         'No' => 0,
                     ),
-                    'expanded' => true))
-                ->add('informedConsentFiles', FileType::class, array('multiple' => false, 'mapped' => false))
-                ->add('informedAssentFiles', FileType::class, array('multiple' => false, 'mapped' => false));
+                    'expanded' => true,
+                    'label' => 'Requiere asentimiento informado:',
+                    'help' => 'Esto aplica para las personas de doce a dieciocho años de edad.'))
+                ->add('informedConsentFiles', FileType::class, array(
+                    'multiple' => true,
+                    'mapped' => false,
+                    'label' => 'Adjuntar el documento de consentimiento informado:'))
+                ->add('informedAssentFiles', FileType::class, array('multiple' => true, 'mapped' => false, 'label' => 'Adjuntar el documento de asentimiento informado:'))
+                ->add('collectionInformationFiles', FileType::class, array('multiple' => true, 'mapped' => false, 'label' => 'Adjuntar los instrumentos a la documentación respectiva:'))
+                ->add('population', EntityType::class, [
+                    'class' => Criterion::class,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'query_builder' => function(CriterionRepository $repo) {
+                        return $repo->createPopulationQueryBuilder('population');
+                    },
+                    'label' => 'Participación de población vulnerable:',
+                    'help' => '(Marque todas las opciones que sean necesarias)'
+                ])
+                ->add('dataType', EntityType::class, [
+                    'class' => Criterion::class,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'query_builder' => function(CriterionRepository $repo) {
+                        return $repo->createPopulationQueryBuilder('dataType');
+                    },
+                    'label' => 'Indicar qué tipos de datos se recopilarán en la investigación y marcar los que aplican:'
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver) {
