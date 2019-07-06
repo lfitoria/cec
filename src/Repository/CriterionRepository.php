@@ -19,8 +19,8 @@ class CriterionRepository extends ServiceEntityRepository {
     }
 
     public function createPopulationQueryBuilder($code) {
-        return $this->createQueryBuilder('criterion')
-                        ->andWhere('criterion.code = :code')
+        return $this->createQueryBuilder('Criterion')
+                        ->andWhere('Criterion.code = :code')
                         ->setParameter('code', $code);
     }
 

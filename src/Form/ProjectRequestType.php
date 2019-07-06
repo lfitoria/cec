@@ -18,11 +18,14 @@ class ProjectRequestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
+            ->add('title', TextType::class, [
+                'label' => 'Titulo del proyecto:',
+            ])
             // ->add('code')
             // ->add('state')
             ->add('extInstitutions', TextareaType::class, [
                 'attr' => ['class' => 'tinymce'],
+                'label' => 'Otras instituciones externas públicas o privadas:'
             ])
             // ->add('extInstitutionsAuthorization', CheckboxType::class, [
             //     'label' => 'Autorización de la institución externa pública o privada',
@@ -32,12 +35,18 @@ class ProjectRequestType extends AbstractType
                     'No' => 0,
                 ),         
                 'expanded' => true,
+                'label' => 'Autorización de la institución externa pública o privada:',
+                'attr' => ['class' => 'extInstitutionsAuthorization'],
             ))
-            ->add('fakeFilesOne', FileType::class, array('multiple' => false, 'mapped' => false))
-            ->add('fakeFilesTwo', FileType::class, array('multiple' => false, 'mapped' => false))
+            ->add('extInstitutionsAuthorization_file', FileType::class, array('multiple' => false, 
+                'mapped' => false,
+                'label' => false,
+                
+            ))
 
             ->add('placeOfStudy', TextareaType::class, [
                 'attr' => ['class' => 'tinymce'],
+                'label' => 'Lugar donde se realizará el estudio (escuelas, comunidades, instituciones, colegios, etc).'
             ])
             // ->add('involvesHumans')
             ->add('involvesHumans', ChoiceType::class, array(
@@ -46,6 +55,7 @@ class ProjectRequestType extends AbstractType
                     'No' => 0,
                 ),         
                 'expanded' => true,
+                'label' => 'La investigación involucra participantes humanos:',
             ))
             // ->add('docHumanInformation')
             ->add('docHumanInformation', ChoiceType::class, array(
@@ -54,8 +64,15 @@ class ProjectRequestType extends AbstractType
                     'No' => 0,
                 ),         
                 'expanded' => true,
+                'label' => 'La investigación requiere revisar información documental de seres humanos:',
             ))
-            ->add('projectUnit')
+
+            ->add('record_file', FileType::class, array('multiple' => false, 'mapped' => false,
+                'label' => 'Acta de la comisión científica o de la Comisión de TFG de grado o posgrado:'
+                ))
+
+
+            //->add('projectUnit')
             // ->add('users')
         ;
     }

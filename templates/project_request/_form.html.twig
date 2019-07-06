@@ -1,12 +1,26 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ form_start(form) }}
-    <div class="form-control">
-    <i class="fa fa-calendar"></i> {{ form_label(form.title, 'Titulo') }}
-    {{ form_widget(form.title, {'attr': {'class': 'task_field'}}) }}
-
-    <small>{{ form_help(form.title) }}</small>
-
-    <div class="form-error">
-        {{ form_errors(form.title) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.extInstitutions) }}
+    <div class="inline-custom-radio">
+        {{ form_row(form.extInstitutionsAuthorization,{label_attr: {class: 'radio-custom'} }) }}
     </div>
-</div>
+
+    <div id="input_extInstitutionsAuthorization_file" class="d-none">
+    {{ form_row(form.extInstitutionsAuthorization_file, {label_attr: {class: 'custom-file'} }) }}
+    </div>
+
+
+    {{ form_row(form.placeOfStudy) }}
+
+    <div class="inline-custom-radio">
+        {{ form_row(form.involvesHumans,{label_attr: {class: 'radio-custom'} }) }}
+    </div>
+    <div class="inline-custom-radio">
+        {{ form_row(form.docHumanInformation,{label_attr: {class: 'radio-custom'} }) }}
+    </div>
+
+    {{ form_row(form.record_file, {label_attr: {class: 'custom-file'} }) }}
+    
+    <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

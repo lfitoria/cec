@@ -1,0 +1,12 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form) }}
+    {# {{ form_widget(form) }} #}
+    {{ form_row(form.summaryObserv) }}
+    {{ form_row(form.objetives) }}
+    {{ form_row(form.questions) }}
+    {{ form_row(form.hypothesis) }}
+    {{ form_row(form.metodologyObserv) }}
+    
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

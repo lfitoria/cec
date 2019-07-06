@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Services\Utils\FileManager;
 
 
 /**
@@ -55,11 +56,15 @@ class ProjectRequestController extends AbstractController
           );
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($projectRequest);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('project_request_index');
+            var_dump($form);
+            die();
+
+            // $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($projectRequest);
+            // $entityManager->flush();
+
+            // return $this->redirectToRoute('project_request_index');
         }
 
         return $this->render('project_request/new.html.twig', [

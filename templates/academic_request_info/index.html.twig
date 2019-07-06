@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AcademicRequestInfo index{% endblock %}
+
+{% block body %}
+    <h1>AcademicRequestInfo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>SummaryObserv</th>
+                <th>Objetives</th>
+                <th>Questions</th>
+                <th>Hypothesis</th>
+                <th>MetodologyObserv</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for academic_request_info in academic_request_infos %}
+            <tr>
+                <td>{{ academic_request_info.id }}</td>
+                <td>{{ academic_request_info.summaryObserv }}</td>
+                <td>{{ academic_request_info.objetives }}</td>
+                <td>{{ academic_request_info.questions }}</td>
+                <td>{{ academic_request_info.hypothesis }}</td>
+                <td>{{ academic_request_info.metodologyObserv }}</td>
+                <td>
+                    <a href="{{ path('academic_request_info_show', {'id': academic_request_info.id}) }}">show</a>
+                    <a href="{{ path('academic_request_info_edit', {'id': academic_request_info.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('academic_request_info_new') }}">Create new</a>
+{% endblock %}

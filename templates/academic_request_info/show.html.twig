@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AcademicRequestInfo{% endblock %}
+
+{% block body %}
+    <h1>AcademicRequestInfo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ academic_request_info.id }}</td>
+            </tr>
+            <tr>
+                <th>SummaryObserv</th>
+                <td>{{ academic_request_info.summaryObserv }}</td>
+            </tr>
+            <tr>
+                <th>Objetives</th>
+                <td>{{ academic_request_info.objetives }}</td>
+            </tr>
+            <tr>
+                <th>Questions</th>
+                <td>{{ academic_request_info.questions }}</td>
+            </tr>
+            <tr>
+                <th>Hypothesis</th>
+                <td>{{ academic_request_info.hypothesis }}</td>
+            </tr>
+            <tr>
+                <th>MetodologyObserv</th>
+                <td>{{ academic_request_info.metodologyObserv }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('academic_request_info_index') }}">back to list</a>
+
+    <a href="{{ path('academic_request_info_edit', {'id': academic_request_info.id}) }}">edit</a>
+
+    {{ include('academic_request_info/_delete_form.html.twig') }}
+{% endblock %}
