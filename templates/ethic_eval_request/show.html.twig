@@ -55,6 +55,13 @@
                 <th>InformedAssent</th>
                 <td>{{ ethic_eval_request.informedAssent ? 'Yes' : 'No' }}</td>
             </tr>
+            <tr>
+                <th>InformedAssent</th>
+                <td>{% for d in ethic_eval_request.informedAssentFiles %}
+                    {{ d.originalName }}
+                    {% endfor%}
+                </td>
+            </tr>
         </tbody>
     </table>
 

@@ -61,7 +61,13 @@ class ProjectRequest {
      * @ORM\Column(name="ext_institutions_authorization", type="boolean", nullable=true)
      */
     private $extInstitutionsAuthorization;
-
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="File")
+     * @ORM\JoinTable(name="inst_auth_files_project")
+     */
+    private $extInstitutionsAuthorizationFiles;
+    
     /**
      * @var string|null
      *
@@ -82,7 +88,13 @@ class ProjectRequest {
      * @ORM\Column(name="doc_human_information", type="boolean", nullable=true)
      */
     private $docHumanInformation;
-
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="File")
+     * @ORM\JoinTable(name="human_info_files_project")
+     */
+    private $docHumanInformationFiles;
+    
     /**
      * @var string|null
      *
@@ -95,7 +107,24 @@ class ProjectRequest {
      * @ORM\JoinTable(name="assignments_request")
      */
     private $users;
+    
+    
+    function getExtInstitutionsAuthorizationFiles() {
+        return $this->extInstitutionsAuthorizationFiles;
+    }
 
+    function getDocHumanInformationFiles() {
+        return $this->docHumanInformationFiles;
+    }
+
+    function setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles) {
+        $this->extInstitutionsAuthorizationFiles = $extInstitutionsAuthorizationFiles;
+    }
+
+    function setDocHumanInformationFiles($docHumanInformationFiles) {
+        $this->docHumanInformationFiles = $docHumanInformationFiles;
+    }
+    
     function getId() {
         return $this->id;
     }

@@ -8,18 +8,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Services\Utils\FileManager;
 
 
 /**
- * @Route("/project/request")
+ * @Route("/solicitud")
  */
 class ProjectRequestController extends AbstractController
 {
     /**
-     * @Route("/", name="project_request_index", methods={"GET"})
+     * @Route("es/", name="project_request_index", methods={"GET"})
      */
     public function index(): Response
     {
@@ -31,52 +29,58 @@ class ProjectRequestController extends AbstractController
             'project_requests' => $projectRequests,
         ]);
     }
+    
+    /**
+     * @Route("/admin", name="project_request_index_admin", methods={"GET"})
+     */
+    public function indexAdmin(): Response
+    {
+        $projectRequests = $this->getDoctrine()
+            ->getRepository(ProjectRequest::class)
+            ->findAll();
+
+        return $this->render('project_request/index.html.twig', [
+            'project_requests' => $projectRequests,
+        ]);
+    }
 
     /**
-     * @Route("/new", name="project_request_new", methods={"GET","POST"})
+     * @Route("/nueva", name="project_request_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileManager $fileManager): Response
     {
         $projectRequest = new ProjectRequest();
         $form = $this->createForm(ProjectRequestType::class, $projectRequest);
         $form->handleRequest($request);
 
-        // $form = $this->createFormBuilder($projectRequest)
-        //     ->add('title', TextType::class, ['label' => 'Titulo del proyecto'])
-        //     ->add('save', SubmitType::class, ['label' => 'Create Project'])
-        //     ->getForm();
-        
-
-        $data['principal_research'] = false;
-        $data['collaborating_researchers'] = array
-          (
-          array("Lorem 1","1-111-1111","correo@correo.com"),
-          array("Lorem 2","1-111-1112","correo@correo.com"),
-          array("Lorem 3","1-111-1113","correo@correo.com"),
-          );
-
         if ($form->isSubmitted() && $form->isValid()) {
 
-            var_dump($form);
-            die();
+            $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
+            $docHumanInformationUploadedFiles = $form->get("docHumanInformationFiles")->getData();
 
-            // $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($projectRequest);
-            // $entityManager->flush();
+            $projectDir = $this->getParameter('brochures_directory');
+            
+            $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir);
+            $docHumanInformationFiles = $fileManager->uploadFiles($docHumanInformationUploadedFiles, $projectDir);
 
-            // return $this->redirectToRoute('project_request_index');
+            $projectRequest->setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles);
+            $projectRequest->setDocHumanInformationFiles($docHumanInformationFiles);
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($projectRequest);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('project_request_index');
         }
 
         return $this->render('project_request/new.html.twig', [
             'project_request' => $projectRequest,
-            'form' => $form->createView(),
-            'no_value' => 'No value',
-            'data' => $data
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/{id}", name="project_request_show", methods={"GET"})
+     * @Route("/detalle/{id}", name="project_request_show", methods={"GET"})
      */
     public function show(ProjectRequest $projectRequest): Response
     {
@@ -86,16 +90,27 @@ class ProjectRequestController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="project_request_edit", methods={"GET","POST"})
+     * @Route("/{id}", name="project_request_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, ProjectRequest $projectRequest): Response
+    public function edit(Request $request, ProjectRequest $projectRequest, FileManager $fileManager): Response
     {
         $form = $this->createForm(ProjectRequestType::class, $projectRequest);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            
+            $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
+            $docHumanInformationUploadedFiles = $form->get("docHumanInformationFiles")->getData();
 
+            $projectDir = $this->getParameter('brochures_directory');
+            
+            $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir);
+            $docHumanInformationFiles = $fileManager->uploadFiles($docHumanInformationUploadedFiles, $projectDir);
+
+            $projectRequest->setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles);
+            $projectRequest->setDocHumanInformationFiles($docHumanInformationFiles);
+            
             return $this->redirectToRoute('project_request_index', [
                 'id' => $projectRequest->getId(),
             ]);

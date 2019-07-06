@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * AcademicRequestInfo
@@ -12,6 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AcademicRequestInfo
 {
+    
+    public function __construct() {
+        $this->invType = new ArrayCollection();
+    }
+
     /**
      * @var int
      *
@@ -65,7 +72,39 @@ class AcademicRequestInfo
      * })
      */
     private $request;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Criterion")
+     * @ORM\JoinTable(name="inv_type_ethic_eval_request")
+     */
+    private $invType;
+    
+    
+    function getInvType(): Collection {
+        return $this->invType;
+    }
 
+    function setInvType(Doctrine\Common\Collections\Collection $invType) {
+        $this->invType = $invType;
+    }
+    
+    public function addInvType(Criterion $invType): self {
+        if (!$this->invType->contains($invType)) {
+            $this->invType[] = $invType;
+        }
+
+        return $this;
+    }
+
+    public function removeInvType(Criterion $invType): self {
+        if ($this->invType->contains($invType)) {
+            $this->invType->removeElement($invType);
+        }
+
+        return $this;
+    }
+
+    
     public function getId(): ?int
     {
         return $this->id;

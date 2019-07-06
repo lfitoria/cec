@@ -3,37 +3,21 @@
 {% block title %}ProjectRequest index{% endblock %}
 
 {% block body %}
-    <h1>ProjectRequest index</h1>
-
-    <table class="table">
+    <h1>Solicitudes</h1>
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Code</th>
-                <th>State</th>
-                <th>ExtInstitutions</th>
-                <th>ExtInstitutionsAuthorization</th>
-                <th>PlaceOfStudy</th>
-                <th>InvolvesHumans</th>
-                <th>DocHumanInformation</th>
-                <th>ProjectUnit</th>
-                <th>actions</th>
+                <th>Nº de solicitud</th>
+                <th>Título</th>
+                <th colspan="2">Estado</th>
             </tr>
         </thead>
         <tbody>
         {% for project_request in project_requests %}
             <tr>
-                <td>{{ project_request.id }}</td>
+                <td>CEC-{{ project_request.id }}</td>
                 <td>{{ project_request.title }}</td>
-                <td>{{ project_request.code }}</td>
                 <td>{{ project_request.state }}</td>
-                <td>{{ project_request.extInstitutions }}</td>
-                <td>{{ project_request.extInstitutionsAuthorization ? 'Yes' : 'No' }}</td>
-                <td>{{ project_request.placeOfStudy }}</td>
-                <td>{{ project_request.involvesHumans ? 'Yes' : 'No' }}</td>
-                <td>{{ project_request.docHumanInformation ? 'Yes' : 'No' }}</td>
-                <td>{{ project_request.projectUnit }}</td>
                 <td>
                     <a href="{{ path('project_request_show', {'id': project_request.id}) }}">show</a>
                     <a href="{{ path('project_request_edit', {'id': project_request.id}) }}">edit</a>

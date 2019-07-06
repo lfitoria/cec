@@ -11,13 +11,13 @@
         <a href="{{ path('project_request_index') }}">back to list</a>
 
 <script type="text/javascript">
-    $("#project_request_extInstitutionsAuthorization input").change(function(){
-        console.log($(this).val());
+    $(".decision_question input").change(function(){
+        var _this = $(this);
+        var targetId = "#" + _this.parent().parent().data("code");
         if($(this).val() == 1) {
-            $("#input_extInstitutionsAuthorization_file").removeClass("d-none");
-        }
-        if($(this).val() == 0) {
-            $("#input_extInstitutionsAuthorization_file").addClass("d-none");
+            $(targetId).removeClass("d-none");
+        }else if($(this).val() == 0) {
+            $(targetId).addClass("d-none");
         }
     });
 
