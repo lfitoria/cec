@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\AcademicRequestInfo;
+use App\Entity\ProjectRequest;
+use App\Entity\EthicEvalRequest;
 use App\Form\AcademicRequestInfoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,20 +31,29 @@ class AcademicRequestInfoController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="academic_request_info_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="academic_request_info_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ProjectRequest $projectRequest): Response
     {
         $academicRequestInfo = new AcademicRequestInfo();
         $form = $this->createForm(AcademicRequestInfoType::class, $academicRequestInfo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $academicRequestInfo->setRequest($projectRequest);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($academicRequestInfo);
             $entityManager->flush();
 
-            return $this->redirectToRoute('academic_request_info_index');
+            $route = 'tab_ethic_eval_request';
+            $data = ['id' => $academicRequestInfo->getRequest()->getId()];
+            $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($academicRequestInfo->getRequest()->getId());
+            if($ethicEvalRequest){
+                $route = 'tab_ethic_eval_request';
+                $data = ['id' => $ethicEvalRequest->getRequest()->getId()];
+            }
+            
+            return $this->redirectToRoute($route, $data);
         }
 
         return $this->render('academic_request_info/new.html.twig', [
@@ -72,9 +83,16 @@ class AcademicRequestInfoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('academic_request_info_index', [
-                'id' => $academicRequestInfo->getId(),
-            ]);
+            $route = 'tab_ethic_eval_request';
+            $data = ['id' => $academicRequestInfo->getRequest()->getId()];
+            $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($academicRequestInfo->getRequest()->getId());
+            
+            if($ethicEvalRequest){
+                $route = 'tab_ethic_eval_request';
+                $data = ['id' => $ethicEvalRequest->getRequest()->getId()];
+            }
+            
+            return $this->redirectToRoute($route, $data);
         }
 
         return $this->render('academic_request_info/edit.html.twig', [

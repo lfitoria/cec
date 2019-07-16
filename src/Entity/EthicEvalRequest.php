@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
  * EthicEvalRequest
  *
  * @ORM\Table(name="ethic_eval_request", indexes={@ORM\Index(name="FK_ethic_req", columns={"request_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\EthicEvalRequestRepository")
  */
 class EthicEvalRequest {
 

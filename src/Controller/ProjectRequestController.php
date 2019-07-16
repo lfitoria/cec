@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ProjectRequest;
+use App\Entity\AcademicRequestInfo;
 use App\Form\ProjectRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +13,7 @@ use App\Services\Utils\FileManager;
 
 
 /**
- * @Route("/solicitud")
+ * @Route("/project/request")
  */
 class ProjectRequestController extends AbstractController
 {
@@ -45,7 +46,7 @@ class ProjectRequestController extends AbstractController
     }
 
     /**
-     * @Route("/nueva", name="project_request_new", methods={"GET","POST"})
+     * @Route("/new", name="project_request_new", methods={"GET","POST"})
      */
     public function new(Request $request, FileManager $fileManager): Response
     {
@@ -70,7 +71,10 @@ class ProjectRequestController extends AbstractController
             $entityManager->persist($projectRequest);
             $entityManager->flush();
             
-            return $this->redirectToRoute('project_request_index');
+            $route = 'tab_academic_request_info';
+            $data = ['id' => $projectRequest->getId()];
+            
+            return $this->redirectToRoute($route, $data);
         }
 
         return $this->render('project_request/new.html.twig', [
@@ -111,9 +115,10 @@ class ProjectRequestController extends AbstractController
             $projectRequest->setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles);
             $projectRequest->setDocHumanInformationFiles($docHumanInformationFiles);
             
-            return $this->redirectToRoute('project_request_index', [
-                'id' => $projectRequest->getId(),
-            ]);
+            $route = 'tab_academic_request_info';
+            $data = ['id' => $projectRequest->getId()];
+            
+            return $this->redirectToRoute($route, $data);
         }
 
         return $this->render('project_request/edit.html.twig', [

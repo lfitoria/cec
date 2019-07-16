@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
  * AcademicRequestInfo
  *
  * @ORM\Table(name="academic_request_info", indexes={@ORM\Index(name="FK_acad_req", columns={"request_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AcademicRequestInfoRepository")
  */
 class AcademicRequestInfo
 {

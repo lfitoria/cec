@@ -86,7 +86,6 @@ class ProjectRequestType extends AbstractType {
 
     public function preSetData(FormBuilderInterface $builder, FormEvent $event) {
         $projectRequest = $event->getData();
-        $form = $event->getForm();
 
         if (!$projectRequest || null === $projectRequest->getId()) {
             $data = true;

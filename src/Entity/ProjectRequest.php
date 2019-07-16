@@ -209,7 +209,7 @@ class ProjectRequest {
         $this->projectUnit = $projectUnit;
     }
 
-    public function setUsers(Doctrine\Common\Collections\Collection $users) {
+    public function setUsers($users) {
         $this->users = $users;
 
         return this;

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\EthicEvalRequest;
+use App\Entity\ProjectRequest;
 use App\Form\EthicEvalRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,9 +31,9 @@ class EthicEvalRequestController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="ethic_eval_request_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="ethic_eval_request_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FileManager $fileManager): Response
+    public function new(Request $request, FileManager $fileManager, ProjectRequest $projectRequest): Response
     {
         $ethicEvalRequest = new EthicEvalRequest();
         $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
@@ -54,6 +55,7 @@ class EthicEvalRequestController extends AbstractController
             $ethicEvalRequest->setInformedConsentFiles($informedConsentFiles);
             $ethicEvalRequest->setInformedAssentFiles($informedAssentFiles);
             $ethicEvalRequest->setCollectionInformationFiles($collectionInformationFiles);
+            $ethicEvalRequest->setRequest($projectRequest);
             
             $entityManager->persist($ethicEvalRequest);
             $entityManager->flush();
