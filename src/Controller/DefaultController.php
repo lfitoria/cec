@@ -24,6 +24,8 @@ class DefaultController extends AbstractController {
         $ss->addUser($user2);
         $entityManager = $this->getDoctrine()->getManager();
         $test = $entityManager->getRepository(ProjectRequest::class)->findOneBy(array('id' => 1));
+        // var_dump($test);
+        // die();
 
         return $this->render('default/index.html.twig', [
                     'controller_name' => 'DefaultController',

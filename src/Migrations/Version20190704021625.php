@@ -33,10 +33,10 @@ final class Version20190704021625 extends AbstractMigration
         $this->addSql('ALTER TABLE assignments_request DROP FOREIGN KEY FK_EF186BA05AD8C397');
         $this->addSql('DROP INDEX IDX_EF186BA05AD8C397 ON assignments_request');
         $this->addSql('ALTER TABLE assignments_request DROP PRIMARY KEY');
-        $this->addSql('ALTER TABLE assignments_request CHANGE project_request_id projectrequest_id INT NOT NULL');
-        $this->addSql('ALTER TABLE assignments_request ADD CONSTRAINT FK_EF186BA01EDE5C6F FOREIGN KEY (projectrequest_id) REFERENCES project_request (id) ON DELETE CASCADE');
-        $this->addSql('CREATE INDEX IDX_EF186BA01EDE5C6F ON assignments_request (projectrequest_id)');
-        $this->addSql('ALTER TABLE assignments_request ADD PRIMARY KEY (projectrequest_id, user_id)');
+        $this->addSql('ALTER TABLE assignments_request CHANGE project_request_id project_request_id INT NOT NULL');
+        $this->addSql('ALTER TABLE assignments_request ADD CONSTRAINT FK_EF186BA01EDE5C6F FOREIGN KEY (project_request_id) REFERENCES project_request (id) ON DELETE CASCADE');
+        $this->addSql('CREATE INDEX IDX_EF186BA01EDE5C6F ON assignments_request (project_request_id)');
+        $this->addSql('ALTER TABLE assignments_request ADD PRIMARY KEY (project_request_id, user_id)');
         $this->addSql('ALTER TABLE work_log ADD date DATETIME DEFAULT NULL');
     }
 
@@ -49,7 +49,7 @@ final class Version20190704021625 extends AbstractMigration
         $this->addSql('ALTER TABLE assignments_request DROP FOREIGN KEY FK_EF186BA01EDE5C6F');
         $this->addSql('DROP INDEX IDX_EF186BA01EDE5C6F ON assignments_request');
         $this->addSql('ALTER TABLE assignments_request DROP PRIMARY KEY');
-        $this->addSql('ALTER TABLE assignments_request CHANGE projectrequest_id project_request_id INT NOT NULL');
+        $this->addSql('ALTER TABLE assignments_request CHANGE project_request_id project_request_id INT NOT NULL');
         $this->addSql('ALTER TABLE assignments_request ADD CONSTRAINT FK_EF186BA05AD8C397 FOREIGN KEY (project_request_id) REFERENCES project_request (id) ON DELETE CASCADE');
         $this->addSql('CREATE INDEX IDX_EF186BA05AD8C397 ON assignments_request (project_request_id)');
         $this->addSql('ALTER TABLE assignments_request ADD PRIMARY KEY (project_request_id, user_id)');
