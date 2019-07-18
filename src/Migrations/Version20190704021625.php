@@ -22,7 +22,7 @@ final class Version20190704021625 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE Criterion (id INT AUTO_INCREMENT NOT NULL, description VARCHAR(255) NOT NULL, code INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE criterion (id INT AUTO_INCREMENT NOT NULL, description VARCHAR(255) NOT NULL, code INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE files_eval DROP FOREIGN KEY FK_C2EABE3B48DB1F');
         $this->addSql('DROP INDEX IDX_C2EABE3B48DB1F ON files_eval');
         $this->addSql('ALTER TABLE files_eval DROP PRIMARY KEY');
