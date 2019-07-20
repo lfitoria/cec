@@ -5,6 +5,7 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
+/nbproject/private/private.xml
 /var/
 /vendor/
 /config/packages/doctrine.yaml
