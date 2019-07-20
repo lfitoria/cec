@@ -3,13 +3,41 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/cec/src/Controller/RequestFormController.php</file>
+            <file>file:/C:/xampp/htdocs/cec/public/build/forms.css</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/FileManager.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/ethic_eval_request/_form.html.twig</file>
-            <file>file:/C:/xampp/htdocs/cec/src/Controller/ProjectRequestController.php</file>
-            <file>file:/C:/xampp/htdocs/cec/src/Controller/AcademicRequestInfoController.php</file>
-            <file>file:/C:/xampp/htdocs/cec/src/Controller/EthicEvalRequestController.php</file>
+            <file>file:/C:/xampp/htdocs/cec/public/build/app.css</file>
+            <file>file:/C:/xampp/htdocs/cec/assets/css/app.css</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/_form.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/nbproject/private/private.xml~6a57d396cec85b63e52ba92d90a7fc5fc8aced43</file>
+            <file>file:/C:/xampp/htdocs/cec/config/packages/doctrine.yaml</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Controller/RequestFormController.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Services/User/UserManager.php</file>
+            <file>file:/C:/xampp/htdocs/cec/assets/css/forms.css</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/Ldap.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Controller/EthicEvalRequestController.php</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/ethic_eval_request/new.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/new.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/nbproject/private/private.xml</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/ethic_eval_request/edit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/commons/_form_header.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/LogManager.php</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/users_roles/new.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/project_request/edit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/commons/_form_footer.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/nbproject/private/private.properties</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/base.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/academic_request_info/new.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/config/packages/security.yaml</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/academic_request_info/edit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Controller/ProjectRequestController.php</file>
+            <file>file:/C:/xampp/htdocs/cec/.gitignore</file>
+            <file>file:/C:/xampp/htdocs/cec/assets/js/forms.js</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Controller/AcademicRequestInfoController.php</file>
+            <file>file:/C:/xampp/htdocs/cec/assets/js/app.js</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/users_roles/_form.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/academic_request_info/_form.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/webpack.config.js</file>
         </group>
     </open-files>
 </project-private>

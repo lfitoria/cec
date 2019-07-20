@@ -1,0 +1,61 @@
+form{
+    padding: 50px 10%;
+}
+
+.form_header{
+    background-color: var(--A4);
+}
+
+.form_header > .form_header_nav{
+
+}
+
+.form_header > .form_header_nav > .form_header_nav_item{
+    background-color: var(--A4); 
+    position: relative;
+    padding: 15px;
+}
+.form_header > .form_header_nav > .form_header_nav_item > .nav_step{
+    border-radius: 50%;
+    color: var(--A3);
+    border: var(--A3) 2px solid;
+    width: 50px;
+    height: 50px;
+    display: block;
+    text-align: center;
+    line-height: 50px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+.form_header > .form_header_nav > .form_header_nav_item:after{
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 75%;
+    right: 0px;
+    top: 0;
+    bottom: 0;
+    background-color: var(--white);
+    margin: auto;
+}
+
+.form_header > .form_header_nav > .form_header_nav_item > .form_header_nav_item_link{
+    color: var(--white);
+    padding: .5rem 1rem;
+    display: block;
+}
+
+.form_header > .form_header_nav > .form_header_nav_item.form_header_nav_item--active{
+    background-color: var(--white);
+    color: var(--A4);
+}
+.form_header > .form_header_nav > .form_header_nav_item.form_header_nav_item--active > .nav_step{
+    color: white;
+    background-color: var(--A6);
+    border: var(--A6) 2px solid;
+}
+.form_header > .form_header_nav > .form_header_nav_item.form_header_nav_item--active > .form_header_nav_item_link{
+    background-color: var(--white);
+    color: var(--A4);
+}
+

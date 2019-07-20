@@ -1,27 +1,26 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ include('commons/_form_header.html.twig') }}
 {{ form_start(form) }}
-<div>
-    {{ form_row(form.population, {label_attr: {class: 'checkbox-custom'} }) }}
-    {{ form_row(form.amountParticipants) }}
-    {{ form_row(form.inExCriteria) }}
-    {{ form_row(form.recruitmentParticipants) }}
-    {{ form_row(form.collectionInformation) }}
-    {{ form_row(form.collectionInformationFiles, {label_attr: {class: 'custom-file'} }) }}
-    {{ form_row(form.dataType, {label_attr: {class: 'checkbox-custom'} }) }}
-    {{ form_row(form.riskDeclaration) }}
-    {{ form_row(form.benefitsForParticipant) }}
-    {{ form_row(form.benefitsForPopulation) }}
-    {{ form_row(form.previsionsPrivacy) }}
-    {{ form_row(form.futureUse) }}
-    <div class="inline-custom-radio">
+{{ form_row(form.population, {label_attr: {class: 'checkbox-custom'} }) }}
+{{ form_row(form.amountParticipants) }}
+{{ form_row(form.inExCriteria) }}
+{{ form_row(form.recruitmentParticipants) }}
+{{ form_row(form.collectionInformation) }}
+{{ form_row(form.collectionInformationFiles, {label_attr: {class: 'custom-file'} }) }}
+{{ form_row(form.dataType, {label_attr: {class: 'checkbox-custom'} }) }}
+{{ form_row(form.riskDeclaration) }}
+{{ form_row(form.benefitsForParticipant) }}
+{{ form_row(form.benefitsForPopulation) }}
+{{ form_row(form.previsionsPrivacy) }}
+{{ form_row(form.futureUse) }}
+<div class="inline-custom-radio">
     {{ form_row(form.informedConsent, {label_attr: {class: 'radio-custom'} }) }}
-    </div>
-    {{ form_row(form.informedConsentFiles, {label_attr: {class: 'custom-file'} }) }}
-    <div class="inline-custom-radio">
-    {{ form_row(form.informedAssent, {label_attr: {class: 'radio-custom'} }) }}
-    </div>
-    {{ form_row(form.informedAssentFiles, {label_attr: {class: 'custom-file'} }) }}
-    
 </div>
-<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_row(form.informedConsentFiles, {label_attr: {class: 'custom-file'} }) }}
+<div class="inline-custom-radio">
+    {{ form_row(form.informedAssent, {label_attr: {class: 'radio-custom'} }) }}
+</div>
+{{ form_row(form.informedAssentFiles, {label_attr: {class: 'custom-file'} }) }}
+
 {{ form_end(form) }}
+{{ include('commons/_form_footer.html.twig') }}
