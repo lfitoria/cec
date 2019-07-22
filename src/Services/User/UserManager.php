@@ -50,22 +50,22 @@ class UserManager {
     }
 
     // Create new user on database
-    public function createUser($strEmail) {
+    public function createUser($strEmail,$tipo_usuario) {
         $boolResult = false;
         $objCurrentDatetime = new \Datetime();
 
         try {
 
-            if ($strEmail['tipo_usuario']=="administrador") {
+            if ($tipo_usuario=="administrador") {
                 $role_find=1;
             }
-            if ($strEmail['tipo_usuario']=="estudiante" && $strEmail['tipo_usuario_ldap'] == "ESTUDIANTE") {
+            if ($tipo_usuario=="estudiante" && $strEmail['tipo_usuario_ldap'] == "ESTUDIANTE") {
                 $role_find=2;
             }
-            if ($strEmail['tipo_usuario']=="investigador") {
+            if ($tipo_usuario=="investigador") {
                 $role_find=3;
             }
-            if ($strEmail['tipo_usuario']=="evaluador") {
+            if ($tipo_usuario=="evaluador") {
                 $role_find=4;
             }
 
