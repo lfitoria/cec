@@ -31,7 +31,8 @@ class UserManager {
     public function loginAction($strEmail) {
         if (!$this->checkUserExists($strEmail['cedula'])) {
             // create new user
-            $this->createUser($strEmail['cedula']);
+            // $tipo_usuario
+            $this->createUser($strEmail['cedula'],$strEmail['tipo_usuario']);
         }
 
         $this->createLoginSession();
@@ -54,7 +55,21 @@ class UserManager {
         $objCurrentDatetime = new \Datetime();
 
         try {
-            $role = $this->em->getRepository(UsersRoles::class)->find(1);
+
+            if ($strEmail['tipo_usuario']=="administrador") {
+                $role_find=1;
+            }
+            if ($strEmail['tipo_usuario']=="estudiante" && $strEmail['tipo_usuario_ldap'] == "ESTUDIANTE") {
+                $role_find=2;
+            }
+            if ($strEmail['tipo_usuario']=="investigador") {
+                $role_find=3;
+            }
+            if ($strEmail['tipo_usuario']=="evaluador") {
+                $role_find=4;
+            }
+
+            $role = $this->em->getRepository(UsersRoles::class)->find($role_find);
             
             $objUser = new LdapUser();
             $objUser->setEmail($strEmail);

@@ -55,6 +55,8 @@ class DefaultController extends AbstractController {
             var_dump($arrLoginResult);
             if ($arrViewData['LOGIN'] == "OK") {
                 // user logged ok, then we redirect to the home page
+                echo "entra";
+                die();
                 $router = $this->get('router');
                 $url = $router->generate('home');
 
