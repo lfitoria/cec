@@ -104,8 +104,10 @@ class Ldap {
                     
                     $this->arrLoginResult['USERNAME'] = ! empty($info[0]['name'][0]) ? $info[0]['name'][0] : NULL;
                     
-                    // var_dump($data);
-                    // die();
+                   // echo "<pre>";
+			// var_dump($data);
+			//echo "</pre>";
+                     //die();
                     
                     $objUserServ = $this->container->get('user_manager');
                     $objUserServ->loginAction(array("cedula" => $data[0]["mail"][0]));
