@@ -1,5 +1,7 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ include('commons/_form_header.html.twig') }}
 {{ form_start(form) }}
+
 {{ form_row(form.title) }}
 {{ form_row(form.extInstitutions) }}
 <div class="inline-custom-radio">
@@ -16,7 +18,5 @@
     {{ form_row(form.docHumanInformation,{label_attr: {class: 'radio-custom'} }) }}
 </div>
 {{ form_row(form.docHumanInformationFiles, {label_attr: {class: 'custom-file'} }) }}
-
-
-<button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+{{ include('commons/_form_footer.html.twig') }}

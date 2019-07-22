@@ -3,11 +3,5 @@
 {% block title %}Edit AcademicRequestInfo{% endblock %}
 
 {% block body %}
-    <h1>Edit AcademicRequestInfo</h1>
-
-    {{ include('academic_request_info/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('academic_request_info_index') }}">back to list</a>
-
-    {{ include('academic_request_info/_delete_form.html.twig') }}
+    {{ include('academic_request_info/_form.html.twig') }}
 {% endblock %}
