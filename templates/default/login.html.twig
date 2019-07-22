@@ -18,6 +18,12 @@
                 <input type="password" class="form-control" placeholder="Password" name="password" value="{{ PASSWORD }}" />
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
+            {# type #}
+              <input type="radio" name="tipo_usuario" value="administrador"> Administrador<br>
+              <input type="radio" name="tipo_usuario" value="estudiante"> Estudiante<br>
+              <input type="radio" name="tipo_usuario" value="investigador"> Investigador<br>
+              <input type="radio" name="tipo_usuario" value="evaluador"> Evaluador<br>  
+            {# end type #}
             <div class="row">
                 <div class="col-xs-12">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>

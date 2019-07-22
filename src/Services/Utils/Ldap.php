@@ -36,6 +36,7 @@ class Ldap {
         $request = $this->requestStack->getCurrentRequest();
         $NOMBRE_USUARIO = $request->request->get('email');
         $CLAVE_USUARIO = $request->request->get('password');
+        $tipo_usuario = $request->request->get('tipo_usuario');
 
         // USUARIO LDAP CON PERMISO ESPECIAL DE LECTURA - SE LO ASIGNA EL CENTRO DE INFORMÁTICA
         $ldap['user'] = "sigpro.vinv";
@@ -86,7 +87,11 @@ class Ldap {
                     $this->arrLoginResult['USERNAME'] = ! empty($info[0]['name'][0]) ? $info[0]['name'][0] : NULL;
                     
                     $objUserServ = $this->container->get('user_manager');
-                    $objUserServ->loginAction(array("cedula" => $data[0]["mail"][0]));
+                    $objUserServ->loginAction(array(
+                        "cedula" => $data[0]["mail"][0],
+                        "tipo_usuario" => $tipo_usuario,
+                        "tipo_usuario_ldap" => $data[0]["ucrrelacion"][0]
+                    ));
                 }
             } catch (Exception $e) {
                 ldap_close($ldap['conn']);
