@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/project/request")
@@ -30,7 +30,7 @@ class ProjectRequestController extends AbstractController
             'project_requests' => $projectRequests,
         ]);
     }
-    
+
     /**
      * @Route("/admin", name="project_request_index_admin", methods={"GET"})
      */

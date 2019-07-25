@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class DefaultController extends AbstractController {
 
     /**
-     * @Route("/", name="default")
+     * @Route("/indexold", name="indexold")
      */
     public function index() {
         $ss = new ProjectRequest();
@@ -32,9 +32,9 @@ class DefaultController extends AbstractController {
             'test' => $test,
         ]);
     }
-
+    // * @Route("/login", name="login")
     /**
-     * @Route("/login", name="login")
+     * @Route("/", name="default")
      */
     public function login(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils) {
         $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
@@ -52,21 +52,34 @@ class DefaultController extends AbstractController {
 
             // check Ldap login result
 
-            var_dump($arrLoginResult);
-            if ($arrViewData['LOGIN'] == "OK") {
-                // user logged ok, then we redirect to the home page
-                echo "entra";
-                die();
-                $router = $this->get('router');
-                $url = $router->generate('home');
+            // var_dump($arrLoginResult);
+            // var_dump($arrViewData);
 
-                return $this->redirect($url);
+            // die();
+
+            if ($arrViewData['USERNAME'] != null) {
+                // user logged ok, then we redirect to the home page
+                // echo "entra";
+                // die();
+                // $router = $this->get('router');
+                // $url = $router->generate('home');
+
+                //return $this->redirect($url);
+                return $this->redirectToRoute('project_request_index_admin');
             }
         }
 
 
 
         return $this->render('default/login.html.twig', $arrViewData);
+    }
+    /**
+     * @Route("/logout", name="app_logout", methods={"GET"})
+     */
+    public function logout()
+    {
+        // controller can be blank: it will never be executed!
+        throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 
 }

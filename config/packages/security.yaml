@@ -30,6 +30,10 @@ security:
             form_login:
                 login_path: login
                 check_path: login
+
+            logout:
+                path: app_logout
+
             # activate different ways to authenticate
  
             # http_basic: ~
@@ -43,5 +47,5 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
  
     access_control:
-        - { path: ^/test, roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -18,10 +18,51 @@
         </div>
         <div class="header-title">
             <div class="container">
-                <h2>COMITÉ ÉTICO CIENTÍFICO</h2>
-                <p>Sistema de evaluación ética para la investigación con seres humanos</p>
+                <div class="row">
+                    <div class="col">
+                        <h2>COMITÉ ÉTICO CIENTÍFICO</h2>
+                        <p>Sistema de evaluación ética para la investigación con seres humanos</p>
+                    </div>
+                    {% if app.user %}
+                        {{app.user.username}}
+                    {% else %}
+                        <p>no session</p>
+                    {% endif %}
+                </div>
             </div>
+            {{dump(app.user)}}
+            {% if app.user %}
+                <div class="box-info-home">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Nombre: {{app.user.username}}</p>
+                                <p>Puesto: 
+                                    {% if app.user.role.description == "ROLE_EVALUATOR" %}
+                                        Administrador
+                                    {% elseif app.user.role.description == "ROLE_STUDENT" %}
+                                        Estudiante                                  {% elseif app.user.role.description == "ROLE_RESEARCHER" %}
+                                        Investigador
+                                    {% elseif app.user.role.description == "ROLE_EVALUATOR" %}
+                                        Evaluador
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="col">
+                                <p>Correo electronónico: {{app.user.email|lower}}</p>
+                                <p>Cédula/Carné: </p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
+        
+
+        
+        
+        
         <div class="container">
             {% block body %}{% endblock %}
         </div>
