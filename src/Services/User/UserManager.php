@@ -32,7 +32,7 @@ class UserManager {
         if (!$this->checkUserExists($strEmail['cedula'])) {
             // create new user
             // $tipo_usuario
-            $this->createUser($strEmail['cedula'],$strEmail['tipo_usuario']);
+            $this->createUser($strEmail['cedula'],$strEmail['tipo_usuario_ldap']);
         }
 
         $this->createLoginSession();
@@ -50,23 +50,22 @@ class UserManager {
     }
 
     // Create new user on database
-    public function createUser($strEmail,$tipo_usuario) {
+    public function createUser($strEmail,$tipo_usuario_ldap) {
         $boolResult = false;
         $objCurrentDatetime = new \Datetime();
 
+         // echo "<pre>";
+        // var_dump($tipo_usuario);
+         // var_dump($tipo_usuario_ldap);
+         // echo "</pre>";
+         // die();
+
         try {
 
-            if ($tipo_usuario=="administrador") {
-                $role_find=1;
-            }
-            if ($tipo_usuario=="estudiante" && $strEmail['tipo_usuario_ldap'] == "ESTUDIANTE") {
-                $role_find=2;
-            }
-            if ($tipo_usuario=="investigador") {
+            if ( isset($tipo_usuario_ldap[1]) && $tipo_usuario_ldap[1] == "DOCENTE") {
                 $role_find=3;
-            }
-            if ($tipo_usuario=="evaluador") {
-                $role_find=4;
+            }else{
+                $role_find=2;
             }
 
             $role = $this->em->getRepository(UsersRoles::class)->find($role_find);

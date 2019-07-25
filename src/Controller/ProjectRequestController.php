@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/project/request")
@@ -23,6 +24,7 @@ class ProjectRequestController extends AbstractController {
     $projectRequests = $this->getDoctrine()
             ->getRepository(ProjectRequest::class)
             ->findAll();
+
 
     return $this->render('project_request/index.html.twig', [
                 'project_requests' => $projectRequests,
