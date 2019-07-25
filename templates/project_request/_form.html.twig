@@ -1,6 +1,6 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-{{ include('commons/_form_header.html.twig') }}
-{{ form_start(form) }}
+{{ include('commons/_form_header.html.twig', {'tab': 1}) }}
+{{ form_start(form, {attr: {class: 'form-request'}}) }}
 
 {{ form_row(form.title) }}
 {{ form_row(form.extInstitutions) }}

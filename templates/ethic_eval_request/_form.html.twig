@@ -1,6 +1,6 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-{{ include('commons/_form_header.html.twig') }}
-{{ form_start(form) }}
+{{ include('commons/_form_header.html.twig', {'tab': 3}) }}
+{{ form_start(form, {attr: {class: 'form-request'}}) }}
 {{ form_row(form.population, {label_attr: {class: 'checkbox-custom'} }) }}
 {{ form_row(form.amountParticipants) }}
 {{ form_row(form.inExCriteria) }}

@@ -4,17 +4,4 @@
 
 {% block body %}
     {{ include('project_request/_form.html.twig') }}
-    <script type="text/javascript">
-        $(".decision_question input").change(function () {
-            var _this = $(this);
-            var targetId = "#" + _this.parent().parent().data("code");
-            if ($(this).val() === 1) {
-                $(targetId).removeClass("d-none");
-            } else if ($(this).val() === 0) {
-                $(targetId).addClass("d-none");
-            }
-        });
-
-    </script>
-
 {% endblock %}
