@@ -31,7 +31,7 @@
           {% endif %}
         </div>
       </div>
-      {{dump(app.user)}}
+      {% if app.user %}{{dump(app.user)}}{% endif %}
       {% if app.user %}
         <div class="box-info-home">
           <div class="container">
@@ -59,15 +59,11 @@
         </div>
       {% endif %}
     </div>
-    <div class="container">
-      <h2>COMITÉ ÉTICO CIENTÍFICO</h2>
-      <p>Sistema de evaluación ética para la investigación con seres humanos</p>
-    </div>
   </div>
 </header>
 <div class="container ">
-  <div class="row">
-    <div class="main-container">
+  <div class="row no-gutters">
+    <div class="main-container col-12">
       {% block body %}{% endblock %}
     </div>
   </div>

@@ -1,74 +1,76 @@
 body{
-    font-family: Arial;
-    background-color: var(--A9);
+  font-family: Arial;
+  background-color: var(--A9);
 }
 
 body .main-container{
   background-color: var(--white);
+  padding-bottom: 25px;
 }
 
 .btn-primary {
-    color: var(--white);
-    background-color: var(--green);
-    border-color: var(--green);
+  color: var(--white);
+  background-color: var(--green);
+  border-color: var(--green);
 }
 
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
-    color: var(--white); 
-    background-color: var(--green);
-    border-color: var(--green);
+  color: var(--white); 
+  background-color: var(--green);
+  border-color: var(--green);
 }
 
 .inline-custom-radio .custom-radio{
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    margin-right: 1rem;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin-right: 1rem;
 }
 
 input, textarea, select{
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 
 .header{
-    background-color: var(--A3);
-    padding: 1% 0;
+  background-color: var(--A3);
+  padding: 1% 0;
 }
 .header-title{
-    padding: 1% 0;
-    background-color: var(--white);
-    margin-bottom: 35px;
+  padding: 1% 0;
+  background-color: var(--white);
+  margin-bottom: 35px;
 }
 .header-title h2 {
-    color: var(--A4);
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
+  color: var(--A4);
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
 }
 .header-title p{
-    color: var(--A6);
-    margin-bottom: 0;
+  color: var(--A6);
+  margin-bottom: 0;
 }
 footer{
-    padding: 2% 0;
-    background-color: var(--G2);
-    color: var(--white);
-    font-size: 0.8em;
+  margin-top: 35px;
+  padding: 2% 0;
+  background-color: var(--G2);
+  color: var(--white);
+  font-size: 0.8em;
 }
 footer a{
-    color: var(--white);
+  color: var(--white);
 }
 footer a:hover{
-    color: var(--white);
+  color: var(--white);
 }
 footer p{
-    margin:0;
+  margin:0;
 }
 .infooter-box {
-    padding: 5px 0px 5px 15px;
-    border-left: 1px solid var(--N1);
+  padding: 5px 0px 5px 15px;
+  border-left: 1px solid var(--N1);
 }
 .copy {
-    padding-top: 15px;
+  padding-top: 15px;
 }

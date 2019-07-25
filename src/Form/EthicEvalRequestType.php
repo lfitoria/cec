@@ -13,6 +13,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use App\Entity\Criterion;
 use App\Repository\CriterionRepository;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class EthicEvalRequestType extends AbstractType {
 
@@ -27,69 +29,94 @@ class EthicEvalRequestType extends AbstractType {
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1000 caracteres.',
                 'label' => 'Cantidad de participantes necesaria para lograr los objetivos, determinación estadística o justiﬁcación teórica',
+                'required' => false,
             ])
             ->add('inExCriteria', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1500 caracteres.',
                 'label' => 'Criterios de inclusión y exclusión:',
+                'required' => false,
             ])
             ->add('recruitmentParticipants', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1500 caracteres.',
                 'label' => 'Reclutamiento de los participantes (indicar cómo, quién, y cuándo se hará):',
+                'required' => false,
             ])
             ->add('collectionInformation', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1500 caracteres.',
                 'label' => 'Recolección de información. Análisis de laboratorio, imágenes, pruebas psicológicas, cuestionarios, entrevistas u otros medios para generar datos o colectar información (Si aplica)',
+                'required' => false,
             ])
             ->add('riskDeclaration', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1000 caracteres.',
                 'label' => 'Declaración de riesgos de la investigación',
+                'required' => false,
             ])
             ->add('benefitsForParticipant', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 500 caracteres.',
                 'label' => 'Beneﬁcios para la población:',
+                'required' => false,
             ])
             ->add('benefitsForPopulation', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 500 caracteres.',
                 'label' => 'Beneﬁcios para el participante individual:',
+                'required' => false,
             ])
             ->add('previsionsPrivacy', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 500 caracteres.',
                 'label' => 'Previsiones para resguardar la privacidad, conﬁdencialidad y almacenamiento de los datos, tiempo de resguardo, detalle de la anonimización de los datos de los participantes:',
+                'required' => false,
             ])
             ->add('futureUse', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 500 caracteres.',
                 'label' => ' Indique el uso futuro de las muestras biológicas y de los datos del participante:',
+                'required' => false,
             ])
-            ->add('informedConsent', ChoiceType::class, array(
-                'choices' => array(
-                    'Sí' => 1,
-                    'No' => 0,
-                ),
-                'expanded' => true,
-                'label' => 'Requiere consentimiento informado:',
-                'help' => 'Esto aplica para las personas mayores de edad y los padres o representantes legales de menores de edad o de personas con capacidades cognitivas disminuidas.'))
-            ->add('informedAssent', ChoiceType::class, array(
-                'choices' => array(
-                    'Sí' => 1,
-                    'No' => 0,
-                ),
-                'expanded' => true,
-                'label' => 'Requiere asentimiento informado:',
-                'help' => 'Esto aplica para las personas de doce a dieciocho años de edad.'))
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+              $ethicEvalRequest = $event->getData();
+              $form = $event->getForm();
+
+              if (!$ethicEvalRequest || null === $ethicEvalRequest->getId()) {
+                $informedConsent = '0';
+                $informedAssent = '0';
+              } else {
+                $informedConsent = $ethicEvalRequest->getInformedConsent();
+                $informedAssent = $ethicEvalRequest->getInformedAssent();
+              }
+
+              $form->add('informedConsent', ChoiceType::class, array(
+                  'choices' => array(
+                      'No' => '0',
+                      'Si' => '1',
+                  ),
+                  'data' => $informedConsent,
+                  'expanded' => true,
+                  'label' => 'Requiere consentimiento informado:',
+                  'help' => 'Esto aplica para las personas mayores de edad y los padres o representantes legales de menores de edad o de personas con capacidades cognitivas disminuidas.'));
+              $form->add('informedAssent', ChoiceType::class, array(
+                  'choices' => array(
+                      'No' => '0',
+                      'Si' => '1',
+                  ),
+                  'data' => $informedAssent,
+                  'expanded' => true,
+                  'label' => 'Requiere asentimiento informado:',
+                  'help' => 'Esto aplica para las personas de doce a dieciocho años de edad.'));
+            })
             ->add('informedConsentFiles', FileType::class, array(
                 'multiple' => true,
                 'mapped' => false,
+                'required' => false,
                 'label' => 'Adjuntar el documento de consentimiento informado:'))
-            ->add('informedAssentFiles', FileType::class, array('multiple' => true, 'mapped' => false, 'label' => 'Adjuntar el documento de asentimiento informado:'))
-            ->add('collectionInformationFiles', FileType::class, array('multiple' => true, 'mapped' => false, 'label' => 'Adjuntar los instrumentos a la documentación respectiva:'))
+            ->add('informedAssentFiles', FileType::class, array('required' => false, 'multiple' => true, 'mapped' => false, 'label' => 'Adjuntar el documento de asentimiento informado:'))
+            ->add('collectionInformationFiles', FileType::class, array('required' => false, 'multiple' => true, 'mapped' => false, 'label' => 'Adjuntar los instrumentos a la documentación respectiva:'))
             ->add('population', EntityType::class, [
                 'class' => Criterion::class,
                 'multiple' => true,

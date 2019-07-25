@@ -1,5 +1,5 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-{{ include('commons/_form_header.html.twig', {'tab': 3}) }}
+{{ include('commons/_form_header.html.twig', {'current_nav_item': 'ethic'}) }}
 {{ form_start(form, {attr: {class: 'form-request'}}) }}
 {{ form_row(form.population, {label_attr: {class: 'checkbox-custom'} }) }}
 {{ form_row(form.amountParticipants) }}
@@ -14,13 +14,19 @@
 {{ form_row(form.previsionsPrivacy) }}
 {{ form_row(form.futureUse) }}
 <div class="inline-custom-radio">
-    {{ form_row(form.informedConsent, {label_attr: {class: 'radio-custom'} }) }}
+  {{ form_row(form.informedConsent, {attr: {'data-code': 'informedConsentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
-{{ form_row(form.informedConsentFiles, {label_attr: {class: 'custom-file'} }) }}
+<div id="informedConsentFiles" class="d-none">
+  {{ form_row(form.informedConsentFiles, {label_attr: {class: 'custom-file'} }) }}
+</div>
+
 <div class="inline-custom-radio">
-    {{ form_row(form.informedAssent, {label_attr: {class: 'radio-custom'} }) }}
+  {{ form_row(form.informedAssent, {attr: {'data-code': 'informedAssentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
-{{ form_row(form.informedAssentFiles, {label_attr: {class: 'custom-file'} }) }}
+<div id="informedAssentFiles" class="d-none">
+  {{ form_row(form.informedAssentFiles, {label_attr: {class: 'custom-file'} }) }}
+</div>
+
 
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig') }}

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ProjectRequest;
-use App\Entity\AcademicRequestInfo;
+use App\Entity\ExtraInformationRequest;
 use App\Form\ProjectRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,10 +66,21 @@ class ProjectRequestController extends AbstractController {
       $projectRequest->setDocHumanInformationFiles($docHumanInformationFiles);
 
       $entityManager = $this->getDoctrine()->getManager();
+      
+//      if($form->get("tutor_name")){
+//        $extraInfo = new ExtraInformationRequest();
+//        $extraInfo->setTutorName($form->get("tutor_name")->getData());
+//        $extraInfo->setTutorId($form->get("tutor_id")->getData());
+//        $extraInfo->setTutorEmail($form->get("tutor_email")->getData());
+//        $extraInfo->setRequest($projectRequest);
+//        
+//        $entityManager->persist($extraInfo);
+//      }
+      
       $entityManager->persist($projectRequest);
       $entityManager->flush();
-
-
+      
+      
       $target = $form->get("form_target_input")->getData();
 
       $route = $this->getTargetRoute($target);

@@ -61,8 +61,27 @@ form{
   color: var(--A4);
 }
 
-form label.error{
+.form_footer > .form_footer_button{
+  margin: 0 15px;
+}
+
+form .form-group .custom-file .custom-file-label{
+  border-radius: 0;
+}
+
+form .form-group .custom-file .custom-file-label::after{
+  border-radius: 0;
+  left: 0;
+  right: initial;
+  border-left: none;
+  border-right: inherit;
+}
+
+form .form-group legend.col-form-label, form .form-group label:not(.error):not(.custom-control-label){
+  font-weight: bold;
+}
+
+form .form-group label.error{
   color: red;
   font-size: 0.85em;
 }
-

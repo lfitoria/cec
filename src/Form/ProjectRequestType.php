@@ -36,8 +36,6 @@ class ProjectRequestType extends AbstractType {
                 'required' => false,
                 'mapped' => false
             ])
-            
-            
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
               $projectRequest = $event->getData();
               $form = $event->getForm();
@@ -49,7 +47,45 @@ class ProjectRequestType extends AbstractType {
                 $data = false;
                 $default = '';
               }
-              
+
+              $userType = "student";
+              if ($userType === "student") {
+                $form->add('tutorName', TextType::class, [
+                    'label' => 'Nombre del tutor:',
+                    'mapped' => false
+                ]);
+                $form->add('tutorId', TextType::class, [
+                    'label' => 'Cédula:',
+                    'mapped' => false
+                ]);
+                $form->add('tutorEmail', TextType::class, [
+                    'label' => 'Correo institucional:',
+                    'mapped' => false
+                ]);
+
+                $form->add('grupalProject', ChoiceType::class, array(
+                    'choices' => array(
+                        'No' => '0',
+                        'Si' => '1',
+                    ),
+                    'data' => $projectRequest->getGrupalProject() ? $projectRequest->getGrupalProject() : '0',
+                    'expanded' => true,
+                    'label' => '¿Es un proyecto de trabajo final de graduación grupal?',
+                   
+                ));
+
+                  $form->add('ascriptionUnit', TextType::class, [
+                    'label' => 'Unidad de adscripción del proyecto:',
+                    'required' => false,
+                ]);
+
+                $form->add('ucrInstitutions', TextareaType::class, [
+                    'attr' => ['class' => 'tinymce', 'rows' => '4'],
+                    'label' => 'Otras unidades o instituciones de la UCR participantes:',
+                    'required' => false,
+                ]);
+              }
+
               $form->add('docHumanInformationFiles', FileType::class, array('multiple' => true, 'mapped' => false, 'required' => $data, 'label' => 'Acta de la comisión científica o de la Comisión de TFG de grado o posgrado:'));
               $form->add('extInstitutionsAuthorizationFiles', FileType::class, array('multiple' => true, 'mapped' => false, 'required' => $data, 'label' => false));
               $form->add('involvesHumans', ChoiceType::class, array(
@@ -80,6 +116,15 @@ class ProjectRequestType extends AbstractType {
                   'label' => 'Autorización de la institución externa pública o privada:',
                   'attr' => ['class' => 'extInstitutionsAuthorization'],
                   'required' => true
+              ));
+              $form->add('involvesHumans', ChoiceType::class, array(
+                  'choices' => array(
+                      'No' => '0',
+                      'Si' => '1',
+                  ),
+                  'data' => $projectRequest->getInvolvesHumans() ? $projectRequest->getInvolvesHumans() : '0',
+                  'expanded' => true,
+                  'label' => 'Acta de la comisión de trabajos finales de graduación:',
               ));
             })
     //->add('projectUnit')

@@ -1,21 +1,50 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-{{ include('commons/_form_header.html.twig', {'tab': 1}) }}
+{{ include('commons/_form_header.html.twig', {'current_nav_item': 'info'}) }}
 {{ form_start(form, {attr: {class: 'form-request'}}) }}
 
 {{ form_row(form.title) }}
+
+<div class="tutor_information_container">
+  <div class="form-group">
+    <label for="tutor_information_label" class="required">Director(a) del trabajo final de graduación:</label>
+    <div class="form-group row">
+      <label for="tutor_name" class="col-sm-3 col-form-label text-right">Nombre del tutor:</label>
+      <div class="col-sm-9">
+        {{ form_widget(form.tutorName) }}
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="tutor_id" class="col-sm-3 col-form-label text-right">Cédula:</label>
+      <div class="col-sm-9">
+        {{ form_widget(form.tutorId) }}
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="tutor_name" class="col-sm-3 col-form-label text-right">Correo institucional:</label>
+      <div class="col-sm-9">
+        {{ form_widget(form.tutorEmail) }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="inline-custom-radio">
+  {{ form_row(form.grupalProject,{label_attr: {class: 'radio-custom'} }) }}
+</div>
+{{ form_row(form.ascriptionUnit) }}
+{{ form_row(form.ucrInstitutions) }}
 {{ form_row(form.extInstitutions) }}
 <div class="inline-custom-radio">
-    {{ form_row(form.extInstitutionsAuthorization, {attr: {'data-code': 'extInstitutionsAuthorizationFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+  {{ form_row(form.extInstitutionsAuthorization, {attr: {'data-code': 'extInstitutionsAuthorizationFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
 <div id="extInstitutionsAuthorizationFiles" class="d-none">
-    {{ form_row(form.extInstitutionsAuthorizationFiles, {label_attr: {class: 'custom-file'} }) }}
+  {{ form_row(form.extInstitutionsAuthorizationFiles, {label_attr: {class: 'custom-file'} }) }}
 </div>
 {{ form_row(form.placeOfStudy) }}
 <div class="inline-custom-radio">
-    {{ form_row(form.involvesHumans,{label_attr: {class: 'radio-custom'} }) }}
+  {{ form_row(form.involvesHumans,{label_attr: {class: 'radio-custom'} }) }}
 </div>
 <div class="inline-custom-radio">
-    {{ form_row(form.docHumanInformation,{label_attr: {class: 'radio-custom'} }) }}
+  {{ form_row(form.docHumanInformation,{label_attr: {class: 'radio-custom'} }) }}
 </div>
 {{ form_row(form.docHumanInformationFiles, {label_attr: {class: 'custom-file'} }) }}
 {{ form_end(form) }}

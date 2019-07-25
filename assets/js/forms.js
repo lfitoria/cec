@@ -30,7 +30,9 @@ const $ = require('jquery');
 
       cache.form_buttons.click(function () {
         cache.form_target[0].value = $(this).data('target');
-        cache.form.submit();
+        if (cache.form.valid()) {
+          cache.form.submit();
+        }
       });
 
       cache.decision_inputs.change(function () {
@@ -51,8 +53,6 @@ const $ = require('jquery');
       cache.form_target = $('.form_target_input');
       cache.form = $('.form-request');
       cache.decision_inputs = $(".decision_question input");
-
-
 
       bindEvents();
     };
