@@ -29,10 +29,14 @@ class UserManager {
 
     // checks if user exists when login form has been submitted
     public function loginAction($strEmail) {
+        //var_dump($strEmail);
+        //die();
+        // array(4) { ["cedula"]=> string(30) "xxxxx" ["id"]=> string(10) "0115190268" ["carnet"]=> string(6) "B04278" ["tipo_usuario_ldap"]=> array(2) { ["count"]=> int(1) [0]=> string(10) "ESTUDIANTE" } }
+
         if (!$this->checkUserExists($strEmail['cedula'])) {
             // create new user
             // $tipo_usuario
-            $this->createUser($strEmail['cedula'],$strEmail['tipo_usuario_ldap']);
+            $this->createUser($strEmail);
         }
 
         $this->createLoginSession();
@@ -50,7 +54,7 @@ class UserManager {
     }
 
     // Create new user on database
-    public function createUser($strEmail,$tipo_usuario_ldap) {
+    public function createUser($strEmail) {
         $boolResult = false;
         $objCurrentDatetime = new \Datetime();
 
@@ -62,20 +66,26 @@ class UserManager {
 
         try {
 
-            if ( isset($tipo_usuario_ldap[1]) && $tipo_usuario_ldap[1] == "DOCENTE") {
+            if ( isset($strEmail["tipo_usuario_ldap"][1]) && $strEmail["tipo_usuario_ldap"][1] == "DOCENTE") {
                 $role_find=3;
             }else{
                 $role_find=2;
             }
 
+            // var_dump($role_find);
+            // die();
+
             $role = $this->em->getRepository(UsersRoles::class)->find($role_find);
             
             $objUser = new LdapUser();
-            $objUser->setEmail($strEmail);
+            $objUser->setEmail($strEmail["cedula"]);
             $objUser->setCreationDate($objCurrentDatetime);
             $objUser->setLastLoginDate($objCurrentDatetime);
-            $objUser->setUsername(explode("@", $strEmail)[0]);
+            $objUser->setUsername(explode("@", $strEmail["cedula"])[0]);
             $objUser->setRole($role);
+            $objUser->setCarnet($strEmail["carnet"]);
+            $objUser->setName($strEmail["nombre"]);
+            $objUser->setCedula_usuario($strEmail["id"]);
             // save data
             $this->em->persist($objUser);
             $this->em->flush();

@@ -37,41 +37,44 @@ class DefaultController extends AbstractController {
      * @Route("/", name="default")
      */
     public function login(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils) {
-        $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
-        $this->container = $container;
-        // Checks if the login form has been submitted
-        if ($request->getMethod() == 'POST') {
-            // load Ldap service
-            $objLdapServ = $this->get('ldap');
 
-            // check Ldap login
-            $arrLoginResult = $objLdapServ->login();
+        if ($this->getUser() != null) {
+            return $this->redirectToRoute('project_request_index_admin');
+        }else{
+            $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
+            $this->container = $container;
+            // Checks if the login form has been submitted
+            if ($request->getMethod() == 'POST') {
+                // load Ldap service
+                $objLdapServ = $this->get('ldap');
 
-            // Ldap login result
-            $arrViewData = json_decode($arrLoginResult, TRUE);
+                // check Ldap login
+                $arrLoginResult = $objLdapServ->login();
 
-            // check Ldap login result
+                // Ldap login result
+                $arrViewData = json_decode($arrLoginResult, TRUE);
 
-            // var_dump($arrLoginResult);
-            // var_dump($arrViewData);
+                // check Ldap login result
 
-            // die();
+                // var_dump($arrLoginResult);
+                // var_dump($arrViewData);
 
-            if ($arrViewData['USERNAME'] != null) {
-                // user logged ok, then we redirect to the home page
-                // echo "entra";
                 // die();
-                // $router = $this->get('router');
-                // $url = $router->generate('home');
 
-                //return $this->redirect($url);
-                return $this->redirectToRoute('project_request_index_admin');
+                if ($arrViewData['USERNAME'] != null) {
+                    // user logged ok, then we redirect to the home page
+                    // echo "entra";
+                    // die();
+                    // $router = $this->get('router');
+                    // $url = $router->generate('home');
+
+                    //return $this->redirect($url);
+                    return $this->redirectToRoute('project_request_index_admin');
+                }
             }
         }
 
-
-
-        return $this->render('default/login.html.twig', $arrViewData);
+         return $this->render('default/login.html.twig', $arrViewData);
     }
     /**
      * @Route("/logout", name="app_logout", methods={"GET"})

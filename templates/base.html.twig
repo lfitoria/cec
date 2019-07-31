@@ -9,6 +9,7 @@
         {{ encore_entry_link_tags('forms') }}
         {% endblock %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     </head>
     <body>
         <div class="header">
@@ -18,26 +19,36 @@
         </div>
         <div class="header-title">
             <div class="container">
-                <div class="row">
+                <div class="row menu-user-box">
                     <div class="col">
                         <h2>COMITÉ ÉTICO CIENTÍFICO</h2>
-                        <p>Sistema de evaluación ética para la investigación con seres humanos</p>
+                        <p style="margin: 0;">Sistema de evaluación ética para la investigación con seres humanos</p>
                     </div>
                     {% if app.user %}
-                        {{app.user.username}}
+                        <div class="dropdown menu-user">
+                          <button class="btn-menu-user dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{app.user.name|lower}}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">SEGUIMIENTO DE SOLICITUDES</a>
+                            <a class="dropdown-item" href="#">AYUDA</a>
+                            <a class="dropdown-item" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
+                          </div>
+                        </div>
+                        
                     {% else %}
-                        <p>no session</p>
+                        
                     {% endif %}
                 </div>
             </div>
-            {{dump(app.user)}}
+            {# {{dump(app.user)}} #}
             {% if app.user %}
                 <div class="box-info-home">
                     <div class="container">
                         <div class="row">
                             <div class="col-4">
-                                <p>Nombre: {{app.user.username}}</p>
-                                <p>Puesto: 
+                                <p style="text-transform: capitalize;"><span class="label">{{'Nombre'|upper}}:</span> {{app.user.name|lower}}</p>
+                                <p><span class="label">{{'Puesto'|upper}}:</span> 
                                     {% if app.user.role.description == "ROLE_EVALUATOR" %}
                                         Administrador
                                     {% elseif app.user.role.description == "ROLE_STUDENT" %}
@@ -48,9 +59,15 @@
                                     {% endif %}
                                 </p>
                             </div>
-                            <div class="col">
-                                <p>Correo electronónico: {{app.user.email|lower}}</p>
-                                <p>Cédula/Carné: </p>
+                            <div class="col box-r">
+                                <p><span class="label">{{'Correo electrónico'|upper}}:</span> {{app.user.email|lower}}</p>
+                                <p><span class="label">{{'Cédula/Carné'|upper}}:</span> 
+                                    {{app.user.cedula_usuario}}
+                                    {% if app.user.carnet != "" %}
+                                        / {{app.user.carnet}}
+                                    {% endif %}
+                                    
+                                </p>
                             </div>
                             
                         </div>
@@ -58,14 +75,11 @@
                 </div>
             {% endif %}
         </div>
-        
 
-        
-        
-        
         <div class="container">
             {% block body %}{% endblock %}
         </div>
+
         <footer>
             <div class="container">
                 <div class="row">
@@ -84,8 +98,9 @@
             </div>
         </footer>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         
 

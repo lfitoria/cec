@@ -89,7 +89,9 @@ class Ldap {
                     $objUserServ = $this->container->get('user_manager');
                     $objUserServ->loginAction(array(
                         "cedula" => $data[0]["mail"][0],
-
+                        "id" => $data[0]["ucruserid"][0],
+                        "nombre" => $data[0]["cn"][0],
+                        "carnet" => $data[0]["ucrstudentid"][0],
                         "tipo_usuario_ldap" => $data[0]["ucrrelacion"]
                     ));
                 }

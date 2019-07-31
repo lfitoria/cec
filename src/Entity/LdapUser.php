@@ -84,6 +84,20 @@ class LdapUser implements UserInterface {
      */
     private $deletionDate;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="carnet", type="string", length=200, nullable=false)
+     */
+    private $carnet;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cedula_usuario", type="string", length=200, nullable=false)
+     */
+    private $cedula_usuario;
+
     function getId() {
         return $this->id;
     }
@@ -106,6 +120,29 @@ class LdapUser implements UserInterface {
 
     function getDeletionDate(): \DateTime {
         return $this->deletionDate;
+    }
+
+    function getCarnet() {
+        return $this->carnet;
+    }
+
+    function setCarnet($carnet) {
+        $this->carnet = $carnet;
+    }
+    function getName() {
+        return $this->name;
+    }
+    
+    function setName($name) {
+        $this->name = $name;
+    }
+
+    function getCedula_usuario() {
+        return $this->cedula_usuario;
+    }
+    
+    function setCedula_usuario($cedula_usuario) {
+        $this->cedula_usuario = $cedula_usuario;
     }
 
     function setId($id) {
