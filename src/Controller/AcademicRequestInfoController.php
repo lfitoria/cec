@@ -14,104 +14,112 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/academic/request/info")
  */
-class AcademicRequestInfoController extends AbstractController
-{
-    /**
-     * @Route("/", name="academic_request_info_index", methods={"GET"})
-     */
-    public function index(): Response
-    {
-        $academicRequestInfos = $this->getDoctrine()
+class AcademicRequestInfoController extends AbstractController {
+
+  /**
+   * @Route("/", name="academic_request_info_index", methods={"GET"})
+   */
+  public function index(): Response {
+    $academicRequestInfos = $this->getDoctrine()
             ->getRepository(AcademicRequestInfo::class)
             ->findAll();
 
-        return $this->render('academic_request_info/index.html.twig', [
-            'academic_request_infos' => $academicRequestInfos,
-        ]);
+    return $this->render('academic_request_info/index.html.twig', [
+                'academic_request_infos' => $academicRequestInfos,
+    ]);
+  }
+
+  private function getTargetRoute($target) {
+    switch ($target) {
+      case "info":
+        $route = 'tab_general_info_request_edit';
+        break;
+      case "academic":
+        $route = 'tab_academic_request_info';
+        break;
+      case "ethic":
+        $route = 'tab_ethic_eval_request';
+        break;
+
+      default:
+        $route = 'tab_academic_request_info';
+        break;
+    }
+    return $route;
+  }
+
+  /**
+   * @Route("/new/{id}", name="academic_request_info_new", methods={"GET","POST"})
+   */
+  public function new(Request $request, ProjectRequest $projectRequest): Response {
+    $academicRequestInfo = new AcademicRequestInfo();
+    $form = $this->createForm(AcademicRequestInfoType::class, $academicRequestInfo);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $academicRequestInfo->setRequest($projectRequest);
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->persist($academicRequestInfo);
+      $entityManager->flush();
+
+      $target = $form->get("form_target_input")->getData();
+
+      $route = $this->getTargetRoute($target);
+      $data = ['id' => $academicRequestInfo->getRequest()->getId()];
+
+      return $this->redirectToRoute($route, $data);
     }
 
-    /**
-     * @Route("/new/{id}", name="academic_request_info_new", methods={"GET","POST"})
-     */
-    public function new(Request $request, ProjectRequest $projectRequest): Response
-    {
-        $academicRequestInfo = new AcademicRequestInfo();
-        $form = $this->createForm(AcademicRequestInfoType::class, $academicRequestInfo);
-        $form->handleRequest($request);
+    return $this->render('academic_request_info/new.html.twig', [
+                'academic_request_info' => $academicRequestInfo,
+                'form' => $form->createView(),
+    ]);
+  }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $academicRequestInfo->setRequest($projectRequest);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($academicRequestInfo);
-            $entityManager->flush();
+  /**
+   * @Route("/{id}", name="academic_request_info_show", methods={"GET"})
+   */
+  public function show(AcademicRequestInfo $academicRequestInfo): Response {
+    return $this->render('academic_request_info/show.html.twig', [
+                'academic_request_info' => $academicRequestInfo,
+    ]);
+  }
 
-            $route = 'tab_ethic_eval_request';
-            $data = ['id' => $academicRequestInfo->getRequest()->getId()];
-            $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($academicRequestInfo->getRequest()->getId());
-            if($ethicEvalRequest){
-                $route = 'tab_ethic_eval_request';
-                $data = ['id' => $ethicEvalRequest->getRequest()->getId()];
-            }
-            
-            return $this->redirectToRoute($route, $data);
-        }
+  /**
+   * @Route("/{id}/edit", name="academic_request_info_edit", methods={"GET","POST"})
+   */
+  public function edit(Request $request, AcademicRequestInfo $academicRequestInfo): Response {
+    $form = $this->createForm(AcademicRequestInfoType::class, $academicRequestInfo);
+    $form->handleRequest($request);
 
-        return $this->render('academic_request_info/new.html.twig', [
-            'academic_request_info' => $academicRequestInfo,
-            'form' => $form->createView(),
-        ]);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $this->getDoctrine()->getManager()->flush();
+
+      $target = $form->get("form_target_input")->getData();
+
+      $route = $this->getTargetRoute($target);
+      $data = ['id' => $academicRequestInfo->getRequest()->getId()];
+
+      return $this->redirectToRoute($route, $data);
     }
 
-    /**
-     * @Route("/{id}", name="academic_request_info_show", methods={"GET"})
-     */
-    public function show(AcademicRequestInfo $academicRequestInfo): Response
-    {
-        return $this->render('academic_request_info/show.html.twig', [
-            'academic_request_info' => $academicRequestInfo,
-        ]);
+    return $this->render('academic_request_info/edit.html.twig', [
+                'academic_request_info' => $academicRequestInfo,
+                'form' => $form->createView(),
+    ]);
+  }
+
+  /**
+   * @Route("/{id}", name="academic_request_info_delete", methods={"DELETE"})
+   */
+  public function delete(Request $request, AcademicRequestInfo $academicRequestInfo): Response {
+    if ($this->isCsrfTokenValid('delete' . $academicRequestInfo->getId(), $request->request->get('_token'))) {
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->remove($academicRequestInfo);
+      $entityManager->flush();
     }
 
-    /**
-     * @Route("/{id}/edit", name="academic_request_info_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, AcademicRequestInfo $academicRequestInfo): Response
-    {
-        $form = $this->createForm(AcademicRequestInfoType::class, $academicRequestInfo);
-        $form->handleRequest($request);
+    return $this->redirectToRoute('academic_request_info_index');
+  }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            $route = 'tab_ethic_eval_request';
-            $data = ['id' => $academicRequestInfo->getRequest()->getId()];
-            $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($academicRequestInfo->getRequest()->getId());
-            
-            if($ethicEvalRequest){
-                $route = 'tab_ethic_eval_request';
-                $data = ['id' => $ethicEvalRequest->getRequest()->getId()];
-            }
-            
-            return $this->redirectToRoute($route, $data);
-        }
-
-        return $this->render('academic_request_info/edit.html.twig', [
-            'academic_request_info' => $academicRequestInfo,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="academic_request_info_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, AcademicRequestInfo $academicRequestInfo): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$academicRequestInfo->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($academicRequestInfo);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('academic_request_info_index');
-    }
 }

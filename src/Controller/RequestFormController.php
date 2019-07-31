@@ -12,12 +12,12 @@ use App\Form\AcademicRequestInfoType;
 use App\Form\EthicEvalRequestType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/solicitud")
  */
-class RequestFormController extends Controller {
+class RequestFormController extends AbstractController {
 
     protected $repository;
     protected $em;

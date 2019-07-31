@@ -1,9 +1,9 @@
 form{
-    padding: 50px 10%;
+  padding: 50px 10%;
 }
 
 .form_header{
-    background-color: var(--A4);
+  background-color: var(--A4);
 }
 
 .form_header > .form_header_nav{
@@ -11,51 +11,77 @@ form{
 }
 
 .form_header > .form_header_nav > .form_header_nav_item{
-    background-color: var(--A4); 
-    position: relative;
-    padding: 15px;
+  background-color: var(--A4); 
+  position: relative;
+  padding: 15px;
+  cursor: pointer;
 }
+
 .form_header > .form_header_nav > .form_header_nav_item > .nav_step{
-    border-radius: 50%;
-    color: var(--A3);
-    border: var(--A3) 2px solid;
-    width: 50px;
-    height: 50px;
-    display: block;
-    text-align: center;
-    line-height: 50px;
-    font-size: 2rem;
-    font-weight: 700;
+  border-radius: 50%;
+  color: var(--A3);
+  border: var(--A3) 2px solid;
+  width: 50px;
+  height: 50px;
+  display: block;
+  text-align: center;
+  line-height: 50px;
+  font-size: 2rem;
+  font-weight: 700;
 }
 .form_header > .form_header_nav > .form_header_nav_item:after{
-    content: "";
-    position: absolute;
-    width: 1px;
-    height: 75%;
-    right: 0px;
-    top: 0;
-    bottom: 0;
-    background-color: var(--white);
-    margin: auto;
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 75%;
+  right: 0px;
+  top: 0;
+  bottom: 0;
+  background-color: var(--white);
+  margin: auto;
 }
 
 .form_header > .form_header_nav > .form_header_nav_item > .form_header_nav_item_link{
-    color: var(--white);
-    padding: .5rem 1rem;
-    display: block;
+  color: var(--white);
+  padding: .5rem 1rem;
+  display: block;
 }
 
 .form_header > .form_header_nav > .form_header_nav_item.form_header_nav_item--active{
-    background-color: var(--white);
-    color: var(--A4);
+  background-color: var(--white);
+  color: var(--A4);
 }
 .form_header > .form_header_nav > .form_header_nav_item.form_header_nav_item--active > .nav_step{
-    color: white;
-    background-color: var(--A6);
-    border: var(--A6) 2px solid;
+  color: white;
+  background-color: var(--A6);
+  border: var(--A6) 2px solid;
 }
 .form_header > .form_header_nav > .form_header_nav_item.form_header_nav_item--active > .form_header_nav_item_link{
-    background-color: var(--white);
-    color: var(--A4);
+  background-color: var(--white);
+  color: var(--A4);
 }
 
+.form_footer > .form_footer_button{
+  margin: 0 15px;
+}
+
+form .form-group .custom-file .custom-file-label{
+  border-radius: 0;
+}
+
+form .form-group .custom-file .custom-file-label::after{
+  border-radius: 0;
+  left: 0;
+  right: initial;
+  border-left: none;
+  border-right: inherit;
+}
+
+form .form-group legend.col-form-label, form .form-group label:not(.error):not(.custom-control-label){
+  font-weight: bold;
+}
+
+form .form-group label.error{
+  color: red;
+  font-size: 0.85em;
+}
