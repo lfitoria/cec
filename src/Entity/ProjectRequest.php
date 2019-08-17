@@ -16,6 +16,9 @@ class ProjectRequest {
 
   function __construct() {
     $this->users = new ArrayCollection();
+    $this->infoRequestFiles = new ArrayCollection();
+    $this->teamWork = new ArrayCollection();
+    $this->teamWork = new ArrayCollection();
   }
 
   /**
@@ -63,12 +66,6 @@ class ProjectRequest {
   private $extInstitutionsAuthorization;
 
   /**
-   * @ORM\ManyToMany(targetEntity="File")
-   * @ORM\JoinTable(name="inst_auth_files_project")
-   */
-  private $extInstitutionsAuthorizationFiles;
-
-  /**
    * @var string|null
    *
    * @ORM\Column(name="place_of_study", type="string", length=200, nullable=true)
@@ -90,10 +87,37 @@ class ProjectRequest {
   private $docHumanInformation;
 
   /**
-   * @ORM\ManyToMany(targetEntity="File")
-   * @ORM\JoinTable(name="human_info_files_project")
+   * @var bool|null
+   *
+   * @ORM\Column(name="minute_commission_tfg", type="boolean", nullable=true)
    */
-  private $docHumanInformationFiles;
+  private $minuteCommissionTFG;
+
+  /**
+   * @var bool|null
+   *
+   * @ORM\Column(name="minute_final_work", type="boolean", nullable=true)
+   */
+  private $minuteFinalWork;
+
+  /**
+   * @var bool|null
+   *
+   * @ORM\Column(name="minute_research_center", type="boolean", nullable=true)
+   */
+  private $minutesResearchCenter;
+
+  /**
+   * @ORM\ManyToMany(targetEntity="File")
+   * @ORM\JoinTable(name="files_info_request")
+   */
+  private $infoRequestFiles;
+
+  /**
+   * @ORM\ManyToMany(targetEntity="TeamWork", cascade={"persist"})
+   * @ORM\JoinTable(name="team_works_project")
+   */
+  private $teamWork;
 
   /**
    * @var string|null
@@ -116,6 +140,27 @@ class ProjectRequest {
   private $grupalProject;
 
   /**
+   * @var string|null
+   *
+   * @ORM\Column(name="tutor_name", type="string", length=100, nullable=true)
+   */
+  private $tutorName;
+
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="tutor_id", type="string", length=45, nullable=true)
+   */
+  private $tutorId;
+
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="tutor_email", type="string", length=100, nullable=true)
+   */
+  private $tutorEmail;
+
+  /**
    * @var string
    *
    * @ORM\Column(name="ascriptionUnit", type="string", length=400, nullable=false)
@@ -129,21 +174,28 @@ class ProjectRequest {
    */
   private $ucrInstitutions;
 
-
-  function getExtInstitutionsAuthorizationFiles() {
-    return $this->extInstitutionsAuthorizationFiles;
+  function getMinutesResearchCenter() {
+    return $this->minutesResearchCenter;
+  }
+  
+  function setMinutesResearchCenter($minutesResearchCenter) {
+    $this->minutesResearchCenter = $minutesResearchCenter;
   }
 
-  function getDocHumanInformationFiles() {
-    return $this->docHumanInformationFiles;
+  function setMinuteCommissionTFG($minuteCommissionTFG) {
+    $this->minuteCommissionTFG = $minuteCommissionTFG;
+  }
+  
+   function getMinuteCommissionTFG() {
+    return $this->minuteCommissionTFG;
   }
 
-  function setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles) {
-    $this->extInstitutionsAuthorizationFiles = $extInstitutionsAuthorizationFiles;
+  function getMinuteFinalWork() {
+    return $this->minuteFinalWork;
   }
 
-  function setDocHumanInformationFiles($docHumanInformationFiles) {
-    $this->docHumanInformationFiles = $docHumanInformationFiles;
+  function setMinuteFinalWork($minuteFinalWork) {
+    $this->minuteFinalWork = $minuteFinalWork;
   }
 
   function getId() {
@@ -251,6 +303,26 @@ class ProjectRequest {
 
     return $this;
   }
+  
+  function getInfoRequestFiles() {
+    return $this->infoRequestFiles;
+  }
+
+  function setInfoRequestFiles($infoRequestFiles) {
+    $this->infoRequestFiles = $infoRequestFiles;
+  }
+
+    
+  public function addInfoRequestFiles($files): self {
+    foreach ($files as &$file) {
+      if (!$this->infoRequestFiles->contains($file)) {
+        $this->infoRequestFiles[] = $file;
+      }
+    }
+
+
+    return $this;
+  }
 
   function getGrupalProject() {
     return $this->grupalProject;
@@ -275,4 +347,43 @@ class ProjectRequest {
   function setUcrInstitutions($ucrInstitutions) {
     $this->ucrInstitutions = $ucrInstitutions;
   }
+
+  public function getTutorName(): ?string {
+    return $this->tutorName;
+  }
+
+  public function setTutorName(?string $tutorName): self {
+    $this->tutorName = $tutorName;
+
+    return $this;
+  }
+
+  public function getTutorId(): ?string {
+    return $this->tutorId;
+  }
+
+  public function setTutorId(?string $tutorId): self {
+    $this->tutorId = $tutorId;
+
+    return $this;
+  }
+
+  public function getTutorEmail(): ?string {
+    return $this->tutorEmail;
+  }
+
+  public function setTutorEmail(?string $tutorEmail): self {
+    $this->tutorEmail = $tutorEmail;
+
+    return $this;
+  }
+
+  function getTeamWork() {
+    return $this->teamWork;
+  }
+
+  function setTeamWork($teamWork) {
+    $this->teamWork = $teamWork;
+  }
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Form\FilesType;
 use App\Entity\EthicEvalRequest;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use App\Entity\Criterion;
@@ -110,13 +112,30 @@ class EthicEvalRequestType extends AbstractType {
                   'label' => 'Requiere asentimiento informado:',
                   'help' => 'Esto aplica para las personas de doce a dieciocho años de edad.'));
             })
-            ->add('informedConsentFiles', FileType::class, array(
-                'multiple' => true,
+            ->add('informedConsentFiles', CollectionType::class, [
+                  'entry_type' => FileType::class,
+                  'entry_options' => ['label' => false],
+                  'mapped' => false,
+                  'allow_add' => true,
+                  'required' => false,
+                  'label' => false
+            ])
+            ->add('informedAssentFiles', CollectionType::class, [
+                  'entry_type' => FileType::class,
+                  'entry_options' => ['label' => false],
+                  'mapped' => false,
+                  'allow_add' => true,
+                  'required' => false,
+                  'label' => false
+            ])
+            ->add('collectionInformationFiles', CollectionType::class, [
+                'entry_type' => FileType::class,
+                'entry_options' => ['label' => false],
                 'mapped' => false,
+                'allow_add' => true,
                 'required' => false,
-                'label' => 'Adjuntar el documento de consentimiento informado:'))
-            ->add('informedAssentFiles', FileType::class, array('required' => false, 'multiple' => true, 'mapped' => false, 'label' => 'Adjuntar el documento de asentimiento informado:'))
-            ->add('collectionInformationFiles', FileType::class, array('required' => false, 'multiple' => true, 'mapped' => false, 'label' => 'Adjuntar los instrumentos a la documentación respectiva:'))
+                'label' => false
+            ])
             ->add('population', EntityType::class, [
                 'class' => Criterion::class,
                 'multiple' => true,

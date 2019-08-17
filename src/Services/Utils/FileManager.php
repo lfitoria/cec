@@ -9,66 +9,67 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class FileManager {
 
-    private $em;
-    
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
+  private $em;
+
+  public function __construct(EntityManagerInterface $em) {
+    $this->em = $em;
+  }
+
+  public function upload(UploadedFile $file, $targetDirectory, $questionCode) {
+    $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+    $newFile = new \App\Entity\File();
+
+    $newFile->setFilename($fileName);
+    $newFile->setOriginalName($file->getClientOriginalName());
+    $newFile->setMime($file->getClientMimeType());
+    $newFile->setSize($file->getSize());
+    $newFile->setQuestionCode($questionCode);
+
+    try {
+      $file->move($targetDirectory, $fileName);
+      $this->em->persist($newFile);
+
+      return $newFile;
+    } catch (FileException $e) {
+
+      return false;
     }
+  }
 
-    public function upload(UploadedFile $file, $targetDirectory) {
-        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-
-        $newFile = new \App\Entity\File();
-
-        $newFile->setFilename($fileName);
-        $newFile->setOriginalName($file->getClientOriginalName());
-        $newFile->setMime($file->getClientMimeType());
-        $newFile->setSize($file->getClientSize());
-
-        try {
-            $file->move($targetDirectory, $fileName);
-            $this->em->persist($newFile);
-
-            return $newFile;
-        } catch (FileException $e) {
-            return false;
+  public function uploadFiles($files, $targetDirectory, $questionCode) {
+    $uploadedFiles = array();
+    if ($files) {
+      foreach ($files as $file) {
+        $newFile = $this->upload($file, $targetDirectory, $questionCode);
+        if ($newFile) {
+          $uploadedFiles[] = $newFile;
         }
+      }
     }
 
-    public function uploadFiles($files, $targetDirectory) {
-        $uploadedFiles = array();
+    return $uploadedFiles;
+  }
 
-        foreach ($files as $file) {
-            $newFile = $this->upload($file, $targetDirectory);
-            if($newFile){
-                $uploadedFiles[] = $newFile;
-            }
-            
-        }
+  public function deleteFile(File $file, $targetDirectory) {
+    $filePath = $targetDirectory . $file->getFilename();
+    $wasDeleted = false;
 
-        return $uploadedFiles;
+    if (file_exists($filePath)) {
+      unlink($filePath);
+
+      $this->em->remove($file);
+      $this->em->flush();
+
+      $wasDeleted = true;
     }
 
-    public function deleteFile(File $file, $targetDirectory) {
-        $filePath = $targetDirectory . $file->getFilename();
-        $wasDeleted = false;
+    return $wasDeleted;
+  }
 
-        if (file_exists($filePath)) {
-            unlink($filePath);
-
-            $this->em->remove($file);
-            $this->em->flush();
-
-            $wasDeleted = true;
-        }
-
-        return $wasDeleted;
-    }
-    
-    private function fileExists(File $file, $targetDirectory) {
-        $filePath = $targetDirectory . $file->getFilename();
-        return (file_exists($filePath));
-    }
+  private function fileExists(File $file, $targetDirectory) {
+    $filePath = $targetDirectory . $file->getFilename();
+    return (file_exists($filePath));
+  }
 
 }

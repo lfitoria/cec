@@ -65,23 +65,58 @@ form{
   margin: 0 15px;
 }
 
-form .form-group .custom-file .custom-file-label{
-  border-radius: 0;
+form .custom-file,
+form .input-group{
+  margin-bottom: 10px;
 }
 
-form .form-group .custom-file .custom-file-label::after{
+form .custom-file .custom-file-label{
+  border-radius: 0;
+  padding-left: 90px;
+}
+
+
+form .custom-file .custom-file-label::after{
   border-radius: 0;
   left: 0;
   right: initial;
   border-left: none;
   border-right: inherit;
+  content: "Buscar"
 }
 
-form .form-group legend.col-form-label, form .form-group label:not(.error):not(.custom-control-label){
+form .form-group legend.col-form-label, form .form-group label:not(.error):not(.custom-control-label):not(.custom-file-label){
   font-weight: bold;
 }
 
 form .form-group label.error{
   color: red;
   font-size: 0.85em;
+}
+
+form .collecion_list {
+  list-style: none;
+  padding-left: 0;
+}
+
+form .collecion_list .uploaded_files_list_item{
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ced4da;
+  color: var(--A4);
+}
+form .collecion_list .uploaded_files_list_item--delete,
+form .collecion_list .selected_files_list_item--delete{
+  margin: -6px -10px;
+  background-color: var(--red);
+  padding: 5px;
+  color: var(--white);
+}
+form .collecion_list .selected_files_list_item--delete{
+  display: block;
+  height: 38px;
+  margin: 0;
+  border: 1px solid #ced4da; 
 }

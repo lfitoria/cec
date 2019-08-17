@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ExtraInformationRequest index{% endblock %}
+
+{% block body %}
+    <h1>ExtraInformationRequest index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>TutorName</th>
+                <th>TutorId</th>
+                <th>TutorEmail</th>
+                <th>GrupalProject</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for extra_information_request in extra_information_requests %}
+            <tr>
+                <td>{{ extra_information_request.id }}</td>
+                <td>{{ extra_information_request.tutorName }}</td>
+                <td>{{ extra_information_request.tutorId }}</td>
+                <td>{{ extra_information_request.tutorEmail }}</td>
+                <td>{{ extra_information_request.grupalProject ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('extra_information_request_show', {'id': extra_information_request.id}) }}">show</a>
+                    <a href="{{ path('extra_information_request_edit', {'id': extra_information_request.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('extra_information_request_new') }}">Create new</a>
+{% endblock %}

@@ -74,3 +74,136 @@ footer p{
 .copy {
   padding-top: 15px;
 }
+
+.label{
+  color: var(--A4);
+}
+.box-info-home p{
+  color: var(--G2);
+  margin: 5px 0;
+}
+.box-info-home {
+  background-color: var(--A9);
+  border-top: 1px solid var(--A8);
+  border-bottom: 1px solid var(--A8);
+  padding: 1% 0;
+}
+.btn-menu-user {
+  background-color: transparent;
+  border: none;
+  text-transform: capitalize;
+  position: relative;
+  padding: 0 15px 0px 0;
+  color: var(--G2);
+}
+.btn-menu-user:before{
+  content: '\f007';
+  font-family: FontAwesome;
+}
+.btn-menu-user:after {
+  content: '\f078';
+  font-family: FontAwesome;
+  border: none;
+  /* padding-top: 15px; */
+  position: absolute;
+  display: inline-block;
+  right: 0;
+  top: 0px;
+  font-size: 0.6em;
+}
+.menu-user {
+  border-left: 1px solid var(--A8);
+  padding-left: 10px;
+
+}
+.menu-user .btn-menu-user {
+  line-height: 63px;
+}
+.menu-user .dropdown-menu a{
+  color: var(--G2);
+}
+.menu-user .dropdown-menu a:nth-child(1){
+
+}
+.menu-user .dropdown-menu a:nth-child(2){
+
+}
+.menu-user .dropdown-menu a:nth-child(3){
+
+}
+.menu-user .dropdown-menu a:before {
+  font-family: FontAwesome;
+  margin-right: 5px;
+}
+.menu-user .dropdown-menu a:nth-child(1):before{
+  content: '\f15c';
+}
+.menu-user .dropdown-menu a:nth-child(2):before{
+  content: '\f059';
+}
+.menu-user .dropdown-menu a:nth-child(3):before{
+  content: '\f08b';
+}
+.login-box-body form{
+  padding: 0;
+}
+.login-box-body p{
+  text-align: center;
+  font-weight: bold;
+  color: var(--G2);
+}
+.login-box-body .btn{
+  width: initial;
+  margin: auto;
+
+}
+.login-box-body {
+  padding: 3%;
+  border: 1px solid var(--A2);
+  border-radius: 5px;
+  box-shadow: 0px 5px 6px 5px rgba(0, 0, 0, 0.19);
+  background: #fff;
+}
+.container-box-login {
+  background-color: var(--A9);
+  padding: 2% 0;
+  border-top: 1px solid var(--A8);
+  border-bottom: 1px solid var(--A8);
+}
+.container-box-login ul {
+  list-style: none;
+}
+
+.container-box-login ul li::before {
+  content: '\2022';
+  color: var(--N1);
+  font-weight: bold;
+  display: inline-block; 
+  width: 1em;
+  margin-left: -1em;
+}
+ul.form_header_nav li::before {
+  content: '';
+}
+
+.login-box-body .form-control {
+  border: 1px solid var(--A2);
+}
+
+@media (min-width: 576px) { 
+} /*fin*/
+
+@media (min-width: 768px) {
+  .box-r {
+    border-left: 1px solid var(--A8);
+  }
+  .login-box-body {
+    margin-top: -70px;
+  }
+} /*fin*/
+
+@media (min-width: 992px) {
+} /*fin*/
+
+@media (min-width: 1200px) {
+} /*fin*/

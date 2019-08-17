@@ -1,119 +1,121 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        {% block stylesheets %}
-        {{ encore_entry_link_tags('variables') }}
-        {{ encore_entry_link_tags('app') }}
-        {{ encore_entry_link_tags('forms') }}
-        {% endblock %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    </head>
-    <body>
-        <div class="header">
-            <div class="container">
-                <img src="{{ asset('images/logo_header_ucr.png') }}" alt="CEC"/>
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('variables') }}
+      {{ encore_entry_link_tags('app') }}
+      {{ encore_entry_link_tags('forms') }}
+    {% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <img src="{{ asset('images/logo_header_ucr.png') }}" alt="CEC"/>
+      </div>
+    </div>
+    <div class="header-title">
+      <div class="container">
+        <div class="row menu-user-box">
+          <div class="col">
+            <h2>COMITÉ ÉTICO CIENTÍFICO</h2>
+            <p style="margin: 0;">Sistema de evaluación ética para la investigación con seres humanos</p>
+          </div>
+          {% if app.user %}
+            <div class="dropdown menu-user">
+              <button class="btn-menu-user dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{app.user.name|lower}}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">SEGUIMIENTO DE SOLICITUDES</a>
+                <a class="dropdown-item" href="#">AYUDA</a>
+                <a class="dropdown-item" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
+              </div>
             </div>
-        </div>
-        <div class="header-title">
-            <div class="container">
-                <div class="row menu-user-box">
-                    <div class="col">
-                        <h2>COMITÉ ÉTICO CIENTÍFICO</h2>
-                        <p style="margin: 0;">Sistema de evaluación ética para la investigación con seres humanos</p>
-                    </div>
-                    {% if app.user %}
-                        <div class="dropdown menu-user">
-                          <button class="btn-menu-user dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{app.user.name|lower}}
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">SEGUIMIENTO DE SOLICITUDES</a>
-                            <a class="dropdown-item" href="#">AYUDA</a>
-                            <a class="dropdown-item" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
-                          </div>
-                        </div>
-                        
-                    {% else %}
-                        
-                    {% endif %}
-                </div>
-            </div>
-            {# {{dump(app.user)}} #}
-            {% if app.user %}
-                <div class="box-info-home">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-4">
-                                <p style="text-transform: capitalize;"><span class="label">{{'Nombre'|upper}}:</span> {{app.user.name|lower}}</p>
-                                <p><span class="label">{{'Puesto'|upper}}:</span> 
-                                    {% if app.user.role.description == "ROLE_EVALUATOR" %}
-                                        Administrador
-                                    {% elseif app.user.role.description == "ROLE_STUDENT" %}
-                                        Estudiante                                  {% elseif app.user.role.description == "ROLE_RESEARCHER" %}
-                                        Investigador
-                                    {% elseif app.user.role.description == "ROLE_EVALUATOR" %}
-                                        Evaluador
-                                    {% endif %}
-                                </p>
-                            </div>
-                            <div class="col box-r">
-                                <p><span class="label">{{'Correo electrónico'|upper}}:</span> {{app.user.email|lower}}</p>
-                                <p><span class="label">{{'Cédula/Carné'|upper}}:</span> 
-                                    {{app.user.cedula_usuario}}
-                                    {% if app.user.carnet != "" %}
-                                        / {{app.user.carnet}}
-                                    {% endif %}
-                                    
-                                </p>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
 
-        <div class="container ">
-          <div class="row no-gutters">
-            <div class="main-container col-12">
-              {% block body %}{% endblock %}
+          {% else %}
+
+          {% endif %}
+        </div>
+      </div>
+      {# {{dump(app.user)}} #}
+      {% if app.user %}
+        <div class="box-info-home">
+          <div class="container">
+            <div class="row">
+              <div class="col-4">
+                <p style="text-transform: capitalize;"><span class="label">{{'Nombre'|upper}}:</span> {{app.user.name|lower}}</p>
+                <p><span class="label">{{'Puesto'|upper}}:</span> 
+                  {% if app.user.role.description == "ROLE_ADMIN" %}
+                    Administrador
+                  {% elseif app.user.role.description == "ROLE_STUDENT" %}
+                    Estudiante                                  
+                  {% elseif app.user.role.description == "ROLE_RESEARCHER" %}
+                    Investigador
+                  {% elseif app.user.role.description == "ROLE_EVALUATOR" %}
+                    Evaluador
+                  {% endif %}
+                </p>
+              </div>
+              <div class="col box-r">
+                
+                <p><span class="label">{{'Correo electrónico'|upper}}:</span> {{app.user.email|lower}}</p>
+                <p><span class="label">{{'Cédula/Carné'|upper}}:</span> 
+                  {{app.user.cedula_usuario}}
+                  {% if app.user.carnet != "" %}
+                    / {{app.user.carnet}}
+                  {% endif %}
+
+                </p>
+              </div>
+
             </div>
           </div>
         </div>
+      {% endif %}
+    </div>
 
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-1">
-                        <img src="{{ asset('images/firma_footer_ucr.png') }}" alt="CEC"/>
-                    </div>
-                    <div class="col-sm-5 infooter">
-                        <div class="infooter-box">
-                            <p>Comité Ético Científico</p>
-                            <p class="tel">Teléfono: (506) 2511-4201 / (506) 2511-1398</p>
-                            <p class="email">Correo electrónico: <a href="mailto:cec.vi@ucr.ac.cr">cec.vi@ucr.ac.cr</a></p>
-                            <p class="copy">Todos los derechos reservados reservados. 2019. Universidad de Costa Rica.</p>
-                        </div> 
-                    </div>
-                </div>
-            </div>
-        </footer>
+    <div class="container ">
+      <div class="row no-gutters">
+        <div class="main-container col-12">
+          {% block body %}{% endblock %}
+        </div>
+      </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-1">
+            <img src="{{ asset('images/firma_footer_ucr.png') }}" alt="CEC"/>
+          </div>
+          <div class="col-sm-5 infooter">
+            <div class="infooter-box">
+              <p>Comité Ético Científico</p>
+              <p class="tel">Teléfono: (506) 2511-4201 / (506) 2511-1398</p>
+              <p class="email">Correo electrónico: <a href="mailto:cec.vi@ucr.ac.cr">cec.vi@ucr.ac.cr</a></p>
+              <p class="copy">Todos los derechos reservados reservados. 2019. Universidad de Costa Rica.</p>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 
 
-{% block javascripts %}
-  {{ encore_entry_script_tags('variables') }}
-  {{ encore_entry_script_tags('app') }}
-  {{ encore_entry_script_tags('forms') }}
-{% endblock %}
+    {% block javascripts %}
+      {{ encore_entry_script_tags('variables') }}
+      {{ encore_entry_script_tags('app') }}
+      {{ encore_entry_script_tags('forms') }}
+    {% endblock %}
 
-</body>
+  </body>
 </html>
