@@ -42,7 +42,7 @@ class AcademicRequestInfoController extends AbstractController {
         break;
 
       default:
-        $route = 'tab_academic_request_info';
+        $route = 'tab_ethic_eval_request';
         break;
     }
     return $route;
