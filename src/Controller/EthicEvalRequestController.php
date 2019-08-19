@@ -65,13 +65,11 @@ class EthicEvalRequestController extends AbstractController {
 
       $projectDir = $this->getParameter('brochures_directory');
 
-      $informedConsentFiles = $fileManager->uploadFiles($informedConsentUploadedFiles, $projectDir);
-      $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir);
-      $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir);
+      $informedConsentFiles = $fileManager->uploadFiles($informedConsentUploadedFiles, $projectDir, "informedConsentFiles");
+      $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir, "informedAssentFiles");
+      $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir, "collectionInformationFiles");
 
-      $ethicEvalRequest->setInformedConsentFiles($informedConsentFiles);
-      $ethicEvalRequest->setInformedAssentFiles($informedAssentFiles);
-      $ethicEvalRequest->setCollectionInformationFiles($collectionInformationFiles);
+      $ethicEvalRequest->setEthicEvalFiles(array_merge($informedConsentFiles, $informedAssentFiles, $collectionInformationFiles));
       $ethicEvalRequest->setRequest($projectRequest);
 
       $entityManager->persist($ethicEvalRequest);
@@ -106,22 +104,20 @@ class EthicEvalRequestController extends AbstractController {
   public function edit(Request $request, EthicEvalRequest $ethicEvalRequest, FileManager $fileManager): Response {
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
     $form->handleRequest($request);
-
+    
     if ($form->isSubmitted() && $form->isValid()) {
-      
+        
       $informedConsentUploadedFiles = $form->get("informedConsentFiles")->getData();
       $informedAssentUploadedFiles = $form->get("informedAssentFiles")->getData();
       $collectionInformationUploadedFiles = $form->get("collectionInformationFiles")->getData();
 
       $projectDir = $this->getParameter('brochures_directory');
 
-      $informedConsentFiles = $fileManager->uploadFiles($informedConsentUploadedFiles, $projectDir);
-      $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir);
-      $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir);
-
-      $ethicEvalRequest->setInformedConsentFiles($informedConsentFiles);
-      $ethicEvalRequest->setInformedAssentFiles($informedAssentFiles);
-      $ethicEvalRequest->setCollectionInformationFiles($collectionInformationFiles);
+      $informedConsentFiles = $fileManager->uploadFiles($informedConsentUploadedFiles, $projectDir, "informedConsentFiles");
+      $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir, "informedAssentFiles");
+      $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir, "collectionInformationFiles");
+     
+      $ethicEvalRequest->addEthicEvalFiles(array_merge($informedConsentFiles, $informedAssentFiles, $collectionInformationFiles));
       
       $this->getDoctrine()->getManager()->flush();
 

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ExtraInformationRequest{% endblock %}
+
+{% block body %}
+    <h1>Create new ExtraInformationRequest</h1>
+
+    {{ include('extra_information_request/_form.html.twig') }}
+
+    <a href="{{ path('extra_information_request_index') }}">back to list</a>
+{% endblock %}

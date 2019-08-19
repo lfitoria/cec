@@ -1,43 +1,74 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ include('commons/_form_header.html.twig', {'current_nav_item': 'info'}) }}
-{{ form_start(form, {attr: {class: 'form-request'}}) }}
+{{ form_start(form, {attr: {class: 'form-request', 'data-number': '1'}}) }}
 
 {{ form_row(form.title) }}
-
-<div class="tutor_information_container">
-  <div class="form-group">
-    <label for="tutor_information_label" class="required">Director(a) del trabajo final de graduación:</label>
-    <div class="form-group row">
-      <label for="tutor_name" class="col-sm-3 col-form-label text-right">Nombre del tutor:</label>
-      <div class="col-sm-9">
-        {{ form_widget(form.tutorName) }}
+{% if app.user.role.description == "ROLE_STUDENT" %}
+  <div class="tutor_information_container">
+    <div class="form-group">
+      <label for="tutor_information_label" class="required">Director(a) del trabajo final de graduación:</label>
+      <div class="form-group row">
+        <label for="tutor_name" class="col-sm-3 col-form-label text-right no-label">Nombre del tutor:</label>
+        <div class="col-sm-9">
+          {{ form_widget(form.tutorName) }}
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="tutor_id" class="col-sm-3 col-form-label text-right">Cédula:</label>
-      <div class="col-sm-9">
-        {{ form_widget(form.tutorId) }}
+      <div class="form-group row">
+        <label for="tutor_id" class="col-sm-3 col-form-label text-right no-label">Cédula:</label>
+        <div class="col-sm-9">
+          {{ form_widget(form.tutorId) }}
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="tutor_name" class="col-sm-3 col-form-label text-right">Correo institucional:</label>
-      <div class="col-sm-9">
-        {{ form_widget(form.tutorEmail) }}
+      <div class="form-group row">
+        <label for="tutor_name" class="col-sm-3 col-form-label text-right no-label">Correo institucional:</label>
+        <div class="col-sm-9">
+          {{ form_widget(form.tutorEmail) }}
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="inline-custom-radio">
-  {{ form_row(form.grupalProject,{label_attr: {class: 'radio-custom'} }) }}
-</div>
-{{ form_row(form.ascriptionUnit) }}
-{{ form_row(form.ucrInstitutions) }}
+  <div class="inline-custom-radio">
+    {{ form_row(form.grupalProject, {attr: {'data-code': 'teamWork', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+  </div>
+  <div id="teamWork" class="d-none">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Cédula</th>
+          <th scope="col">Correo institucional</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for team in project_request.teamWork %}
+          <tr>
+            <td scope="col">{{ team.name }} </td>
+            <td scope="col">{{ team.studentId }}</td>
+            <td scope="col">{{ team.studentEmail }}</td>
+            <td scope="col"><a class="team_list_item--delete" data-id='{{ team.id }}' href="#">Eliminar</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="input-group mb-3 w-50">
+      <input type="text" class="form-control" placeholder="Carnet del estudiante" aria-label="Carnet del estudiante" aria-describedby="button-addon2">
+      <div class="input-group-append">
+        <button type='button' class='add_file_button btn btn-primary' data-list='teamWork'>Agregar miembro</button>
+      </div>
+    </div> 
+  </div>
+  {{ form_row(form.ascriptionUnit) }}
+  {{ form_row(form.ucrInstitutions) }}
+{% endif %}
 {{ form_row(form.extInstitutions) }}
+
 <div class="inline-custom-radio">
   {{ form_row(form.extInstitutionsAuthorization, {attr: {'data-code': 'extInstitutionsAuthorizationFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
 <div id="extInstitutionsAuthorizationFiles" class="d-none">
-  {{ form_row(form.extInstitutionsAuthorizationFiles, {label_attr: {class: 'custom-file'} }) }}
+  {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.extInstitutionsAuthorizationFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'extInstitutionsAuthorizationFiles', 'delete_label': 'Eliminar'}) }}
+
 </div>
 {{ form_row(form.placeOfStudy) }}
 <div class="inline-custom-radio">
@@ -46,6 +77,36 @@
 <div class="inline-custom-radio">
   {{ form_row(form.docHumanInformation,{label_attr: {class: 'radio-custom'} }) }}
 </div>
-{{ form_row(form.docHumanInformationFiles, {label_attr: {class: 'custom-file'} }) }}
+
+{% if app.user.role.description == "ROLE_RESEARCHER" %}
+  <div class="inline-custom-radio">
+    {{ form_row(form.minuteCommissionTFG, {attr: {'data-code': 'minuteCommissionTFGFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+  </div>
+  <div id="minuteCommissionTFGFiles" class="d-none">
+    {{ include('commons/_form_uploaded_file.html.twig', 
+    {'files': project_request.infoRequestFiles, 
+    'questionCode': 'minuteCommissionTFGFiles', 
+    'form_prototype': form.minuteCommissionTFGFiles.vars.prototype,
+    'delete_label': 'Eliminar'}) }}
+
+  </div>
+{% endif %}
+
+
+{% if app.user.role.description == "ROLE_STUDENT" %}
+  <div class="inline-custom-radio">
+    {{ form_row(form.minutesResearchCenter, {attr: {'data-code': 'minutesResearchCenterFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+  </div>
+  <div id="minutesResearchCenterFiles" class="d-none">
+    {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.minutesResearchCenterFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'minutesResearchCenterFiles', 'delete_label': 'Eliminar'}) }}
+  </div>
+  <div class="inline-custom-radio">
+    {{ form_row(form.minuteFinalWork, {attr: {'data-code': 'minuteFinalWorkFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+  </div>
+  <div id="minuteFinalWorkFiles" class="d-none">
+    {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.minuteFinalWorkFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'minuteFinalWorkFiles', 'delete_label': 'Eliminar'}) }}
+  </div>
+{% endif %}
+
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig') }}

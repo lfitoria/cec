@@ -10,84 +10,99 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="file")
  * @ORM\Entity
  */
-class File
-{
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+class File {
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="filename", type="string", length=200, nullable=false)
-     */
-    private $filename;
+  /**
+   * @var int
+   *
+   * @ORM\Column(name="id", type="integer", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="IDENTITY")
+   */
+  private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="original_name", type="string", length=200, nullable=false)
-     */
-    private $original_name;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="filename", type="string", length=200, nullable=false)
+   */
+  private $filename;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mime", type="string", length=50, nullable=false)
-     */
-    private $mime;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="original_name", type="string", length=200, nullable=false)
+   */
+  private $originalName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="size", type="string", length=50, nullable=false)
-     */
-    private $size;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="mime", type="string", length=50, nullable=false)
+   */
+  private $mime;
 
-    function getId() {
-        return $this->id;
-    }
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="size", type="string", length=50, nullable=false)
+   */
+  private $size;
+  
+  
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="question_code", type="string", length=200, nullable=false)
+   */
+  private $questionCode;
 
-    function getFilename() {
-        return $this->filename;
-    }
+  function getQuestionCode() {
+    return $this->questionCode;
+  }
 
-    function getMime() {
-        return $this->mime;
-    }
+  function setQuestionCode($questionCode) {
+    $this->questionCode = $questionCode;
+  }
 
-    function getSize() {
-        return $this->size;
-    }
+  
+  function getId() {
+    return $this->id;
+  }
 
-    function setId($id) {
-        $this->id = $id;
-    }
+  function getFilename() {
+    return $this->filename;
+  }
 
-    function getOriginalName() {
-        return $this->original_name;
-    }
+  function getMime() {
+    return $this->mime;
+  }
 
-    function setOriginalName($original_name) {
-        $this->original_name = $original_name;
-    }
+  function getSize() {
+    return $this->size;
+  }
 
-    function setFilename($filename) {
-        $this->filename = $filename;
-    }
+  function setId($id) {
+    $this->id = $id;
+  }
 
-    function setMime($mime) {
-        $this->mime = $mime;
-    }
+  function getOriginalName() {
+    return $this->originalName;
+  }
 
-    function setSize($size) {
-        $this->size = $size;
-    }
+  function setOriginalName($originalName) {
+    $this->originalName = $originalName;
+  }
 
+  function setFilename($filename) {
+    $this->filename = $filename;
+  }
 
+  function setMime($mime) {
+    $this->mime = $mime;
+  }
+
+  function setSize($size) {
+    $this->size = $size;
+  }
 }

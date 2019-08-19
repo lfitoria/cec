@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/project/request")
@@ -47,40 +48,43 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/new", name="project_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, FileManager $fileManager): Response {
+  public function new(Request $request, FileManager $fileManager, Security $security): Response {
+    $loggedUser = $security->getUser();
+
     $projectRequest = new ProjectRequest();
     $form = $this->createForm(ProjectRequestType::class, $projectRequest);
     $form->handleRequest($request);
-
+    
+    $minuteCommissionTFGFiles = [];
+    $extInstitutionsAuthorizationFiles = [];
+    $minuteFinalWorkFiles = [];
+    $minutesResearchCenterFiles = [];
+    
     if ($form->isSubmitted() && $form->isValid()) {
-
-      $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
-      $docHumanInformationUploadedFiles = $form->get("docHumanInformationFiles")->getData();
-
       $projectDir = $this->getParameter('brochures_directory');
 
-      $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir);
-      $docHumanInformationFiles = $fileManager->uploadFiles($docHumanInformationUploadedFiles, $projectDir);
+      if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
+        $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
+        $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
 
-      $projectRequest->setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles);
-      $projectRequest->setDocHumanInformationFiles($docHumanInformationFiles);
+        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
+        $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
+      } else {
+        $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
+        $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
+      }
+
+      $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
+      $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
+
+
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
 
       $entityManager = $this->getDoctrine()->getManager();
-      
-//      if($form->get("tutor_name")){
-//        $extraInfo = new ExtraInformationRequest();
-//        $extraInfo->setTutorName($form->get("tutor_name")->getData());
-//        $extraInfo->setTutorId($form->get("tutor_id")->getData());
-//        $extraInfo->setTutorEmail($form->get("tutor_email")->getData());
-//        $extraInfo->setRequest($projectRequest);
-//        
-//        $entityManager->persist($extraInfo);
-//      }
-      
+
       $entityManager->persist($projectRequest);
       $entityManager->flush();
-      
-      
+
       $target = $form->get("form_target_input")->getData();
 
       $route = $this->getTargetRoute($target);
@@ -106,7 +110,6 @@ class ProjectRequestController extends AbstractController {
       case "ethic":
         $route = 'tab_ethic_eval_request';
         break;
-
       default:
         $route = 'tab_academic_request_info';
         break;
@@ -126,25 +129,36 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/{id}", name="project_request_edit", methods={"GET","POST"})
    */
-  public function edit(Request $request, ProjectRequest $projectRequest, FileManager $fileManager): Response {
+  public function edit(Request $request, ProjectRequest $projectRequest, FileManager $fileManager, Security $security): Response {
+    $loggedUser = $security->getUser();
+
     $form = $this->createForm(ProjectRequestType::class, $projectRequest);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $this->getDoctrine()->getManager()->flush();
-
-      $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
-      $docHumanInformationUploadedFiles = $form->get("docHumanInformationFiles")->getData();
 
       $projectDir = $this->getParameter('brochures_directory');
 
-      $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir);
-      $docHumanInformationFiles = $fileManager->uploadFiles($docHumanInformationUploadedFiles, $projectDir);
+      if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
+        $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
+        $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
 
-      $projectRequest->setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles);
-      $projectRequest->setDocHumanInformationFiles($docHumanInformationFiles);
+        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
+        $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
+      } else {
+        $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
+        $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
+      }
+
+      $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
+      $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
+
+
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
 
       $target = $form->get("form_target_input")->getData();
+
+      $this->getDoctrine()->getManager()->flush();
 
       $route = $this->getTargetRoute($target);
       $data = ['id' => $projectRequest->getId()];
