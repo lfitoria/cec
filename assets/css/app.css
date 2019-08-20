@@ -1,13 +1,22 @@
 body{
   font-family: Arial;
-  background-color: var(--A9);
+  /* background-color: var(--A9); */
 }
 
 body .main-container{
   background-color: var(--white);
   padding-bottom: 25px;
 }
-
+thead tr {
+  background-color: var(--A3);
+  color: var(--white);
+}
+tbody tr:nth-of-type(odd) {
+    background-color: rgba(81, 148, 220, 0.15);
+}
+tbody tr:nth-of-type(even) {
+  background-color: rgba(81, 148, 220, 0.35);
+}
 .btn-primary {
   color: var(--white);
   background-color: var(--green);
@@ -189,6 +198,54 @@ ul.form_header_nav li::before {
 .login-box-body .form-control {
   border: 1px solid var(--A2);
 }
+#new_project{
+  text-align: center;
+}
+#new_project ul.nav a{
+  color: var(--A4);
+  font-weight: bold;
+}
+#new_project .modal-content{
+  padding: 2% 0;
+}
+#new_project ul.nav .nav_step {
+  border-radius: 50%;
+  color: var(--A4);
+  border: var(--A3) 2px solid;
+  width: 35px;
+  height: 35px;
+  display: block;
+  text-align: center;
+  line-height: 33px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-right: 3px;
+  }
+  #new_project ul.nav .form_header_nav_item {
+    margin: 0px 5px;
+    background-color: rgba(81, 148, 220, 0.15);
+    padding: 5px;
+  }
+#new_project h4,h4{
+  color: var(--G2);
+  text-transform: uppercase;
+}
+.btn-close-modalnew{
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+.text-color-green{
+  color: var(--green);
+}
+.btn-open-modalnew{
+  font-size: 0.8em;
+}
+.btn-open-modalnew:before{
+  content: '\f067';
+  font-family: FontAwesome;
+  font-weight: lighter;
+}
+
 
 @media (min-width: 576px) { 
 } /*fin*/

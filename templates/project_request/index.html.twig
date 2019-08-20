@@ -3,7 +3,7 @@
 {% block title %}ProjectRequest index{% endblock %}
 
 {% block body %}
-    <h1>Solicitudes</h1>
+    <h4>SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</h4>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -25,11 +25,61 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="11">no records found</td>
+                <td colspan="11">Solicitudes no encontradas</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('project_request_new') }}">Create new</a>
+    {# <a href="{{ path('project_request_new') }}">Create new</a> #}
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg btn-open-modalnew" data-toggle="modal" data-target="#new_project">
+  NUEVA SOLICITUD DE REVISIÓN
+</button>
+<!-- Modal -->
+<div class="modal fade" id="new_project" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {# <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div> #}
+            <div class="modal-body">
+            <h4>Instrucciones</h4>
+            <p>Lea con detenimiento esta información antes de completar la solicitud.</p>
+            <p>Este formulario se compone de 3 bloques:</p>
+            
+    <hr>
+    <ul class="nav justify-content-center nav-pills">
+        <li class="d-flex align-items-center form_header_nav_item  form_header_nav_item--active " data-target="info">
+            <span class="nav_step">1</span>
+            <a class="form_header_nav_item_link" href="#">Información del proyecto</a>
+        </li>
+        <li class="d-flex align-items-center form_header_nav_item " data-target="academic">
+            <span class="nav_step">2</span>
+            <a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
+        </li>
+        <li class="d-flex align-items-center form_header_nav_item " data-target="ethic">
+            <span class="nav_step">3</span>
+            <a class="form_header_nav_item_link" href="#">Evaluación ética</a>
+        </li>
+    </ul>
+    <hr>
+    <p>Podrá guardar el formulario en cualquier momento usando el botón <span class="text-color-green">“GUARDAR”</span>. Podrá avanzar al siguiente bloque usando el botón
+<span class="text-color-green">“GUARDAR Y CONTINUAR”</span> o navegar a través del formulario usando la navegación superior.
+Al terminar el tercer bloque, podrá enviar su solicitud.</p>
+                <a class="btn btn-primary" href="{{ path('project_request_new') }}">Empezar</a>
+            </div>
+            
+                <button type="button" class="btn btn-close-modalnew" data-dismiss="modal">Cancelar</button>
+                {# <button type="button" class="btn btn-primary">Save</button> #}
+            
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+
+
