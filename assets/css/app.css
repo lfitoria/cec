@@ -1,6 +1,5 @@
 body{
   font-family: Arial;
-  background-color: var(--A9);
 }
 
 body .main-container{
@@ -189,6 +188,28 @@ ul.form_header_nav li::before {
 .login-box-body .form-control {
   border: 1px solid var(--A2);
 }
+
+table thead{
+  background-color: var(--A3);
+  color: var(--white);
+}
+
+table thead th{
+  border-bottom: none;
+}
+
+table tbody tr:nth-of-type(odd) {
+  background-color: var(--A9);
+}
+
+table tbody tr:nth-of-type(even) {
+  background-color: var(--A8);
+}
+table td, table th{
+  align-items: center;
+  border-right: 2px solid var(--white);
+}
+
 
 @media (min-width: 576px) { 
 } /*fin*/

@@ -105,7 +105,7 @@ class UserManager {
   // creates login session
   public function createLoginSession() {
     $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
-    var_dump("as");
+  
     // update user last login
     $this->user->setLastLoginDate(new \Datetime());
     $this->em->persist($this->user);

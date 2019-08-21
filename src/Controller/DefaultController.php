@@ -55,19 +55,8 @@ class DefaultController extends AbstractController {
         // Ldap login result
         $arrViewData = json_decode($arrLoginResult, TRUE);
 
-        // check Ldap login result
-        // var_dump($arrLoginResult);
-        // var_dump($arrViewData);
-        // die();
-
         if ($arrViewData['USERNAME'] != null) {
-          // user logged ok, then we redirect to the home page
-          // echo "entra";
-          // die();
-          // $router = $this->get('router');
-          // $url = $router->generate('home');
-          //return $this->redirect($url);
-          return $this->redirectToRoute('project_request_index_admin');
+          return $this->redirectToRoute('project_request_index');
         }
       }
     }

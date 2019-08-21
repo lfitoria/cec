@@ -57,11 +57,12 @@ class AcademicRequestInfoController extends AbstractController {
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      $projectRequest->setState(1);
       $academicRequestInfo->setRequest($projectRequest);
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($academicRequestInfo);
       $entityManager->flush();
-
+      
       $target = $form->get("form_target_input")->getData();
 
       $route = $this->getTargetRoute($target);
@@ -96,7 +97,7 @@ class AcademicRequestInfoController extends AbstractController {
       $this->getDoctrine()->getManager()->flush();
 
       $target = $form->get("form_target_input")->getData();
-
+      $academicRequestInfo->getRequest()->setState(2);
       $route = $this->getTargetRoute($target);
       $data = ['id' => $academicRequestInfo->getRequest()->getId()];
 

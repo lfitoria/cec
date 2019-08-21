@@ -3,33 +3,54 @@
 namespace App\Controller;
 
 use App\Entity\ProjectRequest;
-use App\Entity\ExtraInformationRequest;
+use App\Entity\Criterion;
+use App\Entity\LdapUser;
 use App\Form\ProjectRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
 
 /**
- * @Route("/project/request")
+ * @Route("/solicitud")
  */
 class ProjectRequestController extends AbstractController {
 
   /**
    * @Route("es/", name="project_request_index", methods={"GET"})
    */
-  public function index(): Response {
-    $projectRequests = $this->getDoctrine()
-            ->getRepository(ProjectRequest::class)
-            ->findAll();
-
-
-    return $this->render('project_request/index.html.twig', [
-                'project_requests' => $projectRequests,
-    ]);
+  public function index(Security $security): Response {
+    $loggedUser = $security->getUser();
+    $role = $loggedUser->getRole()->getDescription();
+    $data = [];
+    
+    switch ($role) {
+      case "ROLE_ADMIN":
+        $requestsFilter = array("state" => 28);
+        $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
+   
+        $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
+        break;
+      case "ROLE_STUDENT":
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28]);
+        break;
+      case "ROLE_RESEARCHER":
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28]);
+        break;
+      case "ROLE_EVALUATOR":
+        $requestsFilter = array("owner" => $loggedUser, "state" => [28]);
+        break;
+      default:
+        $requestsFilter = array("state" => 2);
+        break;
+    }
+      
+    $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->findBy($requestsFilter);
+    $data['project_requests'] = $projectRequests;
+    
+    return $this->render('project_request/index.html.twig', $data);
   }
 
   /**
@@ -54,12 +75,12 @@ class ProjectRequestController extends AbstractController {
     $projectRequest = new ProjectRequest();
     $form = $this->createForm(ProjectRequestType::class, $projectRequest);
     $form->handleRequest($request);
-    
+
     $minuteCommissionTFGFiles = [];
     $extInstitutionsAuthorizationFiles = [];
     $minuteFinalWorkFiles = [];
     $minutesResearchCenterFiles = [];
-    
+
     if ($form->isSubmitted() && $form->isValid()) {
       $projectDir = $this->getParameter('brochures_directory');
 
@@ -79,7 +100,9 @@ class ProjectRequestController extends AbstractController {
 
 
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
-
+      
+      $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
+      $projectRequest->setState($state);
       $entityManager = $this->getDoctrine()->getManager();
 
       $entityManager->persist($projectRequest);
@@ -89,6 +112,9 @@ class ProjectRequestController extends AbstractController {
 
       $route = $this->getTargetRoute($target);
       $data = ['id' => $projectRequest->getId()];
+      $projectRequest->setCode("CEC-" + $projectRequest->getId());
+      $projectRequest->setOwner($loggedUser);
+      $entityManager->flush();
 
       return $this->redirectToRoute($route, $data);
     }
@@ -155,7 +181,8 @@ class ProjectRequestController extends AbstractController {
 
 
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
-
+      $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
+      $projectRequest->setState($state);
       $target = $form->get("form_target_input")->getData();
 
       $this->getDoctrine()->getManager()->flush();

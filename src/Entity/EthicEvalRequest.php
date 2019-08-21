@@ -142,6 +142,17 @@ class EthicEvalRequest {
     $this->ethicEvalFiles = $ethicEvalFiles;
   }
 
+  public function addEthicEvalFiles($files): self {
+    foreach ($files as &$file) {
+      if (!$this->ethicEvalFiles->contains($file)) {
+        $this->ethicEvalFiles[] = $file;
+      }
+    }
+
+
+    return $this;
+  }
+
   function getDataType(): Collection {
     return $this->dataType;
   }
@@ -278,17 +289,6 @@ class EthicEvalRequest {
 
   public function setRequest(?ProjectRequest $request): self {
     $this->request = $request;
-
-    return $this;
-  }
-
-  public function addEthicEvalFiles($files): self {
-    foreach ($files as &$file) {
-      if (!$this->ethicEvalFiles->contains($file)) {
-        $this->ethicEvalFiles[] = $file;
-      }
-    }
-
 
     return $this;
   }

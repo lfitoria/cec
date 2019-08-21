@@ -3,33 +3,55 @@
 {% block title %}ProjectRequest index{% endblock %}
 
 {% block body %}
-    <h1>Solicitudes</h1>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Nº de solicitud</th>
-                <th>Título</th>
-                <th colspan="2">Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for project_request in project_requests %}
-            <tr>
-                <td>CEC-{{ project_request.id }}</td>
-                <td>{{ project_request.title }}</td>
-                <td>{{ project_request.state }}</td>
-                <td>
-                    <a href="{{ path('project_request_show', {'id': project_request.id}) }}">show</a>
-                    <a href="{{ path('project_request_edit', {'id': project_request.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+  <h1>SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nº de solicitud</th>
+        <th>Título</th>
+        <th colspan="2">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project_request in project_requests %}
+        <tr>
+          <td class="text-bold"><span>CEC-{{ project_request.id }}</span></td>
+          <td><span>{{ project_request.title }}</span></td>
+          <td class="d-flex justify-content-between">
+            <span>{{ project_request.state.description }}</span>
 
-    <a href="{{ path('project_request_new') }}">Create new</a>
+
+            {% if app.user.role.description == "ROLE_ADMIN" %}
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" 
+                        id="dropdownMenu1" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="true">
+                  Asignar
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu checkbox-menu allow-focus">
+                  {% for evaluator in evaluators %}
+                    <li >
+                      <label>
+                        <input type="checkbox"> {{ evaluator.name }}
+                      </label>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
+              {% if project_request.state.id == 27 %}<a class="" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>{% endif %} 
+            {% endif %} 
+
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="11">no records found</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{{ path('project_request_new') }}">Create new</a>
 {% endblock %}

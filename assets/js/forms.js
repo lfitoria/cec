@@ -80,6 +80,9 @@ const $ = require('jquery');
 
       cache.form_buttons.click(function () {
         cache.form_target[0].value = $(this).data('target');
+        if (cache.form_finish[0]){
+          cache.form_finish[0].value = $(this).data('finish');
+        }
         if (cache.form.valid()) {
           cache.form.submit();
         }
@@ -90,7 +93,7 @@ const $ = require('jquery');
         var targetId = "#" + _this.parent().parent().data("code");
         if ($(this).is(":checked") && $(this).val() === '1') {
           $(targetId).removeClass("d-none");
-        } else{
+        } else {
           $(targetId).addClass("d-none");
           $(targetId).find("input").attr('required', false);
         }
@@ -129,8 +132,8 @@ const $ = require('jquery');
       cache.addFileButton.on('click', function (e) {
         var _this = $(this);
         var target = _this.data("list");
-        var collectionHolder = $('[data-list-target="'+target+'"]');
-        var newLinkLi = $('[data-new-item="'+target+'"]');
+        var collectionHolder = $('[data-list-target="' + target + '"]');
+        var newLinkLi = $('[data-new-item="' + target + '"]');
         cache.fileInputs.off('change');
         cache.selected_item_delete.off('click');
         addTagForm(collectionHolder, newLinkLi);
@@ -163,6 +166,7 @@ const $ = require('jquery');
       cache.nav_items = $('.form_header_nav_item');
       cache.form_buttons = $('.form_footer_button');
       cache.form_target = $('.form_target_input');
+      cache.form_finish = $('.form_finish_input');
       cache.form = $('.form-request');
       cache.decision_inputs = $(".decision_question input");
       cache.uploaded_item_delete = $(".uploaded_files_list_item--delete");
