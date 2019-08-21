@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\LdapUser;
 
 /**
  * ProjectRequest
@@ -45,9 +46,12 @@ class ProjectRequest {
   private $code;
 
   /**
-   * @var int|null
+   * @var \ProjectRequest
    *
-   * @ORM\Column(name="state", type="integer", nullable=true)
+   * @ORM\ManyToOne(targetEntity="Criterion")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+   * })
    */
   private $state;
 
@@ -174,10 +178,28 @@ class ProjectRequest {
    */
   private $ucrInstitutions;
 
+  /**
+   * @var \LdapUser
+   *
+   * @ORM\ManyToOne(targetEntity="LdapUSer")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+   * })
+   */
+  private $owner;
+
+  function getOwner(): LdapUser {
+    return $this->owner;
+  }
+
+  function setOwner(LdapUser $owner) {
+    $this->owner = $owner;
+  }
+
   function getMinutesResearchCenter() {
     return $this->minutesResearchCenter;
   }
-  
+
   function setMinutesResearchCenter($minutesResearchCenter) {
     $this->minutesResearchCenter = $minutesResearchCenter;
   }
@@ -185,8 +207,8 @@ class ProjectRequest {
   function setMinuteCommissionTFG($minuteCommissionTFG) {
     $this->minuteCommissionTFG = $minuteCommissionTFG;
   }
-  
-   function getMinuteCommissionTFG() {
+
+  function getMinuteCommissionTFG() {
     return $this->minuteCommissionTFG;
   }
 
@@ -303,7 +325,7 @@ class ProjectRequest {
 
     return $this;
   }
-  
+
   function getInfoRequestFiles() {
     return $this->infoRequestFiles;
   }
@@ -312,7 +334,6 @@ class ProjectRequest {
     $this->infoRequestFiles = $infoRequestFiles;
   }
 
-    
   public function addInfoRequestFiles($files): self {
     foreach ($files as &$file) {
       if (!$this->infoRequestFiles->contains($file)) {

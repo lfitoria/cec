@@ -3,82 +3,101 @@
 {% block title %}ProjectRequest index{% endblock %}
 
 {% block body %}
-    <h4>SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</h4>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Nº de solicitud</th>
-                <th>Título</th>
-                <th colspan="2">Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for project_request in project_requests %}
-            <tr>
-                <td>CEC-{{ project_request.id }}</td>
-                <td>{{ project_request.title }}</td>
-                <td>{{ project_request.state }}</td>
-                <td>
-                    <a href="{{ path('project_request_show', {'id': project_request.id}) }}">show</a>
-                    <a href="{{ path('project_request_edit', {'id': project_request.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">Solicitudes no encontradas</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+  <h1>SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nº de solicitud</th>
+        <th>Título</th>
+        <th colspan="2">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project_request in project_requests %}
+        <tr>
+          <td class="text-bold"><span>CEC-{{ project_request.id }}</span></td>
+          <td><span>{{ project_request.title }}</span></td>
+          <td class="d-flex justify-content-between">
+            <span>{{ project_request.state.description }}</span>
 
-    {# <a href="{{ path('project_request_new') }}">Create new</a> #}
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg btn-open-modalnew" data-toggle="modal" data-target="#new_project">
-  NUEVA SOLICITUD DE REVISIÓN
-</button>
-<!-- Modal -->
-<div class="modal fade" id="new_project" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+
+            {% if app.user.role.description == "ROLE_ADMIN" %}
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" 
+                        id="dropdownMenu1" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="true">
+                  Asignar
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu checkbox-menu allow-focus">
+                  {% for evaluator in evaluators %}
+                    <li >
+                      <label>
+                        <input type="checkbox"> {{ evaluator.name }}
+                      </label>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
+              {% if project_request.state.id == 27 %}<a class="" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>{% endif %} 
+            {% endif %} 
+
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="11">Solicitudes no encontradas</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-primary btn-lg btn-open-modalnew" data-toggle="modal" data-target="#new_project">
+    NUEVA SOLICITUD DE REVISIÓN
+  </button>
+  <!-- Modal -->
+  <div class="modal fade" id="new_project" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            {# <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div> #}
-            <div class="modal-body">
-            <h4>Instrucciones</h4>
-            <p>Lea con detenimiento esta información antes de completar la solicitud.</p>
-            <p>Este formulario se compone de 3 bloques:</p>
-            
-    <hr>
-    <ul class="nav justify-content-center nav-pills">
-        <li class="d-flex align-items-center form_header_nav_item  form_header_nav_item--active " data-target="info">
-            <span class="nav_step">1</span>
-            <a class="form_header_nav_item_link" href="#">Información del proyecto</a>
-        </li>
-        <li class="d-flex align-items-center form_header_nav_item " data-target="academic">
-            <span class="nav_step">2</span>
-            <a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
-        </li>
-        <li class="d-flex align-items-center form_header_nav_item " data-target="ethic">
-            <span class="nav_step">3</span>
-            <a class="form_header_nav_item_link" href="#">Evaluación ética</a>
-        </li>
-    </ul>
-    <hr>
-    <p>Podrá guardar el formulario en cualquier momento usando el botón <span class="text-color-green">“GUARDAR”</span>. Podrá avanzar al siguiente bloque usando el botón
-<span class="text-color-green">“GUARDAR Y CONTINUAR”</span> o navegar a través del formulario usando la navegación superior.
-Al terminar el tercer bloque, podrá enviar su solicitud.</p>
-                <a class="btn btn-primary" href="{{ path('project_request_new') }}">Empezar</a>
-            </div>
-            
-                <button type="button" class="btn btn-close-modalnew" data-dismiss="modal">Cancelar</button>
-                {# <button type="button" class="btn btn-primary">Save</button> #}
-            
+      <div class="modal-content">
+        {# <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div> #}
+        <div class="modal-body">
+          <h4>Instrucciones</h4>
+          <p>Lea con detenimiento esta información antes de completar la solicitud.</p>
+          <p>Este formulario se compone de 3 bloques:</p>
+
+          <hr>
+          <ul class="nav justify-content-center nav-pills">
+            <li class="d-flex align-items-center form_header_nav_item  form_header_nav_item--active " data-target="info">
+              <span class="nav_step">1</span>
+              <a class="form_header_nav_item_link" href="#">Información del proyecto</a>
+            </li>
+            <li class="d-flex align-items-center form_header_nav_item " data-target="academic">
+              <span class="nav_step">2</span>
+              <a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
+            </li>
+            <li class="d-flex align-items-center form_header_nav_item " data-target="ethic">
+              <span class="nav_step">3</span>
+              <a class="form_header_nav_item_link" href="#">Evaluación ética</a>
+            </li>
+          </ul>
+          <hr>
+          <p>Podrá guardar el formulario en cualquier momento usando el botón <span class="text-color-green">“GUARDAR”</span>. Podrá avanzar al siguiente bloque usando el botón
+            <span class="text-color-green">“GUARDAR Y CONTINUAR”</span> o navegar a través del formulario usando la navegación superior.
+            Al terminar el tercer bloque, podrá enviar su solicitud.</p>
+          <a class="btn btn-primary" href="{{ path('tab_general_info_request_new') }}">Empezar</a>
         </div>
+
+        <button type="button" class="btn btn-close-modalnew" data-dismiss="modal">Cancelar</button>
+        {# <button type="button" class="btn btn-primary">Save</button> #}
+
+      </div>
     </div>
-</div>
+  </div>
 {% endblock %}
 
 

@@ -27,6 +27,11 @@ class EthicEvalRequestType extends AbstractType {
                 'required' => false,
                 'mapped' => false
             ])
+            ->add('form_finish_input', HiddenType::class, [
+                'attr' => ['class' => 'form_finish_input'],
+                'required' => false,
+                'mapped' => false
+            ])
             ->add('amountParticipants', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1000 caracteres.',
