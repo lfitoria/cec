@@ -11,7 +11,7 @@ thead tr {
   color: var(--white);
 }
 tbody tr:nth-of-type(odd) {
-    background-color: rgba(81, 148, 220, 0.15);
+  background-color: rgba(81, 148, 220, 0.15);
 }
 tbody tr:nth-of-type(even) {
   background-color: rgba(81, 148, 220, 0.35);
@@ -219,12 +219,13 @@ ul.form_header_nav li::before {
   font-size: 1.4rem;
   font-weight: 700;
   margin-right: 3px;
-  }
-  #new_project ul.nav .form_header_nav_item {
-    margin: 0px 5px;
-    background-color: rgba(81, 148, 220, 0.15);
-    padding: 5px;
-  }
+}
+#new_project ul.nav .form_header_nav_item {
+  margin: 0px 5px;
+  background-color: rgba(81, 148, 220, 0.15);
+  padding: 5px;
+}
+
 #new_project h4,h4{
   color: var(--G2);
   text-transform: uppercase;

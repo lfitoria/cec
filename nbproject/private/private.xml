@@ -12,9 +12,12 @@
             <file>file:/C:/xampp/htdocs/cec/config/packages/twig.yaml</file>
             <file>file:/C:/xampp/htdocs/cec/templates/ethic_eval_request/_form.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/assets/css/variables.css</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Repository/EthicEvalRequestRepository.php</file>
             <file>file:/C:/xampp/htdocs/cec/assets/css/app.css</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/_form.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/config/packages/doctrine.yaml</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Repository/UsersRolesRepository.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Entity/UsersRoles.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20190820014004.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Controller/RequestFormController.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Services/User/UserManager.php</file>
@@ -33,7 +36,9 @@
             <file>file:/C:/xampp/htdocs/cec/src/Entity/ProjectRequest.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/users_roles/new.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/edit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Repository/WorkLogRepository.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/LdapUser.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Repository/CriterionRepository.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/eval_request/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/EvalRequest.php</file>
@@ -60,6 +65,7 @@
             <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/Ldap.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Controller/EthicEvalRequestController.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/default/index.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Repository/AcademicRequestInfoRepository.php</file>
             <file>file:/C:/xampp/htdocs/cec/nbproject/private/private.xml</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/PreEvalRequest.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/ethic_eval_request/edit.html.twig</file>
@@ -73,6 +79,7 @@
             <file>file:/C:/xampp/htdocs/cec/config/routes.yaml</file>
             <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20190820010045.php</file>
             <file>file:/C:/xampp/htdocs/cec/config/packages/security.yaml</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Repository/TeamWorkRepository.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Form/AcademicRequestInfoType.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/StatusRequest.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Controller/ProjectRequestController.php</file>

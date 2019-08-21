@@ -25,12 +25,12 @@ class ProjectRequestController extends AbstractController {
     $loggedUser = $security->getUser();
     $role = $loggedUser->getRole()->getDescription();
     $data = [];
-    
+
     switch ($role) {
       case "ROLE_ADMIN":
         $requestsFilter = array("state" => 28);
         $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
-   
+
         $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
         break;
       case "ROLE_STUDENT":
@@ -46,10 +46,10 @@ class ProjectRequestController extends AbstractController {
         $requestsFilter = array("state" => 2);
         break;
     }
-      
+
     $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->findBy($requestsFilter);
     $data['project_requests'] = $projectRequests;
-    
+
     return $this->render('project_request/index.html.twig', $data);
   }
 
@@ -64,6 +64,32 @@ class ProjectRequestController extends AbstractController {
     return $this->render('project_request/index.html.twig', [
                 'project_requests' => $projectRequests,
     ]);
+  }
+
+  private function getProjectExternalInformation($projectCode) {
+    $entityManager = $this->getDoctrine()->getManager('sip');
+    $externalCollaboration = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getExternalCollaborationByProject($entityManager, $projectCode);
+
+    $projectData = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getSIPProjectByCode($entityManager, $projectCode);
+
+    $unitData = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getAcademicUnitByProject($entityManager, $projectData["codigo_unidad"]);
+
+    $researchers = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getResearchersByProject($entityManager, $projectCode);
+
+    return array(
+        "externalCollaboration" => $externalCollaboration,
+        "projectData" => $projectData,
+        "unitData" => $unitData,
+        "researchers" => $researchers
+    );
   }
 
   /**
@@ -100,7 +126,7 @@ class ProjectRequestController extends AbstractController {
 
 
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
-      
+
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       $projectRequest->setState($state);
       $entityManager = $this->getDoctrine()->getManager();
@@ -153,7 +179,7 @@ class ProjectRequestController extends AbstractController {
   }
 
   /**
-   * @Route("/{id}", name="project_request_edit", methods={"GET","POST"})
+   * @Route("/edit/{id}", name="project_request_edit", methods={"GET","POST"})
    */
   public function edit(Request $request, ProjectRequest $projectRequest, FileManager $fileManager, Security $security): Response {
     $loggedUser = $security->getUser();

@@ -14,21 +14,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ExternalDataRepository extends ServiceEntityRepository {
 
-    public function __construct(RegistryInterface $registry) {
-        parent::__construct($registry, UsersRoles::class);
-    }
+  public function __construct(RegistryInterface $registry) {
+    parent::__construct($registry, UsersRoles::class);
+  }
 
-    /**
-     * @return UsersRoles[] Returns an array of UsersRoles objects
-     */
-    public function getSIPProjectByCode($em, $project_id) {
+  /**
+   * @return UsersRoles[] Returns an array of UsersRoles objects
+   */
+  public function getSIPProjectByCode($em, $projectCode) {
 
-        $connection = $em->getConnection();
-        $statement = $connection->prepare("
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
             select xprouni.unidadc as codigo_unidad, proyectos.descrip as nombre, proyectos.proyecto as codigo_proyecto, unidades.descrip as unidad, TI.descrip AS tipo_invest, CR.descrip as tipo_finan,  
 					EP.descrip as estado, descr_ubi as ubicacion, TP.descrip as tipo_proyecto 
                     From proyectos, xprouni, codigos as TI,codigos as CR,codigos as EP, ubicacion,codigos as TP, unidades  
-                    where proyecto = '$project_id' 
+                    where proyecto = '$projectCode' 
                     and unidades.unidad = xprouni.unidadc  
                     and tipoc = 1  
                     and xprouni.proyectoc = proyectos.proyecto  
@@ -38,15 +38,15 @@ class ExternalDataRepository extends ServiceEntityRepository {
                     and ubicacion.ubicacion = proyectos.ubicacion  
                     and TP.tipo = 21 and TP.codigo = tipo_proy");
 
-        $statement->execute();
+    $statement->execute();
 
-        $results = $statement->fetchAll();
-        return $results[0];
-    }
+    $results = $statement->fetchAll();
+    return $results[0];
+  }
 
-    public function getExternalCollaborationByProject($em, $project_id) {
-        $connection = $em->getConnection();
-        $statement = $connection->prepare("
+  public function getExternalCollaborationByProject($em, $projectCode) {
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
             SELECT
                 c.convenio as numero, c.nombre,
                 isnull(e.descrip,'') as entidad,
@@ -58,32 +58,52 @@ class ExternalDataRepository extends ServiceEntityRepository {
                 LEFT JOIN codigos co on co.codigo = c.tipo
                 LEFT JOIN entidades e on e.entidad = xp.entidad
             where
-                c.proyecto = '$project_id' and
+                c.proyecto = '$projectCode' and
                 co.tipo = 34;");
-        $statement->execute();
+    $statement->execute();
 
-        $results = $statement->fetchAll();
-        return $results;
-    }
+    $results = $statement->fetchAll();
+    return $results;
+  }
 
-    public function getUnidadCAByProject($id) {
+  public function getAcademicUnitByProject($em, $unitId) {
 
-        $connection = $this->em->getConnection();
-        $statement = $connection->prepare(
-                "SELECT 
+    $connection = $em->getConnection();
+    $statement = $connection->prepare(
+            "SELECT 
                     unidades.descrip AS UNIDADA 
                 FROM 
                     xprouni, unidades
                 WHERE 
-                    proyectoc = '" . $id . "' AND 
+                    proyectoc = '" . $unitId . "' AND 
                     unidades.unidad = xprouni.unidadc AND 
                     tipoc = 1"
-        );
+    );
 
-        $statement->execute();
+    $statement->execute();
 
-        $results = $statement->fetchAll();
-        return $results[0];
-    }
+    $results = $statement->fetchAll();
+    return $results[0];
+  }
+
+  public function getResearchersByProject($em, $projectCode) {
+
+    $connection = $em->getConnection();
+    $statement = $connection->prepare(
+            "Select datos_per.cedula,apellido1,apellido2,nombre,codigos.descrip AS PARTICIPA,(rtrim(convert(char,dedicacion.dedicacion)) + ' - ' + dedicacion.descrip) AS TIEMPO, 
+			 convert(char(10),fec_inicio,103) as fec_inicioF, 
+			 convert(char(10),fec_final,103) as fec_finalF, 
+    			monto_ca 
+				From xproinv, codigos, dedicacion, datos_per  
+			   WHERE xproinv.proyecto = '$projectCode'
+			   and datos_per.cedula = xproinv.cedula and codigos.codigo = participacion and codigos.tipo = 1 
+			   and dedicacion.dedicacion = xproinv.dedicacion 
+			   order by codigos.descrip desc, fec_inicioF");
+
+    $statement->execute();
+
+    $results = $statement->fetchAll();
+    return $results;
+  }
 
 }
