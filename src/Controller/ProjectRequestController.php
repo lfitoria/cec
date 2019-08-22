@@ -68,10 +68,6 @@ class ProjectRequestController extends AbstractController {
 
     $entityManager = $this->getDoctrine()->getManager('sip');
     $entityManagerOracle = $this->getDoctrine()->getManager('oracle');
-<<<<<<< HEAD
-=======
-
->>>>>>> 2fe427cb44c9aa9ee9d8b812aacaafef99a45a9c
     $test = $this->getDoctrine()
             ->getRepository(UsersRoles::class)
             ->getExternalCollaborationByProject($entityManager, 'B0802');
