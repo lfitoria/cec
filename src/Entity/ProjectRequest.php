@@ -344,6 +344,17 @@ class ProjectRequest {
 
     return $this;
   }
+  
+  public function addTeamWork($students): self {
+    foreach ($students as &$student) {
+      if (!$this->teamWork->contains($student)) {
+        $this->teamWork[] = $student;
+      }
+    }
+
+
+    return $this;
+  }
 
   function getGrupalProject() {
     return $this->grupalProject;

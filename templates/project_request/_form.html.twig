@@ -40,21 +40,21 @@
           <th scope="col">Acciones</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="team_work_table">
         {% for team in project_request.teamWork %}
           <tr>
             <td scope="col">{{ team.name }} </td>
             <td scope="col">{{ team.studentId }}</td>
             <td scope="col">{{ team.studentEmail }}</td>
-            <td scope="col"><a class="team_list_item--delete" data-id='{{ team.id }}' href="#">Eliminar</a></td>
+            <td scope="col"><a class="uploaded_teamwork_item--delete" data-path="{{ path("remove_student_by_id") }}" data-id='{{ team.id }}' href="#">Eliminar</a></td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
     <div class="input-group mb-3 w-50">
-      <input type="text" class="form-control" placeholder="Carnet del estudiante" aria-label="Carnet del estudiante" aria-describedby="button-addon2">
+      <input type="text" class="form-control add_student_input" placeholder="Carnet del estudiante" aria-label="Carnet del estudiante" aria-describedby="button-addon2">
       <div class="input-group-append">
-        <button type='button' class='add_file_button btn btn-primary' data-list='teamWork'>Agregar miembro</button>
+        <button type='button' class='add_student_button btn btn-primary' data-path="{{ path("get_student_by_id") }}" data-list='teamWork'>Agregar miembro</button>
         
       </div>
       <small id="project_request_team_work_help" class="form-text text-muted">Para agregar un nuevo miembro al equipo, coloque en número de carné y presione el botón "Agregar miembro".</small>

@@ -106,4 +106,51 @@ class ExternalDataRepository extends ServiceEntityRepository {
     return $results;
   }
 
+  public function getStudentById($em, $studentId) {
+    $query = 'SELECT * FROM v_vi_estudiante_activo WHERE carne = :estudent_id';
+    try {
+
+      $connection = $em->getConnection();
+      $statement = $connection->prepare($query);
+      $statement->bindValue('estudent_id', $studentId);
+      $statement->execute();
+
+      $results = $statement->fetchAll();
+    } catch (\Exception $e) {
+      var_dump($e);
+      return null;
+    }
+    return $results;
+  }
+
+  public function getInvesColaboradoresByProject($em, $project) {
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
+                SELECT 
+                    x.cedula, 
+                    (RTRIM(d.nombre)+' '+RTRIM(d.apellido1)+' '+RTRIM(d.apellido2)) as nombre,
+                    (RTRIM(c.descrip)+' '+RTRIM(cd.descrip)) as descrip, 
+                    d.sexo, 
+                    convert(char(10),x.fec_inicio,103) as fec_inicio, 
+                    convert(char(10),x.fec_final,103) as fec_final
+                
+                FROM XPROINV x 
+                inner join 
+                    codigos c on c.codigo = x.participacion and c.tipo = 1  
+                
+                inner join 
+                    datos_per d on d.cedula = x.cedula
+                inner join 
+                    codigos cd on cd.codigo = d.estado and cd.tipo = 4
+                where 
+                    x.proyecto = '" + trim($project) + "' and 
+                    x.participacion = 1");
+    $statement->execute();
+
+
+    $results = $statement->fetchAll();
+
+    return $results;
+  }
+
 }

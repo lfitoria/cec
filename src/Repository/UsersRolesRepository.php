@@ -12,16 +12,15 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method UsersRoles[]    findAll()
  * @method UsersRoles[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UsersRolesRepository extends ServiceEntityRepository
-{
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, UsersRoles::class);
-    }
+class UsersRolesRepository extends ServiceEntityRepository {
 
-    public function getExternalCollaborationByProject($em, $project_id) {
-        $connection = $em->getConnection();
-        $statement = $connection->prepare("
+  public function __construct(RegistryInterface $registry) {
+    parent::__construct($registry, UsersRoles::class);
+  }
+
+  public function getExternalCollaborationByProject($em, $project_id) {
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
             SELECT
                 c.convenio as numero, c.nombre,
                 isnull(e.descrip,'') as entidad,
@@ -35,92 +34,47 @@ class UsersRolesRepository extends ServiceEntityRepository
             where
                 c.proyecto = '$project_id' and
                 co.tipo = 34;");
-        $statement->execute();
+    $statement->execute();
 
-        $results = $statement->fetchAll();
-        return $results;
-    }
+    $results = $statement->fetchAll();
+    return $results;
+  }
 
-    /*
+  /*
     public function findOneBySomeField($value): ?UsersRoles
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    return $this->createQueryBuilder('u')
+    ->andWhere('u.exampleField = :val')
+    ->setParameter('val', $value)
+    ->getQuery()
+    ->getOneOrNullResult()
+    ;
     }
-    */
-    public function getEstudianteByCarnet($em, $estudent_id) {
-        $query = 'SELECT * FROM v_vi_estudiante_activo WHERE carne = :estudent_id';
+   */
 
-        //$query = "SELECT * FROM v_vi_estudiante_activo";
+  public function getEstudentById($em, $estudent_id) {
+    $query = 'SELECT * FROM v_vi_estudiante_activo WHERE carne = :estudent_id';
+    try {
 
-      // var_dump($query);
-      //  die();
+      $connection = $em->getConnection();
+      $statement = $connection->prepare($query);
+      $statement->bindValue('estudent_id', $estudent_id);
+      $statement->execute();
 
-    try{
-        
-            $connection = $em->getConnection();
-            // $connection = $em->getConnection();
-        
-            $statement = $connection->prepare($query);
-
-            
-
-            $statement->bindValue('estudent_id', $estudent_id);
-            
-            $statement->execute();
-
-            $results = $statement->fetchAll();
-
-              
-
-        } catch(\Exception $e) {
-            //var_dump($e);
-            echo "error";
-             die();
-            return null;    
-        }
-        return $results;
+      $results = $statement->fetchAll();
+    } catch (\Exception $e) {
+      var_dump($e);
+      return null;
     }
-    public function getInvesColaboradoresByProject($em,$project) {
-        
-        $project = trim($project);
+    return $results;
+  }
 
-        $connection = $em->getConnection();
-        $statement = $connection->prepare("
-                SELECT 
-                    x.cedula, 
-                    (RTRIM(d.nombre)+' '+RTRIM(d.apellido1)+' '+RTRIM(d.apellido2)) as nombre,
-                    (RTRIM(c.descrip)+' '+RTRIM(cd.descrip)) as descrip, 
-                    d.sexo, 
-                    convert(char(10),x.fec_inicio,103) as fec_inicio, 
-                    convert(char(10),x.fec_final,103) as fec_final
-                
-                FROM XPROINV x 
-                inner join 
-                    codigos c on c.codigo = x.participacion and c.tipo = 1  
-                
-                inner join 
-                    datos_per d on d.cedula = x.cedula
-                inner join 
-                    codigos cd on cd.codigo = d.estado and cd.tipo = 4
-                where 
-                    x.proyecto = '$project' and 
-                    x.participacion = 1");
-        $statement->execute();
-       
-       
-        $results = $statement->fetchAll();
+  
 
-        return $results;
-    }
-    public function getProjectById($em,$id) {
-        
-        $connection = $em->getConnection();
-        $statement = $connection->prepare("
+  public function getProjectById($em, $id) {
+
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
             select xprouni.unidadc as codigo_unidad, proyectos.descrip as nombre, proyectos.proyecto as codigo_proyecto, unidades.descrip as unidad, TI.descrip AS tipo_invest, CR.descrip as tipo_finan,  
                     EP.descrip as estado, descr_ubi as ubicacion, TP.descrip as tipo_proyecto 
                     From proyectos, xprouni, codigos as TI,codigos as CR,codigos as EP, ubicacion,codigos as TP, unidades  
@@ -134,19 +88,21 @@ class UsersRolesRepository extends ServiceEntityRepository
                     and ubicacion.ubicacion = proyectos.ubicacion  
                     and TP.tipo = 21 and TP.codigo = tipo_proy");
 
-        $statement->execute();
+    $statement->execute();
 
-        $results = $statement->fetchAll();
+    $results = $statement->fetchAll();
 
-        return (!empty($results))? $results[0]: null;
-    }
-    public function getMetodologiaByProject($em,$id) {
-        $connection = $em->getConnection();
-        $statement = $connection->prepare("
+    return (!empty($results)) ? $results[0] : null;
+  }
+
+  public function getMetodologiaByProject($em, $id) {
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
                 SELECT * FROM proyectos_info_adicional where proyecto = '$id'");
-        $statement->execute();
+    $statement->execute();
 
-        $results = $statement->fetchAll();
-        return isset($results[0]) ? $results[0] : false;
-    }
+    $results = $statement->fetchAll();
+    return isset($results[0]) ? $results[0] : false;
+  }
+
 }

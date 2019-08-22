@@ -5,13 +5,16 @@ namespace App\Controller;
 use App\Entity\ProjectRequest;
 use App\Entity\Criterion;
 use App\Entity\LdapUser;
+use App\Entity\TeamWork;
 use App\Form\ProjectRequestType;
+use App\Repository\ExternalDataRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/solicitud")
@@ -60,9 +63,10 @@ class ProjectRequestController extends AbstractController {
     $projectRequests = $this->getDoctrine()
             ->getRepository(ProjectRequest::class)
             ->findAll();
-    
+
     $entityManager = $this->getDoctrine()->getManager('sip');
     $entityManagerOracle = $this->getDoctrine()->getManager('oracle');
+
     $test = $this->getDoctrine()
             ->getRepository(UsersRoles::class)
             ->getExternalCollaborationByProject($entityManager, 'B0802');
@@ -188,6 +192,38 @@ class ProjectRequestController extends AbstractController {
                 'form' => $form->createView()
     ]);
   }
+  
+  /**
+   * @Route("/remove_student_by_id", name="remove_student_by_id", methods={"POST"})
+   */
+  public function removeStudentAjax(Request $request): Response {
+    $student_id = $request->request->get('id');
+    if ($student_id) {
+      $entityManager = $this->getDoctrine()->getManager();
+      $file = $this->getDoctrine()->getRepository(TeamWork::class)->find($student_id);
+
+      $entityManager->remove($file);
+      $entityManager->flush();
+
+      return new JsonResponse(['wasDeleted' => true]);
+    }
+
+    return new JsonResponse(['wasDeleted' => false]);
+  }
+  
+  /**
+   * @Route("/get_student_by_id", name="get_student_by_id", methods={"POST"})
+   */
+  public function getStudentById(Request $request): Response {
+    $studentId = $request->request->get('id');
+    $student = $this->getDoctrine()
+            ->getRepository(ExternalDataRepository::class)
+            ->getStudentById($em, $studentId); //'B04278'
+    if ($student) {
+      return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
+    }
+    return new JsonResponse(["studentWasFound" => false]);
+  }
 
   private function getTargetRoute($target) {
     switch ($target) {
@@ -235,6 +271,23 @@ class ProjectRequestController extends AbstractController {
 
         $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
         $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
+
+        $uploadedTeamWork = $request->request->get('teamWork');
+        $teamWork = array();
+        if (count($uploadedTeamWork["student_name"]) > 0) {
+          for ($i = 0; $i < count($uploadedTeamWork["student_name"]); $i++) {
+            $student = new \App\Entity\TeamWork();
+            $student->setName($uploadedTeamWork["student_name"][$i]);
+            $student->setStudentId($uploadedTeamWork["student_id"][$i]);
+            $student->setStudentEmail($uploadedTeamWork["student_email"][$i]);
+
+            $this->getDoctrine()->getManager()->persist($student);
+
+            array_push($teamWork, $student);
+          }
+
+          $projectRequest->addTeamWork($teamWork);
+        }
       } else {
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");

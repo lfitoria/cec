@@ -225,7 +225,6 @@ ul.form_header_nav li::before {
   background-color: rgba(81, 148, 220, 0.15);
   padding: 5px;
 }
-
 #new_project h4,h4{
   color: var(--G2);
   text-transform: uppercase;

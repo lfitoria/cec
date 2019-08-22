@@ -80,7 +80,7 @@ const $ = require('jquery');
 
       cache.form_buttons.click(function () {
         cache.form_target[0].value = $(this).data('target');
-        if (cache.form_finish[0]){
+        if (cache.form_finish[0]) {
           cache.form_finish[0].value = $(this).data('finish');
         }
         if (cache.form.valid()) {
@@ -118,11 +118,37 @@ const $ = require('jquery');
           }
         });
       });
+      
+      cache.uploaded_student_delete.click(function (e) {
+        e.preventDefault();
+        var _this = $(this);
+        var path = _this[0].dataset.path;
+        $.ajax({
+          type: 'POST',
+          url: path,
+          context: _this,
+          data: {
+            id: _this[0].dataset.id
+          },
+          dataType: 'json',
+          success: function (file) {
+            if (file.wasDeleted) {
+              _this.parent().parent().remove();
+            }
+          }
+        });
+      });
 
       cache.selected_item_delete.click(function (e) {
         e.preventDefault();
         var _this = $(this);
         removeSelectedFile(_this);
+      });
+
+      cache.selected_item_delete.click(function (e) {
+        e.preventDefault();
+        var _this = $(this);
+        removeSelectedTeamWork(_this);
       });
 
       cache.fileInputs.on('change', function (event) {
@@ -149,7 +175,47 @@ const $ = require('jquery');
           removeSelectedFile(_this);
         });
       });
+
+      cache.addStudentButton.click(function (e) {
+        e.preventDefault();
+        var _this = $(this);
+        var path = _this[0].dataset.path;
+        $.ajax({
+          type: 'POST',
+          url: path,
+          context: _this,
+          data: {
+            id: $(".add_student_input").val()
+          },
+          dataType: 'json',
+          success: function (response) {
+            if (response.studentWasFound) {
+              const studentCount = $(".student_row").length;
+              const studentRow =
+                      `<tr class="student_row">
+                <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_name][${studentCount}]" value="${response.student.NOMBRE} ${response.student.APELLIDO1} ${response.student['APELLIDO2']}"></td>
+                <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_id][${studentCount}]" value="${response.student['IDENTIFICACION']}"></td>
+                <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_email][${studentCount}]" value="${response.student['CARNE']}"></td>
+                <td scope="col"><a class="selected_teamwork_item--delete" href="#">Eliminar</a></td>
+              </tr>`;
+
+              $(".team_work_table").append(studentRow);
+              cache.selected_student_delete.off("click");
+              cache.selected_student_delete = $(".selected_teamwork_item--delete");
+              cache.selected_student_delete.on('click', function (e) {
+                e.preventDefault();
+                var _this = $(this);
+                removeSelectedTeamWork(_this);
+              });
+            } else {
+
+            }
+          }
+        });
+      });
     }
+
+
 
     function showlabel(event) {
       var inputFile = event.currentTarget;
@@ -160,6 +226,10 @@ const $ = require('jquery');
 
     function removeSelectedFile(_this) {
       _this.parent().parent().parent().remove();
+    }
+
+    function removeSelectedTeamWork(_this) {
+      _this.parent().parent().remove();
     }
 
     _objectPublic.init = function () {
@@ -175,7 +245,10 @@ const $ = require('jquery');
                                 form .form-group label:not(.error):not(.custom-control-label):not(.custom-file-label):not(.no-label)");
       cache.fileInputs = $('.custom-file-input');
       cache.addFileButton = $(".add_file_button");
-
+      cache.addStudentButton = $(".add_student_button");
+      cache.selected_student_delete = $(".selected_teamwork_item--delete");
+      cache.uploaded_student_delete = $(".uploaded_teamwork_item--delete");
+      
       var collectionFileHolder = $('.collecion_list');
       for (var i = 0; i < collectionFileHolder.length; i++) {
         collectionFileHolder[i].dataset.index = collectionFileHolder[i].querySelectorAll('input').length;
