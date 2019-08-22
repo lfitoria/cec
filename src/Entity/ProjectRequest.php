@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\LdapUser;
 
 /**
  * ProjectRequest
@@ -16,6 +17,9 @@ class ProjectRequest {
 
   function __construct() {
     $this->users = new ArrayCollection();
+    $this->infoRequestFiles = new ArrayCollection();
+    $this->teamWork = new ArrayCollection();
+    $this->teamWork = new ArrayCollection();
   }
 
   /**
@@ -42,9 +46,12 @@ class ProjectRequest {
   private $code;
 
   /**
-   * @var int|null
+   * @var \ProjectRequest
    *
-   * @ORM\Column(name="state", type="integer", nullable=true)
+   * @ORM\ManyToOne(targetEntity="Criterion")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+   * })
    */
   private $state;
 
@@ -61,12 +68,6 @@ class ProjectRequest {
    * @ORM\Column(name="ext_institutions_authorization", type="boolean", nullable=true)
    */
   private $extInstitutionsAuthorization;
-
-  /**
-   * @ORM\ManyToMany(targetEntity="File")
-   * @ORM\JoinTable(name="inst_auth_files_project")
-   */
-  private $extInstitutionsAuthorizationFiles;
 
   /**
    * @var string|null
@@ -90,10 +91,37 @@ class ProjectRequest {
   private $docHumanInformation;
 
   /**
-   * @ORM\ManyToMany(targetEntity="File")
-   * @ORM\JoinTable(name="human_info_files_project")
+   * @var bool|null
+   *
+   * @ORM\Column(name="minute_commission_tfg", type="boolean", nullable=true)
    */
-  private $docHumanInformationFiles;
+  private $minuteCommissionTFG;
+
+  /**
+   * @var bool|null
+   *
+   * @ORM\Column(name="minute_final_work", type="boolean", nullable=true)
+   */
+  private $minuteFinalWork;
+
+  /**
+   * @var bool|null
+   *
+   * @ORM\Column(name="minute_research_center", type="boolean", nullable=true)
+   */
+  private $minutesResearchCenter;
+
+  /**
+   * @ORM\ManyToMany(targetEntity="File")
+   * @ORM\JoinTable(name="files_info_request")
+   */
+  private $infoRequestFiles;
+
+  /**
+   * @ORM\ManyToMany(targetEntity="TeamWork", cascade={"persist"})
+   * @ORM\JoinTable(name="team_works_project")
+   */
+  private $teamWork;
 
   /**
    * @var string|null
@@ -116,6 +144,27 @@ class ProjectRequest {
   private $grupalProject;
 
   /**
+   * @var string|null
+   *
+   * @ORM\Column(name="tutor_name", type="string", length=100, nullable=true)
+   */
+  private $tutorName;
+
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="tutor_id", type="string", length=45, nullable=true)
+   */
+  private $tutorId;
+
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="tutor_email", type="string", length=100, nullable=true)
+   */
+  private $tutorEmail;
+
+  /**
    * @var string
    *
    * @ORM\Column(name="ascriptionUnit", type="string", length=400, nullable=false)
@@ -129,21 +178,46 @@ class ProjectRequest {
    */
   private $ucrInstitutions;
 
+  /**
+   * @var \LdapUser
+   *
+   * @ORM\ManyToOne(targetEntity="LdapUSer")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+   * })
+   */
+  private $owner;
 
-  function getExtInstitutionsAuthorizationFiles() {
-    return $this->extInstitutionsAuthorizationFiles;
+  function getOwner(): LdapUser {
+    return $this->owner;
   }
 
-  function getDocHumanInformationFiles() {
-    return $this->docHumanInformationFiles;
+  function setOwner(LdapUser $owner) {
+    $this->owner = $owner;
   }
 
-  function setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles) {
-    $this->extInstitutionsAuthorizationFiles = $extInstitutionsAuthorizationFiles;
+  function getMinutesResearchCenter() {
+    return $this->minutesResearchCenter;
   }
 
-  function setDocHumanInformationFiles($docHumanInformationFiles) {
-    $this->docHumanInformationFiles = $docHumanInformationFiles;
+  function setMinutesResearchCenter($minutesResearchCenter) {
+    $this->minutesResearchCenter = $minutesResearchCenter;
+  }
+
+  function setMinuteCommissionTFG($minuteCommissionTFG) {
+    $this->minuteCommissionTFG = $minuteCommissionTFG;
+  }
+
+  function getMinuteCommissionTFG() {
+    return $this->minuteCommissionTFG;
+  }
+
+  function getMinuteFinalWork() {
+    return $this->minuteFinalWork;
+  }
+
+  function setMinuteFinalWork($minuteFinalWork) {
+    $this->minuteFinalWork = $minuteFinalWork;
   }
 
   function getId() {
@@ -252,6 +326,36 @@ class ProjectRequest {
     return $this;
   }
 
+  function getInfoRequestFiles() {
+    return $this->infoRequestFiles;
+  }
+
+  function setInfoRequestFiles($infoRequestFiles) {
+    $this->infoRequestFiles = $infoRequestFiles;
+  }
+
+  public function addInfoRequestFiles($files): self {
+    foreach ($files as &$file) {
+      if (!$this->infoRequestFiles->contains($file)) {
+        $this->infoRequestFiles[] = $file;
+      }
+    }
+
+
+    return $this;
+  }
+  
+  public function addTeamWork($students): self {
+    foreach ($students as &$student) {
+      if (!$this->teamWork->contains($student)) {
+        $this->teamWork[] = $student;
+      }
+    }
+
+
+    return $this;
+  }
+
   function getGrupalProject() {
     return $this->grupalProject;
   }
@@ -275,4 +379,43 @@ class ProjectRequest {
   function setUcrInstitutions($ucrInstitutions) {
     $this->ucrInstitutions = $ucrInstitutions;
   }
+
+  public function getTutorName(): ?string {
+    return $this->tutorName;
+  }
+
+  public function setTutorName(?string $tutorName): self {
+    $this->tutorName = $tutorName;
+
+    return $this;
+  }
+
+  public function getTutorId(): ?string {
+    return $this->tutorId;
+  }
+
+  public function setTutorId(?string $tutorId): self {
+    $this->tutorId = $tutorId;
+
+    return $this;
+  }
+
+  public function getTutorEmail(): ?string {
+    return $this->tutorEmail;
+  }
+
+  public function setTutorEmail(?string $tutorEmail): self {
+    $this->tutorEmail = $tutorEmail;
+
+    return $this;
+  }
+
+  function getTeamWork() {
+    return $this->teamWork;
+  }
+
+  function setTeamWork($teamWork) {
+    $this->teamWork = $teamWork;
+  }
+
 }

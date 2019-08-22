@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\EthicEvalRequest;
 use App\Entity\ProjectRequest;
 use App\Form\EthicEvalRequestType;
+use App\Entity\Criterion;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
+use App\Services\Utils\NotificationManager;
 
 /**
  * @Route("/ethic/eval/request")
@@ -40,9 +42,8 @@ class EthicEvalRequestController extends AbstractController {
       case "ethic":
         $route = 'tab_ethic_eval_request';
         break;
-
       default:
-        $route = 'tab_academic_request_info';
+        $route = 'project_request_index';
         break;
     }
     return $route;
@@ -51,12 +52,13 @@ class EthicEvalRequestController extends AbstractController {
   /**
    * @Route("/new/{id}", name="ethic_eval_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, FileManager $fileManager, ProjectRequest $projectRequest): Response {
+  public function new(Request $request, FileManager $fileManager, NotificationManager $notificationManager, ProjectRequest $projectRequest): Response {
     $ethicEvalRequest = new EthicEvalRequest();
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      $finish = $form->get("form_finish_input")->getData();
       $entityManager = $this->getDoctrine()->getManager();
 
       $informedConsentUploadedFiles = $form->get("informedConsentFiles")->getData();
@@ -65,15 +67,29 @@ class EthicEvalRequestController extends AbstractController {
 
       $projectDir = $this->getParameter('brochures_directory');
 
-      $informedConsentFiles = $fileManager->uploadFiles($informedConsentUploadedFiles, $projectDir);
-      $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir);
-      $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir);
+      $informedConsentFiles = $fileManager->uploadFiles($informedConsentUploadedFiles, $projectDir, "informedConsentFiles");
+      $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir, "informedAssentFiles");
+      $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir, "collectionInformationFiles");
 
-      $ethicEvalRequest->setInformedConsentFiles($informedConsentFiles);
-      $ethicEvalRequest->setInformedAssentFiles($informedAssentFiles);
-      $ethicEvalRequest->setCollectionInformationFiles($collectionInformationFiles);
+      $ethicEvalRequest->setEthicEvalFiles(array_merge($informedConsentFiles, $informedAssentFiles, $collectionInformationFiles));
       $ethicEvalRequest->setRequest($projectRequest);
-
+      
+      if($finish == "1"){
+        $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
+        $emailData = [
+            "subject" => "TEST",
+            "from" => "camacho.le@gmail.com",
+            "to" => "camacho.le@gmail.com",
+            "body" => "BODY TEST"
+        ];
+        $notificationManager->sendEmail($emailData);
+        var_dump("asaa");
+      }else{
+        $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
+      }
+      
+      $ethicEvalRequest->getRequest()->setState($state);
+      
       $entityManager->persist($ethicEvalRequest);
       $entityManager->flush();
 
@@ -82,7 +98,7 @@ class EthicEvalRequestController extends AbstractController {
       $route = $this->getTargetRoute($target);
       $data = ['id' => $ethicEvalRequest->getRequest()->getId()];
 
-      return $this->redirectToRoute($route, $data);
+      //return $this->redirectToRoute($route, $data);
     }
 
     return $this->render('ethic_eval_request/new.html.twig', [
@@ -103,29 +119,45 @@ class EthicEvalRequestController extends AbstractController {
   /**
    * @Route("/{id}/edit", name="ethic_eval_request_edit", methods={"GET","POST"})
    */
-  public function edit(Request $request, EthicEvalRequest $ethicEvalRequest, FileManager $fileManager): Response {
+  public function edit(Request $request, EthicEvalRequest $ethicEvalRequest, FileManager $fileManager, NotificationManager $notificationManager): Response {
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      
+      $finish = $form->get("form_finish_input")->getData();
+
       $informedConsentUploadedFiles = $form->get("informedConsentFiles")->getData();
       $informedAssentUploadedFiles = $form->get("informedAssentFiles")->getData();
       $collectionInformationUploadedFiles = $form->get("collectionInformationFiles")->getData();
 
       $projectDir = $this->getParameter('brochures_directory');
 
-      $informedConsentFiles = $fileManager->uploadFiles($informedConsentUploadedFiles, $projectDir);
-      $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir);
-      $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir);
+      $informedConsentFiles = $fileManager->uploadFiles($informedConsentUploadedFiles, $projectDir, "informedConsentFiles");
+      $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir, "informedAssentFiles");
+      $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir, "collectionInformationFiles");
 
-      $ethicEvalRequest->setInformedConsentFiles($informedConsentFiles);
-      $ethicEvalRequest->setInformedAssentFiles($informedAssentFiles);
-      $ethicEvalRequest->setCollectionInformationFiles($collectionInformationFiles);
+      $ethicEvalRequest->addEthicEvalFiles(array_merge($informedConsentFiles, $informedAssentFiles, $collectionInformationFiles));
+   
+      if($finish == "1"){
+        $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
+        $emailData = [
+            "subject" => "TEST",
+            "from" => "camacho.le@gmail.com",
+            "to" => "camacho.le@gmail.com",
+            "body" => "BODY TEST"
+        ];
+        $notificationManager->sendEmail($emailData);
+        var_dump("asaa");
+      }else{
+        $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
+      }
       
+      $ethicEvalRequest->getRequest()->setState($state);
+
       $this->getDoctrine()->getManager()->flush();
 
       $target = $form->get("form_target_input")->getData();
+
 
       $route = $this->getTargetRoute($target);
       $data = ['id' => $ethicEvalRequest->getRequest()->getId()];

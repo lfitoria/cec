@@ -23,6 +23,7 @@ class UsersRolesController extends AbstractController
         $usersRoles = $this->getDoctrine()
             ->getRepository(UsersRoles::class)
             ->findAll();
+        
         $entityManager = $this->getDoctrine()->getManager('sip');
         $test = $this->getDoctrine()
             ->getRepository(UsersRoles::class)

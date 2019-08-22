@@ -1,12 +1,12 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ include('commons/_form_header.html.twig', {'current_nav_item': 'ethic'}) }}
-{{ form_start(form, {attr: {class: 'form-request'}}) }}
+{{ form_start(form, {attr: {class: 'form-request', 'data-number': '3'}}) }}
 {{ form_row(form.population, {label_attr: {class: 'checkbox-custom'} }) }}
 {{ form_row(form.amountParticipants) }}
 {{ form_row(form.inExCriteria) }}
 {{ form_row(form.recruitmentParticipants) }}
 {{ form_row(form.collectionInformation) }}
-{{ form_row(form.collectionInformationFiles, {label_attr: {class: 'custom-file'} }) }}
+{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.collectionInformationFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'collectionInformationFiles', 'delete_label': 'Eliminar'}) }}
 {{ form_row(form.dataType, {label_attr: {class: 'checkbox-custom'} }) }}
 {{ form_row(form.riskDeclaration) }}
 {{ form_row(form.benefitsForParticipant) }}
@@ -17,16 +17,16 @@
   {{ form_row(form.informedConsent, {attr: {'data-code': 'informedConsentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
 <div id="informedConsentFiles" class="d-none">
-  {{ form_row(form.informedConsentFiles, {label_attr: {class: 'custom-file'} }) }}
+  {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.informedConsentFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'informedConsentFiles', 'delete_label': 'Eliminar'}) }}
 </div>
 
 <div class="inline-custom-radio">
   {{ form_row(form.informedAssent, {attr: {'data-code': 'informedAssentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
 <div id="informedAssentFiles" class="d-none">
-  {{ form_row(form.informedAssentFiles, {label_attr: {class: 'custom-file'} }) }}
+  {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.informedAssentFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'informedAssentFiles', 'delete_label': 'Eliminar'}) }}
 </div>
 
 
 {{ form_end(form) }}
-{{ include('commons/_form_footer.html.twig') }}
+{{ include('commons/_form_footer.html.twig', {'finish': 1}) }}

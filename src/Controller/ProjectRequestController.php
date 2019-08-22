@@ -3,34 +3,59 @@
 namespace App\Controller;
 
 use App\Entity\ProjectRequest;
-use App\Entity\ExtraInformationRequest;
+use App\Entity\Criterion;
+use App\Entity\LdapUser;
+use App\Entity\TeamWork;
 use App\Form\ProjectRequestType;
+use App\Repository\ExternalDataRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Entity\UsersRoles;
 
 /**
- * @Route("/project/request")
+ * @Route("/solicitud")
  */
 class ProjectRequestController extends AbstractController {
 
   /**
    * @Route("es/", name="project_request_index", methods={"GET"})
    */
-  public function index(): Response {
-    $projectRequests = $this->getDoctrine()
-            ->getRepository(ProjectRequest::class)
-            ->findAll();
+  public function index(Security $security): Response {
+    $loggedUser = $security->getUser();
+    $role = $loggedUser->getRole()->getDescription();
+    $data = [];
 
+    switch ($role) {
+      case "ROLE_ADMIN":
+        $requestsFilter = array("state" => 28);
+        $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
 
-    return $this->render('project_request/index.html.twig', [
-                'project_requests' => $projectRequests,
-    ]);
+        $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
+        break;
+      case "ROLE_STUDENT":
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28]);
+        break;
+      case "ROLE_RESEARCHER":
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28]);
+        break;
+      case "ROLE_EVALUATOR":
+        $requestsFilter = array("owner" => $loggedUser, "state" => [28]);
+        break;
+      default:
+        $requestsFilter = array("state" => 2);
+        break;
+    }
+
+    $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->findBy($requestsFilter);
+    $data['project_requests'] = $projectRequests;
+
+    return $this->render('project_request/index.html.twig', $data);
   }
 
   /**
@@ -43,6 +68,10 @@ class ProjectRequestController extends AbstractController {
 
     $entityManager = $this->getDoctrine()->getManager('sip');
     $entityManagerOracle = $this->getDoctrine()->getManager('oracle');
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2fe427cb44c9aa9ee9d8b812aacaafef99a45a9c
     $test = $this->getDoctrine()
             ->getRepository(UsersRoles::class)
             ->getExternalCollaborationByProject($entityManager, 'B0802');
@@ -75,7 +104,11 @@ class ProjectRequestController extends AbstractController {
             ->getRepository(UsersRoles::class)
             ->getMetodologiaByProject($entityManager, 'B4143');
     echo "<pre>";
+<<<<<<< HEAD
     var_dump($proyecto_metodologia["antecedentes"]);
+=======
+    var_dump($proyecto_metodologia);
+>>>>>>> 2fe427cb44c9aa9ee9d8b812aacaafef99a45a9c
     echo "</pre>";
     die();
 
@@ -84,47 +117,81 @@ class ProjectRequestController extends AbstractController {
     ]);
   }
 
+  private function getProjectExternalInformation($projectCode) {
+    $entityManager = $this->getDoctrine()->getManager('sip');
+    $externalCollaboration = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getExternalCollaborationByProject($entityManager, $projectCode);
+
+    $projectData = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getSIPProjectByCode($entityManager, $projectCode);
+
+    $unitData = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getAcademicUnitByProject($entityManager, $projectData["codigo_unidad"]);
+
+    $researchers = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getResearchersByProject($entityManager, $projectCode);
+
+    return array(
+        "externalCollaboration" => $externalCollaboration,
+        "projectData" => $projectData,
+        "unitData" => $unitData,
+        "researchers" => $researchers
+    );
+  }
+
   /**
    * @Route("/new", name="project_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, FileManager $fileManager): Response {
+  public function new(Request $request, FileManager $fileManager, Security $security): Response {
+    $loggedUser = $security->getUser();
+
     $projectRequest = new ProjectRequest();
     $form = $this->createForm(ProjectRequestType::class, $projectRequest);
     $form->handleRequest($request);
 
+    $minuteCommissionTFGFiles = [];
+    $extInstitutionsAuthorizationFiles = [];
+    $minuteFinalWorkFiles = [];
+    $minutesResearchCenterFiles = [];
+
     if ($form->isSubmitted() && $form->isValid()) {
-
-      $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
-      $docHumanInformationUploadedFiles = $form->get("docHumanInformationFiles")->getData();
-
       $projectDir = $this->getParameter('brochures_directory');
 
-      $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir);
-      $docHumanInformationFiles = $fileManager->uploadFiles($docHumanInformationUploadedFiles, $projectDir);
+      if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
+        $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
+        $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
 
-      $projectRequest->setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles);
-      $projectRequest->setDocHumanInformationFiles($docHumanInformationFiles);
+        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
+        $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
+      } else {
+        $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
+        $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
+      }
 
+      $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
+      $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
+
+
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
+
+      $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
+      $projectRequest->setState($state);
       $entityManager = $this->getDoctrine()->getManager();
-      
-//      if($form->get("tutor_name")){
-//        $extraInfo = new ExtraInformationRequest();
-//        $extraInfo->setTutorName($form->get("tutor_name")->getData());
-//        $extraInfo->setTutorId($form->get("tutor_id")->getData());
-//        $extraInfo->setTutorEmail($form->get("tutor_email")->getData());
-//        $extraInfo->setRequest($projectRequest);
-//        
-//        $entityManager->persist($extraInfo);
-//      }
-      
+
       $entityManager->persist($projectRequest);
       $entityManager->flush();
-      
-      
+
       $target = $form->get("form_target_input")->getData();
 
       $route = $this->getTargetRoute($target);
       $data = ['id' => $projectRequest->getId()];
+      $projectRequest->setCode("CEC-" + $projectRequest->getId());
+      $projectRequest->setOwner($loggedUser);
+      $entityManager->flush();
 
       return $this->redirectToRoute($route, $data);
     }
@@ -133,6 +200,38 @@ class ProjectRequestController extends AbstractController {
                 'project_request' => $projectRequest,
                 'form' => $form->createView()
     ]);
+  }
+  
+  /**
+   * @Route("/remove_student_by_id", name="remove_student_by_id", methods={"POST"})
+   */
+  public function removeStudentAjax(Request $request): Response {
+    $student_id = $request->request->get('id');
+    if ($student_id) {
+      $entityManager = $this->getDoctrine()->getManager();
+      $file = $this->getDoctrine()->getRepository(TeamWork::class)->find($student_id);
+
+      $entityManager->remove($file);
+      $entityManager->flush();
+
+      return new JsonResponse(['wasDeleted' => true]);
+    }
+
+    return new JsonResponse(['wasDeleted' => false]);
+  }
+  
+  /**
+   * @Route("/get_student_by_id", name="get_student_by_id", methods={"POST"})
+   */
+  public function getStudentById(Request $request): Response {
+    $studentId = $request->request->get('id');
+    $student = $this->getDoctrine()
+            ->getRepository(ExternalDataRepository::class)
+            ->getStudentById($em, $studentId); //'B04278'
+    if ($student) {
+      return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
+    }
+    return new JsonResponse(["studentWasFound" => false]);
   }
 
   private function getTargetRoute($target) {
@@ -146,7 +245,6 @@ class ProjectRequestController extends AbstractController {
       case "ethic":
         $route = 'tab_ethic_eval_request';
         break;
-
       default:
         $route = 'tab_academic_request_info';
         break;
@@ -164,27 +262,56 @@ class ProjectRequestController extends AbstractController {
   }
 
   /**
-   * @Route("/{id}", name="project_request_edit", methods={"GET","POST"})
+   * @Route("/edit/{id}", name="project_request_edit", methods={"GET","POST"})
    */
-  public function edit(Request $request, ProjectRequest $projectRequest, FileManager $fileManager): Response {
+  public function edit(Request $request, ProjectRequest $projectRequest, FileManager $fileManager, Security $security): Response {
+    $loggedUser = $security->getUser();
+
     $form = $this->createForm(ProjectRequestType::class, $projectRequest);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $this->getDoctrine()->getManager()->flush();
-
-      $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
-      $docHumanInformationUploadedFiles = $form->get("docHumanInformationFiles")->getData();
 
       $projectDir = $this->getParameter('brochures_directory');
 
-      $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir);
-      $docHumanInformationFiles = $fileManager->uploadFiles($docHumanInformationUploadedFiles, $projectDir);
+      if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
+        $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
+        $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
 
-      $projectRequest->setExtInstitutionsAuthorizationFiles($extInstitutionsAuthorizationFiles);
-      $projectRequest->setDocHumanInformationFiles($docHumanInformationFiles);
+        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
+        $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
 
+        $uploadedTeamWork = $request->request->get('teamWork');
+        $teamWork = array();
+        if (count($uploadedTeamWork["student_name"]) > 0) {
+          for ($i = 0; $i < count($uploadedTeamWork["student_name"]); $i++) {
+            $student = new \App\Entity\TeamWork();
+            $student->setName($uploadedTeamWork["student_name"][$i]);
+            $student->setStudentId($uploadedTeamWork["student_id"][$i]);
+            $student->setStudentEmail($uploadedTeamWork["student_email"][$i]);
+
+            $this->getDoctrine()->getManager()->persist($student);
+
+            array_push($teamWork, $student);
+          }
+
+          $projectRequest->addTeamWork($teamWork);
+        }
+      } else {
+        $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
+        $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
+      }
+
+      $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
+      $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
+
+
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
+      $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
+      $projectRequest->setState($state);
       $target = $form->get("form_target_input")->getData();
+
+      $this->getDoctrine()->getManager()->flush();
 
       $route = $this->getTargetRoute($target);
       $data = ['id' => $projectRequest->getId()];

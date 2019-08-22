@@ -12,16 +12,15 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method UsersRoles[]    findAll()
  * @method UsersRoles[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UsersRolesRepository extends ServiceEntityRepository
-{
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, UsersRoles::class);
-    }
+class UsersRolesRepository extends ServiceEntityRepository {
 
-    public function getExternalCollaborationByProject($em, $project_id) {
-        $connection = $em->getConnection();
-        $statement = $connection->prepare("
+  public function __construct(RegistryInterface $registry) {
+    parent::__construct($registry, UsersRoles::class);
+  }
+
+  public function getExternalCollaborationByProject($em, $project_id) {
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
             SELECT
                 c.convenio as numero, c.nombre,
                 isnull(e.descrip,'') as entidad,
@@ -35,22 +34,23 @@ class UsersRolesRepository extends ServiceEntityRepository
             where
                 c.proyecto = '$project_id' and
                 co.tipo = 34;");
-        $statement->execute();
+    $statement->execute();
 
-        $results = $statement->fetchAll();
-        return $results;
-    }
+    $results = $statement->fetchAll();
+    return $results;
+  }
 
-    /*
+  /*
     public function findOneBySomeField($value): ?UsersRoles
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    return $this->createQueryBuilder('u')
+    ->andWhere('u.exampleField = :val')
+    ->setParameter('val', $value)
+    ->getQuery()
+    ->getOneOrNullResult()
+    ;
     }
+<<<<<<< HEAD
     */
     public function getEstudianteByCarnet($em, $estudent_id) {
         $query = 'SELECT * FROM v_vi_estudiante_activo WHERE carne = :estudent_id';
@@ -121,6 +121,33 @@ class UsersRolesRepository extends ServiceEntityRepository
         
         $connection = $em->getConnection();
         $statement = $connection->prepare("
+=======
+   */
+
+  public function getEstudentById($em, $estudent_id) {
+    $query = 'SELECT * FROM v_vi_estudiante_activo WHERE carne = :estudent_id';
+    try {
+
+      $connection = $em->getConnection();
+      $statement = $connection->prepare($query);
+      $statement->bindValue('estudent_id', $estudent_id);
+      $statement->execute();
+
+      $results = $statement->fetchAll();
+    } catch (\Exception $e) {
+      var_dump($e);
+      return null;
+    }
+    return $results;
+  }
+
+  
+
+  public function getProjectById($em, $id) {
+
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
+>>>>>>> 2fe427cb44c9aa9ee9d8b812aacaafef99a45a9c
             select xprouni.unidadc as codigo_unidad, proyectos.descrip as nombre, proyectos.proyecto as codigo_proyecto, unidades.descrip as unidad, TI.descrip AS tipo_invest, CR.descrip as tipo_finan,  
                     EP.descrip as estado, descr_ubi as ubicacion, TP.descrip as tipo_proyecto 
                     From proyectos, xprouni, codigos as TI,codigos as CR,codigos as EP, ubicacion,codigos as TP, unidades  
@@ -134,6 +161,7 @@ class UsersRolesRepository extends ServiceEntityRepository
                     and ubicacion.ubicacion = proyectos.ubicacion  
                     and TP.tipo = 21 and TP.codigo = tipo_proy");
 
+<<<<<<< HEAD
         $statement->execute();
 
         $results = $statement->fetchAll();
@@ -149,4 +177,23 @@ class UsersRolesRepository extends ServiceEntityRepository
         $results = $statement->fetchAll();
         return isset($results[0]) ? $results[0] : false;
     }
+=======
+    $statement->execute();
+
+    $results = $statement->fetchAll();
+
+    return (!empty($results)) ? $results[0] : null;
+  }
+
+  public function getMetodologiaByProject($em, $id) {
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
+                SELECT * FROM proyectos_info_adicional where proyecto = '$id'");
+    $statement->execute();
+
+    $results = $statement->fetchAll();
+    return isset($results[0]) ? $results[0] : false;
+  }
+
+>>>>>>> 2fe427cb44c9aa9ee9d8b812aacaafef99a45a9c
 }
