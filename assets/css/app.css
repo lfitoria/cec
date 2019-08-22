@@ -9,68 +9,199 @@ body .main-container{
 }
 
 .btn-primary {
-  color: var(--white);
-  background-color: var(--green);
-  border-color: var(--green);
+    color: #fff;
+    background-color: var(--green);
+    border-color: var(--green);
 }
 
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
-  color: var(--white); 
-  background-color: var(--green);
-  border-color: var(--green);
+    color: #fff;
+    background-color: var(--green);
+    border-color: var(--green);
 }
 
 .inline-custom-radio .custom-radio{
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  margin-right: 1rem;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    margin-right: 1rem;
 }
 
 input, textarea, select{
-  border-radius: 0 !important;
+    border-radius: 0 !important;
 }
-
 
 .header{
-  background-color: var(--A3);
-  padding: 1% 0;
+    background-color: var(--A3);
+    padding: 1% 0;
 }
-.header-title{
-  padding: 1% 0;
-  background-color: var(--white);
-  margin-bottom: 35px;
+.header-title {
+padding: 0% 0 2% 0;
 }
 .header-title h2 {
-  color: var(--A4);
-  margin: 0;
-  padding: 0;
-  font-weight: bold;
+color: var(--A4);
+margin: 0;
+padding: 10px 0 0 0;
+font-weight: bold;
 }
 .header-title p{
-  color: var(--A6);
-  margin-bottom: 0;
+    color: var(--A6);
 }
 footer{
-  margin-top: 35px;
-  padding: 2% 0;
-  background-color: var(--G2);
-  color: var(--white);
-  font-size: 0.8em;
+    padding: 2% 0;
+    background-color: var(--G2);
+    color: var(--white);
+    font-size: 0.8em;
 }
 footer a{
-  color: var(--white);
+    color: var(--white);
 }
 footer a:hover{
-  color: var(--white);
+    color: var(--white);
 }
 footer p{
-  margin:0;
+    margin:0;
 }
-.infooter-box {
-  padding: 5px 0px 5px 15px;
-  border-left: 1px solid var(--N1);
+.infooter-box{
+    padding: 5px 0px 5px 15px;
+    border-left: 1px solid var(--N1);
 }
-.copy {
-  padding-top: 15px;
+.copy{
+    padding-top: 15px;
 }
+.label{
+color: var(--A4);
+}
+.box-info-home p{
+    color: var(--G2);
+    margin: 5px 0;
+}
+.box-info-home {
+background-color: var(--A9);
+border-top: 1px solid var(--A8);
+border-bottom: 1px solid var(--A8);
+padding: 1% 0;
+}
+.btn-menu-user {
+background-color: transparent;
+border: none;
+text-transform: capitalize;
+position: relative;
+padding: 0 15px 0px 0;
+color: var(--G2);
+}
+.btn-menu-user:before{
+    content: '\f007';
+    font-family: FontAwesome;
+}
+.btn-menu-user:after {
+content: '\f078';
+font-family: FontAwesome;
+border: none;
+/* padding-top: 15px; */
+position: absolute;
+display: inline-block;
+right: 0;
+top: 0px;
+font-size: 0.6em;
+}
+.menu-user {
+border-left: 1px solid var(--A8);
+padding-left: 10px;
+
+}
+.menu-user .btn-menu-user {
+line-height: 63px;
+}
+.menu-user .dropdown-menu a{
+    color: var(--G2);
+}
+.menu-user .dropdown-menu a:nth-child(1){
+
+}
+.menu-user .dropdown-menu a:nth-child(2){
+    
+}
+.menu-user .dropdown-menu a:nth-child(3){
+    
+}
+.menu-user .dropdown-menu a:before {
+font-family: FontAwesome;
+margin-right: 5px;
+}
+.menu-user .dropdown-menu a:nth-child(1):before{
+content: '\f15c';
+}
+.menu-user .dropdown-menu a:nth-child(2):before{
+content: '\f059';
+}
+.menu-user .dropdown-menu a:nth-child(3):before{
+content: '\f08b';
+}
+.login-box-body form{
+    padding: 0;
+}
+.login-box-body p{
+    text-align: center;
+    font-weight: bold;
+    color: var(--G2);
+}
+.login-box-body .btn{
+width: initial;
+margin: auto;
+
+}
+.login-box-body {
+padding: 3%;
+border: 1px solid var(--A2);
+border-radius: 5px;
+box-shadow: 0px 5px 6px 5px rgba(0, 0, 0, 0.19);
+background: #fff;
+}
+.container-box-login {
+background-color: var(--A9);
+padding: 2% 0;
+border-top: 1px solid var(--A8);
+border-bottom: 1px solid var(--A8);
+}
+ul {
+  list-style: none;
+}
+
+ul li::before {
+  content: '\2022';
+  color: var(--N1);
+  font-weight: bold;
+  display: inline-block; 
+  width: 1em;
+  margin-left: -1em;
+}
+ul.form_header_nav li::before {
+  content: '';
+  
+}
+
+.form-control {
+
+border: 1px solid var(--A2);
+
+}
+
+@media (min-width: 576px) { 
+} /*fin*/
+
+
+@media (min-width: 768px) {
+    .box-r {
+        border-left: 1px solid var(--A8);
+    }
+    .login-box-body {
+        margin-top: -70px;
+    }
+} /*fin*/
+
+@media (min-width: 992px) {
+} /*fin*/
+
+@media (min-width: 1200px) {
+} /*fin*/

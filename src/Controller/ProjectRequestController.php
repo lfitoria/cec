@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use App\Entity\UsersRoles;
+
 /**
  * @Route("/project/request")
  */
@@ -38,6 +40,44 @@ class ProjectRequestController extends AbstractController {
     $projectRequests = $this->getDoctrine()
             ->getRepository(ProjectRequest::class)
             ->findAll();
+
+    $entityManager = $this->getDoctrine()->getManager('sip');
+    $entityManagerOracle = $this->getDoctrine()->getManager('oracle');
+    $test = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getExternalCollaborationByProject($entityManager, 'B0802');
+    echo "<pre>";
+    var_dump($test);
+    echo "</pre>";
+    echo "<hr>";
+    $estudiante = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getEstudianteByCarnet($entityManagerOracle, 'B04278');
+    echo "<pre>";
+    var_dump($estudiante);
+    echo "</pre>";
+    echo "<hr>";
+    $invest_colaboradores = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getInvesColaboradoresByProject($entityManager, 'B0802');
+    echo "<pre>";
+    var_dump($invest_colaboradores);
+    echo "</pre>";
+    echo "<hr>";
+    $proyecto_info = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getProjectById($entityManager, 'B0802');
+    echo "<pre>";
+    var_dump($proyecto_info);
+    echo "</pre>";
+    echo "<hr>";
+    $proyecto_metodologia = $this->getDoctrine()
+            ->getRepository(UsersRoles::class)
+            ->getMetodologiaByProject($entityManager, 'B4143');
+    echo "<pre>";
+    var_dump($proyecto_metodologia["antecedentes"]);
+    echo "</pre>";
+    die();
 
     return $this->render('project_request/index.html.twig', [
                 'project_requests' => $projectRequests,

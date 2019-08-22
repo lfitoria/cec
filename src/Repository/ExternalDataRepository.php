@@ -86,4 +86,26 @@ class ExternalDataRepository extends ServiceEntityRepository {
         return $results[0];
     }
 
+    public function getXternalCollaborationByProject($em, $project_id) {
+        $connection = $em->getConnection();
+        $statement = $connection->prepare("
+            SELECT
+                c.convenio as numero, c.nombre,
+                isnull(e.descrip,'') as entidad,
+                co.descrip as tipo,
+                isnull(xp.cuenta,'') cuenta, isnull(xp.monto,0) monto,
+                isnull(xp.descripcion,'') descripcion
+            FROM convenios c
+                LEFT JOIN  xproconvent xp on xp.convenio = c.convenio
+                LEFT JOIN codigos co on co.codigo = c.tipo
+                LEFT JOIN entidades e on e.entidad = xp.entidad
+            where
+                c.proyecto = '$project_id' and
+                co.tipo = 34;");
+        $statement->execute();
+
+        $results = $statement->fetchAll();
+        return $results;
+    }
+
 }
