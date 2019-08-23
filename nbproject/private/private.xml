@@ -56,7 +56,6 @@
             <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/NotificationManager.php</file>
             <file>file:/C:/xampp/htdocs/cec/assets/js/variables.js</file>
             <file>file:/C:/xampp/htdocs/cec/src/Form/TeamWorkType.php</file>
-            <file>file:/C:/xampp/htdocs/cec/public/build/forms.js</file>
             <file>file:/C:/xampp/htdocs/cec/templates/eval_request/new.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/config/packages/webpack_encore.yaml</file>
@@ -70,6 +69,7 @@
             <file>file:/C:/xampp/htdocs/cec/src/Entity/PreEvalRequest.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/ethic_eval_request/edit.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Repository/ExternalDataRepository.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Controller/FileController.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/LogManager.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/commons/_form_footer.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Controller/EvalRequestController.php</file>

@@ -117,7 +117,7 @@ final class Version20190817193147 extends AbstractMigration
         $this->addSql('ALTER TABLE ldap_user DROP FOREIGN KEY FK_3888D380D60322AC');
         $this->addSql('DROP TABLE academic_request_info');
         $this->addSql('DROP TABLE inv_type_ethic_eval_request');
-        $this->addSql('DROP TABLE Criterion');
+        $this->addSql('DROP TABLE criterion');
         $this->addSql('DROP TABLE ethic_eval_request');
         $this->addSql('DROP TABLE population_ethic_eval_request');
         $this->addSql('DROP TABLE data_type_ethic_eval_request');
