@@ -1,48 +1,5 @@
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        {% block stylesheets %}
-        {{ encore_entry_link_tags('variables') }}
-        {{ encore_entry_link_tags('app') }}
-        {{ encore_entry_link_tags('forms') }}
-        {% endblock %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    </head>
-    <body>
-        <div class="header">
-            <div class="container">
-                <img src="{{ asset('images/logo_header_ucr.png') }}" alt="CEC"/>
-            </div>
-        </div>
-        <div class="header-title">
-            <div class="container">
-                <div class="row menu-user-box">
-                    <div class="col">
-                        <h2>COMITÉ ÉTICO CIENTÍFICO</h2>
-                        <p style="margin: 0;">Sistema de evaluación ética para la investigación con seres humanos</p>
-                    </div>
-                    {% if app.user %}
-                        <div class="dropdown menu-user">
-                          <button class="btn-menu-user dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{app.user.name|lower}}
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">SEGUIMIENTO DE SOLICITUDES</a>
-                            <a class="dropdown-item" href="#">AYUDA</a>
-                            <a class="dropdown-item" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
-                          </div>
-                        </div>
-                        
-                    {% else %}
-                        
-                    {% endif %}
-                </div>
-=======
   <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -78,7 +35,6 @@
                 <a class="dropdown-item" href="#">AYUDA</a>
                 <a class="dropdown-item" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
               </div>
->>>>>>> 2fe427cb44c9aa9ee9d8b812aacaafef99a45a9c
             </div>
 
           {% else %}

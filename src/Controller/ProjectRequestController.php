@@ -100,11 +100,7 @@ class ProjectRequestController extends AbstractController {
             ->getRepository(UsersRoles::class)
             ->getMetodologiaByProject($entityManager, 'B4143');
     echo "<pre>";
-<<<<<<< HEAD
-    var_dump($proyecto_metodologia["antecedentes"]);
-=======
     var_dump($proyecto_metodologia);
->>>>>>> 2fe427cb44c9aa9ee9d8b812aacaafef99a45a9c
     echo "</pre>";
     die();
 

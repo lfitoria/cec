@@ -21,7 +21,7 @@ final class Version20190820014004 extends AbstractMigration {
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
     $this->addSql('ALTER TABLE project_request CHANGE state state_id INT DEFAULT NULL');
-    $this->addSql('ALTER TABLE project_request ADD CONSTRAINT FK_AD8983FA5D83CC1 FOREIGN KEY (state_id) REFERENCES Criterion (id)');
+    $this->addSql('ALTER TABLE project_request ADD CONSTRAINT FK_AD8983FA5D83CC1 FOREIGN KEY (state_id) REFERENCES criterion (id)');
     $this->addSql('CREATE INDEX IDX_AD8983FA5D83CC1 ON project_request (state_id)');
 
     $this->addSql("INSERT INTO `criterion` (`id`, `description`, `code`) VALUES

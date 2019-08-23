@@ -3,66 +3,6 @@
 {% block title %}ProjectRequest index{% endblock %}
 
 {% block body %}
-<<<<<<< HEAD
-    <h1>Solicitudes</h1>
-    <table class="table table-bordered">
-        <thead class="thead-light">
-            <tr>
-                <th>Nº de solicitud</th>
-                <th>Título</th>
-                <th colspan="2">Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for project_request in project_requests %}
-            <tr>
-                <td>CEC-{{ project_request.id }}</td>
-                <td>{{ project_request.title }}</td>
-                <td>
-                    {% if project_request.state == 1 %}
-                        {{"En edición"}}
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
-                    <a href="{{ path('project_request_edit', {'id': project_request.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">Proyectos no encontrados</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Crear proyecto
-    </button>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--fin Modal -->
-{% endblock %}
-
-=======
   <h1>SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</h1>
   <table class="table">
     <thead>
@@ -162,4 +102,3 @@
 
 
 
->>>>>>> 2fe427cb44c9aa9ee9d8b812aacaafef99a45a9c
