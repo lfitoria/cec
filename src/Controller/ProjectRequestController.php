@@ -181,7 +181,7 @@ class ProjectRequestController extends AbstractController {
 
       $route = $this->getTargetRoute($target);
       $data = ['id' => $projectRequest->getId()];
-      $projectRequest->setCode("CEC-" + $projectRequest->getId());
+      $projectRequest->setCode($projectRequest->getId());
       $projectRequest->setOwner($loggedUser);
       $entityManager->flush();
 
@@ -217,11 +217,16 @@ class ProjectRequestController extends AbstractController {
    */
   public function getStudentById(Request $request): Response {
     $studentId = $request->request->get('id');
+    $entityManager = $this->getDoctrine()->getManager('oracle');
     $student = $this->getDoctrine()
-            ->getRepository(ExternalDataRepository::class)
-            ->getStudentById($em, $studentId); //'B04278'
+            ->getRepository(UsersRoles::class)
+            // ->getStudentById($entityManager, $studentId); //'B04278'
+            ->getEstudentById($entityManager, $studentId); //'B04278'
+            
+   
     if ($student) {
-      return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
+       return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
+      //return new JsonResponse(["studentWasFound" => true]);
     }
     return new JsonResponse(["studentWasFound" => false]);
   }

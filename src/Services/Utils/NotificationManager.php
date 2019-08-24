@@ -20,9 +20,9 @@ class NotificationManager {
     $this->fileManager = $fileManager;
 
     // Create the Transport
-    $this->transport = (new \Swift_SmtpTransport('localhost', 25))
-            ->setUsername('asasa')
-            ->setPassword('asasa');
+    $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
+            ->setUsername('catedrahumboldt.vi@ucr.ac.cr')
+            ->setPassword('$Humbo_2019#');
 
     $this->mailer = (new \Swift_Mailer($this->transport));
   }
@@ -41,6 +41,7 @@ class NotificationManager {
             ->setFrom($emailData["from"])
             ->setContentType($emailData["contentType"] ?? 'text/html')
             ->setTo($emailData["to"])
+            ->addCc($emailData["cc"])
             ->setBody($emailData["body"] ?? 'No body');
 
     if (isset($emailData["bcc"])) {
@@ -66,7 +67,7 @@ class NotificationManager {
 
   public function sendEmail($emailData) {
 
-    $this->validateEmails([$emailData["from"], $emailData["to"]]);
+    $this->validateEmails([$emailData["from"], $emailData["to"], $emailData["cc"]]);
     $message = $this->configureEmail($emailData);
 
     try {

@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
 use App\Services\Utils\NotificationManager;
+use App\Entity\LdapUser;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/ethic/eval/request")
@@ -52,7 +54,7 @@ class EthicEvalRequestController extends AbstractController {
   /**
    * @Route("/new/{id}", name="ethic_eval_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, FileManager $fileManager, NotificationManager $notificationManager, ProjectRequest $projectRequest): Response {
+  public function new(Request $request, FileManager $fileManager, NotificationManager $notificationManager, ProjectRequest $projectRequest,Security $security): Response {
     $ethicEvalRequest = new EthicEvalRequest();
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
     $form->handleRequest($request);
@@ -76,14 +78,27 @@ class EthicEvalRequestController extends AbstractController {
       
       if($finish == "1"){
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
+        $loggedUser = $security->getUser();
+        $role = $loggedUser->getRole()->getDescription();
+        $body_html = '<img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_correo.png" alt="">
+                      <hr>
+                      <p>Se ha recibido una nueva solicitud de revisioón con el número CEC-'.$projectRequest->getId().'</p>
+                      <p><strong>Proyecto: </strong>'.$projectRequest->getTitle().'</p>
+                      <p><strong>Unidad: </strong>'.$projectRequest->getProjectUnit().'</p>
+                      <p><strong>Investigador/estudiante responsable:</strong> '.$projectRequest->getTutorName().'</p>
+                      <a href="#" target="_blank">Asignar a evaluador</a>
+                      
+                      ';
         $emailData = [
-            "subject" => "TEST",
-            "from" => "camacho.le@gmail.com",
-            "to" => "camacho.le@gmail.com",
-            "body" => "BODY TEST"
+          "subject" => "TEST",
+          "from" => "catedrahumboldt.vi@ucr.ac.cr",
+          "to" => "lfitoria@eldomo.net",
+          // "to" => "camacho.le@gmail.com",
+          "cc" => "camacho.le@gmail.com",
+          "body" => $body_html
         ];
         $notificationManager->sendEmail($emailData);
-        var_dump("asaa");
+        var_dump("new");
       }else{
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       }
@@ -142,12 +157,14 @@ class EthicEvalRequestController extends AbstractController {
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
         $emailData = [
             "subject" => "TEST",
-            "from" => "camacho.le@gmail.com",
-            "to" => "camacho.le@gmail.com",
-            "body" => "BODY TEST"
+            "from" => "catedrahumboldt.vi@ucr.ac.cr",
+            "to" => "lfitoria@eldomo.net",
+            // "to" => "camacho.le@gmail.com",
+            "cc" => "camacho.le@gmail.com",
+            "body" => "BODY TEST public function edit"
         ];
         $notificationManager->sendEmail($emailData);
-        var_dump("asaa");
+        var_dump("edit");
       }else{
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       }
