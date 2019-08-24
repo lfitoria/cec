@@ -119,14 +119,11 @@ class ProjectRequestController extends AbstractController {
 
     $projectData = $externalDataManager->getSIPProjectByCode($entityManager, $projectCode);
     if ($projectData) {
-
       $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
-      $unitData = $externalDataManager->getAcademicUnitByProject($entityManager, $projectData["codigo_unidad"]);
       $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
 
       return new JsonResponse(["externalCollaboration" => $externalCollaboration,
           "projectData" => $projectData,
-          "unitData" => $unitData,
           "researchers" => $researchers, "projectWasFound" => true]);
     }
     return new JsonResponse(["projectWasFound" => false]);
