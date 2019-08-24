@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Criterion;
 use App\Entity\AcademicRequestInfo;
 use App\Entity\ProjectRequest;
 use App\Entity\EthicEvalRequest;
@@ -57,7 +58,8 @@ class AcademicRequestInfoController extends AbstractController {
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $projectRequest->setState(1);
+      $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
+      $projectRequest->setState($state);
       $academicRequestInfo->setRequest($projectRequest);
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($academicRequestInfo);
@@ -97,7 +99,9 @@ class AcademicRequestInfoController extends AbstractController {
       $this->getDoctrine()->getManager()->flush();
 
       $target = $form->get("form_target_input")->getData();
-      $academicRequestInfo->getRequest()->setState(2);
+
+      $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
+      $academicRequestInfo->getRequest()->setState($state);
       $route = $this->getTargetRoute($target);
       $data = ['id' => $academicRequestInfo->getRequest()->getId()];
 

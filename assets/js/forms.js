@@ -178,8 +178,11 @@ const $ = require('jquery');
 
       cache.addStudentButton.click(function (e) {
         e.preventDefault();
+        console.log("entraaa");
+        console.log($(".add_student_input").val());
         var _this = $(this);
         var path = _this[0].dataset.path;
+        console.log(path);
         $.ajax({
           type: 'POST',
           url: path,
@@ -187,9 +190,11 @@ const $ = require('jquery');
           data: {
             id: $(".add_student_input").val()
           },
-          dataType: 'json',
+          // dataType: 'json',
           success: function (response) {
+            console.log(response);
             if (response.studentWasFound) {
+              console.log("prefire");
               const studentCount = $(".student_row").length;
               const studentRow =
                       `<tr class="student_row">
@@ -207,6 +212,15 @@ const $ = require('jquery');
                 var _this = $(this);
                 removeSelectedTeamWork(_this);
               });
+              console.log("antesfire");
+              Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: 'Estudiante agregado',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              console.log("fire");
             } else {
 
             }
