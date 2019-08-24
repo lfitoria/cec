@@ -32,9 +32,6 @@ class ProjectRequestType extends AbstractType {
 
 
     $builder
-            ->add('title', TextType::class, [
-                'label' => 'Titulo del proyecto:',
-            ])
             ->add('extInstitutions', TextareaType::class, [
                 'attr' => ['class' => 'tinymce', 'rows' => '4'],
                 'label' => 'Otras instituciones externas públicas o privadas:',
@@ -85,6 +82,9 @@ class ProjectRequestType extends AbstractType {
 
               $userType = $this->user->getRole()->getDescription();
               if ($userType === "ROLE_STUDENT") {
+                $form->add('title', TextType::class, [
+                    'label' => 'Titulo del proyecto:',
+                ]);
                 $form->add('tutorName', TextType::class, [
                     'label' => 'Nombre del tutor:',
                     'constraints' => array(

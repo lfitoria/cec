@@ -2,8 +2,18 @@
 {{ include('commons/_form_header.html.twig', {'current_nav_item': 'info'}) }}
 {{ form_start(form, {attr: {class: 'form-request', 'data-number': '1'}}) }}
 
-{{ form_row(form.title) }}
+{% if app.user.role.description == "ROLE_RESEARCHER" %}
+  <div class="input-group mb-3 w-50">
+    <input type="text" class="form-control add_project_info_input" placeholder="Código del proyecto" aria-label="Código del proyecto" aria-describedby="button-addon2">
+    <div class="input-group-append">
+      <button type='button' class='add_project_info_button btn btn-primary' data-path="{{ path("get_external_data_by_project_code") }}">Cargar información</button>
+
+    </div>
+    <small id="project_request_project_info_help" class="form-text text-muted">Digite el código del proyecto y presione el botón "Cargar información".</small>
+  </div> 
+{% endif %}
 {% if app.user.role.description == "ROLE_STUDENT" %}
+  {{ form_row(form.title) }}
   <div class="tutor_information_container">
     <div class="form-group">
       <label for="tutor_information_label" class="required">Director(a) del trabajo final de graduación:</label>
@@ -55,7 +65,7 @@
       <input type="text" class="form-control add_student_input" placeholder="Carnet del estudiante" aria-label="Carnet del estudiante" aria-describedby="button-addon2">
       <div class="input-group-append">
         <button type='button' class='add_student_button btn btn-primary' data-path="{{ path("get_student_by_id") }}" data-list='teamWork'>Agregar miembro</button>
-        
+
       </div>
       <small id="project_request_team_work_help" class="form-text text-muted">Para agregar un nuevo miembro al equipo, coloque en número de carné y presione el botón "Agregar miembro".</small>
     </div> 

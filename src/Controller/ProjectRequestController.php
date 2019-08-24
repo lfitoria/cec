@@ -16,7 +16,6 @@ use App\Services\Utils\FileManager;
 use App\Services\Utils\ExternalDataManager;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use App\Entity\UsersRoles;
 
 /**
@@ -110,30 +109,27 @@ class ProjectRequestController extends AbstractController {
     ]);
   }
 
-  private function getProjectExternalInformation($projectCode) {
+  /**
+   * @Route("/get_external_data_by_project_code", name="get_external_data_by_project_code", methods={"POST"})
+   */
+  public function getProjectExternalInformation(ExternalDataManager $externalDataManager, Request $request): Response {
+    $projectCode = $request->request->get('projectCode');
+
     $entityManager = $this->getDoctrine()->getManager('sip');
-    $externalCollaboration = $this->getDoctrine()
-            ->getRepository(UsersRoles::class)
-            ->getExternalCollaborationByProject($entityManager, $projectCode);
 
-    $projectData = $this->getDoctrine()
-            ->getRepository(UsersRoles::class)
-            ->getSIPProjectByCode($entityManager, $projectCode);
+    $projectData = $externalDataManager->getSIPProjectByCode($entityManager, $projectCode);
+    if ($projectData) {
 
-    $unitData = $this->getDoctrine()
-            ->getRepository(UsersRoles::class)
-            ->getAcademicUnitByProject($entityManager, $projectData["codigo_unidad"]);
+      $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
+      $unitData = $externalDataManager->getAcademicUnitByProject($entityManager, $projectData["codigo_unidad"]);
+      $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
 
-    $researchers = $this->getDoctrine()
-            ->getRepository(UsersRoles::class)
-            ->getResearchersByProject($entityManager, $projectCode);
-
-    return array(
-        "externalCollaboration" => $externalCollaboration,
-        "projectData" => $projectData,
-        "unitData" => $unitData,
-        "researchers" => $researchers
-    );
+      return new JsonResponse(["externalCollaboration" => $externalCollaboration,
+          "projectData" => $projectData,
+          "unitData" => $unitData,
+          "researchers" => $researchers, "projectWasFound" => true]);
+    }
+    return new JsonResponse(["projectWasFound" => false]);
   }
 
   /**
@@ -194,7 +190,7 @@ class ProjectRequestController extends AbstractController {
                 'form' => $form->createView()
     ]);
   }
-  
+
   /**
    * @Route("/remove_student_by_id", name="remove_student_by_id", methods={"POST"})
    */
@@ -212,7 +208,7 @@ class ProjectRequestController extends AbstractController {
 
     return new JsonResponse(['wasDeleted' => false]);
   }
-  
+
   /**
    * @Route("/get_student_by_id", name="get_student_by_id", methods={"POST"})
    */
@@ -221,18 +217,18 @@ class ProjectRequestController extends AbstractController {
 
     $em = $this->getDoctrine()->getManager('oracle');
     $student = $externalDataManager->getStudentById($em, $studentId); //'B04278'
-    
+
     /*
-    
-    $entityManager = $this->getDoctrine()->getManager('oracle');
-    $student = $this->getDoctrine()
-    ->getRepository(UsersRoles::class)
-    ->getStudentById($entityManager, $studentId); //'B04278'
-    ->getEstudentById($entityManager, $studentId); //'B04278'
-  
+
+      $entityManager = $this->getDoctrine()->getManager('oracle');
+      $student = $this->getDoctrine()
+      ->getRepository(UsersRoles::class)
+      ->getStudentById($entityManager, $studentId); //'B04278'
+      ->getEstudentById($entityManager, $studentId); //'B04278'
+
      */
     if ($student) {
-       return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
+      return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
       //return new JsonResponse(["studentWasFound" => true]);
     }
     return new JsonResponse(["studentWasFound" => false]);

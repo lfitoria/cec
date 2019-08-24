@@ -118,7 +118,7 @@ const $ = require('jquery');
           }
         });
       });
-      
+
       cache.uploaded_student_delete.click(function (e) {
         e.preventDefault();
         var _this = $(this);
@@ -178,11 +178,8 @@ const $ = require('jquery');
 
       cache.addStudentButton.click(function (e) {
         e.preventDefault();
-        console.log("entraaa");
-        console.log($(".add_student_input").val());
         var _this = $(this);
         var path = _this[0].dataset.path;
-        console.log(path);
         $.ajax({
           type: 'POST',
           url: path,
@@ -192,9 +189,7 @@ const $ = require('jquery');
           },
           // dataType: 'json',
           success: function (response) {
-            console.log(response);
             if (response.studentWasFound) {
-              console.log("prefire");
               const studentCount = $(".student_row").length;
               const studentRow =
                       `<tr class="student_row">
@@ -212,7 +207,6 @@ const $ = require('jquery');
                 var _this = $(this);
                 removeSelectedTeamWork(_this);
               });
-              console.log("antesfire");
               Swal.fire({
                 position: 'center',
                 type: 'success',
@@ -220,9 +214,49 @@ const $ = require('jquery');
                 showConfirmButton: false,
                 timer: 1500
               })
-              console.log("fire");
             } else {
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: 'Estudiante no encontrado',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            }
+          }
+        });
+      });
 
+      cache.addProjectInfoButton.click(function (e) {
+        e.preventDefault();
+        var _this = $(this);
+        var path = _this[0].dataset.path;
+        $.ajax({
+          type: 'POST',
+          url: path,
+          context: _this,
+          data: {
+            projectCode: $(".add_project_info_input").val()
+          },
+          // dataType: 'json',
+          success: function (response) {
+            if (response.projectWasFound) {
+
+              Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: 'Estudiante agregado',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else {
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: 'Estudiante no encontrado',
+                showConfirmButton: false,
+                timer: 1500
+              })
             }
           }
         });
@@ -262,7 +296,8 @@ const $ = require('jquery');
       cache.addStudentButton = $(".add_student_button");
       cache.selected_student_delete = $(".selected_teamwork_item--delete");
       cache.uploaded_student_delete = $(".uploaded_teamwork_item--delete");
-      
+      cache.addProjectInfoButton = $(".add_project_info_button");
+
       var collectionFileHolder = $('.collecion_list');
       for (var i = 0; i < collectionFileHolder.length; i++) {
         collectionFileHolder[i].dataset.index = collectionFileHolder[i].querySelectorAll('input').length;
