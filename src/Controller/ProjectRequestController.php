@@ -219,7 +219,7 @@ class ProjectRequestController extends AbstractController {
   public function getStudentById(Request $request, ExternalDataManager $externalDataManager): Response {
     $studentId = $request->request->get('id');
 
-    $em = $this->getDoctrine()->getManager();
+    $em = $this->getDoctrine()->getManager('oracle');
     $student = $externalDataManager->getStudentById($em, $studentId); //'B04278'
     
     /*
@@ -287,7 +287,7 @@ class ProjectRequestController extends AbstractController {
 
         $uploadedTeamWork = $request->request->get('teamWork');
         $teamWork = array();
-        if (count($uploadedTeamWork["student_name"]) > 0) {
+        if (isset($uploadedTeamWork["student_name"]) && count($uploadedTeamWork["student_name"]) > 0) {
           for ($i = 0; $i < count($uploadedTeamWork["student_name"]); $i++) {
             $student = new \App\Entity\TeamWork();
             $student->setName($uploadedTeamWork["student_name"][$i]);
