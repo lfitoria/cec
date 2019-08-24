@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
+use App\Services\Utils\ExternalDataManager;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -214,11 +215,10 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/get_student_by_id", name="get_student_by_id", methods={"POST"})
    */
-  public function getStudentById(Request $request): Response {
+  public function getStudentById(Request $request, ExternalDataManager $externalDataManager): Response {
     $studentId = $request->request->get('id');
-    $student = $this->getDoctrine()
-            ->getRepository(ExternalDataRepository::class)
-            ->getStudentById($em, $studentId); //'B04278'
+    $em = $this->getDoctrine()->getManager();
+    $student = $externalDataManager->getStudentById($em, $studentId); //'B04278'
     if ($student) {
       return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
     }

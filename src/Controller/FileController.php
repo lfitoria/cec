@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Services\Utils\FileManager;
 
 /**
  * @Route("/file")
@@ -96,16 +97,14 @@ class FileController extends AbstractController {
   /**
    * @Route("/removeFile", name="file_remove", methods={"POST"})
    */
-  public function deleteAjax(Request $request): Response {
+  public function deleteAjax(Request $request, FileManager $fileManager): Response {
     $file_id = $request->request->get('id');
     if ($file_id) {
-      $entityManager = $this->getDoctrine()->getManager();
       $file = $this->getDoctrine()->getRepository(File::class)->find($file_id);
+      $targetDirectory = $this->getParameter('brochures_directory');
+      $result = $fileManager->deleteFile($file, $targetDirectory);
 
-      $entityManager->remove($file);
-      $entityManager->flush();
-
-      return new JsonResponse(['wasDeleted' => true]);
+      return new JsonResponse(['wasDeleted' => $result]);
     }
 
     return new JsonResponse(['wasDeleted' => false]);

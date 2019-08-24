@@ -129,6 +129,13 @@ class ProjectRequest {
    * @ORM\Column(name="project_unit", type="string", length=45, nullable=true)
    */
   private $projectUnit;
+  
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="sip_project", type="string", length=45, nullable=true)
+   */
+  private $sipProject;
 
   /**
    * @ORM\ManyToMany(targetEntity="User")
@@ -417,5 +424,15 @@ class ProjectRequest {
   function setTeamWork($teamWork) {
     $this->teamWork = $teamWork;
   }
+  
+  function getSipProject() {
+    return $this->sipProject;
+  }
+
+  function setSipProject($sipProject) {
+    $this->sipProject = $sipProject;
+  }
+
+
 
 }

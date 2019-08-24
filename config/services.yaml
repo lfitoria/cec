@@ -23,7 +23,8 @@ services:
 
     App\Services\Utils\FileManager:
     App\Services\Utils\NotificationManager:    
-        
+    App\Services\Utils\ExternalDataManager:
+      
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
