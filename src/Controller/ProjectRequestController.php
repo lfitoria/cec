@@ -219,7 +219,7 @@ class ProjectRequestController extends AbstractController {
   public function getStudentById(Request $request, ExternalDataManager $externalDataManager): Response {
     $studentId = $request->request->get('id');
 
-    $em = $this->getDoctrine()->getManager();
+    $em = $this->getDoctrine()->getManager('oracle');
     $student = $externalDataManager->getStudentById($em, $studentId); //'B04278'
     
     /*
