@@ -13,6 +13,7 @@ use App\Form\EthicEvalRequestType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Services\Utils\ExternalDataManager;
 
 /**
  * @Route("/solicitud")
@@ -32,7 +33,7 @@ class RequestFormController extends AbstractController {
    * @Route("/informacion", name="tab_general_info_request_new")
    */
   public function tabOneRequest(Request $request) {
-    
+
     $projectRequest = new ProjectRequest();
 
     $form = $this->createForm(ProjectRequestType::class, $projectRequest, [
@@ -42,6 +43,7 @@ class RequestFormController extends AbstractController {
 
     return $this->render('project_request/new.html.twig', [
                 'project_request' => $projectRequest,
+                'project_info' => null,
                 'form' => $form->createView()
     ]);
   }
@@ -49,15 +51,16 @@ class RequestFormController extends AbstractController {
   /**
    * @Route("/informacion/{id}", name="tab_general_info_request_edit")
    */
-  public function tabOneRequestEdit(Request $request, ProjectRequest $projectRequest) {
+  public function tabOneRequestEdit(Request $request, ProjectRequest $projectRequest, ExternalDataManager $externalDataManager) {
 
     $form = $this->createForm(ProjectRequestType::class, $projectRequest, [
         'action' => $this->generateUrl('project_request_edit', ['id' => $projectRequest->getId()]),
     ]);
     $form->handleRequest($request);
-
+    $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
     return $this->render('project_request/edit.html.twig', [
                 'project_request' => $projectRequest,
+                'project_info' => $projectInfo,
                 'form' => $form->createView()
     ]);
   }
@@ -75,7 +78,7 @@ class RequestFormController extends AbstractController {
       $formRoute = 'academic_request_info_edit';
       $formData = ['id' => $academicRequestInfo->getId()];
       $templateRoute = 'academic_request_info/edit.html.twig';
-    }else{
+    } else {
       $academicRequestInfo = new AcademicRequestInfo();
     }
 
@@ -104,10 +107,10 @@ class RequestFormController extends AbstractController {
       $formRoute = 'ethic_eval_request_edit';
       $formData = ['id' => $ethicEvalRequest->getId()];
       $templateRoute = 'ethic_eval_request/edit.html.twig';
-    }else{
+    } else {
       $ethicEvalRequest = new EthicEvalRequest();
     }
-    
+
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest, [
         'action' => $this->generateUrl($formRoute, $formData),
     ]);
@@ -117,6 +120,23 @@ class RequestFormController extends AbstractController {
                 'ethic_eval_request' => $ethicEvalRequest,
                 'form' => $form->createView()
     ]);
+  }
+
+  private function getInformationByProject($externalDataManager, $projectCode) {
+
+    $entityManager = $this->getDoctrine()->getManager('sip');
+
+    $projectData = $externalDataManager->getSIPProjectByCode($entityManager, $projectCode);
+    if ($projectData) {
+      $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
+      $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
+      $principalResearchers = $externalDataManager->getPrincipalResearchersByProject($entityManager, $projectCode);
+      return new JsonResponse(["externalCollaboration" => $externalCollaboration,
+          "projectData" => $projectData,
+          "researchers" => $researchers, 
+          "principalResearchers"=> $principalResearchers, "projectWasFound" => true]);
+    }
+    return new JsonResponse(["projectWasFound" => false]);
   }
 
 }

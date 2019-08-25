@@ -213,7 +213,7 @@ const $ = require('jquery');
                 title: 'Estudiante agregado',
                 showConfirmButton: false,
                 timer: 1500
-              })
+              });
             } else {
               Swal.fire({
                 position: 'center',
@@ -221,7 +221,7 @@ const $ = require('jquery');
                 title: 'Estudiante no encontrado',
                 showConfirmButton: false,
                 timer: 1500
-              })
+              });
             }
           }
         });
@@ -241,6 +241,9 @@ const $ = require('jquery');
           // dataType: 'json',
           success: function (response) {
             if (response.projectWasFound) {
+
+              $(".project_title").val(response.projectData.nombre);
+              $(".project_unit").val(response.projectData.unidad);
 
               Swal.fire({
                 position: 'center',

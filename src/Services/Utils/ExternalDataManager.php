@@ -78,7 +78,7 @@ class ExternalDataManager {
     $statement->execute();
 
     $results = $statement->fetchAll();
-    return $results[0];
+    return isset($results[0]) ? $results[0] : null;
   }
 
   public function getResearchersByProject($em, $projectCode) {
@@ -93,6 +93,27 @@ class ExternalDataManager {
 			   WHERE xproinv.proyecto = '$projectCode'
 			   and datos_per.cedula = xproinv.cedula and codigos.codigo = participacion and codigos.tipo = 1 
 			   and dedicacion.dedicacion = xproinv.dedicacion 
+			   order by codigos.descrip desc, fec_inicioF");
+
+    $statement->execute();
+
+    $results = $statement->fetchAll();
+    return $results;
+  }
+
+  public function getPrincipalResearchersByProject($em, $projectCode) {
+
+    $connection = $em->getConnection();
+    $statement = $connection->prepare(
+            "Select datos_per.cedula,apellido1,apellido2,nombre,codigos.descrip AS PARTICIPA,(rtrim(convert(char,dedicacion.dedicacion)) + ' - ' + dedicacion.descrip) AS TIEMPO, 
+			 convert(char(10),fec_inicio,103) as fec_inicioF, 
+			 convert(char(10),fec_final,103) as fec_finalF, 
+    			monto_ca 
+				From xproinv, codigos, dedicacion, datos_per  
+			   WHERE xproinv.proyecto = '$projectCode'
+			   and datos_per.cedula = xproinv.cedula and codigos.codigo = participacion and codigos.tipo = 1 
+			   and dedicacion.dedicacion = xproinv.dedicacion
+               and codigos.descrip = 'PRINCIPAL' or codigos.descrip = 'COORDINADOR' 
 			   order by codigos.descrip desc, fec_inicioF");
 
     $statement->execute();

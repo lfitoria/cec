@@ -114,6 +114,10 @@ class ProjectRequestController extends AbstractController {
    */
   public function getProjectExternalInformation(ExternalDataManager $externalDataManager, Request $request): Response {
     $projectCode = $request->request->get('projectCode');
+    return $this->getInformationByProject($externalDataManager, $projectCode);
+  }
+
+  private function getInformationByProject($externalDataManager, $projectCode) {
 
     $entityManager = $this->getDoctrine()->getManager('sip');
 
@@ -121,10 +125,11 @@ class ProjectRequestController extends AbstractController {
     if ($projectData) {
       $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
       $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
-
+      $principalResearchers = $externalDataManager->getPrincipalResearchersByProject($entityManager, $projectCode);
       return new JsonResponse(["externalCollaboration" => $externalCollaboration,
           "projectData" => $projectData,
-          "researchers" => $researchers, "projectWasFound" => true]);
+          "researchers" => $researchers, 
+          "principalResearchers"=> $principalResearchers, "projectWasFound" => true]);
     }
     return new JsonResponse(["projectWasFound" => false]);
   }
@@ -215,18 +220,8 @@ class ProjectRequestController extends AbstractController {
     $em = $this->getDoctrine()->getManager('oracle');
     $student = $externalDataManager->getStudentById($em, $studentId); //'B04278'
 
-    /*
-
-      $entityManager = $this->getDoctrine()->getManager('oracle');
-      $student = $this->getDoctrine()
-      ->getRepository(UsersRoles::class)
-      ->getStudentById($entityManager, $studentId); //'B04278'
-      ->getEstudentById($entityManager, $studentId); //'B04278'
-
-     */
     if ($student) {
       return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
-      //return new JsonResponse(["studentWasFound" => true]);
     }
     return new JsonResponse(["studentWasFound" => false]);
   }
@@ -261,11 +256,13 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/edit/{id}", name="project_request_edit", methods={"GET","POST"})
    */
-  public function edit(Request $request, ProjectRequest $projectRequest, FileManager $fileManager, Security $security): Response {
+  public function edit(Request $request, ProjectRequest $projectRequest, FileManager $fileManager, Security $security, ExternalDataManager $externalDataManager): Response {
     $loggedUser = $security->getUser();
 
     $form = $this->createForm(ProjectRequestType::class, $projectRequest);
     $form->handleRequest($request);
+
+    $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
 
     if ($form->isSubmitted() && $form->isValid()) {
 
@@ -279,21 +276,8 @@ class ProjectRequestController extends AbstractController {
         $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
 
         $uploadedTeamWork = $request->request->get('teamWork');
-        $teamWork = array();
-        if (isset($uploadedTeamWork["student_name"]) && count($uploadedTeamWork["student_name"]) > 0) {
-          for ($i = 0; $i < count($uploadedTeamWork["student_name"]); $i++) {
-            $student = new \App\Entity\TeamWork();
-            $student->setName($uploadedTeamWork["student_name"][$i]);
-            $student->setStudentId($uploadedTeamWork["student_id"][$i]);
-            $student->setStudentEmail($uploadedTeamWork["student_email"][$i]);
-
-            $this->getDoctrine()->getManager()->persist($student);
-
-            array_push($teamWork, $student);
-          }
-
-          $projectRequest->addTeamWork($teamWork);
-        }
+        $teamWork = $this->arrangeUploadedStudents($uploadedTeamWork);
+        $projectRequest->addTeamWork($teamWork);
       } else {
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
@@ -318,8 +302,27 @@ class ProjectRequestController extends AbstractController {
 
     return $this->render('project_request/edit.html.twig', [
                 'project_request' => $projectRequest,
+                'project_info' => $projectInfo,
                 'form' => $form->createView(),
     ]);
+  }
+
+  private function arrangeUploadedStudents($uploadedTeamWork) {
+    $teamWork = array();
+    if (isset($uploadedTeamWork["student_name"]) && count($uploadedTeamWork["student_name"]) > 0) {
+      for ($i = 0; $i < count($uploadedTeamWork["student_name"]); $i++) {
+        $student = new \App\Entity\TeamWork();
+        $student->setName($uploadedTeamWork["student_name"][$i]);
+        $student->setStudentId($uploadedTeamWork["student_id"][$i]);
+        $student->setStudentEmail($uploadedTeamWork["student_email"][$i]);
+
+        $this->getDoctrine()->getManager()->persist($student);
+
+        array_push($teamWork, $student);
+      }
+      return $teamWork;
+      
+    }
   }
 
   /**
