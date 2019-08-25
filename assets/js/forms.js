@@ -246,7 +246,7 @@ const $ = require('jquery');
               $("#project_unit").val(response.projectData.unidad);
 
               $(".project_researchers_table").html("");
-              $("#project_principal_researchers").html("");
+              $(".project_principal_researchers_row").remove("");
               var researchers = response.researchers.filter(function (el) {
                 return el.PARTICIPA.trim() === "ASOCIADO";
               });
