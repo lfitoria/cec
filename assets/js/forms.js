@@ -245,6 +245,32 @@ const $ = require('jquery');
               $("#project_title").val(response.projectData.nombre);
               $("#project_unit").val(response.projectData.unidad);
 
+              $(".project_researchers_table").html("");
+              $("#project_principal_researchers").html("");
+              var researchers = response.researchers.filter(function (el) {
+                return el.PARTICIPA.trim() === "ASOCIADO";
+              });
+
+              var principalResearchers = response.researchers.filter(function (el) {
+                return el.PARTICIPA.trim() === "PRINCIPAL" || el.PARTICIPA.trim() === "COLABORADOR";
+              });
+              for (var i = 0; i < researchers.length; i++) {
+                var researcherRow = `<tr>
+              <td scope="col">${researchers[i].nombre} ${researchers[i].apellido1} ${researchers[i].apellido2}</td>
+              <td scope="col">${researchers[i].cedula}</td>
+              <td scope="col">${researchers[i].cedula}</td>
+            </tr>`;
+
+                $(".project_researchers_table").append(researcherRow);
+              }
+              
+              for (var i = 0; i < principalResearchers.length; i++) {
+                var researcherRow = `<input type="text" readonly class="form-control-plaintext" name="" value="${researchers[i].nombre} ${researchers[i].apellido1} ${researchers[i].apellido2}">`;
+                $("#project_principal_researchers").append(researcherRow);
+              }
+
+
+
               Swal.fire({
                 position: 'center',
                 type: 'success',

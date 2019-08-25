@@ -53,9 +53,9 @@
       </tbody>
     </table>
   </div>
-  <div class="form-group" id="project_unit">
+  <div class="form-group">
     <label for="project_request_extInstitutions">Unidad base del proyecto:</label>
-    <input type="text" readonly class="form-control-plaintext" name="" value="{{ project_info.projectData.unidad|default('No hay dato') }}">
+    <input type="text" readonly class="form-control-plaintext" id="project_unit" name="" value="{{ project_info.projectData.unidad|default('No hay dato') }}">
   </div>
   <div class="form-group">
     <label for="project_request_extInstitutions">Otras unidades e instituciones de la UCR participantes:</label>
@@ -63,7 +63,7 @@
       {% if project_info is not null and project_info.externalCollaboration|length > 0 %}
         {% for external in project_info.externalCollaboration  %}
           <li>
-            <li scope="col">{{ external.test }} </li>
+          <li scope="col">{{ external.test }} </li>
           </li>
         {% endfor %}
       {% else %}
