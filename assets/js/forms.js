@@ -258,7 +258,7 @@ const $ = require('jquery');
               });
               for (var i = 0; i < researchers.length; i++) {
                 var researcherRow = `<tr>
-              <td scope="col">${researchers[i].nombre} ${researchers[i].apellido1} ${researchers[i].apellido2}</td>
+              <td scope="col">${researchers[i].nombre.trim()} ${researchers[i].apellido1.trim()} ${researchers[i].apellido2.trim()}</td>
               <td scope="col">${researchers[i].cedula}</td>
               <td scope="col">${researchers[i].bitnet}</td>
             </tr>`;
