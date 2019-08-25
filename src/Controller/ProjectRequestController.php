@@ -125,11 +125,10 @@ class ProjectRequestController extends AbstractController {
     if ($projectData) {
       $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
       $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
-      $principalResearchers = $externalDataManager->getPrincipalResearchersByProject($entityManager, $projectCode);
       return new JsonResponse(["externalCollaboration" => $externalCollaboration,
           "projectData" => $projectData,
           "researchers" => $researchers, 
-          "principalResearchers"=> $principalResearchers, "projectWasFound" => true]);
+          "projectWasFound" => true]);
     }
     return new JsonResponse(["projectWasFound" => false]);
   }

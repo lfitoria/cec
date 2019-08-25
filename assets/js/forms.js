@@ -242,8 +242,8 @@ const $ = require('jquery');
           success: function (response) {
             if (response.projectWasFound) {
 
-              $(".project_title").val(response.projectData.nombre);
-              $(".project_unit").val(response.projectData.unidad);
+              $("#project_title").val(response.projectData.nombre);
+              $("#project_unit").val(response.projectData.unidad);
 
               Swal.fire({
                 position: 'center',
