@@ -14,16 +14,16 @@
   <hr>
   <div class="form-group">
     <label for="project_request_extInstitutions">Título del estudio o investigación:</label>
-    <input type="text" readonly class="form-control-plaintext" id="project_title" value="{{ project_info.projectData.nombre|default('No hay dato') }}">
+    <input type="text" readonly class="form-control" id="project_title" value="{{ project_info.projectData.nombre|default('No hay dato') }}">
   </div>
   <div class="form-group" id="project_principal_researchers">
     <label for="project_request_extInstitutions">Nombre del investigador (a) principal:</label>
     {% if project_info is not null and project_info.principalResearchers|length > 0 %}
       {% for researcher in project_info.principalResearchers   %}
-        <input type="text" readonly class="form-control-plaintext project_principal_researchers_row" name="" value="{{ researcher.nombre }} {{ researcher.apellido1 }} {{ researcher.apellido2 }} ">
+        <input type="text" readonly class="form-control mb-2 project_principal_researchers_row" name="" value="{{ researcher.nombre }} {{ researcher.apellido1 }} {{ researcher.apellido2 }} ">
       {% endfor %}
     {% else %}
-      <input type="text" readonly class="form-control-plaintext no-data" name="" value="No hay datos">
+      <input type="text" readonly class="form-control no-data" name="" value="No hay datos">
     {% endif %}
   </div>
   <div class="form-group">

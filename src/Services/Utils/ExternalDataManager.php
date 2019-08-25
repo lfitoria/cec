@@ -85,7 +85,7 @@ class ExternalDataManager {
 
     $connection = $em->getConnection();
     $statement = $connection->prepare(
-            "Select datos_per.cedula,apellido1,apellido2,nombre,codigos.descrip AS PARTICIPA,(rtrim(convert(char,dedicacion.dedicacion)) + ' - ' + dedicacion.descrip) AS TIEMPO, 
+            "Select DISTINCT datos_per.cedula,apellido1,apellido2,nombre,codigos.descrip AS PARTICIPA,(rtrim(convert(char,dedicacion.dedicacion)) + ' - ' + dedicacion.descrip) AS TIEMPO, 
 			 convert(char(10),fec_inicio,103) as fec_inicioF, 
 			 convert(char(10),fec_final,103) as fec_finalF, 
     			monto_ca 

@@ -247,6 +247,8 @@ const $ = require('jquery');
 
               $(".project_researchers_table").html("");
               $(".project_principal_researchers_row").remove("");
+              $(".project_principal_researchers .no-data").remove("");
+              
               var researchers = response.researchers.filter(function (el) {
                 return el.PARTICIPA.trim() === "ASOCIADO";
               });
@@ -265,7 +267,7 @@ const $ = require('jquery');
               }
               
               for (var i = 0; i < principalResearchers.length; i++) {
-                var researcherRow = `<input type="text" readonly class="form-control-plaintext" name="" value="${researchers[i].nombre} ${researchers[i].apellido1} ${researchers[i].apellido2}">`;
+                var researcherRow = `<input type="text" readonly class="form-control mb-2 project_principal_researchers_row" name="" value="${researchers[i].nombre} ${researchers[i].apellido1} ${researchers[i].apellido2}">`;
                 $("#project_principal_researchers").append(researcherRow);
               }
 
