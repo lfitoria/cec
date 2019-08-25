@@ -42,7 +42,7 @@
             <tr>
               <td scope="col">{{ researcher.nombre }} {{ researcher.apellido1 }} {{ researcher.apellido2 }} </td>
               <td scope="col">{{ researcher.cedula }}</td>
-              <td scope="col">{{ researcher.cedula }}</td>
+              <td scope="col">{{ researcher.bitnet }}</td>
             </tr>
           {% endfor %}
         {% else %}
@@ -55,7 +55,7 @@
   </div>
   <div class="form-group">
     <label for="project_request_extInstitutions">Unidad base del proyecto:</label>
-    <input type="text" readonly class="form-control-plaintext" id="project_unit" name="" value="{{ project_info.projectData.unidad|default('No hay dato') }}">
+    <input type="text" readonly class="form-control" id="project_unit" name="" value="{{ project_info.projectData.unidad|default('No hay dato') }}">
   </div>
   <div class="form-group">
     <label for="project_request_extInstitutions">Otras unidades e instituciones de la UCR participantes:</label>

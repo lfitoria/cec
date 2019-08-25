@@ -247,7 +247,7 @@ const $ = require('jquery');
 
               $(".project_researchers_table").html("");
               $(".project_principal_researchers_row").remove("");
-              $(".project_principal_researchers .no-data").remove("");
+              $("#project_principal_researchers .no-data").remove("");
               
               var researchers = response.researchers.filter(function (el) {
                 return el.PARTICIPA.trim() === "ASOCIADO";
@@ -260,7 +260,7 @@ const $ = require('jquery');
                 var researcherRow = `<tr>
               <td scope="col">${researchers[i].nombre} ${researchers[i].apellido1} ${researchers[i].apellido2}</td>
               <td scope="col">${researchers[i].cedula}</td>
-              <td scope="col">${researchers[i].cedula}</td>
+              <td scope="col">${researchers[i].bitnet}</td>
             </tr>`;
 
                 $(".project_researchers_table").append(researcherRow);
