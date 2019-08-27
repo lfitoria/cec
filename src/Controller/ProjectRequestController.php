@@ -149,6 +149,7 @@ class ProjectRequestController extends AbstractController {
     $minutesResearchCenterFiles = [];
 
     if ($form->isSubmitted() && $form->isValid()) {
+      
       $projectDir = $this->getParameter('brochures_directory');
 
       if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
@@ -169,6 +170,7 @@ class ProjectRequestController extends AbstractController {
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
 
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
+      // $projectRequest->setTitle($state);
       $projectRequest->setState($state);
       $entityManager = $this->getDoctrine()->getManager();
 

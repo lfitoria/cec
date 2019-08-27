@@ -164,6 +164,11 @@ class ProjectRequestType extends AbstractType {
                     'label' => false
                 ]);
               } else {
+                $form->add('title', TextType::class, [
+                    'attr' => ['readonly' => true, 'class'=> 'project_title_researcher','id'=>'project_title'],
+                    'label' => 'Título del estudio o investigación:',
+                    'data' => $projectRequest->getTitle() ? $projectRequest->getTitle() : 'No hay datos',
+                ]);
                 $form->add('minuteCommissionTFG', ChoiceType::class, array(
                     'choices' => array(
                         'No' => '0',

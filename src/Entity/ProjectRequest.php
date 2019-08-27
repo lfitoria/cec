@@ -174,14 +174,14 @@ class ProjectRequest {
   /**
    * @var string
    *
-   * @ORM\Column(name="ascriptionUnit", type="string", length=400, nullable=false)
+   * @ORM\Column(name="ascriptionUnit", type="string", length=400, nullable=true)
    */
   private $ascriptionUnit;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="ucrInstitutions", type="string", length=400, nullable=false)
+   * @ORM\Column(name="ucrInstitutions", type="string", length=400, nullable=true)
    */
   private $ucrInstitutions;
 
