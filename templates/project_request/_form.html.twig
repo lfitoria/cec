@@ -4,7 +4,7 @@
 
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
   <div class="input-group mb-3 w-50">
-    <input type="text" class="form-control add_project_info_input" placeholder="Código del proyecto" aria-label="Código del proyecto" aria-describedby="button-addon2">
+    <input type="text" class="form-control add_project_info_input" name="project_code" placeholder="Código del proyecto" aria-label="Código del proyecto" aria-describedby="button-addon2">
     <div class="input-group-append">
       <button type='button' class='add_project_info_button btn btn-primary' data-path="{{ path("get_external_data_by_project_code") }}">Cargar información</button>
 
@@ -12,10 +12,6 @@
     <small id="project_request_project_info_help" class="form-text text-muted">Digite el código del proyecto y presione el botón "Cargar información".</small>
   </div> 
   <hr>
-  {# <div class="form-group">
-    <label for="project_request_extInstitutions">Título del estudio o investigación:</label>
-    <input type="text" readonly class="form-control" id="project_title" value="{{ project_info.projectData.nombre|default('No hay dato') }}">
-  </div> #}
   {{ form_row(form.title) }}
   <div class="form-group" id="project_principal_researchers">
     <label for="project_request_extInstitutions">Nombre del investigador (a) principal:</label>

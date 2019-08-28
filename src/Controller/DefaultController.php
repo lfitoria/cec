@@ -41,7 +41,7 @@ class DefaultController extends AbstractController {
   public function login(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils) {
 
     if ($this->getUser() != null) {
-      return $this->redirectToRoute('project_request_index_admin');
+      return $this->redirectToRoute('project_request_index');
     } else {
       $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
       $this->container = $container;
@@ -101,7 +101,7 @@ class DefaultController extends AbstractController {
         "cedula" => $email,
     ));
 
-    return $this->redirectToRoute('project_request_index_admin');
+    return $this->redirectToRoute('project_request_index');
   }
 
 }

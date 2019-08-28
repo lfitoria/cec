@@ -98,7 +98,6 @@ class EthicEvalRequestController extends AbstractController {
           "body" => $body_html
         ];
         $notificationManager->sendEmail($emailData);
-        var_dump("new");
       }else{
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       }
@@ -113,7 +112,7 @@ class EthicEvalRequestController extends AbstractController {
       $route = $this->getTargetRoute($target);
       $data = ['id' => $ethicEvalRequest->getRequest()->getId()];
 
-      //return $this->redirectToRoute($route, $data);
+      return $this->redirectToRoute($route, $data);
     }
 
     return $this->render('ethic_eval_request/new.html.twig', [

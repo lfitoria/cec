@@ -54,6 +54,7 @@
             <file>file:/C:/xampp/htdocs/cec/src/Entity/File.php</file>
             <file>file:/C:/xampp/htdocs/cec/webpack.config.js</file>
             <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/NotificationManager.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/ExternalDataManager.php</file>
             <file>file:/C:/xampp/htdocs/cec/assets/js/variables.js</file>
             <file>file:/C:/xampp/htdocs/cec/src/Form/TeamWorkType.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/eval_request/new.html.twig</file>
