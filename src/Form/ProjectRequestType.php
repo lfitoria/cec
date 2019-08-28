@@ -71,7 +71,7 @@ class ProjectRequestType extends AbstractType {
               $form->add('extInstitutionsAuthorization', ChoiceType::class, array(
                   'choices' => array(
                       'No' => '0',
-                      'Si' => '1',
+                      'Sí' => '1',
                   ),
                   'data' => $projectRequest->getExtInstitutionsAuthorization() ? $projectRequest->getExtInstitutionsAuthorization() : '0',
                   'expanded' => true,
@@ -108,7 +108,7 @@ class ProjectRequestType extends AbstractType {
                 $form->add('grupalProject', ChoiceType::class, array(
                     'choices' => array(
                         'No' => '0',
-                        'Si' => '1',
+                        'Sí' => '1',
                     ),
                     'data' => $projectRequest->getGrupalProject() ? $projectRequest->getGrupalProject() : '0',
                     'expanded' => true,
@@ -129,7 +129,7 @@ class ProjectRequestType extends AbstractType {
                 $form->add('minuteFinalWork', ChoiceType::class, array(
                     'choices' => array(
                         'No' => '0',
-                        'Si' => '1',
+                        'Sí' => '1',
                     ),
                     'data' => $projectRequest->getMinuteFinalWork() ? $projectRequest->getMinuteFinalWork() : '0',
                     'expanded' => true,
@@ -148,7 +148,7 @@ class ProjectRequestType extends AbstractType {
                 $form->add('minutesResearchCenter', ChoiceType::class, array(
                     'choices' => array(
                         'No' => '0',
-                        'Si' => '1',
+                        'Sí' => '1',
                     ),
                     'data' => $projectRequest->getMinutesResearchCenter() ? $projectRequest->getMinutesResearchCenter() : '0',
                     'expanded' => true,
@@ -166,13 +166,12 @@ class ProjectRequestType extends AbstractType {
               } else {
                 $form->add('title', TextType::class, [
                     'attr' => ['readonly' => true, 'class'=> 'project_title_researcher','id'=>'project_title'],
-                    'label' => 'Título del estudio o investigación:',
-                    'data' => $projectRequest->getTitle() ? $projectRequest->getTitle() : 'No hay datos',
+                    'label' => 'Título del estudio o investigaciónd:',
                 ]);
                 $form->add('minuteCommissionTFG', ChoiceType::class, array(
                     'choices' => array(
                         'No' => '0',
-                        'Si' => '1',
+                        'Sí' => '1',
                     ),
                     'data' => $projectRequest->getMinuteCommissionTFG() ? $projectRequest->getMinuteCommissionTFG() : '0',
                     'expanded' => true,
@@ -197,7 +196,7 @@ class ProjectRequestType extends AbstractType {
               $form->add('involvesHumans', ChoiceType::class, array(
                   'choices' => array(
                       'No' => '0',
-                      'Si' => '1',
+                      'Sí' => '1',
                   ),
                   'data' => $projectRequest->getInvolvesHumans() ? $projectRequest->getInvolvesHumans() : '0',
                   'expanded' => true,
@@ -207,7 +206,7 @@ class ProjectRequestType extends AbstractType {
               $form->add('docHumanInformation', ChoiceType::class, array(
                   'choices' => array(
                       'No' => '0',
-                      'Si' => '1',
+                      'Sí' => '1',
                   ),
                   'data' => $projectRequest->getDocHumanInformation() ? $projectRequest->getDocHumanInformation() : '0',
                   'expanded' => true,

@@ -1,11 +1,58 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ include('commons/_form_header.html.twig', {'current_nav_item': 'academic'}) }}
 {{ form_start(form, {attr: {class: 'form-request', 'data-number': '2'}}) }}
+{% if app.user.role.description == "ROLE_RESEARCHER" %}
+    <div class="form-group">
+        <p>
+            <strong>Resumen del estudio (antecedentes y justificación):</strong>
+        </p>
+
+        {% if SipProject %}
+            <textarea class="form-control" name="" id="" rows="12" disabled>{{SipProject.antecedentes|striptags|raw|default('')}}{{SipProject.jusitificacion|striptags|raw|default('Sin datos')}}</textarea>
+        {% else %}
+            <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+        {% endif %}
+    </div>
+{% endif %}
 {{ form_row(form.summaryObserv) }}
+{% if app.user.role.description == "ROLE_RESEARCHER" %}
+    <div class="form-group">
+        <p>
+            <strong>Objetivo principal:</strong>
+        </p>
+        {% if SipProject %}
+            <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.descrip|striptags|raw|default('Sin datos')}}</textarea>
+        {% else %}
+            <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+        {% endif %}
+
+    </div>
+{% endif %}
 {{ form_row(form.objetives) }}
 {{ form_row(form.questions) }}
 {{ form_row(form.hypothesis) }}
 {{ form_row(form.invType, {label_attr: {class: 'checkbox-custom'} }) }}
+{% if app.user.role.description == "ROLE_RESEARCHER" %}
+    <div class="form-group">
+        <p>
+            <strong>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de
+                                muestras biológicas –si aplica:</strong>
+        </p>
+        {% if SipProject %}
+            <textarea class="form-control" name="" id="" rows="10" disabled>{{SipProject.metodologia|striptags|raw|default('Sin datos')}}</textarea>
+        {% else %}
+            <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+        {% endif %}
+
+    </div>
+{% endif %}
 {{ form_row(form.metodologyObserv) }}
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig') }}
+
+{# <pre>
+    {{ dump(SipProject) }}
+</pre>
+<pre>
+    {{ dump(objetivoPrincipal) }}
+</pre> #}

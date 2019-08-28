@@ -82,7 +82,7 @@ class EthicEvalRequestController extends AbstractController {
         $role = $loggedUser->getRole()->getDescription();
         $body_html = '<img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_correo.png" alt="">
                       <hr>
-                      <p>Se ha recibido una nueva solicitud de revisioón con el número CEC-'.$projectRequest->getId().'</p>
+                      <p>Se ha recibido una nueva solicitud de revisión con el número CEC-'.$projectRequest->getId().'</p>
                       <p><strong>Proyecto: </strong>'.$projectRequest->getTitle().'</p>
                       <p><strong>Unidad: </strong>'.$projectRequest->getProjectUnit().'</p>
                       <p><strong>Investigador/estudiante responsable:</strong> '.$projectRequest->getTutorName().'</p>
@@ -90,7 +90,7 @@ class EthicEvalRequestController extends AbstractController {
                       
                       ';
         $emailData = [
-          "subject" => "TEST",
+          "subject" => "Nueva solicitud",
           "from" => "catedrahumboldt.vi@ucr.ac.cr",
           "to" => "lfitoria@eldomo.net",
           // "to" => "camacho.le@gmail.com",

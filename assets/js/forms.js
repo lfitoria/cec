@@ -44,7 +44,7 @@ const $ = require('jquery');
       var $newFormLi = $('<li></li>').append(inputGroup);
 
 
-      $newFormLi.find(".input-group-cont").append('<div class="input-group-append"><a class="selected_files_list_item--delete" href="#">Eliminar</a></div>');
+      $newFormLi.find(".input-group-cont").append('<div class="input-group-append"><a class="selected_files_list_item--delete btn-blue" href="#">Eliminar</a></div>');
       $newLinkLi.before($newFormLi);
 
     }
@@ -256,6 +256,10 @@ const $ = require('jquery');
               var principalResearchers = response.researchers.filter(function (el) {
                 return el.PARTICIPA.trim() === "PRINCIPAL" || el.PARTICIPA.trim() === "COLABORADOR";
               });
+              console.log(`researchers-${researchers}`);
+              console.log(researchers.length);
+              if(researchers.length > 0){
+                console.log("entra researchers.length");
               for (var i = 0; i < researchers.length; i++) {
                 var researcherRow = `<tr>
               <td scope="col">${researchers[i].nombre.trim()} ${researchers[i].apellido1.trim()} ${researchers[i].apellido2.trim()}</td>
@@ -265,9 +269,16 @@ const $ = require('jquery');
 
                 $(".project_researchers_table").append(researcherRow);
               }
+              }else{
+                console.log("no researchers.length");
+                    var researcherRowNO = `<tr>
+                  <td scope="col" colspan="3">Sin datos</td>
+                </tr>`;
+                $(".project_researchers_table").append(researcherRowNO);
+              }
               
               for (var i = 0; i < principalResearchers.length; i++) {
-                var researcherRow = `<input type="text" readonly class="form-control mb-2 project_principal_researchers_row" name="" value="${researchers[i].nombre} ${researchers[i].apellido1} ${researchers[i].apellido2}">`;
+                var researcherRow = `<input type="text" readonly class="form-control mb-2 project_principal_researchers_row" name="" value="${principalResearchers[i].nombre} ${principalResearchers[i].apellido1} ${principalResearchers[i].apellido2}">`;
                 $("#project_principal_researchers").append(researcherRow);
               }
 
@@ -276,7 +287,7 @@ const $ = require('jquery');
               Swal.fire({
                 position: 'center',
                 type: 'success',
-                title: 'Estudiante agregado',
+                title: 'Proyecto agregado',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -284,7 +295,7 @@ const $ = require('jquery');
               Swal.fire({
                 position: 'center',
                 type: 'error',
-                title: 'Estudiante no encontrado',
+                title: 'Proyecto no encontrado',
                 showConfirmButton: false,
                 timer: 1500
               })

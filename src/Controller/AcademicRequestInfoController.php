@@ -72,10 +72,14 @@ class AcademicRequestInfoController extends AbstractController {
 
       return $this->redirectToRoute($route, $data);
     }
+    $SipProject = $projectRequest->getSipProject();
+    
+    
 
     return $this->render('academic_request_info/new.html.twig', [
                 'academic_request_info' => $academicRequestInfo,
                 'form' => $form->createView(),
+                'SipProject' => $SipProject,
     ]);
   }
 

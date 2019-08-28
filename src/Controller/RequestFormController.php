@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Services\Utils\ExternalDataManager;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/solicitud")
@@ -51,13 +52,14 @@ class RequestFormController extends AbstractController {
   /**
    * @Route("/informacion/{id}", name="tab_general_info_request_edit")
    */
-  public function tabOneRequestEdit(Request $request, ProjectRequest $projectRequest, ExternalDataManager $externalDataManager) {
+  public function tabOneRequestEdit(Request $request, ProjectRequest $projectRequest) {
 
     $form = $this->createForm(ProjectRequestType::class, $projectRequest, [
         'action' => $this->generateUrl('project_request_edit', ['id' => $projectRequest->getId()]),
     ]);
     $form->handleRequest($request);
-    $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+    //$projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+    
     return $this->render('project_request/edit.html.twig', [
                 'project_request' => $projectRequest,
                 'project_info' => $projectInfo,
@@ -68,7 +70,7 @@ class RequestFormController extends AbstractController {
   /**
    * @Route("/informacion-academica/{id}", name="tab_academic_request_info")
    */
-  public function tabTwoRequest(Request $request, ProjectRequest $projectRequest) {
+  public function tabTwoRequest(Request $request, ProjectRequest $projectRequest, ExternalDataManager $externalDataManager) {
     $formRoute = 'academic_request_info_new';
     $formData = ['id' => $projectRequest->getId()];
     $templateRoute = 'academic_request_info/new.html.twig';
@@ -86,10 +88,21 @@ class RequestFormController extends AbstractController {
         'action' => $this->generateUrl($formRoute, $formData),
     ]);
     $form->handleRequest($request);
+    
+    $projectCode = $projectRequest->getSipProject();
+    $SipProject = $this->getExtraInformationByProject($externalDataManager, $projectCode);
+
+    $entityManager = $this->getDoctrine()->getManager('sip');
+    $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($entityManager, $projectCode);
+    
+    // var_dump($SipProject);
+
 
     return $this->render($templateRoute, [
                 'academic_request_info' => $academicRequestInfo,
                 'form' => $form->createView(),
+                'SipProject' => $SipProject,
+                'objetivoPrincipal' => $objetivoPrincipal,
     ]);
   }
 
@@ -130,13 +143,23 @@ class RequestFormController extends AbstractController {
     if ($projectData) {
       $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
       $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
-      $principalResearchers = $externalDataManager->getPrincipalResearchersByProject($entityManager, $projectCode);
-      return new JsonResponse(["externalCollaboration" => $externalCollaboration,
+      return ["externalCollaboration" => $externalCollaboration,
           "projectData" => $projectData,
           "researchers" => $researchers, 
-          "principalResearchers"=> $principalResearchers, "projectWasFound" => true]);
+          "projectWasFound" => true];
     }
-    return new JsonResponse(["projectWasFound" => false]);
+    return ["projectWasFound" => false];
+  }
+
+  private function getExtraInformationByProject($externalDataManager, $projectCode) {
+
+    $entityManager = $this->getDoctrine()->getManager('sip');
+
+    $projectData = $externalDataManager->getInfoByProject($entityManager, $projectCode);
+    if ($projectData) {
+      return $projectData;
+    }
+    return false;
   }
 
 }

@@ -3,30 +3,31 @@
 {{ form_start(form, {attr: {class: 'form-request', 'data-number': '1'}}) }}
 
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
+<p><strong>Para cargar la información de un proyecto, digite el código del proyecto y presione el botón "Cargar información".</strong></p>
   <div class="input-group mb-3 w-50">
-    <input type="text" class="form-control add_project_info_input" name="project_code" placeholder="Código del proyecto" aria-label="Código del proyecto" aria-describedby="button-addon2">
+    <input type="text" class="form-control add_project_info_input" name="project_code" value="{{ project_request.sipProject|default('') }}" placeholder="Código del proyecto" aria-label="Código del proyecto" aria-describedby="button-addon2">
     <div class="input-group-append">
       <button type='button' class='add_project_info_button btn btn-primary' data-path="{{ path("get_external_data_by_project_code") }}">Cargar información</button>
 
     </div>
-    <small id="project_request_project_info_help" class="form-text text-muted">Digite el código del proyecto y presione el botón "Cargar información".</small>
+    {# <small id="project_request_project_info_help" class="form-text text-muted">Digite el código del proyecto y presione el botón "Cargar información".</small> #}
   </div> 
   <hr>
-  {{ form_row(form.title) }}
+  {{ form_row(form.title, {attr: {'value': project_request.title|default('')} }) }}
   <div class="form-group" id="project_principal_researchers">
     <label for="project_request_extInstitutions">Nombre del investigador (a) principal:</label>
-    {% if project_info is not null and project_info.principalResearchers|length > 0 %}
-      {% for researcher in project_info.principalResearchers   %}
+    {% if project_info is not null and project_info.researchers|length > 0 %}
+      {% for researcher in project_info.researchers if researcher.PARTICIPA|trim is same as('COORDINADOR') or researcher.PARTICIPA|trim is same as('PRINCIPAL')  %}
         <input type="text" readonly class="form-control mb-2 project_principal_researchers_row" name="" value="{{ researcher.nombre }} {{ researcher.apellido1 }} {{ researcher.apellido2 }} ">
       {% endfor %}
     {% else %}
-      <input type="text" readonly class="form-control no-data" name="" value="No hay datos">
+      <input type="text" readonly class="form-control no-data test" name="" value="No hay datos">
     {% endif %}
   </div>
   <div class="form-group">
-    <label for="project_request_extInstitutions">Nombre(s) de investigador)es) colaborador(es):</label>
+    <label for="project_request_extInstitutions">Nombre(s) de investigador(es) colaborador(es):</label>
     <table class="table table-striped">
-      <thead class="thead-dark">
+      <thead>
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Cédula</th>
@@ -102,7 +103,7 @@
   </div>
   <div id="teamWork" class="d-none">
     <table class="table table-striped">
-      <thead class="thead-dark">
+      <thead>
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Cédula</th>
@@ -116,7 +117,7 @@
             <td scope="col">{{ team.name }} </td>
             <td scope="col">{{ team.studentId }}</td>
             <td scope="col">{{ team.studentEmail }}</td>
-            <td scope="col"><a class="uploaded_teamwork_item--delete" data-path="{{ path("remove_student_by_id") }}" data-id='{{ team.id }}' href="#">Eliminar</a></td>
+            <td scope="col"><a class="uploaded_teamwork_item--delete btn-blue" data-path="{{ path("remove_student_by_id") }}" data-id='{{ team.id }}' href="#">Eliminar</a></td>
           </tr>
         {% endfor %}
       </tbody>
@@ -140,7 +141,8 @@
 </div>
 <div id="extInstitutionsAuthorizationFiles" class="d-none">
   {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.extInstitutionsAuthorizationFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'extInstitutionsAuthorizationFiles', 'delete_label': 'Eliminar'}) }}
-
+  <small class="form-text text-muted"><span class="file-advice">*Campo obligatorio.</span> Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+  <hr>
 </div>
 {{ form_row(form.placeOfStudy) }}
 <div class="inline-custom-radio">
@@ -160,7 +162,8 @@
     'questionCode': 'minuteCommissionTFGFiles', 
     'form_prototype': form.minuteCommissionTFGFiles.vars.prototype,
     'delete_label': 'Eliminar'}) }}
-
+    <small class="form-text text-muted"><span class="file-advice">*Campo obligatorio.</span> Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+    <hr>
   </div>
 {% endif %}
 
@@ -171,12 +174,16 @@
   </div>
   <div id="minutesResearchCenterFiles" class="d-none">
     {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.minutesResearchCenterFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'minutesResearchCenterFiles', 'delete_label': 'Eliminar'}) }}
+    <small class="form-text text-muted"><span class="file-advice">*Campo obligatorio.</span> Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+    <hr>
   </div>
   <div class="inline-custom-radio">
     {{ form_row(form.minuteFinalWork, {attr: {'data-code': 'minuteFinalWorkFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
   </div>
   <div id="minuteFinalWorkFiles" class="d-none">
     {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.minuteFinalWorkFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'minuteFinalWorkFiles', 'delete_label': 'Eliminar'}) }}
+    <small class="form-text text-muted"><span class="file-advice">*Campo obligatorio.</span> Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+    <hr>
   </div>
 {% endif %}
 

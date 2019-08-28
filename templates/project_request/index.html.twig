@@ -3,12 +3,21 @@
 {% block title %}ProjectRequest index{% endblock %}
 
 {% block body %}
-  <h1>SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</h1>
+  <p class="title-table-index">SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</p>
   <table class="table">
     <thead>
       <tr>
-        <th>Nº de solicitud</th>
-        <th>Título</th>
+        <th width="10%">Nº de solicitud</th>
+        {# <th>Título</th> #}
+        <th width="55%">
+          {% if app.user.role.description == "ROLE_RESEARCHER" %}
+            Título de proyecto
+          {% elseif app.user.role.description == "ROLE_STUDENT" %}
+            Título de Trabajo final de graduación
+          {% else %}
+              Título de proyecto
+          {% endif %}
+        </th>
         <th colspan="2">Estado</th>
       </tr>
     </thead>
@@ -40,7 +49,7 @@
                 </ul>
               </div>
             {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
-              {% if project_request.state.id == 27 %}<a class="" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>{% endif %} 
+              {% if project_request.state.id == 27 %}<a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>{% endif %} 
             {% endif %} 
 
           </td>
