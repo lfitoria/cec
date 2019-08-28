@@ -93,6 +93,7 @@ const $ = require('jquery');
         var targetId = "#" + _this.parent().parent().data("code");
         if ($(this).is(":checked") && $(this).val() === '1') {
           $(targetId).removeClass("d-none");
+          $(targetId).find("input").attr('required', true);
         } else {
           $(targetId).addClass("d-none");
           $(targetId).find("input").attr('required', false);

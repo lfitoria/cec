@@ -15,8 +15,8 @@
   {{ form_row(form.title) }}
   <div class="form-group" id="project_principal_researchers">
     <label for="project_request_extInstitutions">Nombre del investigador (a) principal:</label>
-    {% if project_info is not null and project_info.principalResearchers|length > 0 %}
-      {% for researcher in project_info.principalResearchers   %}
+    {% if project_info is not null and project_info.researchers|length > 0 %}
+      {% for researcher in project_info.researchers if researcher.PARTICIPA|trim is same as('COORDINADOR') or researcher.PARTICIPA|trim is same as('PRINCIPAL')  %}
         <input type="text" readonly class="form-control mb-2 project_principal_researchers_row" name="" value="{{ researcher.nombre }} {{ researcher.apellido1 }} {{ researcher.apellido2 }} ">
       {% endfor %}
     {% else %}
