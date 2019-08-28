@@ -27,7 +27,18 @@ tbody tr:nth-of-type(even) {
     background-color: var(--green);
     border-color: var(--green);
 }
-
+.title-table-index {
+  color: var(--G2);
+  font-size: 1.4em;
+  font-weight: bold;
+}
+a.btn-blue {
+  background-color: var(--A4);
+  border-radius: 5px;
+  color: white;
+  padding: 5px 10px;
+  margin: 0 20px;
+}
 .inline-custom-radio .custom-radio{
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -54,6 +65,9 @@ font-weight: bold;
 }
 .header-title p{
     color: var(--A6);
+}
+.header-title .menu-user-box p{
+  font-weight: bold;
 }
 footer{
     padding: 2% 0;
@@ -98,9 +112,22 @@ position: relative;
 padding: 0 15px 0px 0;
 color: var(--G2);
 }
+.table thead th {
+  line-height: 1em;
+}
 .btn-menu-user:before{
     content: '\f007';
     font-family: FontAwesome;
+}
+p.tel:before{
+  content: '\f095';
+  font-family: FontAwesome;
+  margin-right: 5px;
+}
+p.email:before{
+  content: '\f0e0';
+  font-family: FontAwesome;
+  margin-right: 5px;
 }
 .btn-menu-user:after {
 content: '\f078';
@@ -189,10 +216,12 @@ content: '\f059';
 
 }
 .menu-user .btn-menu-user {
-  line-height: 63px;
+  line-height: 80px;
 }
 .menu-user .dropdown-menu a{
   color: var(--G2);
+  font-size: 0.9em;
+  padding: 3px 10px;
 }
 .menu-user .dropdown-menu a:nth-child(1){
 
@@ -257,6 +286,9 @@ content: '\f059';
 ul.form_header_nav li::before {
   content: '';
 }
+.text-duda-login {
+  color: var(--G2);
+}
 
 .login-box-body .form-control {
   border: 1px solid var(--A2);
@@ -264,9 +296,16 @@ ul.form_header_nav li::before {
 #new_project{
   text-align: center;
 }
-#new_project ul.nav a{
+#new_project ul.nav a {
   color: var(--A4);
   font-weight: bold;
+  text-decoration: none;
+  cursor: unset;
+}
+span.file-advice {
+  color: var(--R1);
+  font-style: italic;
+  margin-bottom: 10px;
 }
 #new_project .modal-content{
   padding: 2% 0;

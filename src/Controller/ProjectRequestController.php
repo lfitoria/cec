@@ -170,8 +170,7 @@ class ProjectRequestController extends AbstractController {
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
 
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
-      $projectCode = $request->request->get('project_code');
-      $projectRequest->setSipProject($projectCode);
+      // $projectRequest->setTitle($state);
       $projectRequest->setState($state);
       $entityManager = $this->getDoctrine()->getManager();
 
@@ -291,8 +290,6 @@ class ProjectRequestController extends AbstractController {
 
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
-      $projectCode = $request->request->get('project_code');
-      $projectRequest->setSipProject($projectCode);
       $projectRequest->setState($state);
       $target = $form->get("form_target_input")->getData();
 

@@ -28,6 +28,7 @@ class AcademicRequestInfoType extends AbstractType {
                 'help' => 'Máximo 1500 caracteres.<br>' . $sippres,
                 'help_html' => true,
                 'label_format' => 'Observaciones:',
+                // 'label_format' => 'Resumen del estudio (antecedentes y justificación):',                
                 'required' => false,
             ])
             ->add('objetives', TextareaType::class, [

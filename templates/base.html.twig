@@ -25,7 +25,7 @@
         <div class="row menu-user-box">
           <div class="col">
             <h2>COMITÉ ÉTICO CIENTÍFICO</h2>
-            <p style="margin: 0;">Sistema de evaluación ética para la investigación con seres humanos</p>
+            <p style="margin: 0 0 10px 0;">Sistema de evaluación ética para la investigación con seres humanos</p>
           </div>
           {% if app.user %}
             <div class="dropdown menu-user">
@@ -33,7 +33,7 @@
                 {{app.user.name|lower}}
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">SEGUIMIENTO DE SOLICITUDES</a>
+                <a class="dropdown-item" href="{{path('project_request_index')}}">SEGUIMIENTO DE SOLICITUDES</a>
                 <a class="dropdown-item" href="#">AYUDA</a>
                 <a class="dropdown-item" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
               </div>
@@ -50,8 +50,8 @@
           <div class="container">
             <div class="row">
               <div class="col-4">
-                <p style="text-transform: capitalize;"><span class="label">{{'Nombre'|upper}}:</span> {{app.user.name|lower}}</p>
-                <p><span class="label">{{'Puesto'|upper}}:</span> 
+                <p style="text-transform: capitalize;"><span class="label">{{'Nombre'|upper}}:</span> <strong>{{app.user.name|lower}}</strong></p>
+                <p><span class="label">{{'Puesto'|upper}}:</span><strong> 
                   {% if app.user.role.description == "ROLE_ADMIN" %}
                     Administrador
                   {% elseif app.user.role.description == "ROLE_STUDENT" %}
@@ -61,17 +61,18 @@
                   {% elseif app.user.role.description == "ROLE_EVALUATOR" %}
                     Evaluador
                   {% endif %}
+                  </strong>
                 </p>
               </div>
               <div class="col box-r">
                 
-                <p><span class="label">{{'Correo electrónico'|upper}}:</span> {{app.user.email|lower}}</p>
-                <p><span class="label">{{'Cédula/Carné'|upper}}:</span> 
+                <p><span class="label">{{'Correo electrónico'|upper}}:</span> <strong>{{app.user.email|lower}}</strong></p>
+                <p><span class="label">{{'Cédula/Carné'|upper}}:</span><strong>
                   {{app.user.cedula_usuario}}
                   {% if app.user.carnet != "" %}
                     / {{app.user.carnet}}
                   {% endif %}
-
+                  </strong>
                 </p>
               </div>
 
@@ -95,12 +96,12 @@
           <div class="col-sm-1">
             <img src="{{ asset('images/firma_footer_ucr.png') }}" alt="CEC"/>
           </div>
-          <div class="col-sm-5 infooter">
+          <div class="col-sm-6 infooter">
             <div class="infooter-box">
               <p>Comité Ético Científico</p>
               <p class="tel">Teléfono: (506) 2511-4201 / (506) 2511-1398</p>
               <p class="email">Correo electrónico: <a href="mailto:cec.vi@ucr.ac.cr">cec.vi@ucr.ac.cr</a></p>
-              <p class="copy">Todos los derechos reservados reservados. 2019. Universidad de Costa Rica.</p>
+              <p class="copy">Todos los derechos reservados. 2019. Universidad de Costa Rica.</p>
             </div> 
           </div>
         </div>

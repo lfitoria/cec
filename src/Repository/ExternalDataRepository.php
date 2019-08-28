@@ -174,5 +174,14 @@ class ExternalDataRepository extends ServiceEntityRepository {
         $results = $statement->fetchAll();
         return $results;
     }
+    public function getInfoByProject($em, $project) {
+      $connection = $em->getConnection();
+      $statement = $connection->prepare("
+                  SELECT * FROM proyectos_info_adicional where proyecto = '$project'");
+      $statement->execute();
+  
+      $results = $statement->fetchAll();
+      return isset($results[0]) ? $results[0] : false;
+    }
 
 }

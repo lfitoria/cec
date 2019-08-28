@@ -88,7 +88,7 @@ class ExternalDataManager {
             "Select DISTINCT datos_per.cedula,apellido1,apellido2,nombre,bitnet,codigos.descrip AS PARTICIPA
                 From xproinv, codigos, dedicacion, datos_per  
                WHERE xproinv.proyecto = '$projectCode'
-               and datos_per.cedula = xproinv.cedula and codigos.codigo = participacion and codigos.tipo = 1
+               and datos_per.cedula = xproinv.cedula and codigos.codigo = 1 and codigos.tipo = 1
                and dedicacion.dedicacion = xproinv.dedicacion");
 
     $statement->execute();
@@ -163,6 +163,24 @@ class ExternalDataManager {
     $results = $statement->fetchAll();
 
     return $results;
+  }
+  public function getInfoByProject($em, $project) {
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
+                SELECT * FROM proyectos_info_adicional where proyecto = '$project'");
+    $statement->execute();
+
+    $results = $statement->fetchAll();
+    return isset($results[0]) ? $results[0] : false;
+  }
+  public function getObjetivoPrincipalByProject($em, $project) {
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("
+                select tipo,descrip from objetivos where proyecto='$project' and tipo='G' order by linea");
+    $statement->execute();
+
+    $results = $statement->fetchAll();
+    return isset($results[0]) ? $results[0] : false;
   }
 
 }

@@ -101,7 +101,7 @@ class EthicEvalRequestType extends AbstractType {
               $form->add('informedConsent', ChoiceType::class, array(
                   'choices' => array(
                       'No' => '0',
-                      'Si' => '1',
+                      'Sí' => '1',
                   ),
                   'data' => $informedConsent,
                   'expanded' => true,
@@ -110,7 +110,7 @@ class EthicEvalRequestType extends AbstractType {
               $form->add('informedAssent', ChoiceType::class, array(
                   'choices' => array(
                       'No' => '0',
-                      'Si' => '1',
+                      'Sí' => '1',
                   ),
                   'data' => $informedAssent,
                   'expanded' => true,
