@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Constraints\File;
 
 class ProjectRequestType extends AbstractType {
 
@@ -53,7 +54,17 @@ class ProjectRequestType extends AbstractType {
                 'mapped' => false,
                 'allow_add' => true,
                 'required' => false,
-                'label' => false
+                'label' => false,
+                'constraints' => [
+                        new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'application/pdf',
+                                'application/x-pdf',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid PDF document',
+                                ])
+                    ],
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
 
@@ -142,7 +153,17 @@ class ProjectRequestType extends AbstractType {
                     'mapped' => false,
                     'allow_add' => true,
                     'required' => false,
-                    'label' => false
+                    'label' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'application/pdf',
+                                'application/x-pdf',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid PDF document',
+                                ])
+                    ],
                 ]);
 
                 $form->add('minutesResearchCenter', ChoiceType::class, array(
@@ -161,11 +182,21 @@ class ProjectRequestType extends AbstractType {
                     'mapped' => false,
                     'allow_add' => true,
                     'required' => false,
-                    'label' => false
+                    'label' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'application/pdf',
+                                'application/x-pdf',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid PDF document',
+                                ])
+                    ],
                 ]);
               } else {
                 $form->add('title', TextType::class, [
-                    'attr' => ['readonly' => true, 'class'=> 'project_title_researcher','id'=>'project_title'],
+                    'attr' => ['readonly' => true, 'class' => 'project_title_researcher', 'id' => 'project_title'],
                     'label' => 'Título del estudio o investigaciónd:',
                 ]);
                 $form->add('minuteCommissionTFG', ChoiceType::class, array(
@@ -185,7 +216,17 @@ class ProjectRequestType extends AbstractType {
                     'mapped' => false,
                     'allow_add' => true,
                     'required' => false,
-                    'label' => false
+                    'label' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'application/pdf',
+                                'application/x-pdf',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid PDF document',
+                                ])
+                    ],
                 ]);
               }
 

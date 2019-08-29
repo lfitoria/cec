@@ -38,7 +38,7 @@ class File {
   /**
    * @var string
    *
-   * @ORM\Column(name="mime", type="string", length=50, nullable=false)
+   * @ORM\Column(name="mime", type="string", length=150, nullable=false)
    */
   private $mime;
 
