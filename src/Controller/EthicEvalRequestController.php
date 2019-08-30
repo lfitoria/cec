@@ -80,12 +80,23 @@ class EthicEvalRequestController extends AbstractController {
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
         $loggedUser = $security->getUser();
         $role = $loggedUser->getRole()->getDescription();
-        $body_html = '<img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_correo.png" alt="">
+        // $body_html = '<img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_correo.png" alt="">
+        //               <hr>
+        //               <p>Se ha recibido una nueva solicitud de revisión con el número CEC-'.$projectRequest->getId().'</p>
+        //               <p><strong>Proyecto: </strong>'.$projectRequest->getTitle().'</p>
+        //               <p><strong>Unidad: </strong>'.$projectRequest->getProjectUnit().'</p>
+        //               <p><strong>Investigador/estudiante responsable:</strong> '.$projectRequest->getTutorName().'</p>
+        //               <a href="#" target="_blank">Asignar a evaluador</a>
+                      
+        //               ';
+        $body_html = '<img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_header_ucr.png" alt="">
+                      <br>
+                      <img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_correo.png" alt="">
                       <hr>
                       <p>Se ha recibido una nueva solicitud de revisión con el número CEC-'.$projectRequest->getId().'</p>
                       <p><strong>Proyecto: </strong>'.$projectRequest->getTitle().'</p>
                       <p><strong>Unidad: </strong>'.$projectRequest->getProjectUnit().'</p>
-                      <p><strong>Investigador/estudiante responsable:</strong> '.$projectRequest->getTutorName().'</p>
+                      <p><strong>Investigador/estudiante responsable:</strong> '.$loggedUser->getName().'</p>
                       <a href="#" target="_blank">Asignar a evaluador</a>
                       
                       ';

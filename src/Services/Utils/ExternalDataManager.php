@@ -36,7 +36,7 @@ class ExternalDataManager {
     $statement->execute();
 
     $results = $statement->fetchAll();
-    return $results[0];
+    return isset($results[0]) ? $results[0] : null;
   }
 
   public function getExternalCollaborationByProject($em, $projectCode) {

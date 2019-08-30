@@ -114,7 +114,7 @@ class ProjectRequestController extends AbstractController {
    */
   public function getProjectExternalInformation(ExternalDataManager $externalDataManager, Request $request): Response {
     $projectCode = $request->request->get('projectCode');
-    return $this->getInformationByProject($externalDataManager, $projectCode);
+    return new JsonResponse($this->getInformationByProject($externalDataManager, $projectCode));
   }
 
   private function getInformationByProject($externalDataManager, $projectCode) {
@@ -125,12 +125,14 @@ class ProjectRequestController extends AbstractController {
     if ($projectData) {
       $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
       $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
-      return new JsonResponse(["externalCollaboration" => $externalCollaboration,
+      return ["externalCollaboration" => $externalCollaboration,
           "projectData" => $projectData,
           "researchers" => $researchers, 
-          "projectWasFound" => true]);
+          "projectWasFound" => true];
     }
-    return new JsonResponse(["projectWasFound" => false]);
+    return ["projectWasFound" => false, "externalCollaboration" => null,
+          "projectData" => null,
+          "researchers" => null];
   }
 
   /**
@@ -159,6 +161,8 @@ class ProjectRequestController extends AbstractController {
         $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
         $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
       } else {
+        $projectCode = $request->request->get('project_code');
+        $projectRequest->setSipProject($projectCode);
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
       }
@@ -263,7 +267,7 @@ class ProjectRequestController extends AbstractController {
     $form = $this->createForm(ProjectRequestType::class, $projectRequest);
     $form->handleRequest($request);
 
-    $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+    $projectInfo = null;
 
     if ($form->isSubmitted() && $form->isValid()) {
 
@@ -280,6 +284,8 @@ class ProjectRequestController extends AbstractController {
         $teamWork = $this->arrangeUploadedStudents($uploadedTeamWork);
         $projectRequest->addTeamWork($teamWork);
       } else {
+        $projectCode = $request->request->get('project_code');
+        $projectRequest->setSipProject($projectCode);
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
       }
@@ -299,8 +305,12 @@ class ProjectRequestController extends AbstractController {
       $data = ['id' => $projectRequest->getId()];
 
       return $this->redirectToRoute($route, $data);
+    } else {
+      if ($loggedUser->getRole()->getDescription() === "ROLE_RESEARCHER") {
+        $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      }
     }
-
+    
     return $this->render('project_request/edit.html.twig', [
                 'project_request' => $projectRequest,
                 'project_info' => $projectInfo,

@@ -236,15 +236,22 @@ content: '\f059';
   font-family: FontAwesome;
   margin-right: 5px;
 }
-.menu-user .dropdown-menu a:nth-child(1):before{
+.menu-user .dropdown-menu a.seguimiento-m:before{
   content: '\f15c';
 }
-.menu-user .dropdown-menu a:nth-child(2):before{
+.menu-user .dropdown-menu a.admin-m:before{
+  content: '\f0c0';
+}
+.menu-user .dropdown-menu a.ayuda-m:before{
   content: '\f059';
 }
-.menu-user .dropdown-menu a:nth-child(3):before{
+.menu-user .dropdown-menu a.cerrar-m:before{
   content: '\f08b';
 }
+.dropdown-menu.show {
+  transform: translate3d(-100px, 81px, 0px) !important;
+}
+
 .login-box-body form{
   padding: 0;
 }
@@ -369,7 +376,30 @@ table td, table th{
   align-items: center;
   border-right: 2px solid var(--white);
 }
-
+.login-box-body-admin {
+  margin: 0 auto !important;
+}
+a.ingreso-admin-home {
+  color: var(--G2);
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+a.ingreso-admin-home:after {
+  content: '\f0a9';
+  font-family: FontAwesome;
+  color: var(--green);
+  margin: 5px;
+}
+.ingreso-general-box-text-admin h3{
+  text-align: center;
+  font-weight: bold;
+  color: var(--G2);
+}
+.textareas-form {
+  background-color: var(--A9);
+  padding: 15px;
+  border: 1px solid #cecece;
+}
 
 @media (min-width: 576px) { 
 } /*fin*/

@@ -103,5 +103,12 @@ class DefaultController extends AbstractController {
 
     return $this->redirectToRoute('project_request_index');
   }
+  /**
+   * @Route("/ayuda", name="ayuda")
+   */
+  public function ayuda() {
+
+    return $this->render('default/ayuda.html.twig');
+  }
 
 }

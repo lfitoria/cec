@@ -52,7 +52,7 @@ class ProjectRequestType extends AbstractType {
                 'entry_options' => ['label' => false],
                 'mapped' => false,
                 'allow_add' => true,
-                'required' => false,
+                'required' => true,
                 'label' => false
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -141,7 +141,7 @@ class ProjectRequestType extends AbstractType {
                     'entry_options' => ['label' => false],
                     'mapped' => false,
                     'allow_add' => true,
-                    'required' => false,
+                    'required' => true,
                     'label' => false
                 ]);
 
@@ -160,13 +160,17 @@ class ProjectRequestType extends AbstractType {
                     'entry_options' => ['label' => false],
                     'mapped' => false,
                     'allow_add' => true,
-                    'required' => false,
+                    'required' => true,
                     'label' => false
                 ]);
               } else {
                 $form->add('title', TextType::class, [
                     'attr' => ['readonly' => true, 'class'=> 'project_title_researcher','id'=>'project_title'],
-                    'label' => 'Título del estudio o investigaciónd:',
+                    'label' => 'Título del estudio o investigación:',
+                ]);
+                $form->add('projectUnit', TextType::class, [
+                    'attr' => ['readonly' => true,'id'=>'project_request_projectUnit'],
+                    'label' => 'Unidad base del proyecto:',
                 ]);
                 $form->add('minuteCommissionTFG', ChoiceType::class, array(
                     'choices' => array(
@@ -184,7 +188,7 @@ class ProjectRequestType extends AbstractType {
                     'entry_options' => ['label' => false],
                     'mapped' => false,
                     'allow_add' => true,
-                    'required' => false,
+                    'required' => true,
                     'label' => false
                 ]);
               }
@@ -200,7 +204,7 @@ class ProjectRequestType extends AbstractType {
                   ),
                   'data' => $projectRequest->getInvolvesHumans() ? $projectRequest->getInvolvesHumans() : '0',
                   'expanded' => true,
-                  'label' => 'La investigación involucra participantes humanos:',
+                  'label' => '¿La investigación involucra participantes humanos?',
               ));
 
               $form->add('docHumanInformation', ChoiceType::class, array(
@@ -210,7 +214,7 @@ class ProjectRequestType extends AbstractType {
                   ),
                   'data' => $projectRequest->getDocHumanInformation() ? $projectRequest->getDocHumanInformation() : '0',
                   'expanded' => true,
-                  'label' => 'La investigación requiere revisar información documental de seres humanos:',
+                  'label' => '¿La investigación requiere revisar información documental de seres humanos?',
               ));
             })
     //->add('projectUnit')

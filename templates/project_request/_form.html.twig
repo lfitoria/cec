@@ -10,7 +10,9 @@
       <button type='button' class='add_project_info_button btn btn-primary' data-path="{{ path("get_external_data_by_project_code") }}">Cargar información</button>
 
     </div>
+    
     {# <small id="project_request_project_info_help" class="form-text text-muted">Digite el código del proyecto y presione el botón "Cargar información".</small> #}
+    <small id="project_request_project_info_help" class="form-text text-muted">"Use el código de proyecto con el formato de 5 dígitos, por ejemplo AXXXX. No coloque guiones ni espacios"</small>
   </div> 
   <hr>
   {{ form_row(form.title, {attr: {'value': project_request.title|default('')} }) }}
@@ -52,17 +54,23 @@
     </table>
   </div>
   <div class="form-group">
-    <label for="project_request_extInstitutions">Unidad base del proyecto:</label>
-    <input type="text" readonly class="form-control" id="project_unit" name="" value="{{ project_info.projectData.unidad|default('No hay dato') }}">
+    {# <label for="project_request_extInstitutions">Unidad base del proyecto:</label> #}
+    {# <input type="text" readonly class="form-control" id="project_unit" name="" value="{{ project_info.projectData.unidad|default('No hay dato') }}"> project_request_projectUnit#}
+    {# <input type="text" readonly class="form-control" id="project_request_projectUnit" name="" value="{{ project_info.projectData.unidad|default('No hay dato') }}"> #}
+    {{ form_row(form.projectUnit) }}
   </div>
   <div class="form-group">
     <label for="project_request_extInstitutions">Otras unidades e instituciones de la UCR participantes:</label>
     <ul id="project_ucr_units">
       {% if project_info is not null and project_info.externalCollaboration|length > 0 %}
         {% for external in project_info.externalCollaboration  %}
-          <li>
-          <li scope="col">{{ external.test }} </li>
-          </li>
+          
+          <li scope="col">{{ external.nombre }} </li>
+          {# <li scope="col">{{ external }} </li> #}
+          {# <pre>
+            {{ dump(external) }}
+          </pre> #}
+          
         {% endfor %}
       {% else %}
         <li>
@@ -188,4 +196,4 @@
 {% endif %}
 
 {{ form_end(form) }}
-{{ include('commons/_form_footer.html.twig') }}
+{{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}

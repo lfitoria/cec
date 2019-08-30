@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}CEC | Sistema de evaluación ética para la investigación con seres humanos{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     {% block stylesheets %}
       {{ encore_entry_link_tags('variables') }}
@@ -17,7 +17,9 @@
   <body>
     <div class="header">
       <div class="container">
+        <a href="https://ucr.ac.cr" target="_blank">
         <img src="{{ asset('images/logo_header_ucr.png') }}" alt="CEC"/>
+        </a>
       </div>
     </div>
     <div class="header-title">
@@ -33,9 +35,12 @@
                 {{app.user.name|lower}}
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{path('project_request_index')}}">SEGUIMIENTO DE SOLICITUDES</a>
-                <a class="dropdown-item" href="#">AYUDA</a>
-                <a class="dropdown-item" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
+                <a class="dropdown-item seguimiento-m" href="{{path('project_request_index')}}">SEGUIMIENTO DE SOLICITUDES</a>
+                {% if app.user.role.description == "ROLE_ADMIN" %}
+                    <a class="dropdown-item admin-m" href="#">ADMINISTRAR USUARIOS</a>
+                {% endif %}
+                <a class="dropdown-item ayuda-m" href="{{path("ayuda")}}">AYUDA</a>
+                <a class="dropdown-item cerrar-m" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
               </div>
             </div>
 
@@ -94,7 +99,9 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-1">
+          <a href="https://ucr.ac.cr" target="_blank">
             <img src="{{ asset('images/firma_footer_ucr.png') }}" alt="CEC"/>
+            </a>
           </div>
           <div class="col-sm-6 infooter">
             <div class="infooter-box">

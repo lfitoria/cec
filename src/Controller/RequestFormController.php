@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Services\Utils\ExternalDataManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/solicitud")
@@ -52,14 +53,18 @@ class RequestFormController extends AbstractController {
   /**
    * @Route("/informacion/{id}", name="tab_general_info_request_edit")
    */
-  public function tabOneRequestEdit(Request $request, ProjectRequest $projectRequest) {
+  public function tabOneRequestEdit(Request $request, ProjectRequest $projectRequest, ExternalDataManager $externalDataManager, Security $security) {
+    $loggedUser = $security->getUser();
 
     $form = $this->createForm(ProjectRequestType::class, $projectRequest, [
         'action' => $this->generateUrl('project_request_edit', ['id' => $projectRequest->getId()]),
     ]);
     $form->handleRequest($request);
-    //$projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
-    
+    $projectInfo = null;
+    if ($loggedUser->getRole()->getDescription() === "ROLE_RESEARCHER") {
+      $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+    }
+
     return $this->render('project_request/edit.html.twig', [
                 'project_request' => $projectRequest,
                 'project_info' => $projectInfo,
@@ -148,7 +153,9 @@ class RequestFormController extends AbstractController {
           "researchers" => $researchers, 
           "projectWasFound" => true];
     }
-    return ["projectWasFound" => false];
+    return ["projectWasFound" => false, "externalCollaboration" => null,
+          "projectData" => null,
+          "researchers" => null];
   }
 
   private function getExtraInformationByProject($externalDataManager, $projectCode) {

@@ -353,12 +353,13 @@ class ProjectRequest {
   }
   
   public function addTeamWork($students): self {
+    if($students){
     foreach ($students as &$student) {
       if (!$this->teamWork->contains($student)) {
         $this->teamWork[] = $student;
       }
     }
-
+    }
 
     return $this;
   }

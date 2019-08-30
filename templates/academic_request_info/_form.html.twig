@@ -8,7 +8,10 @@
         </p>
 
         {% if SipProject %}
-            <textarea class="form-control" name="" id="" rows="12" disabled>{{SipProject.antecedentes|striptags|raw|default('')}}{{SipProject.jusitificacion|striptags|raw|default('Sin datos')}}</textarea>
+            {# <textarea class="form-control" name="" id="" rows="12" >{{SipProject.antecedentes|raw|striptags|convert_encoding('UTF-8', 'ISO-8859-1//TRANSLIT')}}{{SipProject.jusitificacion|striptags|raw|default('Sin datos')}}</textarea> #}
+            <div class="textareas-form">
+            {{SipProject.antecedentes|raw}}{{SipProject.jusitificacion|raw}}
+            </div>
         {% else %}
             <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
         {% endif %}
@@ -39,7 +42,10 @@
                                 muestras biológicas –si aplica:</strong>
         </p>
         {% if SipProject %}
-            <textarea class="form-control" name="" id="" rows="10" disabled>{{SipProject.metodologia|striptags|raw|default('Sin datos')}}</textarea>
+            {# <textarea class="form-control" name="" id="" rows="10" disabled>{{SipProject.metodologia|striptags|raw|default('Sin datos')}}</textarea> #}
+            <div class="textareas-form">
+            {{SipProject.metodologia|raw}}
+            </div>
         {% else %}
             <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
         {% endif %}
@@ -48,11 +54,14 @@
 {% endif %}
 {{ form_row(form.metodologyObserv) }}
 {{ form_end(form) }}
-{{ include('commons/_form_footer.html.twig') }}
-
-{# <pre>
-    {{ dump(SipProject) }}
-</pre>
+{{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}
+{# <div contenteditable="true">
+{{SipProject.antecedentes|raw}}
+</div>
+ <pre>
+    {{ dump(SipProject.antecedentes) }}
+</pre> #}
+{#
 <pre>
     {{ dump(objetivoPrincipal) }}
 </pre> #}
