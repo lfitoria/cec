@@ -26,6 +26,7 @@
   {{ form_row(form.informedAssent, {attr: {'data-code': 'informedAssentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
 <div id="informedAssentFiles" class="d-none">
+
   {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.informedAssentFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'informedAssentFiles', 'delete_label': 'Eliminar'}) }}
   <small class="form-text text-muted"><span class="file-advice">*Campo obligatorio.</span> Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
     <hr>

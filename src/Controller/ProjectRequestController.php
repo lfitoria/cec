@@ -176,6 +176,7 @@ class ProjectRequestController extends AbstractController {
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       // $projectRequest->setTitle($state);
       $projectRequest->setState($state);
+      $projectRequest->setDate(new \DateTime('now'));
       $entityManager = $this->getDoctrine()->getManager();
 
       $entityManager->persist($projectRequest);

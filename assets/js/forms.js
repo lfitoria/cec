@@ -191,6 +191,7 @@ const $ = require('jquery');
           // dataType: 'json',
           success: function (response) {
             if (response.studentWasFound) {
+              console.log(response.student);
               const studentCount = $(".student_row").length;
               const studentRow =
                       `<tr class="student_row">

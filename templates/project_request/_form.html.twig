@@ -131,7 +131,7 @@
       </tbody>
     </table>
     <div class="input-group mb-3 w-50">
-      <input type="text" class="form-control add_student_input" placeholder="Carnet del estudiante" aria-label="Carnet del estudiante" aria-describedby="button-addon2">
+      <input type="text" class="form-control add_student_input" placeholder="Carné del estudiante" aria-label="Carnet del estudiante" aria-describedby="button-addon2">
       <div class="input-group-append">
         <button type='button' class='add_student_button btn btn-primary' data-path="{{ path("get_student_by_id") }}" data-list='teamWork'>Agregar miembro</button>
 
@@ -143,7 +143,7 @@
   {{ form_row(form.ucrInstitutions) }}
 {% endif %}
 {{ form_row(form.extInstitutions) }}
-
+{{ form_row(form.placeOfStudy) }}
 <div class="inline-custom-radio">
   {{ form_row(form.extInstitutionsAuthorization, {attr: {'data-code': 'extInstitutionsAuthorizationFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
@@ -152,7 +152,7 @@
   <small class="form-text text-muted"><span class="file-advice">*Campo obligatorio.</span> Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
   <hr>
 </div>
-{{ form_row(form.placeOfStudy) }}
+
 <div class="inline-custom-radio">
   {{ form_row(form.involvesHumans,{label_attr: {class: 'radio-custom'} }) }}
 </div>
