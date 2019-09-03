@@ -11,6 +11,7 @@
             <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/FileManager.php</file>
             <file>file:/C:/xampp/htdocs/cec/config/packages/twig.yaml</file>
             <file>file:/C:/xampp/htdocs/cec/templates/ethic_eval_request/_form.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/assets/css/evaluator.css</file>
             <file>file:/C:/xampp/htdocs/cec/assets/css/variables.css</file>
             <file>file:/C:/xampp/htdocs/cec/src/Repository/EthicEvalRequestRepository.php</file>
             <file>file:/C:/xampp/htdocs/cec/assets/css/app.css</file>
@@ -23,10 +24,13 @@
             <file>file:/C:/xampp/htdocs/cec/src/Services/User/UserManager.php</file>
             <file>file:/C:/xampp/htdocs/cec/config/packages/cache.yaml</file>
             <file>file:/C:/xampp/htdocs/cec/assets/css/forms.css</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/academic_request_info/ayuda.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Form/EthicEvalRequestType.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Controller/LdapUserController.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/ethic_eval_request/new.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/new.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/eval_request/edit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20190829012401.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/TeamWork.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Form/ProjectRequestType.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/AcademicRequestInfo.php</file>
@@ -57,6 +61,7 @@
             <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/ExternalDataManager.php</file>
             <file>file:/C:/xampp/htdocs/cec/assets/js/variables.js</file>
             <file>file:/C:/xampp/htdocs/cec/src/Form/TeamWorkType.php</file>
+            <file>file:/C:/xampp/htdocs/cec/assets/js/evaluator.js</file>
             <file>file:/C:/xampp/htdocs/cec/templates/eval_request/new.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/config/packages/webpack_encore.yaml</file>

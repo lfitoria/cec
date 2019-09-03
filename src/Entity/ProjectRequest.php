@@ -138,7 +138,7 @@ class ProjectRequest {
   private $sipProject;
 
   /**
-   * @ORM\ManyToMany(targetEntity="User")
+   * @ORM\ManyToMany(targetEntity="LdapUser")
    * @ORM\JoinTable(name="assignments_request")
    */
   private $users;
@@ -188,7 +188,7 @@ class ProjectRequest {
   /**
    * @var \LdapUser
    *
-   * @ORM\ManyToOne(targetEntity="LdapUSer")
+   * @ORM\ManyToOne(targetEntity="LdapUser")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
    * })
@@ -314,7 +314,7 @@ class ProjectRequest {
   public function setUsers($users) {
     $this->users = $users;
 
-    return this;
+    return $this;
   }
 
   public function addUser(User $user): self {
