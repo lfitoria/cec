@@ -150,7 +150,6 @@ class ExternalDataManager {
                 e.apellido1 dsc_apellido1,
                 e.apellido2 dsc_apellido2,
                 e.nombre nom_persona,
-                e.unidad dsc_unidad_participante
             FROM 
                 spp_participante_interno pi, 
                 v_eu_empleados e
@@ -169,7 +168,6 @@ class ExternalDataManager {
                 p.dsc_apellido1,
                 p.dsc_apellido1,
                 p.nom_persona,
-                p.unidad dsc_unidad_participante
             FROM 
                 spp_participante_externo pe, 
                 spp_participante p
