@@ -123,7 +123,6 @@ class ExternalDataManager {
         upper(Invs.dsc_apellido1) apellido1,
         upper(Invs.dsc_apellido2) apellido2,
         upper(Invs.nom_persona) Nombre,
-        Invs.dsc_unidad_participante "dsc_unidad",
         ProyInv.id_valor_tipo_participacion id_tipo_participacion,
         ValorTipo.dsc_valor_tipo "dsc_tipo_participacion"      
     from
