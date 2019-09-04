@@ -1,6 +1,10 @@
+
+<hr>
 <ul class="collecion_list uploaded_files_list tags" data-list-target='{{ questionCode }}' data-prototype="{{ form_widget(form_prototype)|e('html_attr') }}">
+<small class="form-text text-muted">Haga clic en "Agregar archivo" y seleccione "Buscar" para agregar un archivo desde computadora</small>
   {# iterate over each existing tag and render its only field: name #}
   {% for file in files if file.questionCode == questionCode %}
+  
     <li class="uploaded_files_list_item">{{ file.originalName }} ({{ file.size }})
       <a class="uploaded_files_list_item--delete" data-id='{{ file.id }}' href="#">{{ delete_label }}</a>
     </li>

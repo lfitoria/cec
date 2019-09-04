@@ -40,13 +40,13 @@ class AcademicRequestInfoType extends AbstractType {
             ->add('questions', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1500 caracteres.',
-                'label' => 'Preguntas:',
+                'label' => 'Preguntas de investigación (opcional):',
                 'required' => false,
             ])
             ->add('hypothesis', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1500 caracteres.',
-                'label' => 'Hipotesis:',
+                'label' => 'Hipótesis:',
                 'required' => false,
             ])
             ->add('metodologyObserv', TextareaType::class, [

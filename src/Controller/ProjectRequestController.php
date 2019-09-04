@@ -120,8 +120,9 @@ class ProjectRequestController extends AbstractController {
   private function getInformationByProject($externalDataManager, $projectCode) {
 
     $entityManager = $this->getDoctrine()->getManager('sip');
-
-    $projectData = $externalDataManager->getSIPProjectByCode($entityManager, $projectCode);
+    $emOracle = $this->getDoctrine()->getManager('oracle');
+    
+    $projectData = $externalDataManager->getProjectInfoByCode($emOracle, $projectCode);
     if ($projectData) {
       $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
       $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
@@ -176,6 +177,7 @@ class ProjectRequestController extends AbstractController {
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       // $projectRequest->setTitle($state);
       $projectRequest->setState($state);
+      $projectRequest->setDate(new \DateTime('now'));
       $entityManager = $this->getDoctrine()->getManager();
 
       $entityManager->persist($projectRequest);

@@ -4,35 +4,44 @@
   {{ encore_entry_link_tags('evaluator') }}
 {% endblock %}
 {% block body %}
-  <p class="title-table-index">SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</p>
-  <table class="table">
-    <thead>
-      <tr>
-        <th width="10%">Nº de solicitud</th>
-          {# <th>Título</th> #}
-        <th width="55%">
-          {% if app.user.role.description == "ROLE_RESEARCHER" %}
-            Título de proyecto
-          {% elseif app.user.role.description == "ROLE_STUDENT" %}
-            Título de Trabajo final de graduación
-          {% else %}
-            Título de proyecto
-          {% endif %}
-        </th>
-        <th colspan="2">Estado</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for project_request in project_requests %}
-        <tr>
-          <td class="text-bold">
-            <span>CEC-{{ project_request.id }}</span>
-          </td>
-          <td>
-            <span>{{ project_request.title }}</span>
-          </td>
-          <td class="d-flex justify-content-between">
-            <span>{{ project_request.state.description }}</span>
+
+    <p class="title-table-index">SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nº de solicitud</th>
+                <th>
+                    {% if app.user.role.description == "ROLE_RESEARCHER" %}
+                        Título de proyecto
+                    {% elseif app.user.role.description == "ROLE_STUDENT" %}
+                        Título de Trabajo final de graduación
+                    {% else %}
+                        Título de proyecto
+                    {% endif %}
+                </th>
+                {% if app.user.role.description == "ROLE_ADMIN" %}
+                    <th>Investigador / estudiante</th>
+                    <th>Unidad</th>
+                {% endif %}
+                <th colspan="2">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project_request in project_requests %}
+                <tr>
+                    <td class="text-bold">
+                        <span>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</span>
+                    </td>
+                    <td>
+                        <span>{{ project_request.title }}</span>
+                    </td>
+                    {% if app.user.role.description == "ROLE_ADMIN" %}
+                        <td>{{ project_request.owner.name }}</td>
+                        <td>{{ project_request.sipProject }}</td>
+                    {% endif %}
+                    <td class="d-flex justify-content-between">
+                        <span>{{ project_request.state.description }}</span>
+
 
 
             {% if app.user.role.description == "ROLE_ADMIN" %}
@@ -45,8 +54,7 @@
                   {% for evaluator in evaluators %}
                     <li>
                       <label>
-                        
-                        <input type="checkbox" name="evaluators" value="{{ evaluator.id }}" checked="{% for user in  %}{% if user.id == evaluator.id %}true{% endif %}{% endfor %}">
+                        <input type="checkbox" name="evaluators" value="{{ evaluator.id }}" checked="">
                         {{ evaluator.name }}
                       </label>
                     </li>

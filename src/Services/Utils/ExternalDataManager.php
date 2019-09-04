@@ -16,22 +16,49 @@ class ExternalDataManager {
     
   }
 
-  public function getSIPProjectByCode($em, $projectCode) {
-
+  public function getProjectInfoByCode($em, $projectCode) {
+    
+    $code = explode("-",$projectCode)[0];
+    $year = explode("-",$projectCode)[1];
+    
     $connection = $em->getConnection();
-    $statement = $connection->prepare("
-            select xprouni.unidadc as codigo_unidad, proyectos.descrip as nombre, proyectos.proyecto as codigo_proyecto, unidades.descrip as unidad, TI.descrip AS tipo_invest, CR.descrip as tipo_finan,  
-					EP.descrip as estado, descr_ubi as ubicacion, TP.descrip as tipo_proyecto 
-                    From proyectos, xprouni, codigos as TI,codigos as CR,codigos as EP, ubicacion,codigos as TP, unidades  
-                    where proyecto = '$projectCode' 
-                    and unidades.unidad = xprouni.unidadc  
-                    and tipoc = 1  
-                    and xprouni.proyectoc = proyectos.proyecto  
-                    and TI.tipo = 13 and TI.codigo = tipo_invest  
-                    and CR.tipo = 2  and CR.codigo = tipo_financ  
-                    and EP.tipo = 12 and EP.codigo = estado_proy  
-                    and ubicacion.ubicacion = proyectos.ubicacion  
-                    and TP.tipo = 21 and TP.codigo = tipo_proy");
+    $statement = $connection->prepare("SELECT    
+    Proy.fec_inicio 'fecha_inicio',
+    Proy.fec_fin 'fecha_final',
+    formu.fec_registro 'fecha_registro',
+    formu.nom_proyecto 'dsc_proyecto',
+     
+     formu.dsc_obj_general 'dsc_objetivo_general',
+    
+    formu.id_valor_estado 'id_estado_proyecto',    
+    tipoproy.dsc_tipo_proyecto 'dsc_tipo_proyecto',
+    
+    MONTHS_BETWEEN(Proy.fec_fin, Proy.fec_inicio) 'duracion_meses',
+    
+    UnidEject.id_unidad_programatica 'id_unidad',
+    UPPER(SegUnidExec.dsc_unidad_ejecutora) 'dsc_unidad'
+from
+     spp_proyecto Proy INNER join spp_formulario formu
+        ON Proy.id_formulario = Formu.id_formulario AND Proy.id_periodo = Formu.id_periodo AND Proy.id_tipo_proyecto = Formu.id_tipo_proyecto
+     INNER join spp_proyecto_unidad_ejecutora UnidEject
+        ON Proy.id_formulario = UnidEject.id_formulario AND Proy.id_periodo = UnidEject.id_periodo AND Proy.id_tipo_proyecto = UnidEject.id_tipo_proyecto
+     INNER join spp_formulario_origen_fondos fondos
+        ON Proy.id_formulario = fondos.id_formulario AND Proy.id_periodo = fondos.id_periodo AND Proy.id_tipo_proyecto = fondos.id_tipo_proyecto
+     INNER JOIN spp_tipo_proyecto tipoproy
+        on formu.id_tipo_proyecto = tipoproy.id_tipo_proyecto
+     
+     inner join spp_estructura_programatica EstrcProg
+        on UnidEject.id_periodo = EstrcProg.id_periodo AND UnidEject.id_unidad_programatica = EstrcProg.id_unidad_programatica
+     inner join seguridad_unidad_ejecutora SegUnidExec
+        on EstrcProg.id_empresa = SegUnidExec.id_empresa and EstrcProg.id_unidad_referencia = SegUnidExec.id_unidad_ejecutora 
+
+WHERE
+    Proy.id_formulario = '$code'    
+    AND Proy.id_periodo = $year
+    AND Proy.id_tipo_proyecto = 'Pry01'
+    AND fondos.id_act_sustantiva = 2 
+    AND UnidEject.ind_base = '1'  
+    AND formu.id_valor_estado = 42;");
 
     $statement->execute();
 

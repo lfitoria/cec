@@ -195,6 +195,20 @@ class ProjectRequest {
    */
   private $owner;
 
+  /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="date", type="datetime", nullable=true)
+     */
+    private $date;
+
+    function getDate() {
+      return $this->date;
+    }
+  
+    function setDate($date) {
+      $this->date = $date;
+    }
   function getOwner(): LdapUser {
     return $this->owner;
   }

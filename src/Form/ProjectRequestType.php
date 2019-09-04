@@ -179,7 +179,7 @@ class ProjectRequestType extends AbstractType {
                     ),
                     'data' => $projectRequest->getMinuteCommissionTFG() ? $projectRequest->getMinuteCommissionTFG() : '0',
                     'expanded' => true,
-                    'label' => 'Acta de la comisión científica o de la Comisión de TFG de grado o posgrado:',
+                    'label' => 'Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:',
                     'attr' => ['class' => 'extInstitutionsAuthorization'],
                     'required' => true
                 ));

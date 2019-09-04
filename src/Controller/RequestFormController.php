@@ -143,8 +143,9 @@ class RequestFormController extends AbstractController {
   private function getInformationByProject($externalDataManager, $projectCode) {
 
     $entityManager = $this->getDoctrine()->getManager('sip');
+    $emOracle = $this->getDoctrine()->getManager('oracle');
 
-    $projectData = $externalDataManager->getSIPProjectByCode($entityManager, $projectCode);
+    $projectData = $externalDataManager->getProjectInfoByCode($emOracle, $projectCode);
     if ($projectData) {
       $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
       $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
