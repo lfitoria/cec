@@ -149,7 +149,7 @@ class ExternalDataManager {
                 e.id_personal id_participante,
                 e.apellido1 dsc_apellido1,
                 e.apellido2 dsc_apellido2,
-                e.nombre nom_persona,
+                e.nombre nom_persona
             FROM 
                 spp_participante_interno pi, 
                 v_eu_empleados e
