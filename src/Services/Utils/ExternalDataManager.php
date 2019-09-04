@@ -22,7 +22,7 @@ class ExternalDataManager {
     $year = explode("-",$projectCode)[1];
     
     $connection = $em->getConnection();
-    $statement = $connection->prepare(`SELECT    
+    $statement = $connection->prepare('SELECT    
     Proy.fec_inicio "fecha_inicio",
     Proy.fec_fin "fecha_final",
     formu.fec_registro "fecha_registro",
@@ -49,12 +49,12 @@ from
         on EstrcProg.id_empresa = SegUnidExec.id_empresa and EstrcProg.id_unidad_referencia = SegUnidExec.id_unidad_ejecutora 
 
 WHERE
-    Proy.id_formulario = $code    
-    AND Proy.id_periodo = $year
-    AND Proy.id_tipo_proyecto = 'Pry01'
+    Proy.id_formulario = ' + $code + '    
+    AND Proy.id_periodo = ' + $year + '
+    AND Proy.id_tipo_proyecto = "Pry01"
     AND fondos.id_act_sustantiva = 2 
-    AND UnidEject.ind_base = '1'  
-    AND formu.id_valor_estado = 42;`);
+    AND UnidEject.ind_base = "1"  
+    AND formu.id_valor_estado = 42;');
 
     $statement->execute();
 
