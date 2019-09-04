@@ -250,37 +250,34 @@ const $ = require('jquery');
               $(".project_researchers_table").html("");
               $(".project_principal_researchers_row").remove("");
               $("#project_principal_researchers .no-data").remove("");
-              
+
               var researchers = response.researchers.filter(function (el) {
-                return el.PARTICIPA.trim() === "ASOCIADO";
+                return el.ID_TIPO_PARTICIPACION === 43;
               });
 
               var principalResearchers = response.researchers.filter(function (el) {
-                return el.PARTICIPA.trim() === "PRINCIPAL" || el.PARTICIPA.trim() === "COLABORADOR";
+                return el.ID_TIPO_PARTICIPACION === 42;
               });
-              console.log(`researchers-${researchers}`);
-              console.log(researchers.length);
-              if(researchers.length > 0){
-                console.log("entra researchers.length");
-              for (var i = 0; i < researchers.length; i++) {
-                var researcherRow = `<tr>
-              <td scope="col">${researchers[i].nombre.trim()} ${researchers[i].apellido1.trim()} ${researchers[i].apellido2.trim()}</td>
-              <td scope="col">${researchers[i].cedula}</td>
-              <td scope="col">${researchers[i].bitnet}</td>
+              if (researchers.length > 0) {
+                for (var i = 0; i < researchers.length; i++) {
+                  var researcherRow = `<tr>
+              <td scope="col">${researchers[i].NOMBRE.trim()} ${researchers[i].APELLIDO1.trim()} ${researchers[i].APELLIDO2.trim()}</td>
+              <td scope="col">${researchers[i].ID_PARTICIPANTE}</td>
+              <td scope="col">${researchers[i].ID_PARTICIPANTE}</td>
             </tr>`;
 
-                $(".project_researchers_table").append(researcherRow);
-              }
-              }else{
+                  $(".project_researchers_table").append(researcherRow);
+                }
+              } else {
                 console.log("no researchers.length");
-                    var researcherRowNO = `<tr>
+                var researcherRowNO = `<tr>
                   <td scope="col" colspan="3">Sin datos</td>
                 </tr>`;
                 $(".project_researchers_table").append(researcherRowNO);
               }
-              
+
               for (var i = 0; i < principalResearchers.length; i++) {
-                var researcherRow = `<input type="text" readonly class="form-control mb-2 project_principal_researchers_row" name="" value="${principalResearchers[i].nombre} ${principalResearchers[i].apellido1} ${principalResearchers[i].apellido2}">`;
+                var researcherRow = `<input type="text" readonly class="form-control mb-2 project_principal_researchers_row" name="" value="${principalResearchers[i].NOMBRE} ${principalResearchers[i].APELLIDO1} ${principalResearchers[i].APELLIDO2}">`;
                 $("#project_principal_researchers").append(researcherRow);
               }
 
