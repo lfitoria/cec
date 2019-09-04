@@ -244,9 +244,8 @@ const $ = require('jquery');
           success: function (response) {
             if (response.projectWasFound) {
 
-              $("#project_request_title").val(response.projectData.nombre);
-              // $("#project_unit").val(response.projectData.unidad);project_request_projectUnit
-              $("#project_request_projectUnit").val(response.projectData.unidad);
+              $("#project_request_title").val(response.projectData.dsc_proyecto);
+              $("#project_request_projectUnit").val(response.projectData.dsc_unidad);
 
               $(".project_researchers_table").html("");
               $(".project_principal_researchers_row").remove("");
