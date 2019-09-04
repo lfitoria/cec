@@ -17,10 +17,10 @@ class ExternalDataManager {
   }
 
   public function getProjectInfoByCode($em, $projectCode) {
-    
-    $code = explode("-",$projectCode)[0];
-    $year = explode("-",$projectCode)[1];
-    
+
+    $code = explode("-", $projectCode)[0];
+    $year = explode("-", $projectCode)[1];
+
     $connection = $em->getConnection();
     $statement = $connection->prepare('SELECT    
     Proy.fec_inicio "fecha_inicio",
@@ -49,12 +49,16 @@ from
         on EstrcProg.id_empresa = SegUnidExec.id_empresa and EstrcProg.id_unidad_referencia = SegUnidExec.id_unidad_ejecutora 
 
 WHERE
-    Proy.id_formulario = ' . $code . '    
-    AND Proy.id_periodo = ' . $year . '
-    AND Proy.id_tipo_proyecto = "Pry01"
+    Proy.id_formulario = :code    
+    AND Proy.id_periodo = :year
+    AND Proy.id_tipo_proyecto =  :type
     AND fondos.id_act_sustantiva = 2 
-    AND UnidEject.ind_base = "1"  
+    AND UnidEject.ind_base = 1  
     AND formu.id_valor_estado = 42;');
+
+    $statement->bindValue('code', $code);
+    $statement->bindValue('year', $year);
+    $statement->bindValue('type', 'Pry01');
 
     $statement->execute();
 
@@ -187,6 +191,7 @@ WHERE
 
     return $results;
   }
+
   public function getInfoByProject($em, $project) {
     $connection = $em->getConnection();
     $statement = $connection->prepare("
@@ -196,6 +201,7 @@ WHERE
     $results = $statement->fetchAll();
     return isset($results[0]) ? $results[0] : false;
   }
+
   public function getObjetivoPrincipalByProject($em, $project) {
     $connection = $em->getConnection();
     $statement = $connection->prepare("
