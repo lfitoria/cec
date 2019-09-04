@@ -49,8 +49,8 @@ from
         on EstrcProg.id_empresa = SegUnidExec.id_empresa and EstrcProg.id_unidad_referencia = SegUnidExec.id_unidad_ejecutora 
 
 WHERE
-    Proy.id_formulario = ' + $code + '    
-    AND Proy.id_periodo = ' + $year + '
+    Proy.id_formulario = ' . $code . '    
+    AND Proy.id_periodo = ' . $year . '
     AND Proy.id_tipo_proyecto = "Pry01"
     AND fondos.id_act_sustantiva = 2 
     AND UnidEject.ind_base = "1"  
