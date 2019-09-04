@@ -252,11 +252,11 @@ const $ = require('jquery');
               $("#project_principal_researchers .no-data").remove("");
 
               var researchers = response.researchers.filter(function (el) {
-                return el.ID_TIPO_PARTICIPACION === 43;
+                return el.ID_TIPO_PARTICIPACION === "43";
               });
 
               var principalResearchers = response.researchers.filter(function (el) {
-                return el.ID_TIPO_PARTICIPACION === 42;
+                return el.ID_TIPO_PARTICIPACION === "42";
               });
               if (researchers.length > 0) {
                 for (var i = 0; i < researchers.length; i++) {
