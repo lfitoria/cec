@@ -148,7 +148,7 @@ class RequestFormController extends AbstractController {
     $projectData = $externalDataManager->getProjectInfoByCode($emOracle, $projectCode);
     if ($projectData) {
       $externalCollaboration = $externalDataManager->getExternalCollaborationByProject($entityManager, $projectCode);
-      $researchers = $externalDataManager->getResearchersByProject($entityManager, $projectCode);
+      $researchers = $externalDataManager->getResearchersByProject($emOracle, $projectCode);
       return ["externalCollaboration" => $externalCollaboration,
           "projectData" => $projectData,
           "researchers" => $researchers, 

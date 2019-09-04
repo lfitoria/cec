@@ -112,15 +112,84 @@ class ExternalDataManager {
   }
 
   public function getResearchersByProject($em, $projectCode) {
-
+    
+    $code = explode("-", $projectCode)[0];
+    $year = explode("-", $projectCode)[1];
+    
     $connection = $em->getConnection();
-    $statement = $connection->prepare(
-            "Select DISTINCT datos_per.cedula,apellido1,apellido2,nombre,bitnet,codigos.descrip AS PARTICIPA
-                From xproinv, codigos, dedicacion, datos_per  
-               WHERE xproinv.proyecto = '$projectCode'
-               and datos_per.cedula = xproinv.cedula and codigos.codigo = 1 and codigos.tipo = 1
-               and dedicacion.dedicacion = xproinv.dedicacion");
+    $statement = $connection->prepare(' SELECT
+        Invs.id_tipo_identificacion, 
+        Invs.id_participante,
+        upper(Invs.dsc_apellido1) apellido1,
+        upper(Invs.dsc_apellido2) apellido2,
+        upper(Invs.nom_persona) Nombre,
+        Invs.dsc_unidad_participante "dsc_unidad",
+        ProyInv.id_valor_tipo_participacion id_tipo_participacion,
+        ValorTipo.dsc_valor_tipo "dsc_tipo_participacion"      
+    from
+         spp_proyecto Proy INNER join spp_formulario formu
+            ON Proy.id_formulario = Formu.id_formulario AND Proy.id_periodo = Formu.id_periodo AND Proy.id_tipo_proyecto = Formu.id_tipo_proyecto
+         INNER join spp_proyecto_unidad_ejecutora UnidEject
+            ON Proy.id_formulario = UnidEject.id_formulario AND Proy.id_periodo = UnidEject.id_periodo AND Proy.id_tipo_proyecto = UnidEject.id_tipo_proyecto
+         INNER join spp_formulario_origen_fondos fondos
+            ON Proy.id_formulario = fondos.id_formulario AND Proy.id_periodo = fondos.id_periodo AND Proy.id_tipo_proyecto = fondos.id_tipo_proyecto
+         
+         INNER JOIN spp_proyecto_participante ProyInv
+            ON Proy.id_formulario = ProyInv.id_formulario AND Proy.id_periodo = ProyInv.id_periodo AND Proy.id_tipo_proyecto = ProyInv.id_tipo_proyecto
+         INNER JOIN spp_valor_tipo ValorTipo
+            ON ValorTipo.id_valor_tipo = ProyInv.id_valor_tipo_participacion
+         INNER JOIN 
+         (
+            SELECT 
+                pi.id_periodo, 
+                pi.id_formulario, 
+                pi.id_tipo_proyecto, 
+                pi.id_participante_proyecto,
+                e.id_tipo_identificacion, 
+                e.id_personal id_participante,
+                e.apellido1 dsc_apellido1,
+                e.apellido2 dsc_apellido2,
+                e.nombre nom_persona,
+                e.unidad dsc_unidad_participante
+            FROM 
+                spp_participante_interno pi, 
+                v_eu_empleados e
+            WHERE 
+                pi.num_empleado = e.num_empleado
+            
+            UNION ALL
+            
+            SELECT 
+                pe.id_periodo, 
+                pe.id_formulario, 
+                pe.id_tipo_proyecto, 
+                pe.id_participante_proyecto,
+                p.id_valor_tip_identificacion id_tipo_identificacion, 
+                p.id_participante,
+                p.dsc_apellido1,
+                p.dsc_apellido1,
+                p.nom_persona,
+                "NO APLICA" dsc_unidad_participante
+            FROM 
+                spp_participante_externo pe, 
+                spp_participante p
+            WHERE 
+                pe.id_participante = p.id_participante
+        ) Invs
+            ON Proy.id_formulario = Invs.id_formulario AND Proy.id_periodo = Invs.id_periodo AND Proy.id_tipo_proyecto = Invs.id_tipo_proyecto AND ProyInv.id_participante_proyecto = Invs.id_participante_proyecto
+         
+         
+    WHERE
+        Proy.id_formulario = :code
+        AND Proy.id_periodo = :year
+        AND Proy.id_tipo_proyecto = :type
+        AND fondos.id_act_sustantiva = 2 
+        AND UnidEject.ind_base = 1
+        AND formu.id_valor_estado = 42');
 
+    $statement->bindValue('code', $code);
+    $statement->bindValue('year', $year);
+    $statement->bindValue('type', 'Pry01');
     $statement->execute();
 
     $results = $statement->fetchAll();
