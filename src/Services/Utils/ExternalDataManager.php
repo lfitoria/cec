@@ -169,7 +169,8 @@ class ExternalDataManager {
                 p.dsc_apellido1,
                 p.dsc_apellido1,
                 p.nom_persona,
-                "NO APLICA" dsc_unidad_participante
+                "NO APLICA",
+                dsc_unidad_participante
             FROM 
                 spp_participante_externo pe, 
                 spp_participante p
