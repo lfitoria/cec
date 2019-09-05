@@ -7,10 +7,14 @@
             <strong>Resumen del estudio (antecedentes y justificación):</strong>
         </p>
 
-        {% if SipProject %}
+        {% if SipProjectExtraInformation %}
             {# <textarea class="form-control" name="" id="" rows="12" >{{SipProject.antecedentes|raw|striptags|convert_encoding('UTF-8', 'ISO-8859-1//TRANSLIT')}}{{SipProject.jusitificacion|striptags|raw|default('Sin datos')}}</textarea> #}
             <div class="textareas-form">
-            {{SipProject.antecedentes|raw}}{{SipProject.jusitificacion|raw}}
+            {% autoescape %}
+            {{SipProjectExtraInformation.DSC_ANTECEDENTE|raw}}
+            {% endautoescape %}
+            {{SipProjectExtraInformation.DSC_JUSTIFICACION|striptags}}
+
             </div>
         {% else %}
             <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
@@ -24,14 +28,26 @@
             <strong>Objetivo principal:</strong>
         </p>
         {% if SipProject %}
-            <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.descrip|striptags|raw|default('Sin datos')}}</textarea>
+            <textarea class="form-control" name="" id="" rows="6" disabled>{{SipProject.projectData.dsc_proyecto|striptags|raw|default('Sin datos')}}</textarea>
         {% else %}
             <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
         {% endif %}
 
     </div>
+    <div class="form-group">
+        <p>
+            <strong>Objetivos:</strong>
+        </p>
+        {% if objetivoPrincipal %}
+            <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos')}}</textarea>
+        {% else %}
+            <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+        {% endif %}
+
+    </div>
+    
 {% endif %}
-{{ form_row(form.objetives) }}
+{# {{ form_row(form.objetives) }} #}
 {{ form_row(form.questions) }}
 {{ form_row(form.hypothesis) }}
 {{ form_row(form.invType, {label_attr: {class: 'checkbox-custom'} }) }}
@@ -41,10 +57,10 @@
             <strong>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de
                                 muestras biológicas –si aplica:</strong>
         </p>
-        {% if SipProject %}
+        {% if SipProjectExtraInformation %}
             {# <textarea class="form-control" name="" id="" rows="10" disabled>{{SipProject.metodologia|striptags|raw|default('Sin datos')}}</textarea> #}
             <div class="textareas-form">
-            {{SipProject.metodologia|raw}}
+            {{SipProjectExtraInformation.DSC_METODOLOGIA|striptags|raw}}
             </div>
         {% else %}
             <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
@@ -57,11 +73,11 @@
 {{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}
 {# <div contenteditable="true">
 {{SipProject.antecedentes|raw}}
-</div>
- <pre>
-    {{ dump(SipProject.antecedentes) }}
-</pre> #}
-{#
+</div>#}
+ {# <pre> 
+    {{ dump(SipProjectExtraInformation) }}
+</pre>  #}
+{# 
 <pre>
     {{ dump(objetivoPrincipal) }}
-</pre> #}
+</pre>  #}

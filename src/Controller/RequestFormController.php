@@ -95,18 +95,23 @@ class RequestFormController extends AbstractController {
     $form->handleRequest($request);
     
     $projectCode = $projectRequest->getSipProject();
-    $SipProject = $this->getExtraInformationByProject($externalDataManager, $projectCode);
+    $SipProject = $this->getInformationByProject($externalDataManager, $projectCode);
 
-    $entityManager = $this->getDoctrine()->getManager('sip');
-    $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($entityManager, $projectCode);
+    $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectCode);
     
-    // var_dump($SipProject);
+    $entityManager = $this->getDoctrine()->getManager('sip');
+    $emOracle = $this->getDoctrine()->getManager('oracle');
+    $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectCode);
+    
+    // var_dump($objetivoPrincipal);
+    // die();
 
 
     return $this->render($templateRoute, [
                 'academic_request_info' => $academicRequestInfo,
                 'form' => $form->createView(),
                 'SipProject' => $SipProject,
+                'SipProjectExtraInformation' => $SipProjectExtraInformation,
                 'objetivoPrincipal' => $objetivoPrincipal,
     ]);
   }
@@ -162,8 +167,9 @@ class RequestFormController extends AbstractController {
   private function getExtraInformationByProject($externalDataManager, $projectCode) {
 
     $entityManager = $this->getDoctrine()->getManager('sip');
+    $emOracle = $this->getDoctrine()->getManager('oracle');
 
-    $projectData = $externalDataManager->getInfoByProject($entityManager, $projectCode);
+    $projectData = $externalDataManager->getInfoByProject($emOracle, $projectCode);
     if ($projectData) {
       return $projectData;
     }
