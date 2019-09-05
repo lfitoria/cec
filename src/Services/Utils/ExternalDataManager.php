@@ -261,24 +261,91 @@ class ExternalDataManager {
     return $results;
   }
 
-  public function getInfoByProject($em, $project) {
+  // public function getInfoByProject($em, $project) {
+  //   $connection = $em->getConnection();
+  //   $statement = $connection->prepare("
+  //               SELECT * FROM proyectos_info_adicional where proyecto = '$project'");
+  //   $statement->execute();
+
+  //   $results = $statement->fetchAll();
+  //   return isset($results[0]) ? $results[0] : false;
+  // }
+  public function getInfoByProject($em, $projectCode) {
+    $code = explode("-", $projectCode)[0];
+    $year = explode("-", $projectCode)[1];
     $connection = $em->getConnection();
-    $statement = $connection->prepare("
-                SELECT * FROM proyectos_info_adicional where proyecto = '$project'");
+    $statement = $connection->prepare('SELECT
+        UPPER(TRIM(DSC_ANTECEDENTE)) DSC_ANTECEDENTE,
+        DSC_JUSTIFICACION,
+        DSC_METODOLOGIA,
+        DSC_BENEFICIOS_PBL
+    from SPP_PROYECTO_DESCRIPCION Proy 
+    where 
+    Proy.id_formulario = :code
+    AND Proy.id_periodo = :year
+    AND Proy.id_tipo_proyecto = :type
+    ');
+
+    $statement->bindValue('code', $code);
+    $statement->bindValue('year', $year);
+    $statement->bindValue('type', 'Pry01');
+
     $statement->execute();
 
     $results = $statement->fetchAll();
-    return isset($results[0]) ? $results[0] : false;
+    // $results_convert = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $results);
+    return isset($results[0]) ? $results[0] : null;
   }
 
-  public function getObjetivoPrincipalByProject($em, $project) {
+  // public function getObjetivoPrincipalByProject($em, $project) {
+  //   $connection = $em->getConnection();
+  //   $statement = $connection->prepare("
+  //               select tipo,descrip from objetivos where proyecto='$project' and tipo='G' order by linea");
+  //   $statement->execute();
+
+  //   $results = $statement->fetchAll();
+  //   return isset($results[0]) ? $results[0] : false;
+  // }
+  public function getObjetivoPrincipalByProject($em, $projectCode) {
+    $code = explode("-", $projectCode)[0];
+    $year = explode("-", $projectCode)[1];
+
     $connection = $em->getConnection();
-    $statement = $connection->prepare("
-                select tipo,descrip from objetivos where proyecto='$project' and tipo='G' order by linea");
+    $statement = $connection->prepare('SELECT
+        ObjEsp.id_obj_especifico id_objetivo_especifico,
+        ObjEsp.dsc_obj_especifico dsc_objetivo_especifico
+        
+    from
+        spp_proyecto Proy INNER join spp_formulario formu
+            ON Proy.id_formulario = Formu.id_formulario AND Proy.id_periodo = Formu.id_periodo AND Proy.id_tipo_proyecto = Formu.id_tipo_proyecto
+        INNER join spp_proyecto_unidad_ejecutora UnidEject
+            ON Proy.id_formulario = UnidEject.id_formulario AND Proy.id_periodo = UnidEject.id_periodo AND Proy.id_tipo_proyecto = UnidEject.id_tipo_proyecto
+        INNER join spp_formulario_origen_fondos fondos
+            ON Proy.id_formulario = fondos.id_formulario AND Proy.id_periodo = fondos.id_periodo AND Proy.id_tipo_proyecto = fondos.id_tipo_proyecto
+        
+          
+        INNER JOIN spp_objetivo_especifico ObjEsp
+            ON Proy.id_formulario = ObjEsp.id_formulario AND Proy.id_periodo = ObjEsp.id_periodo AND Proy.id_tipo_proyecto = ObjEsp.id_tipo_proyecto
+        
+    WHERE
+        Proy.id_formulario = :code
+        AND Proy.id_periodo =  :year
+        AND Proy.id_tipo_proyecto = :type
+        AND fondos.id_act_sustantiva = 2
+        AND UnidEject.ind_base = 1
+        AND formu.id_valor_estado = 42
+    order by 
+        ObjEsp.id_obj_especifico
+    ');
+
+    $statement->bindValue('code', $code);
+    $statement->bindValue('year', $year);
+    $statement->bindValue('type', 'Pry01');
+
     $statement->execute();
 
     $results = $statement->fetchAll();
-    return isset($results[0]) ? $results[0] : false;
+    return isset($results[0]) ? $results[0] : null;
   }
 
 }
