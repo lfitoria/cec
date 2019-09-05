@@ -48,7 +48,9 @@ security:
  
     access_control:
         # - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/login_test, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        
 
     always_authenticate_before_granting: true
