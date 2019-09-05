@@ -11,7 +11,7 @@ use App\Entity\LdapUser;
  * ProjectRequest
  *
  * @ORM\Table(name="project_request")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ProjectRequestRepository")
  */
 class ProjectRequest {
 

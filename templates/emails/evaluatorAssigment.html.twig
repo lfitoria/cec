@@ -1,0 +1,13 @@
+{# empty Twig template #}
+<div class="email_template">
+  <div class="email_template_header">
+    <img src="{{ asset('images/logo_header_ucr.png') }}" alt="CEC"/>
+    <br>
+    <img src="{{ asset('images/logo_correo.png') }}" alt="CEC"/>
+    <hr>
+  </div>
+  <div class="email_template_body">
+    <p>Usted ha sido asignado como evaluador del proyecto: {{ project_request.title }}</p>
+    <a href="#" target="_blank">Ir al proyecto</a>  
+  </div>
+</div>

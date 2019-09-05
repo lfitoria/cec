@@ -28,6 +28,7 @@ class ProjectRequestController extends AbstractController {
    */
   public function index(Security $security): Response {
     $loggedUser = $security->getUser();
+    $projectRequests = null;
     $role = $loggedUser->getRole()->getDescription();
     $data = [];
 
@@ -35,7 +36,7 @@ class ProjectRequestController extends AbstractController {
       case "ROLE_ADMIN":
         $requestsFilter = array("state" => 28);
         $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
-
+                
         $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
         break;
       case "ROLE_STUDENT":
@@ -45,16 +46,23 @@ class ProjectRequestController extends AbstractController {
         $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28]);
         break;
       case "ROLE_EVALUATOR":
-        $requestsFilter = array("owner" => $loggedUser, "state" => [28]);
+        
+        $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, 28);
         break;
       default:
         $requestsFilter = array("state" => 2);
         break;
     }
 
-    $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->findBy($requestsFilter);
+    $projectRequests = $projectRequests ? $projectRequests : $this->getDoctrine()->getRepository(ProjectRequest::class)->findBy($requestsFilter);
     $data['project_requests'] = $projectRequests;
-
+    
+    foreach ($projectRequests as $projectRequest) {
+      $data['project_requests_users'][$projectRequest->getId()] = array();
+      foreach ($projectRequest->getUsers() as $user) {
+        $data['project_requests_users'][$projectRequest->getId()][] = $user->getId();
+      }
+    }
     return $this->render('project_request/index.html.twig', $data);
   }
 

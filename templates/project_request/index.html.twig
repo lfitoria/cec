@@ -5,42 +5,38 @@
 {% endblock %}
 {% block body %}
 
-    <p class="title-table-index">SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nº de solicitud</th>
-                <th>
-                    {% if app.user.role.description == "ROLE_RESEARCHER" %}
-                        Título de proyecto
-                    {% elseif app.user.role.description == "ROLE_STUDENT" %}
-                        Título de Trabajo final de graduación
-                    {% else %}
-                        Título de proyecto
-                    {% endif %}
-                </th>
-                {% if app.user.role.description == "ROLE_ADMIN" %}
-                    <th>Investigador / estudiante</th>
-                    <th>Unidad</th>
-                {% endif %}
-                <th colspan="2">Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for project_request in project_requests %}
-                <tr>
-                    <td class="text-bold">
-                        <span>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</span>
-                    </td>
-                    <td>
-                        <span>{{ project_request.title }}</span>
-                    </td>
-                    {% if app.user.role.description == "ROLE_ADMIN" %}
-                        <td>{{ project_request.owner.name }}</td>
-                        <td>{{ project_request.sipProject }}</td>
-                    {% endif %}
-                    <td class="d-flex justify-content-between">
-                        <span>{{ project_request.state.description }}</span>
+  <p class="title-table-index">SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nº de solicitud</th>
+        <th>
+          {% if app.user.role.description == "ROLE_RESEARCHER" %}
+            Título de proyecto
+          {% elseif app.user.role.description == "ROLE_STUDENT" %}
+            Título de Trabajo final de graduación
+          {% else %}
+            Título de proyecto
+          {% endif %}
+        </th>
+        {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Investigador / estudiante</th>{% endif %}
+        {% if app.user.role.description in ["ROLE_ADMIN"] %}<th>Unidad</th>{% endif %}
+        <th colspan="2">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project_request in project_requests %}
+        <tr>
+          <td class="text-bold">
+            <span>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</span>
+          </td>
+          <td>
+            <span>{{ project_request.title }}</span>
+          </td>
+          {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<td>{{ project_request.owner.name }}</td>{% endif %}
+          {% if app.user.role.description in ["ROLE_ADMIN"] %}<td>{{ project_request.sipProject }}</td>{% endif %}
+          <td class="d-flex justify-content-between">
+            <span>{{ project_request.state.description }}</span>
 
 
 
@@ -54,7 +50,7 @@
                   {% for evaluator in evaluators %}
                     <li>
                       <label>
-                        <input type="checkbox" name="evaluators" value="{{ evaluator.id }}" checked="">
+                        <input type="checkbox" name="evaluators" value="{{ evaluator.id }}" {% if evaluator.id in project_requests_users[project_request.id] %}checked{% endif %}>
                         {{ evaluator.name }}
                       </label>
                     </li>
@@ -67,6 +63,10 @@
             {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
               {% if project_request.state.id == 27 %}
                 <a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
+              {% endif %}
+            {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_EVALUATOR"%}
+              {% if project_request.state.id == 28 %}
+                <a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Evaluar</a>
               {% endif %}
             {% endif %}
 

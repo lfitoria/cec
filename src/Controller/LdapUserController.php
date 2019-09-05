@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Services\Utils\NotificationManager;
 
 /**
  * @Route("/ldap/user")
@@ -96,23 +97,35 @@ class LdapUserController extends AbstractController {
   /**
    * @Route("/assigment_evaluator_to_request", name="assigment_evaluator_to_request", methods={"POST"})
    */
-  public function assigmentEvaluatorToRequest(Request $request): Response {
+  public function assigmentEvaluatorToRequest(Request $request, NotificationManager $notificationManager): Response {
     $evaluators = $request->request->get('evaluators');
     $projectId = $request->request->get('project_id');
 
     if ($evaluators) {
       $entityManager = $this->getDoctrine()->getManager();
       $newEvaluators = array();
+      $emailEvaluators = array();
       $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find($projectId);
       foreach ($evaluators as $id) {
         $evaluator = $this->getDoctrine()->getRepository(LdapUser::class)->find($id);
         $newEvaluators[] = $evaluator;
+        $emailEvaluators[] = $evaluator->getEmail();
       }
+
+      $body = $this->renderView('emails/evaluatorAssigment.html.twig', ['project_request' => $projectRequest]);
+      $emailData = [
+          "subject" => "Asignacion de solicitud",
+          "from" => "catedrahumboldt.vi@ucr.ac.cr",
+          "to" => $emailEvaluators,
+          "cc" => "camacho.le@gmail.com",
+          "body" => $body
+      ];
+      $notificationManager->sendEmail($emailData);
 
       $projectRequest->setUsers($newEvaluators);
       $entityManager->flush();
 
-        return new JsonResponse(['wasAssigned' => true]);
+      return new JsonResponse(['wasAssigned' => true]);
     }
 
     return new JsonResponse(['wasAssigned' => false]);
