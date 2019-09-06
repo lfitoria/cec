@@ -9,17 +9,17 @@
       {{ encore_entry_link_tags('app') }}
       {{ encore_entry_link_tags('forms') }}
     {% endblock %}
-        {% block specific_stylesheets %} {% endblock %}
+    {% block specific_stylesheets %} {% endblock %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-   
+
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   </head>
   <body>
     <div class="header">
       <div class="container">
         <a href="https://ucr.ac.cr" target="_blank">
-        <img src="{{ asset('images/logo_header_ucr.png') }}" alt="CEC"/>
+          <img src="{{ asset('images/logo_header_ucr.png') }}" alt="CEC"/>
         </a>
       </div>
     </div>
@@ -38,7 +38,7 @@
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item seguimiento-m" href="{{path('project_request_index')}}">SEGUIMIENTO DE SOLICITUDES</a>
                 {% if app.user.role.description == "ROLE_ADMIN" %}
-                    <a class="dropdown-item admin-m" href="#">ADMINISTRAR USUARIOS</a>
+                  <a class="dropdown-item admin-m" href="#">ADMINISTRAR USUARIOS</a>
                 {% endif %}
                 <a class="dropdown-item ayuda-m" href="{{path("ayuda")}}">AYUDA</a>
                 <a class="dropdown-item cerrar-m" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
@@ -58,26 +58,26 @@
               <div class="col-4">
                 <p style="text-transform: capitalize;"><span class="label">{{'Nombre'|upper}}:</span> <strong>{{app.user.name|lower}}</strong></p>
                 <p><span class="label">{{'Puesto'|upper}}:</span><strong> 
-                  {% if app.user.role.description == "ROLE_ADMIN" %}
-                    Administrador
-                  {% elseif app.user.role.description == "ROLE_STUDENT" %}
-                    Estudiante                                  
-                  {% elseif app.user.role.description == "ROLE_RESEARCHER" %}
-                    Investigador
-                  {% elseif app.user.role.description == "ROLE_EVALUATOR" %}
-                    Evaluador
-                  {% endif %}
+                    {% if app.user.role.description == "ROLE_ADMIN" %}
+                      Administrador
+                    {% elseif app.user.role.description == "ROLE_STUDENT" %}
+                      Estudiante                                  
+                    {% elseif app.user.role.description == "ROLE_RESEARCHER" %}
+                      Investigador
+                    {% elseif app.user.role.description == "ROLE_EVALUATOR" %}
+                      Evaluador
+                    {% endif %}
                   </strong>
                 </p>
               </div>
               <div class="col box-r">
-                
+
                 <p><span class="label">{{'Correo electrónico'|upper}}:</span> <strong>{{app.user.email|lower}}</strong></p>
                 <p><span class="label">{{'Cédula/Carné'|upper}}:</span><strong>
-                  {{app.user.cedula_usuario}}
-                  {% if app.user.carnet != "" %}
-                    / {{app.user.carnet}}
-                  {% endif %}
+                    {{app.user.cedula_usuario}}
+                    {% if app.user.carnet != "" %}
+                      / {{app.user.carnet}}
+                    {% endif %}
                   </strong>
                 </p>
               </div>
@@ -100,8 +100,8 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-1">
-          <a href="https://ucr.ac.cr" target="_blank">
-            <img src="{{ asset('images/firma_footer_ucr.png') }}" alt="CEC"/>
+            <a href="https://ucr.ac.cr" target="_blank">
+              <img src="{{ asset('images/firma_footer_ucr.png') }}" alt="CEC"/>
             </a>
           </div>
           <div class="col-sm-6 infooter">
@@ -127,7 +127,23 @@
       {{ encore_entry_script_tags('app') }}
       {{ encore_entry_script_tags('forms') }}
     {% endblock %}
-   
+
     {% block specific_javascripts %}{% endblock %}
-  </body>
+    <div class="modal fade" id="feedback_modal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title feedback_modal_title">Title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4 class="text-center feedback_modal_message" >Modal</h4>
+          <p class="text-center text-muted feedback_modal_subMessage" >Modal</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>

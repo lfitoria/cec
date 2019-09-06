@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Services\Utils\FileManager;
+use Exception;
 
 class NotificationManager {
 
@@ -28,7 +29,9 @@ class NotificationManager {
   }
 
   private function validateEmails($emails) {
+    
     foreach ($emails as $email) {
+      var_dump($email);
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new Exception("Invalid email format: " . $email);
       }
@@ -67,7 +70,7 @@ class NotificationManager {
 
   public function sendEmail($emailData) {
 
-    $this->validateEmails([$emailData["from"], $emailData["to"], $emailData["cc"]]);
+    $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"], $emailData["cc"]]));
     $message = $this->configureEmail($emailData);
 
     try {

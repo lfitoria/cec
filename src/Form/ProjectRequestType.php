@@ -172,17 +172,7 @@ class ProjectRequestType extends AbstractType {
                     'attr' => ['readonly' => true,'id'=>'project_request_projectUnit'],
                     'label' => 'Unidad base del proyecto:',
                 ]);
-                $form->add('minuteCommissionTFG', ChoiceType::class, array(
-                    'choices' => array(
-                        'No' => '0',
-                        'Sí' => '1',
-                    ),
-                    'data' => $projectRequest->getMinuteCommissionTFG() ? $projectRequest->getMinuteCommissionTFG() : '0',
-                    'expanded' => true,
-                    'label' => 'Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:',
-                    'attr' => ['class' => 'extInstitutionsAuthorization'],
-                    'required' => true
-                ));
+               
                 $form->add('minuteCommissionTFGFiles', CollectionType::class, [
                     'entry_type' => FileType::class,
                     'entry_options' => ['label' => false],

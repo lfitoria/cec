@@ -38,6 +38,7 @@
             <file>file:/C:/xampp/htdocs/cec/src/Entity/ExtraInformationRequest.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/commons/_form_header.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/ProjectRequest.php</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/emails/evaluatorAssigment.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/users_roles/new.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/edit.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Repository/WorkLogRepository.php</file>
@@ -46,6 +47,7 @@
             <file>file:/C:/xampp/htdocs/cec/templates/eval_request/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/EvalRequest.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Form/LdapUserType.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/academic_request_info/edit.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/.gitignore</file>
             <file>file:/C:/xampp/htdocs/cec/templates/eval_request/_form.html.twig</file>
@@ -69,6 +71,7 @@
             <file>file:/C:/xampp/htdocs/cec/src/Form/FilesType.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/Ldap.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Controller/EthicEvalRequestController.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Repository/ProjectRequestRepository.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/default/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Repository/AcademicRequestInfoRepository.php</file>
             <file>file:/C:/xampp/htdocs/cec/nbproject/private/private.xml</file>
