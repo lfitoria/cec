@@ -69,8 +69,8 @@ class NotificationManager {
   }
 
   public function sendEmail($emailData) {
-
     $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"], $emailData["cc"]]));
+
     $message = $this->configureEmail($emailData);
 
     try {
