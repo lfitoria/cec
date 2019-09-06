@@ -18,6 +18,9 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\UsersRoles;
 
+use App\Entity\AcademicRequestInfo;
+use App\Entity\EthicEvalRequest;
+
 /**
  * @Route("/solicitud")
  */
@@ -53,8 +56,10 @@ class ProjectRequestController extends AbstractController {
         $requestsFilter = array("state" => 2);
         break;
     }
-
-    $projectRequests = $projectRequests ? $projectRequests : $this->getDoctrine()->getRepository(ProjectRequest::class)->findBy($requestsFilter);
+    if (isset($requestsFilter)){
+      $projectRequests = $projectRequests ? $projectRequests : $this->getDoctrine()->getRepository(ProjectRequest::class)->findBy($requestsFilter);
+    }
+    
     $data['project_requests'] = $projectRequests;
     
     foreach ($projectRequests as $projectRequest) {
@@ -262,9 +267,26 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/detalle/{id}", name="project_request_show", methods={"GET"})
    */
-  public function show(ProjectRequest $projectRequest): Response {
+  public function show(ProjectRequest $projectRequest, Request $request): Response {
+    $projectId = $projectRequest->getId();
+
+    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find($projectId);
+
+    $projectId_getMinuteCommissionTFG = $projectRequest->getMinuteCommissionTFG();
+
+    $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->find($projectId);
+    // $academicRequestInfo = $this->em->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectId);
+
+    $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->find($projectId);
+    // $ethicEvalRequest = $this->em->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectId);
+
+    // var_dump($projectId);
+    // die();
     return $this->render('project_request/show.html.twig', [
                 'project_request' => $projectRequest,
+                'projectId_getMinuteCommissionTFG' => $projectId_getMinuteCommissionTFG,
+                'academicRequestInfo' => $academicRequestInfo,
+                'ethicEvalRequest' => $ethicEvalRequest,
     ]);
   }
 

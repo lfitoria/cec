@@ -20,7 +20,7 @@
           {% endif %}
         </th>
         {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Investigador / estudiante</th>{% endif %}
-        {% if app.user.role.description in ["ROLE_ADMIN"] %}<th>Unidad</th>{% endif %}
+        {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Unidad</th>{% endif %}
         <th colspan="2">Estado</th>
       </tr>
     </thead>
@@ -34,7 +34,7 @@
             <span>{{ project_request.title }}</span>
           </td>
           {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<td>{{ project_request.owner.name }}</td>{% endif %}
-          {% if app.user.role.description in ["ROLE_ADMIN"] %}<td>{{ project_request.sipProject }}</td>{% endif %}
+          {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<td>{{ project_request.projectUnit }}</td>{% endif %}
           <td class="d-flex justify-content-between">
             <span>{{ project_request.state.description }}</span>
 
@@ -56,7 +56,7 @@
                     </li>
                   {% endfor %}
                   <li>
-                    <button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">Completar</button>
+                    <button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">Confirmar</button>
                   </li>
                 </ul>
               </div>

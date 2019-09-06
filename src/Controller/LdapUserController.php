@@ -113,11 +113,13 @@ class LdapUserController extends AbstractController {
       }
 
       $body = $this->renderView('emails/evaluatorAssigment.html.twig', ['project_request' => $projectRequest]);
+      //evaluator@cec.com
       $emailData = [
-          "subject" => "Asignacion de solicitud",
+          "subject" => "CEC – Solicitud de revisión asignada - CEC-".$projectRequest->getId(),
           "from" => "catedrahumboldt.vi@ucr.ac.cr",
           "to" => $emailEvaluators,
-          "cc" => "camacho.le@gmail.com",
+          // "cc" => "camacho.le@gmail.com",
+          "cc" => "lfitoria@eldomo.net",
           "body" => $body
       ];
       $notificationManager->sendEmail($emailData);

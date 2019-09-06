@@ -3,9 +3,9 @@
 {% block title %}ProjectRequest{% endblock %}
 
 {% block body %}
-    <h1>ProjectRequest</h1>
+    <h1>Información</h1>
 
-    <table class="table">
+    {# <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -48,7 +48,21 @@
                 <td>{{ project_request.projectUnit }}</td>
             </tr>
         </tbody>
-    </table>
+    </table> #}
+
+    <pre>
+        {{ dump(projectId_getMinuteCommissionTFG) }}
+    </pre>
+    <pre>
+        {{ dump(project_request) }}
+
+    </pre>
+    <pre>
+        {{ dump(academicRequestInfo) }}
+    </pre>
+    <pre>
+        {{ dump(ethicEvalRequest) }}
+    </pre>
 
     <a href="{{ path('project_request_index') }}">back to list</a>
 
