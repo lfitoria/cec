@@ -18,11 +18,12 @@ class ExternalDataManager {
 
   public function getProjectInfoByCode($em, $projectCode) {
 
-    $code = explode("-", $projectCode)[0];
-    $year = explode("-", $projectCode)[1];
+    if (strpos($projectCode, "-")) {
+      $code = explode("-", $projectCode)[0];
+      $year = explode("-", $projectCode)[1];
 
-    $connection = $em->getConnection();
-    $statement = $connection->prepare('SELECT
+      $connection = $em->getConnection();
+      $statement = $connection->prepare('SELECT
                     Proy.id_formulario "ID_FORMULARIO",
                     Proy.id_periodo,
                     Proy.fec_inicio "fecha_inicio",
@@ -59,14 +60,18 @@ class ExternalDataManager {
                     AND UnidEject.ind_base = 1
                     AND formu.id_valor_estado = 42');
 
-    $statement->bindValue('code', $code);
-    $statement->bindValue('year', $year);
-    $statement->bindValue('type', 'Pry01');
+      $statement->bindValue('code', $code);
+      $statement->bindValue('year', $year);
+      $statement->bindValue('type', 'Pry01');
 
-    $statement->execute();
+      $statement->execute();
 
-    $results = $statement->fetchAll();
-    return isset($results[0]) ? $results[0] : null;
+      $results = $statement->fetchAll();
+
+      return isset($results[0]) ? $results[0] : null;
+    } else {
+      return null;
+    }
   }
 
   public function getExternalCollaborationByProject($em, $projectCode) {
@@ -112,10 +117,10 @@ class ExternalDataManager {
   }
 
   public function getResearchersByProject($em, $projectCode) {
-    
+
     $code = explode("-", $projectCode)[0];
     $year = explode("-", $projectCode)[1];
-    
+
     $connection = $em->getConnection();
     $statement = $connection->prepare(' SELECT
         Invs.id_tipo_identificacion, 
@@ -266,7 +271,6 @@ class ExternalDataManager {
   //   $statement = $connection->prepare("
   //               SELECT * FROM proyectos_info_adicional where proyecto = '$project'");
   //   $statement->execute();
-
   //   $results = $statement->fetchAll();
   //   return isset($results[0]) ? $results[0] : false;
   // }
@@ -302,7 +306,6 @@ class ExternalDataManager {
   //   $statement = $connection->prepare("
   //               select tipo,descrip from objetivos where proyecto='$project' and tipo='G' order by linea");
   //   $statement->execute();
-
   //   $results = $statement->fetchAll();
   //   return isset($results[0]) ? $results[0] : false;
   // }
