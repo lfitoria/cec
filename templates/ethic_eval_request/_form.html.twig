@@ -14,24 +14,70 @@
 {{ form_row(form.previsionsPrivacy) }}
 {{ form_row(form.futureUse) }}
 <div class="inline-custom-radio">
-  {{ form_row(form.informedConsent, {attr: {'data-code': 'informedConsentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+    {{ form_row(form.informedConsent, {attr: {'data-code': 'informedConsentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
 <div id="informedConsentFiles" class="d-none">
-  {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.informedConsentFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'informedConsentFiles', 'delete_label': 'Eliminar'}) }}
-  <small class="form-text text-muted"><span class="file-advice">*Campo obligatorio.</span> Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+    {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.informedConsentFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'informedConsentFiles', 'delete_label': 'Eliminar'}) }}
+    <small class="form-text text-muted">
+        <span class="file-advice">*Campo obligatorio.</span>
+        Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
     <hr>
 </div>
 
 <div class="inline-custom-radio">
-  {{ form_row(form.informedAssent, {attr: {'data-code': 'informedAssentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+    {{ form_row(form.informedAssent, {attr: {'data-code': 'informedAssentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
 </div>
 <div id="informedAssentFiles" class="d-none">
 
-  {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.informedAssentFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'informedAssentFiles', 'delete_label': 'Eliminar'}) }}
-  <small class="form-text text-muted"><span class="file-advice">*Campo obligatorio.</span> Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+    {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.informedAssentFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'informedAssentFiles', 'delete_label': 'Eliminar'}) }}
+    <small class="form-text text-muted">
+        <span class="file-advice">*Campo obligatorio.</span>
+        Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
     <hr>
 </div>
 
 
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig', {'finish': 1}) }}
+
+<!-- Modal -->
+<div class="modal fade" id="valdiate_send_user" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close btn-close-modalnew" data-dismiss="modal" aria-label="Close">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="col">
+                    <p>¿Confirma que ha completado la solicitud de revisión y desea enviar al Comité Ético Científico para su valoración?</p>
+                    
+                    <small class="form-text text-muted"><span class="file-advice">Tome en cuenta que una vez enviado, no podrá realizar ajustes.</span></small>
+                    <small class="form-text text-muted">Confirme sus credenciales institucionales</small>
+                    <form class="col-6 login-box-body-admin" action="{{ path('validate_user_send') }}" method="post" id="valdiate_send_user_form">
+                        
+                        <div class="form-group has-feedback">
+                            <input name="email" type="text" class="form-control" placeholder="CORREO INSTITUCIONAL" autofocus/>
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input type="password" class="form-control" placeholder="CLAVE" name="password"/>
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+                        <small class="form-text text-muted font-italic d-none" id="errorUserReq"><span class="file-advice">Usuario incorrecto.</span></small>
+                        <div class="date-send">
+                          <small class="form-text text-muted font-italic">Fecha de revisión: {{ "now"|date("m/d/Y") }}</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat" id="valdiate_send_user_submit">{{'CONFIRMAR ENVÍO'|upper}}</button>
+                    </form>
+                    <div class="d-none loadbox">
+                      <img src="{{ asset('images/loadajax.gif') }}" alt="CEC"/>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-close-modalnew" data-dismiss="modal">Cancelar envio</button>
+        </div>
+    </div>
+</div>

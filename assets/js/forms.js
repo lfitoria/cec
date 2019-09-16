@@ -84,9 +84,66 @@ const $ = require('jquery');
           cache.form_finish[0].value = $(this).data('finish');
         }
         if (cache.form.valid()) {
-          cache.form.submit();
+          console.log("submit-data");
+          // console.log(cache.form_finish[0].value);
+          if (cache.form_finish[0] != undefined) {
+            if (cache.form_finish[0].value == 1) {
+              jQuery('#valdiate_send_user').modal('show');
+
+              $('#valdiate_send_user_submit').click(function (event) {
+                event.preventDefault();
+                console.log("catch-event");
+                var myform = document.getElementById("valdiate_send_user_form");
+                var action = document.getElementById("valdiate_send_user_form").action;
+                console.log(action);
+                console.log(myform);
+                var fd = new FormData(myform);
+                console.log(fd);
+                var _this = $(this);
+                var path = "http://catedrahumboldt.ucr.ac.cr/cec/public/validate_user_send";
+                $.ajax({
+                  type: 'POST',
+                  enctype: "multipart/form-data",
+                  url: path,
+                  context: _this,
+                  data: fd,
+                  processData: false,
+                  contentType: false,
+                  beforeSend: loadStart,
+                  complete: loadStop,
+                  dataType: 'json',
+                }).done(function (data) {
+                  console.log(data);
+                  if (data.wasAssigned == false) {
+                    
+                    jQuery("#errorUserReq").removeClass("d-none");
+                  } else {
+                    jQuery("#errorUserReq").addClass("d-none");
+                    $("#valdiate_send_user_form").hide();
+                    cache.form.submit();
+                    
+                  }
+
+
+                });
+                // finajax
+              });
+            }
+            //cache.form.submit();
+          } else {
+            cache.form.submit();
+          }
         }
       });
+
+      function loadStart() {
+        $(".loadbox").removeClass("d-none");
+        $("#valdiate_send_user_form").hide();
+      }
+      function loadStop() {
+        $(".loadbox").addClass("d-none");
+        $("#valdiate_send_user_form").show();
+      }
 
       cache.decision_inputs.change(function () {
         var _this = $(this);
@@ -194,7 +251,7 @@ const $ = require('jquery');
               console.log(response.student);
               const studentCount = $(".student_row").length;
               const studentRow =
-                      `<tr class="student_row">
+                `<tr class="student_row">
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_name][${studentCount}]" value="${response.student.NOMBRE} ${response.student.APELLIDO1} ${response.student['APELLIDO2']}"></td>
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_id][${studentCount}]" value="${response.student['IDENTIFICACION']}"></td>
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_email][${studentCount}]" value="${response.student['CARNE']}"></td>
@@ -309,8 +366,8 @@ const $ = require('jquery');
     function showlabel(event) {
       var inputFile = event.currentTarget;
       $(inputFile).parent()
-              .find('.custom-file-label')
-              .html(inputFile.files[0].name);
+        .find('.custom-file-label')
+        .html(inputFile.files[0].name);
     }
 
     function removeSelectedFile(_this) {

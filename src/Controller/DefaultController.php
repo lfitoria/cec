@@ -9,6 +9,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
 use App\Entity\ProjectRequest;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends AbstractController {
 
@@ -62,6 +65,62 @@ class DefaultController extends AbstractController {
     }
 
     return $this->render('default/login.html.twig', $arrViewData);
+  }
+
+  /**
+   * @Route("/validate_user_send", name="validate_user_send", methods={"POST"})
+   */
+  public function ValidateUserSendProject(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils, Security $security): Response {
+    $data = $request->request->all();
+    // echo "<pre>";
+    // var_dump($data["email"]);
+    // echo "</pre><hr>";
+
+    $this->container = $container;
+
+    $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
+    if ($request->getMethod() == 'POST') {
+      // load Ldap service
+      $objLdapServ = $this->get('ldap');
+
+      $arrLoginResult = $objLdapServ->login();
+
+      // Ldap login result
+      $arrViewData = json_decode($arrLoginResult, TRUE);
+
+      $loggedUser = $security->getUser();
+      $userName = $loggedUser->getName();
+      // echo "<pre>";
+      
+      if ( isset($arrViewData['USERNAME']) ) {
+        // var_dump($arrViewData);
+        $arrViewData_cut = $this->getbeforename('@', $arrViewData["USERNAME"]);
+        // var_dump($arrViewData_cut);
+      }else{
+        $arrViewData_cut = "";
+      }
+      
+
+      // echo "</pre>";
+      
+
+      $arrViewData_cut_lower = strtolower($arrViewData_cut);
+
+      if ( $data["email"] ==  $arrViewData_cut_lower) {
+        // echo "entra";
+        return new JsonResponse(['wasAssigned' => true]);
+      }else{
+        // echo "no entra";
+        return new JsonResponse(['wasAssigned' => false]);
+      }
+      
+    }
+    
+    
+  }
+
+  private function getbeforename ($name, $inthat){
+        return substr($inthat, 0, strpos($inthat, $name));
   }
 
   /**
