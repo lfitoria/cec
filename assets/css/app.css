@@ -410,10 +410,22 @@ a.ingreso-admin-home:after {
   border: 1px solid #cecece;
 }
 
+#feedback_modal .modal-dialog {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: auto;
+}
+
 @media (min-width: 576px) { 
 } /*fin*/
 
-@media (min-width: 768px) {
+@media(max-width: 768px) {
+  .modal-dialog {
+    min-height: calc(100vh - 20px);
+  }
+  
   .box-r {
     border-left: 1px solid var(--A8);
   }
@@ -427,3 +439,4 @@ a.ingreso-admin-home:after {
 
 @media (min-width: 1200px) {
 } /*fin*/
+

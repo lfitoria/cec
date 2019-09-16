@@ -122,7 +122,7 @@ class EthicEvalRequestType extends AbstractType {
                   'entry_options' => ['label' => false],
                   'mapped' => false,
                   'allow_add' => true,
-                  'required' => false,
+                  'required' => true,
                   'label' => false
             ])
             ->add('informedAssentFiles', CollectionType::class, [
@@ -130,7 +130,7 @@ class EthicEvalRequestType extends AbstractType {
                   'entry_options' => ['label' => false],
                   'mapped' => false,
                   'allow_add' => true,
-                  'required' => false,
+                  'required' => true,
                   'label' => false
             ])
             ->add('collectionInformationFiles', CollectionType::class, [
