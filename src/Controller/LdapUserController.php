@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\NotificationManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
 /**
  * @Route("/ldap/user")
  */
@@ -132,5 +133,6 @@ class LdapUserController extends AbstractController {
 
     return new JsonResponse(['wasAssigned' => false]);
   }
+  
 
 }

@@ -21,6 +21,14 @@ tbody tr:nth-of-type(even) {
   background-color: var(--green);
   border-color: var(--green);
 }
+#valdiate_send_user{
+  text-align: center;
+}
+#valdiate_send_user p {
+  text-align: center;
+  font-weight: bold;
+  color: var(--A4);
+}
 
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
   color: #fff;
