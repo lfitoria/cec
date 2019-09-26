@@ -267,26 +267,47 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/detalle/{id}", name="project_request_show", methods={"GET"})
    */
-  public function show(ProjectRequest $projectRequest, Request $request): Response {
+  public function show(ProjectRequest $projectRequest, Request $request, ExternalDataManager $externalDataManager): Response {
     $projectId = $projectRequest->getId();
-
-    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find($projectId);
-
-    $projectId_getMinuteCommissionTFG = $projectRequest->getMinuteCommissionTFG();
-
-    $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->find($projectId);
-    // $academicRequestInfo = $this->em->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectId);
-
-    $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->find($projectId);
-    // $ethicEvalRequest = $this->em->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectId);
 
     // var_dump($projectId);
     // die();
-    return $this->render('project_request/show.html.twig', [
+
+    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find($projectId);
+    //$projectRequest->getInfoRequestFiles();
+
+    $projectId_getMinuteCommissionTFG = $projectRequest->getInfoRequestFiles();
+
+    // $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->find($projectId);
+    $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectId);
+
+    // $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->find($projectId);
+    $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectId);
+
+    // var_dump($projectRequest->getOwner()->getRole()->getDescription());
+    // die();
+    $projectInfo = null;
+    $SipProjectExtraInformation = null;
+    $SipProject = null;
+    $objetivoPrincipal = null;
+
+    if( $projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER" ){
+      $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $emOracle = $this->getDoctrine()->getManager('oracle');
+      $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
+    }
+
+    return $this->render('project_request/details.html.twig', [
                 'project_request' => $projectRequest,
+                'project_info' => $projectInfo,
                 'projectId_getMinuteCommissionTFG' => $projectId_getMinuteCommissionTFG,
                 'academicRequestInfo' => $academicRequestInfo,
                 'ethicEvalRequest' => $ethicEvalRequest,
+                'SipProjectExtraInformation' => $SipProjectExtraInformation,
+                'SipProject' => $SipProject,
+                'objetivoPrincipal' => $objetivoPrincipal,
     ]);
   }
 
@@ -379,6 +400,17 @@ class ProjectRequestController extends AbstractController {
     }
 
     return $this->redirectToRoute('project_request_index');
+  }
+  private function getExtraInformationByProject($externalDataManager, $projectCode) {
+
+    $entityManager = $this->getDoctrine()->getManager('sip');
+    $emOracle = $this->getDoctrine()->getManager('oracle');
+
+    $projectData = $externalDataManager->getInfoByProject($emOracle, $projectCode);
+    if ($projectData) {
+      return $projectData;
+    }
+    return false;
   }
 
 }

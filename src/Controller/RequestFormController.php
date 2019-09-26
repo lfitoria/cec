@@ -75,7 +75,8 @@ class RequestFormController extends AbstractController {
   /**
    * @Route("/informacion-academica/{id}", name="tab_academic_request_info")
    */
-  public function tabTwoRequest(Request $request, ProjectRequest $projectRequest, ExternalDataManager $externalDataManager) {
+  public function tabTwoRequest(Request $request, ProjectRequest $projectRequest, ExternalDataManager $externalDataManager, Security $security) {
+    $loggedUser = $security->getUser();
     $formRoute = 'academic_request_info_new';
     $formData = ['id' => $projectRequest->getId()];
     $templateRoute = 'academic_request_info/new.html.twig';
@@ -95,25 +96,35 @@ class RequestFormController extends AbstractController {
     $form->handleRequest($request);
     
     $projectCode = $projectRequest->getSipProject();
-    $SipProject = $this->getInformationByProject($externalDataManager, $projectCode);
 
-    $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectCode);
-    
-    $entityManager = $this->getDoctrine()->getManager('sip');
-    $emOracle = $this->getDoctrine()->getManager('oracle');
-    $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectCode);
-    
-    // var_dump($objetivoPrincipal);
-    // die();
+    if ($loggedUser->getRole()->getDescription() === "ROLE_RESEARCHER") {
+      $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      
 
+      $SipProject = $this->getInformationByProject($externalDataManager, $projectCode);
 
+      $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectCode);
+      
+      $entityManager = $this->getDoctrine()->getManager('sip');
+      $emOracle = $this->getDoctrine()->getManager('oracle');
+      $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectCode);
+
+      return $this->render($templateRoute, [
+                  'academic_request_info' => $academicRequestInfo,
+                  'form' => $form->createView(),
+                  'SipProject' => $SipProject,
+                  'SipProjectExtraInformation' => $SipProjectExtraInformation,
+                  'objetivoPrincipal' => $objetivoPrincipal,
+      ]);
+    }
     return $this->render($templateRoute, [
-                'academic_request_info' => $academicRequestInfo,
-                'form' => $form->createView(),
-                'SipProject' => $SipProject,
-                'SipProjectExtraInformation' => $SipProjectExtraInformation,
-                'objetivoPrincipal' => $objetivoPrincipal,
+      'academic_request_info' => $academicRequestInfo,
+      'form' => $form->createView(),
+      //'SipProject' => $SipProject,
+      // 'SipProjectExtraInformation' => $SipProjectExtraInformation,
+      // 'objetivoPrincipal' => $objetivoPrincipal,
     ]);
+
   }
 
   /**

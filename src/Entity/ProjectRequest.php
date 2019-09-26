@@ -347,7 +347,7 @@ class ProjectRequest {
     return $this;
   }
 
-  function getInfoRequestFiles() {
+  function getInfoRequestFiles(): Collection {
     return $this->infoRequestFiles;
   }
 
