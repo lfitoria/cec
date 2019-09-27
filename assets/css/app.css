@@ -416,6 +416,37 @@ a.ingreso-admin-home:after {
     justify-content: center;
     overflow: auto;
 }
+.text-box {
+  margin-bottom: 20px;
+}
+.text-box p{
+  margin-bottom: 5px;
+}
+.step-view .nav_step {
+  border-radius: 50%;
+  color: var(--A4);
+  border: var(--A3) 2px solid;
+  width: 50px;
+  height: 50px;
+  display: block;
+  text-align: center;
+  line-height: 50px;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: auto;
+}
+.step-view a.form_header_nav_item_link {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.3em;
+  color: var(--A4);
+  margin-top: 15px;
+  display: block;
+  text-decoration: none;
+  cursor: unset;
+  font-weight: bold;
+}
+
 
 @media (min-width: 576px) { 
 } /*fin*/

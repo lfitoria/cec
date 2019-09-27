@@ -5,64 +5,7 @@
 {% block body %}
     <h1>Información</h1>
 
-    {# <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ project_request.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ project_request.title }}</td>
-            </tr>
-            <tr>
-                <th>Code</th>
-                <td>{{ project_request.code }}</td>
-            </tr>
-            <tr>
-                <th>State</th>
-                <td>{{ project_request.state }}</td>
-            </tr>
-            <tr>
-                <th>ExtInstitutions</th>
-                <td>{{ project_request.extInstitutions }}</td>
-            </tr>
-            <tr>
-                <th>ExtInstitutionsAuthorization</th>
-                <td>{{ project_request.extInstitutionsAuthorization ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>PlaceOfStudy</th>
-                <td>{{ project_request.placeOfStudy }}</td>
-            </tr>
-            <tr>
-                <th>InvolvesHumans</th>
-                <td>{{ project_request.involvesHumans ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>DocHumanInformation</th>
-                <td>{{ project_request.docHumanInformation ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>ProjectUnit</th>
-                <td>{{ project_request.projectUnit }}</td>
-            </tr>
-        </tbody>
-    </table> #}
-
-    <pre>
-        {{ dump(projectId_getMinuteCommissionTFG) }}
-    </pre>
-    <pre>
-        {{ dump(project_request) }}
-
-    </pre>
-    <pre>
-        {{ dump(academicRequestInfo) }}
-    </pre>
-    <pre>
-        {{ dump(ethicEvalRequest) }}
-    </pre>
+    {{ include('project_request/details.html.twig') }}
 
     <a href="{{ path('project_request_index') }}">back to list</a>
 
