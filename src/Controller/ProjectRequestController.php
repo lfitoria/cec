@@ -21,6 +21,8 @@ use App\Entity\UsersRoles;
 use App\Entity\AcademicRequestInfo;
 use App\Entity\EthicEvalRequest;
 
+use Knp\Snappy\Pdf;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 /**
  * @Route("/solicitud")
  */
@@ -299,6 +301,52 @@ class ProjectRequestController extends AbstractController {
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
     }
 
+    return $this->render('project_request/show.html.twig', [
+                'project_request' => $projectId,
+                // 'project_info' => $projectInfo,
+                // 'projectId_getMinuteCommissionTFG' => $projectId_getMinuteCommissionTFG,
+                // 'academicRequestInfo' => $academicRequestInfo,
+                // 'ethicEvalRequest' => $ethicEvalRequest,
+                // 'SipProjectExtraInformation' => $SipProjectExtraInformation,
+                // 'SipProject' => $SipProject,
+                // 'objetivoPrincipal' => $objetivoPrincipal,
+    ]);
+  }
+  /**
+   * @Route("/{id}", name="project_details_show_by_id", methods={"GET"})
+   */
+  public function showDetailsById(ProjectRequest $projectRequest, Request $request, ExternalDataManager $externalDataManager): Response {
+    $projectId = $projectRequest->getId();
+
+    // var_dump($projectId);
+    // die();
+
+    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find($projectId);
+    //$projectRequest->getInfoRequestFiles();
+
+    $projectId_getMinuteCommissionTFG = $projectRequest->getInfoRequestFiles();
+
+    // $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->find($projectId);
+    $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectId);
+
+    // $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->find($projectId);
+    $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectId);
+
+    // var_dump($projectRequest->getOwner()->getRole()->getDescription());
+    // die();
+    $projectInfo = null;
+    $SipProjectExtraInformation = null;
+    $SipProject = null;
+    $objetivoPrincipal = null;
+
+    if( $projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER" ){
+      $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $emOracle = $this->getDoctrine()->getManager('oracle');
+      $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
+    }
+
     return $this->render('project_request/details.html.twig', [
                 'project_request' => $projectRequest,
                 'project_info' => $projectInfo,
@@ -411,6 +459,112 @@ class ProjectRequestController extends AbstractController {
       return $projectData;
     }
     return false;
+  }
+  /**
+    * @Route("/generate-pdf/{id}", name="generate_pdf", methods={"GET","POST"})
+    */
+    public function downloadSpecifications(Request $request,ExternalDataManager $externalDataManager,Pdf $pdf): Response {
+
+    
+
+      $projectId = $request->get('id');
+
+    // var_dump($projectId);
+    // die();
+
+    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find($projectId);
+    //$projectRequest->getInfoRequestFiles();
+
+    $projectId_getMinuteCommissionTFG = $projectRequest->getInfoRequestFiles();
+
+    // $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->find($projectId);
+    $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectId);
+
+    // $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->find($projectId);
+    $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectId);
+
+    // var_dump($projectRequest->getOwner()->getRole()->getDescription());
+    // die();
+    $projectInfo = null;
+    $SipProjectExtraInformation = null;
+    $SipProject = null;
+    $objetivoPrincipal = null;
+
+    if( $projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER" ){
+      $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $emOracle = $this->getDoctrine()->getManager('oracle');
+      $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
+    }
+
+
+      $html = $this->renderView('project_request/details.html.twig', [
+        'project_request' => $projectRequest,
+        'project_info' => $projectInfo,
+        'projectId_getMinuteCommissionTFG' => $projectId_getMinuteCommissionTFG,
+        'academicRequestInfo' => $academicRequestInfo,
+        'ethicEvalRequest' => $ethicEvalRequest,
+        'SipProjectExtraInformation' => $SipProjectExtraInformation,
+        'SipProject' => $SipProject,
+        'objetivoPrincipal' => $objetivoPrincipal,
+      ]);
+      
+      $fecha = $projectRequest->getDate();
+      $f = date_format($fecha,"Y");
+      $fYear = substr($f,-2);
+    //     var_dump($fYear);
+    // die();
+    
+      $filename = "Proyecto-CEC-".$projectRequest->getId()."-".$fYear.".pdf";
+      return new PdfResponse(
+          $pdf->getOutputFromHtml($html),
+          $filename 
+      );
+  }
+
+  /**
+    * @Route("/generate", name="app_generate_pdf", methods={"GET","POST"})
+    */
+  public function downloadSpecificationsTest(ExternalDataManager $externalDataManager,Pdf $pdf): Response {
+
+
+    $projectId = 53;
+    // var_dump($projectId);
+    // die();
+    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(53);
+    $projectId_getMinuteCommissionTFG = $projectRequest->getInfoRequestFiles();
+    $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectId);
+    $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectId);
+    $projectInfo = null;
+    $SipProjectExtraInformation = null;
+    $SipProject = null;
+    $objetivoPrincipal = null;
+
+    if( $projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER" ){
+      $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $emOracle = $this->getDoctrine()->getManager('oracle');
+      $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
+    }
+
+
+      $html = $this->renderView('project_request/details.html.twig', [
+        'project_request' => $projectRequest,
+        'project_info' => $projectInfo,
+        'projectId_getMinuteCommissionTFG' => $projectId_getMinuteCommissionTFG,
+        'academicRequestInfo' => $academicRequestInfo,
+        'ethicEvalRequest' => $ethicEvalRequest,
+        'SipProjectExtraInformation' => $SipProjectExtraInformation,
+        'SipProject' => $SipProject,
+        'objetivoPrincipal' => $objetivoPrincipal,
+      ]);
+
+
+    
+    return new PdfResponse($pdf->getOutputFromHtml($html), 'invoice.pdf');
+
   }
 
 }
