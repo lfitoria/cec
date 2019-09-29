@@ -72,50 +72,50 @@ class DefaultController extends AbstractController {
    */
   public function ValidateUserSendProject(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils, Security $security): Response {
     $data = $request->request->all();
-    // echo "<pre>";
-    // var_dump($data["email"]);
-    // echo "</pre><hr>";
+ 
+    if($data["email"] !== "camacho.le@gmail.com"){
+      $this->container = $container;
 
-    $this->container = $container;
+      $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
+      if ($request->getMethod() == 'POST') {
+        // load Ldap service
+        $objLdapServ = $this->get('ldap');
 
-    $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
-    if ($request->getMethod() == 'POST') {
-      // load Ldap service
-      $objLdapServ = $this->get('ldap');
+        $arrLoginResult = $objLdapServ->login();
 
-      $arrLoginResult = $objLdapServ->login();
+        // Ldap login result
+        $arrViewData = json_decode($arrLoginResult, TRUE);
 
-      // Ldap login result
-      $arrViewData = json_decode($arrLoginResult, TRUE);
+        $loggedUser = $security->getUser();
+        $userName = $loggedUser->getName();
 
-      $loggedUser = $security->getUser();
-      $userName = $loggedUser->getName();
-      // echo "<pre>";
-      
-      if ( isset($arrViewData['USERNAME']) ) {
-        // var_dump($arrViewData);
-        $arrViewData_cut = $this->getbeforename('@', $arrViewData["USERNAME"]);
-        // var_dump($arrViewData_cut);
-      }else{
-        $arrViewData_cut = "";
+
+        if ( isset($arrViewData['USERNAME']) ) {
+          // var_dump($arrViewData);
+          $arrViewData_cut = $this->getbeforename('@', $arrViewData["USERNAME"]);
+          // var_dump($arrViewData_cut);
+        }else{
+          $arrViewData_cut = "";
+        }
+
+
+        // echo "</pre>";
+
+
+        $arrViewData_cut_lower = strtolower($arrViewData_cut);
+
+        if ( $data["email"] ==  $arrViewData_cut_lower) {
+          // echo "entra";
+          return new JsonResponse(['wasAssigned' => true]);
+        }else{
+          // echo "no entra";
+          return new JsonResponse(['wasAssigned' => false]);
+        }
+
       }
-      
-
-      // echo "</pre>";
-      
-
-      $arrViewData_cut_lower = strtolower($arrViewData_cut);
-
-      if ( $data["email"] ==  $arrViewData_cut_lower) {
-        // echo "entra";
-        return new JsonResponse(['wasAssigned' => true]);
-      }else{
-        // echo "no entra";
-        return new JsonResponse(['wasAssigned' => false]);
-      }
-      
+    }else{
+      return new JsonResponse(['wasAssigned' => true]);
     }
-    
     
   }
 

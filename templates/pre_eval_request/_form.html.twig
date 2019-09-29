@@ -1,0 +1,6 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form) }}
+{{ form_row(form.status, {label_attr: {class: 'radio-custom no-label'} }) }}
+{{ form_row(form.observations, {label_attr: {class: 'no-label'} }) }}
+{{ form_end(form) }}
+{{ include('commons/_form_footer.html.twig', {'button_label':'Enviar revisión', 'button_label_save': 'Guardar sin enviar'}) }}

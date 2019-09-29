@@ -265,7 +265,7 @@ class ProjectRequestController extends AbstractController {
   }
 
   /**
-   * @Route("/detalle/{id}", name="project_request_show", methods={"GET"})
+   * @Route("/{id}/detalle", name="project_request_show", methods={"GET"})
    */
   public function show(ProjectRequest $projectRequest, Request $request, ExternalDataManager $externalDataManager): Response {
     $projectId = $projectRequest->getId();

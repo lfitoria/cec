@@ -100,7 +100,7 @@ const $ = require('jquery');
                 var fd = new FormData(myform);
                 console.log(fd);
                 var _this = $(this);
-                var path = "http://catedrahumboldt.ucr.ac.cr/cec/public/validate_user_send";
+                var path = "/CEC/public/validate_user_send";
                 $.ajax({
                   type: 'POST',
                   enctype: "multipart/form-data",
@@ -387,7 +387,7 @@ const $ = require('jquery');
       cache.decision_inputs = $(".decision_question input");
       cache.uploaded_item_delete = $(".uploaded_files_list_item--delete");
       cache.selected_item_delete = $(".selected_files_list_item--delete");
-      cache.question_labels = $("form .form-group legend.col-form-label, \n\
+      cache.question_labels = $("form .form-group legend.col-form-label:not(.no-label), \n\
                                 form .form-group label:not(.error):not(.custom-control-label):not(.custom-file-label):not(.no-label)");
       cache.fileInputs = $('.custom-file-input');
       cache.addFileButton = $(".add_file_button");
