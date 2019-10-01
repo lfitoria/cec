@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Criterion;
+use App\Entity\ProjectRequest;
 
 /**
  * PreEvalRequest
@@ -10,122 +12,127 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="pre_eval_request", indexes={@ORM\Index(name="FK_pre_eval_status", columns={"status"}), @ORM\Index(name="FK_pre_eval_user", columns={"user_id"})})
  * @ORM\Entity
  */
-class PreEvalRequest
-{
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+class PreEvalRequest {
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="observations", type="string", length=500, nullable=true)
-     */
-    private $observations;
+  /**
+   * @var int
+   *
+   * @ORM\Column(name="id", type="integer", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="IDENTITY")
+   */
+  private $id;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime", nullable=false)
-     */
-    private $date;
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="observations", type="string", length=500, nullable=true)
+   */
+  private $observations;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="current", type="boolean", nullable=false)
-     */
-    private $current;
+  /**
+   * @var \DateTime
+   *
+   * @ORM\Column(name="date", type="datetime", nullable=false)
+   */
+  private $date;
 
-    /**
-     * @var \StatusRequest
-     *
-     * @ORM\ManyToOne(targetEntity="StatusRequest")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status", referencedColumnName="id")
-     * })
-     */
-    private $status;
+  /**
+   * @var bool
+   *
+   * @ORM\Column(name="current", type="boolean", nullable=false)
+   */
+  private $current;
 
-    /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * })
-     */
-    private $user;
+  /**
+   * @var \StatusRequest
+   *
+   * @ORM\ManyToOne(targetEntity="Criterion")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="status", referencedColumnName="id")
+   * })
+   */
+  private $status;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+  /**
+   * @var ProjectRequest
+   *
+   * @ORM\ManyToOne(targetEntity="ProjectRequest")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="request_id", referencedColumnName="id")
+   * })
+   */
+  private $request;
 
-    public function getObservations(): ?string
-    {
-        return $this->observations;
-    }
+  /**
+   * @var \User
+   *
+   * @ORM\ManyToOne(targetEntity="User")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+   * })
+   */
+  private $user;
 
-    public function setObservations(?string $observations): self
-    {
-        $this->observations = $observations;
+  public function getId(): ?int {
+    return $this->id;
+  }
 
-        return $this;
-    }
+  public function getObservations(): ?string {
+    return $this->observations;
+  }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
+  public function setObservations(?string $observations): self {
+    $this->observations = $observations;
 
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getDate(): ?\DateTimeInterface {
+    return $this->date;
+  }
 
-    public function getCurrent(): ?bool
-    {
-        return $this->current;
-    }
+  public function setDate(\DateTimeInterface $date): self {
+    $this->date = $date;
 
-    public function setCurrent(bool $current): self
-    {
-        $this->current = $current;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getCurrent(): ?bool {
+    return $this->current;
+  }
 
-    public function getStatus(): ?StatusRequest
-    {
-        return $this->status;
-    }
+  public function setCurrent(bool $current): self {
+    $this->current = $current;
 
-    public function setStatus(?StatusRequest $status): self
-    {
-        $this->status = $status;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getStatus(): ?Criterion {
+    return $this->status;
+  }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
+  public function setStatus(?Criterion $status): self {
+    $this->status = $status;
 
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getUser(): ?User {
+    return $this->user;
+  }
 
+  public function setUser(?User $user): self {
+    $this->user = $user;
 
+    return $this;
+  }
+  
+  function getRequest(): ProjectRequest {
+    return $this->request;
+  }
+
+  function setRequest(ProjectRequest $request) {
+    $this->request = $request;
+  }
 }

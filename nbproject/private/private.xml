@@ -14,6 +14,7 @@
             <file>file:/C:/xampp/htdocs/cec/assets/css/forms.css</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/new.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/eval_request/edit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/academic_request_info/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20190829012401.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/project_request/show.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/TeamWork.php</file>
@@ -114,6 +115,7 @@
             <file>file:/C:/xampp/htdocs/cec/config/services.yaml</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/EthicEvalRequest.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/users_roles/_form.html.twig</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/pre_eval_request/edit.html.twig</file>
         </group>
     </open-files>
 </project-private>

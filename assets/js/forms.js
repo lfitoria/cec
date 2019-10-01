@@ -86,8 +86,8 @@ const $ = require('jquery');
         if (cache.form.valid()) {
           console.log("submit-data");
           // console.log(cache.form_finish[0].value);
-          if (cache.form_finish[0] != undefined) {
-            if (cache.form_finish[0].value == 1) {
+          if (cache.form_finish[0] !== undefined && cache.form_finish[0].value === 1) {
+           
               jQuery('#valdiate_send_user').modal('show');
 
               $('#valdiate_send_user_submit').click(function (event) {
@@ -128,7 +128,6 @@ const $ = require('jquery');
                 });
                 // finajax
               });
-            }
             //cache.form.submit();
           } else {
             cache.form.submit();
@@ -383,7 +382,7 @@ const $ = require('jquery');
       cache.form_buttons = $('.form_footer_button');
       cache.form_target = $('.form_target_input');
       cache.form_finish = $('.form_finish_input');
-      cache.form = $('.form-request');
+      cache.form = $('.form-request, .form-eval');
       cache.decision_inputs = $(".decision_question input");
       cache.uploaded_item_delete = $(".uploaded_files_list_item--delete");
       cache.selected_item_delete = $(".selected_files_list_item--delete");

@@ -2,7 +2,16 @@
 
 
 {% block body %}
-
+    {{ include('project_request/details.html.twig', 
+    {'project_request': project_request,
+    'project_info': project_info,
+    'projectId_getMinuteCommissionTFG': projectId_getMinuteCommissionTFG,
+    'academicRequestInfo': academicRequestInfo,
+    'ethicEvalRequest': ethicEvalRequest,
+    'SipProjectExtraInformation': SipProjectExtraInformation,
+    'SipProject': SipProject,
+    'objetivoPrincipal': objetivoPrincipal}) }}
+    
     {{ include('pre_eval_request/_form.html.twig') }}
-
+    
 {% endblock %}

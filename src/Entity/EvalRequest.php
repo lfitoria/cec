@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\Criterion;
 use \DateTime;
 /**
  * EvalRequest
@@ -57,9 +58,9 @@ class EvalRequest
     private $current;
 
     /**
-     * @var \StatusRequest
+     * @var \Criterion
      *
-     * @ORM\ManyToOne(targetEntity="StatusRequest")
+     * @ORM\ManyToOne(targetEntity="Criterion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="status", referencedColumnName="id")
      * })
@@ -137,7 +138,7 @@ class EvalRequest
         $this->current = $current;
     }
 
-    function setStatus(\StatusRequest $status) {
+    function setStatus(Criterion $status) {
         $this->status = $status;
     }
 
