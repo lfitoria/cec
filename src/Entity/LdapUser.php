@@ -110,15 +110,26 @@ class LdapUser implements UserInterface {
         return $this->role;
     }
 
-    function getLastLoginDate(): \DateTime {
+    // function getLastLoginDate(): \DateTime {
+    //     return $this->lastLoginDate;
+    // }
+
+    // function getCreationDate(): \DateTime {
+    //     return $this->creationDate;
+    // }
+
+    // function getDeletionDate(): \DateTime {
+    //     return $this->deletionDate;
+    // }
+    function getLastLoginDate() {
         return $this->lastLoginDate;
     }
 
-    function getCreationDate(): \DateTime {
+    function getCreationDate(){
         return $this->creationDate;
     }
 
-    function getDeletionDate(): \DateTime {
+    function getDeletionDate(){
         return $this->deletionDate;
     }
 
@@ -137,11 +148,18 @@ class LdapUser implements UserInterface {
         $this->name = $name;
     }
 
-    function getCedula_usuario() {
+    public function getCedulaUsuario() {
         return $this->cedula_usuario;
     }
+    function setExternal($external) {
+        $this->external = $external;
+    }
+
+    function getExternal() {
+        return $this->external;
+    }
     
-    function setCedula_usuario($cedula_usuario) {
+    public function setCedulaUsuario($cedula_usuario) {
         $this->cedula_usuario = $cedula_usuario;
     }
 
@@ -173,6 +191,9 @@ class LdapUser implements UserInterface {
         return $this->username;
     }
 
+    public function setPassword($password) {
+        $this->password = $password;
+    }
     public function getPassword() {
         return null;
     }

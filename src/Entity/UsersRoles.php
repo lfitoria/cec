@@ -28,7 +28,7 @@ class UsersRoles
         return $this->id;
     }
 
-    function getDescription() {
+    function getDescription(): ?string {
         return $this->description;
     }
 
@@ -38,5 +38,8 @@ class UsersRoles
 
     function setDescription($description) {
         $this->description = $description;
+    }
+    public function __toString() {
+        return $this->description;
     }
 }

@@ -4,8 +4,11 @@
 
 {% block body %}
     <h1>LdapUser index</h1>
+    {# <pre>
+        {{ dump(ldap_users) }}
+    </pre> #}
 
-    <table class="table">
+    <table class="table" style="word-break: break-all;">
         <thead>
             <tr>
                 <th>Id</th>
@@ -24,6 +27,9 @@
         </thead>
         <tbody>
         {% for ldap_user in ldap_users %}
+        {# <pre>
+        {{ dump(ldap_user) }}
+        </pre> #}
             <tr>
                 <td>{{ ldap_user.id }}</td>
                 <td>{{ ldap_user.email }}</td>
@@ -31,11 +37,19 @@
                 <td>{{ ldap_user.name }}</td>
                 <td>{{ ldap_user.password }}</td>
                 <td>{{ ldap_user.external ? 'Yes' : 'No' }}</td>
+                
                 <td>{{ ldap_user.lastLoginDate ? ldap_user.lastLoginDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ ldap_user.creationDate ? ldap_user.creationDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ ldap_user.deletionDate ? ldap_user.deletionDate|date('Y-m-d H:i:s') : '' }}</td>
+                {# <td>{{ ldap_user.deletionDate ? ldap_user.deletionDate|date('Y-m-d H:i:s') : '' }}</td> #}
+                <td>
+                {% if ldap_user.deletionDate is defined %}
+                    {{'Activo'}}
+                {% else %}
+                    {{ldap_user.deletionDate|date('Y-m-d H:i:s')}}
+                {% endif %}
+                </td>
                 <td>{{ ldap_user.carnet }}</td>
-                <td>{{ ldap_user.cedulaUsuario }}</td>
+                <td>{{ ldap_user.cedulausuario }}</td>
                 <td>
                     <a href="{{ path('ldap_user_show', {'id': ldap_user.id}) }}">show</a>
                     <a href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">edit</a>

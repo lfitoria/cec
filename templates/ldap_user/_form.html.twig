@@ -1,4 +1,54 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{# {{ form_widget(form) }} #}
+<div class="form-group">
+    <label for="tutor_name" class="col-sm-3 col-form-label no-label">Correo electrónico:</label>
+    <div class="col-sm-9">
+        {{ form_widget(form.email) }}
+    </div>
+</div>
+<div class="form-group">
+    <label for="tutor_name" class="col-sm-3 col-form-label no-label">Nombre de usuario:</label>
+    <div class="col-sm-9">
+        {{ form_widget(form.username) }}
+    </div>
+</div>
+<div class="form-group">
+    <label for="tutor_name" class="col-sm-3 col-form-label no-label">Nombre completo:</label>
+    <div class="col-sm-9">
+        {{ form_widget(form.name) }}
+    </div>
+</div>
+<div class="form-group">
+    <label for="tutor_name" class="col-sm-3 col-form-label no-label">Contraseña de acceso:</label>
+    <div class="col-sm-9">
+        {{ form_widget(form.password) }}
+    </div>
+</div>
+<div class="form-group">
+    <label for="tutor_name" class="col-sm-3 col-form-label no-label">Usuario externo:</label>
+    <div class="col-sm-9">
+        {# {{ form_widget(form.external) }} #}
+        {{ form_row(form.external, {attr: {class: 'no-label'}, label_attr: {class: 'radio-custom'} }) }}
+    </div>
+</div>
+<div class="form-group">
+    <label for="tutor_name" class="col-sm-3 col-form-label no-label">Carné:</label>
+    <div class="col-sm-9">
+        {{ form_widget(form.carnet) }}
+    </div>
+</div>
+<div class="form-group">
+    <label for="tutor_name" class="col-sm-3 col-form-label no-label">Cédula:</label>
+    <div class="col-sm-9">
+        {{ form_widget(form.cedula_usuario) }}
+    </div>
+</div>
+<div class="form-group">
+    <label for="tutor_name" class="col-sm-3 col-form-label no-label">Role:</label>
+    <div class="col-sm-9">
+        {{ form_widget(form.role, {attr: {class: 'no-label'}, label_attr: {class: 'radio-custom'} }) }}
+    </div>
+</div>
+<button class="btn">{{ button_label|default('Guardar') }}</button>
 {{ form_end(form) }}

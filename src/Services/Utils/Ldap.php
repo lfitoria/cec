@@ -21,7 +21,8 @@ class Ldap {
     $this->container = $container;
 
     // LDAP CONFIG
-    $this->strLdapServer = "ldap2.ucr.ac.cr:636";
+    // $this->strLdapServer = "ldap2.ucr.ac.cr:636";
+    $this->strLdapServer = "ldaps://ldap2.ucr.ac.cr:636";
     $this->strLdapDN = "DomainName";
     $this->strLdapDC = "dc=DcName,dc=local";
     $this->userLdap = "sigpro.vinv";
