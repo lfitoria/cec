@@ -50,6 +50,7 @@ class DefaultController extends AbstractController {
       $this->container = $container;
       // Checks if the login form has been submitted
       if ($request->getMethod() == 'POST') {
+        // echo "line";
         // die();
         // load Ldap service
         $objLdapServ = $this->get('ldap');
