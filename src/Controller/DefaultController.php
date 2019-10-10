@@ -50,13 +50,26 @@ class DefaultController extends AbstractController {
       $this->container = $container;
       // Checks if the login form has been submitted
       if ($request->getMethod() == 'POST') {
+        // die();
         // load Ldap service
         $objLdapServ = $this->get('ldap');
+        // dump($objLdapServ);
+        // die();
 
         $arrLoginResult = $objLdapServ->login();
 
+        // var_dump($arrLoginResult);
+        // die();
+
         // Ldap login result
         $arrViewData = json_decode($arrLoginResult, TRUE);
+
+        // var_dump($arrViewData);
+        // die();
+
+        if (!empty($arrViewData['ERROR']) ) {
+          return $this->redirectToRoute('login');
+        }
 
         if ($arrViewData['USERNAME'] != null) {
           return $this->redirectToRoute('project_request_index');

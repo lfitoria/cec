@@ -29,8 +29,8 @@ class UserManager {
 
   // checks if user exists when login form has been submitted
   public function loginAction($strEmail) {
-    //var_dump($strEmail);
-    //die();
+    // var_dump($strEmail);
+    // die();
     // array(4) { ["cedula"]=> string(30) "xxxxx" ["id"]=> string(10) "0115190268" ["carnet"]=> string(6) "B04278" ["tipo_usuario_ldap"]=> array(2) { ["count"]=> int(1) [0]=> string(10) "ESTUDIANTE" } }
 
     if (!$this->checkUserExists($strEmail['cedula'])) {
@@ -86,6 +86,7 @@ class UserManager {
       $objUser->setCarnet($strEmail["carnet"]);
       $objUser->setName($strEmail["nombre"]);
       $objUser->setCedula_usuario($strEmail["id"]);
+      $objUser->setExternal(0);
       // save data
       $this->em->persist($objUser);
       $this->em->flush();

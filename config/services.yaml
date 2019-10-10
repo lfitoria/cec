@@ -24,6 +24,7 @@ services:
     App\Services\Utils\FileManager:
     App\Services\Utils\NotificationManager:    
     App\Services\Utils\ExternalDataManager:
+    App\Services\Utils\PdfManager:
       
     # default configuration for services in *this* file
     _defaults:

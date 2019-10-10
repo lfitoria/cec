@@ -6,23 +6,53 @@ use App\Entity\LdapUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+use App\Repository\UsersRolesRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+use App\Entity\UsersRoles;
+
+use App\Entity\Criterion;
+use App\Repository\CriterionRepository;
 
 class LdapUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+            
+            ->add('email', TextType::class, [
+                'label' => false
+            ])
             ->add('username')
             ->add('name')
             ->add('password')
-            ->add('external')
-            ->add('lastLoginDate')
-            ->add('creationDate')
-            ->add('deletionDate')
+            ->add('external', ChoiceType::class, array(
+                'choices' => array(
+                    'No' => '0',
+                    'Sí' => '1',
+                ),
+                'expanded' => true,
+                'label' => false,
+            ))
+
+            // ->add('lastLoginDate')
+            // ->add('creationDate')
+            // ->add('deletionDate')
             ->add('carnet')
             ->add('cedula_usuario')
-            ->add('role')
+            // ->add('role')
+            // ->add('role', TextType::class, [
+            //     'mapped' => false,
+            // ]);
+            ->add('role', EntityType::class, [
+                'class' => UsersRoles::class,
+                'multiple' => false,
+                'expanded' => true,
+                
+                ])
         ;
     }
 
