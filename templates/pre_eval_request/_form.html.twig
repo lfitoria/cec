@@ -1,5 +1,5 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-{{ form_start(form, {attr: {class: 'form-eval', action: path('pre_eval_request_new', {"id":project_request.id})}}) }}
+{{ form_start(form, {attr: {class: 'form-eval'}}) }}
 {{ form_row(form.status, {label_attr: {class: 'radio-custom no-label'} }) }}
 {{ form_row(form.observations, {label_attr: {class: 'no-label'} }) }}
 {{ form_end(form) }}

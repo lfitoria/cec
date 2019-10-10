@@ -25,7 +25,7 @@ class WorkLog
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="work_log")
+     * @ORM\ManyToOne(targetEntity="LdapUser", inversedBy="work_log")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -36,23 +36,30 @@ class WorkLog
      * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
+    
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="observations", type="string", length=200, nullable=true)
+     */
+    private $observations;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="ProjectRequest", inversedBy="work_log")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $request;
 
     /**
      * @ORM\ManyToOne(targetEntity="EvalRequest", inversedBy="work_log")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $eval_request;
 
     /**
      * @ORM\ManyToOne(targetEntity="PreEvalRequest", inversedBy="work_log")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $pre_eval_request;
     
@@ -111,6 +118,15 @@ class WorkLog
     function setDate(\DateTime $date) {
         $this->date = $date;
     }
+    
+    function getObservations() {
+      return $this->observations;
+    }
+
+    function setObservations( $observations) {
+      $this->observations = $observations;
+    }
+
 
 
 }

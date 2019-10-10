@@ -24,7 +24,8 @@ class LogManager {
     $log->setRequest($logData["request"] ?? null);
     $log->setEvalRequest($logData["eval_request"] ?? null);
     $log->setPreEvalRequest($logData["pre_eval_request"] ?? null);
-
+    $log->setObservations($logData["observations"] ?? null);
+    
     $this->em->persist($log);
     $this->em->flush();
   }
