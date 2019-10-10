@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use App\Services\Utils\LogManager;
 
 /**
  * @Route("/pre/eval/request")
@@ -31,7 +33,7 @@ class PreEvalRequestController extends AbstractController {
   /**
    * @Route("/new/{id}", name="pre_eval_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, ProjectRequest $projectRequest): Response {
+  public function new(Request $request, ProjectRequest $projectRequest, LogManager $log): Response {
     $preEvalRequest = new PreEvalRequest();
     $form = $this->createForm(PreEvalRequestType::class, $preEvalRequest);
     $form->handleRequest($request);
@@ -46,9 +48,16 @@ class PreEvalRequestController extends AbstractController {
       
       if ($finish == "1") {
         $preEvalRequest->setCurrent(true);
+        $projectRequest->setState($preEvalRequest->getStatus());
+        
+        $logData = array(
+            "description" => $preEvalRequest->getStatus()->getDescription(),
+            "request" => $projectRequest,
+            "observations" => $preEvalRequest->getObservations()
+        );
+        $log->insertLog($logData);
       } else {
         $preEvalRequest->setCurrent(false);
-        $preEvalRequest->setStatus(null);
       }
 
 
@@ -75,15 +84,34 @@ class PreEvalRequestController extends AbstractController {
   }
 
   /**
-   * @Route("/{id}/edit", name="pre_eval_request_edit", methods={"GET","POST"})
+   * @Route("/{id}/edit/{id_request}", name="pre_eval_request_edit", methods={"GET","POST"})
+   * @Entity("projectRequest", expr="repository.find(id_request)")
    */
-  public function edit(Request $request, PreEvalRequest $preEvalRequest): Response {
+  public function edit(Request $request, PreEvalRequest $preEvalRequest ,ProjectRequest $projectRequest): Response {
     $form = $this->createForm(PreEvalRequestType::class, $preEvalRequest);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      
+      $finish = $form->get("form_finish_input")->getData();
+      
+      $preEvalRequest->setDate(new \DateTime());
+      
+      if ($finish == "1") {
+        $preEvalRequest->setCurrent(true);
+        $projectRequest->setState($preEvalRequest->getStatus());
+        $logData = array(
+            "description" => $preEvalRequest->getStatus()->getDescription(),
+            "request" => $projectRequest,
+            "observations" => $preEvalRequest->getObservations()
+        );
+        $log->insertLog($logData);
+      } else {
+        $preEvalRequest->setCurrent(false);
+      }
+      
       $this->getDoctrine()->getManager()->flush();
-
+      
       return $this->redirectToRoute('pre_eval_request_index', [
                   'id' => $preEvalRequest->getId(),
       ]);

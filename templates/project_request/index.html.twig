@@ -61,12 +61,12 @@
                 </ul>
               </div>
             {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
-              {% if project_request.state.id == 27 %}
+              {% if project_request.state.id in [27, 35] %}
                 <a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
               {% endif %}
             {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_EVALUATOR"%}
               {% if project_request.state.id == 28 %}
-                <a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Evaluar</a>
+                <a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
               {% endif %}
             {% endif %}
 

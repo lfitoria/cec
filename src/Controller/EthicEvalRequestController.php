@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\FileManager;
 use App\Services\Utils\NotificationManager;
+use App\Services\Utils\LogManager;
 use App\Entity\LdapUser;
 use Symfony\Component\Security\Core\Security;
 
@@ -54,7 +55,7 @@ class EthicEvalRequestController extends AbstractController {
   /**
    * @Route("/new/{id}", name="ethic_eval_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, FileManager $fileManager, NotificationManager $notificationManager, ProjectRequest $projectRequest,Security $security): Response {
+  public function new(Request $request, FileManager $fileManager, NotificationManager $notificationManager, ProjectRequest $projectRequest, Security $security, LogManager $log): Response {
     $ethicEvalRequest = new EthicEvalRequest();
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
     $form->handleRequest($request);
@@ -75,8 +76,8 @@ class EthicEvalRequestController extends AbstractController {
 
       $ethicEvalRequest->setEthicEvalFiles(array_merge($informedConsentFiles, $informedAssentFiles, $collectionInformationFiles));
       $ethicEvalRequest->setRequest($projectRequest);
-      
-      if($finish == "1"){
+
+      if ($finish == "1") {
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
         $loggedUser = $security->getUser();
         $role = $loggedUser->getRole()->getDescription();
@@ -87,36 +88,40 @@ class EthicEvalRequestController extends AbstractController {
         //               <p><strong>Unidad: </strong>'.$projectRequest->getProjectUnit().'</p>
         //               <p><strong>Investigador/estudiante responsable:</strong> '.$projectRequest->getTutorName().'</p>
         //               <a href="#" target="_blank">Asignar a evaluador</a>
-                      
         //               ';
         $body_html = '<img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_header_ucr.png" alt="">
                       <br>
                       <img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_correo.png" alt="">
                       <hr>
-                      <p>Se ha recibido una nueva solicitud de revisión con el número CEC-'.$projectRequest->getId().'</p>
-                      <p><strong>Proyecto: </strong>'.$projectRequest->getTitle().'</p>
-                      <p><strong>Unidad: </strong>'.$projectRequest->getProjectUnit().'</p>
-                      <p><strong>Investigador/estudiante responsable:</strong> '.$loggedUser->getName().'</p>
-                      <a href="'.$request->headers->get('host').$this->generateUrl('project_request_index').'" target="_blank">Asignar a evaluador</a>
+                      <p>Se ha recibido una nueva solicitud de revisión con el número CEC-' . $projectRequest->getId() . '</p>
+                      <p><strong>Proyecto: </strong>' . $projectRequest->getTitle() . '</p>
+                      <p><strong>Unidad: </strong>' . $projectRequest->getProjectUnit() . '</p>
+                      <p><strong>Investigador/estudiante responsable:</strong> ' . $loggedUser->getName() . '</p>
+                      <a href="' . $request->headers->get('host') . $this->generateUrl('project_request_index') . '" target="_blank">Asignar a evaluador</a>
                       
                       ';
         $emailData = [
-          "subject" => "Nueva solicitud",
-          "from" => "catedrahumboldt.vi@ucr.ac.cr",
-          "to" => "lfitoria@eldomo.net",
-          // "to" => "camacho.le@gmail.com",
-          "cc" => "camacho.le@gmail.com",
-          "body" => $body_html
+            "subject" => "Nueva solicitud",
+            "from" => "catedrahumboldt.vi@ucr.ac.cr",
+            "to" => "lfitoria@eldomo.net",
+            // "to" => "camacho.le@gmail.com",
+            "cc" => "camacho.le@gmail.com",
+            "body" => $body_html
         ];
         // var_dump($emailData);
         // die();
         $notificationManager->sendEmail($emailData);
-      }else{
+        $logData = array(
+            "description" => "Enviada por solicitante",
+            "request" => $projectRequest
+        );
+        $log->insertLog($logData);
+      } else {
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       }
-      
+
       $ethicEvalRequest->getRequest()->setState($state);
-      
+
       $entityManager->persist($ethicEvalRequest);
       $entityManager->flush();
 
@@ -146,7 +151,7 @@ class EthicEvalRequestController extends AbstractController {
   /**
    * @Route("/{id}/edit", name="ethic_eval_request_edit", methods={"GET","POST"})
    */
-  public function edit(Request $request, EthicEvalRequest $ethicEvalRequest, FileManager $fileManager, NotificationManager $notificationManager): Response {
+  public function edit(Request $request, EthicEvalRequest $ethicEvalRequest, FileManager $fileManager, NotificationManager $notificationManager, LogManager $log): Response {
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
     $form->handleRequest($request);
 
@@ -164,8 +169,8 @@ class EthicEvalRequestController extends AbstractController {
       $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir, "collectionInformationFiles");
 
       $ethicEvalRequest->addEthicEvalFiles(array_merge($informedConsentFiles, $informedAssentFiles, $collectionInformationFiles));
-   
-      if($finish == "1"){
+
+      if ($finish == "1") {
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
         $emailData = [
             "subject" => "TEST",
@@ -176,11 +181,15 @@ class EthicEvalRequestController extends AbstractController {
             "body" => "BODY TEST public function edit"
         ];
         $notificationManager->sendEmail($emailData);
-        var_dump("edit");
-      }else{
+        $logData = array(
+            "description" => "Enviada por solicitante",
+            "request" => $ethicEvalRequest->getRequest()
+        );
+        $log->insertLog($logData);
+      } else {
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       }
-      
+
       $ethicEvalRequest->getRequest()->setState($state);
 
       $this->getDoctrine()->getManager()->flush();

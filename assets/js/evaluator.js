@@ -25,7 +25,7 @@ const $ = require('jquery');
         var path = _this[0].dataset.path;
         var project_id = _this[0].dataset.request;
         var evaluators = []; 
-        $("input[name=evaluators]:checked").each(function () {
+        $(".evaluator_list_assigment.show input[name=evaluators]:checked").each(function () {
           evaluators.push($(this).val());
         });
         $.ajax({
