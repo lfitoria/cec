@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\NotificationManager;
 use App\Services\Utils\LogManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @Route("/ldap/user")
@@ -34,22 +36,73 @@ class LdapUserController extends AbstractController {
   /**
    * @Route("/new", name="ldap_user_new", methods={"GET","POST"})
    */
-  public function new(Request $request): Response {
+  public function new(Request $request, UserPasswordEncoderInterface $encoder, LogManager $log, ContainerInterface $container): Response {
     $ldapUser = new LdapUser();
     $form = $this->createForm(LdapUserType::class, $ldapUser);
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-      $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->persist($ldapUser);
-      $entityManager->flush();
+    $error = false;
 
-      return $this->redirectToRoute('ldap_user_index');
+    // var_dump($request->get('error'));
+    // die();
+
+    // if ($request->get('error') == '1') {
+    //   $error = true;
+    // }
+
+    $this->container = $container;
+    $objUserServ = $this->container->get('user_manager');
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+
+      if (!$objUserServ->checkUserExists($form->get("email")->getData())) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $objCurrentDatetime = new \Datetime();
+
+        $objUser = new LdapUser();
+        $objUser->setEmail($form->get("email")->getData());
+        $objUser->setCreationDate($objCurrentDatetime);
+        $objUser->setLastLoginDate($objCurrentDatetime);
+        $objUser->setUsername($form->get("username")->getData());
+
+        $passEncryp = $encoder->encodePassword($objUser, $form->get("password")->getData());
+
+        // var_dump($passEncryp);
+        // die();
+
+        $objUser->setPassword($passEncryp);
+        $objUser->setRole($form->get("role")->getData());
+        $objUser->setCarnet($form->get("carnet")->getData());
+        
+        $objUser->setName($form->get("name")->getData());
+        $objUser->setCedulaUsuario($form->get("cedula_usuario")->getData());
+        $objUser->setExternal($form->get("external")->getData());
+
+        $entityManager->persist($objUser);
+        $entityManager->flush();
+
+
+        $logData = array(
+          "description" => "Insercion de usuario: ".$form->get("email")->getData(),
+        );
+        $log->insertLog($logData);
+
+        return $this->redirectToRoute('ldap_user_index');
+      }else{
+        $this->addFlash(
+          'notice',
+          'Correo ya existe.'
+        );
+        return $this->redirectToRoute('ldap_user_new');
+      }
     }
 
     return $this->render('ldap_user/new.html.twig', [
                 'ldap_user' => $ldapUser,
                 'form' => $form->createView(),
+
     ]);
   }
 
@@ -86,11 +139,16 @@ class LdapUserController extends AbstractController {
   /**
    * @Route("/{id}", name="ldap_user_delete", methods={"DELETE"})
    */
-  public function delete(Request $request, LdapUser $ldapUser): Response {
+  public function delete(Request $request, LdapUser $ldapUser, LogManager $log): Response {
     if ($this->isCsrfTokenValid('delete' . $ldapUser->getId(), $request->request->get('_token'))) {
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->remove($ldapUser);
       $entityManager->flush();
+
+      $logData = array(
+        "description" => "Eliminación de usuario: ".$ldapUser->getEmail(),
+      );
+      $log->insertLog($logData);
     }
 
     return $this->redirectToRoute('ldap_user_index');

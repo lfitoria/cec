@@ -127,11 +127,11 @@
                         <p>INGRESE AL SISTEMA CON SUS CREDENCIALES INSTITUCIONALES</p>
                         <form class="form-signin" action="?checkLogin" method="post">
                             <div class="form-group has-feedback">
-                                <input name="email" type="text" class="form-control" placeholder="CORREO INSTITUCIONAL" value="{{ USER_EMAIL }}" autofocus/>
+                                <input name="email" type="text" class="form-control" placeholder="CORREO INSTITUCIONAL" value="{{ USER_EMAIL }}" autofocus required/>
                                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="password" class="form-control" placeholder="CLAVE" name="password" value="{{ PASSWORD }}"/>
+                                <input type="password" class="form-control" placeholder="CLAVE" name="password" value="{{ PASSWORD }}" required/>
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block btn-flat">{{'Ingresar'|upper}}</button>

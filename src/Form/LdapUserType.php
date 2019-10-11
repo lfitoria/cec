@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 use App\Repository\UsersRolesRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -28,7 +30,12 @@ class LdapUserType extends AbstractType
             ])
             ->add('username')
             ->add('name')
-            ->add('password')
+            // ->add('password')
+            ->add('password', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options'  => array('label' => false),
+                'second_options' => array('label' => false),
+            ))
             ->add('external', ChoiceType::class, array(
                 'choices' => array(
                     'No' => '0',

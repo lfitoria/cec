@@ -1,28 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}LdapUser index{% endblock %}
+{# {% block title %}Usuarios{% endblock %} #}
 
 {% block body %}
-    <h1>LdapUser index</h1>
+    {# <h1>Usuarios</h1> #}
+    <p class="title-table-index">Usuarios</p>
     {# <pre>
         {{ dump(ldap_users) }}
     </pre> #}
 
-    <table class="table" style="word-break: break-all;">
+    {# <table class="table" style="word-break: break-all;"> #}
+    <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Username</th>
-                <th>Name</th>
-                <th>Password</th>
-                <th>External</th>
-                <th>LastLoginDate</th>
-                <th>CreationDate</th>
-                <th>DeletionDate</th>
-                <th>Carnet</th>
-                <th>Cedula_usuario</th>
-                <th>actions</th>
+                {# <th>Id</th> #}
+                <th>Correo</th>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                {# <th>Password</th> #}
+                <th>Externo</th>
+                <th>Última visita</th>
+                <th>Creación</th>
+                {# <th>DeletionDate</th> #}
+                <th>Carné</th>
+                <th>Cédula</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -31,28 +33,29 @@
         {{ dump(ldap_user) }}
         </pre> #}
             <tr>
-                <td>{{ ldap_user.id }}</td>
-                <td>{{ ldap_user.email }}</td>
+                {# <td>{{ ldap_user.id }}</td> #}
+                <td style="word-break: break-all;">{{ ldap_user.email }}</td>
                 <td>{{ ldap_user.username }}</td>
                 <td>{{ ldap_user.name }}</td>
-                <td>{{ ldap_user.password }}</td>
+                {# <td>{{ ldap_user.password }}</td> #}
                 <td>{{ ldap_user.external ? 'Yes' : 'No' }}</td>
                 
                 <td>{{ ldap_user.lastLoginDate ? ldap_user.lastLoginDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ ldap_user.creationDate ? ldap_user.creationDate|date('Y-m-d H:i:s') : '' }}</td>
                 {# <td>{{ ldap_user.deletionDate ? ldap_user.deletionDate|date('Y-m-d H:i:s') : '' }}</td> #}
-                <td>
+                {# <td>
                 {% if ldap_user.deletionDate is defined %}
                     {{'Activo'}}
                 {% else %}
                     {{ldap_user.deletionDate|date('Y-m-d H:i:s')}}
                 {% endif %}
-                </td>
+                </td> #}
                 <td>{{ ldap_user.carnet }}</td>
                 <td>{{ ldap_user.cedulausuario }}</td>
-                <td>
-                    <a href="{{ path('ldap_user_show', {'id': ldap_user.id}) }}">show</a>
-                    <a href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">edit</a>
+                <td class="d-flex justify-content-between">
+                    <a class="btn" href="{{ path('ldap_user_show', {'id': ldap_user.id}) }}">Mostrar </a>
+                    
+                    <a class="btn" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
@@ -63,5 +66,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('ldap_user_new') }}">Create new</a>
+    <a href="{{ path('ldap_user_new') }}" class="btn btn-success">Crear usuario +</a>
 {% endblock %}

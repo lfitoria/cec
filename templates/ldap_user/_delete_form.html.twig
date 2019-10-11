@@ -1,5 +1,8 @@
-<form method="post" action="{{ path('ldap_user_delete', {'id': ldap_user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('ldap_user_delete', {'id': ldap_user.id}) }}" onsubmit="return confirm('¿Está segur@ de borrar el usuario: {{ldap_user.email}}?');" style="
+    padding: 15px 0;
+    display: inline-block;
+">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ldap_user.id) }}">
-    <button class="btn">Delete</button>
+    <button class="btn btn-danger">Delete</button>
 </form>

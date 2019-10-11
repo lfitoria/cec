@@ -45,11 +45,20 @@ class UserManager {
   // get user data from database
   public function getUser($strEmail) {
     return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail));
+    // var_dump($strEmail);
+    // die();
+  }
+  public function getPass($strEmail) {
+    return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail));
+    // var_dump($strEmail);
+    // die();
   }
 
   // Check if a user exists on database
   public function checkUserExists($strEmail) {
     $this->user = $this->getUser($strEmail);
+    // var_dump($strEmail);
+    // die();
     return (!empty($this->user)) ? true : false;
   }
 

@@ -12,6 +12,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Entity\LdapUser;
+use App\Services\Utils\LogManager;
 
 class DefaultController extends AbstractController {
 
@@ -41,32 +44,42 @@ class DefaultController extends AbstractController {
   /**
    * @Route("/", name="default")
    */
-  public function login(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils) {
+  public function login(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils,UserPasswordEncoderInterface $encoder) {
 
     if ($this->getUser() != null) {
       return $this->redirectToRoute('project_request_index');
     } else {
       $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
       $this->container = $container;
+      $objUserServ = $this->container->get('user_manager');
       // Checks if the login form has been submitted
       if ($request->getMethod() == 'POST') {
-        // echo "line";
-        // die();
-        // load Ldap service
+
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        if ($objUserServ->checkUserExists($email)) {
+          
+          if ($encoder->isPasswordValid($objUserServ->getUser($email), $password)) {
+            // echo "entra";
+            $objUserServ->loginAction(array(
+              "cedula" => $email,
+            ));
+            return $this->redirectToRoute('project_request_index');
+
+          }else{
+            return $this->redirectToRoute('login');
+          }
+          
+        }
+
+        echo "login solo en local";
+        die();
+
         $objLdapServ = $this->get('ldap');
-        // dump($objLdapServ);
-        // die();
-
         $arrLoginResult = $objLdapServ->login();
-
-        // var_dump($arrLoginResult);
-        // die();
-
         // Ldap login result
         $arrViewData = json_decode($arrLoginResult, TRUE);
-
-        // var_dump($arrViewData);
-        // die();
 
         if (!empty($arrViewData['ERROR']) ) {
           return $this->redirectToRoute('login');
@@ -86,12 +99,30 @@ class DefaultController extends AbstractController {
    */
   public function ValidateUserSendProject(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils, Security $security): Response {
     $data = $request->request->all();
- 
+
     if($data["email"] !== "camacho.le@gmail.com"){
       $this->container = $container;
 
       $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
       if ($request->getMethod() == 'POST') {
+        
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        if ($objUserServ->checkUserExists($email)) {
+          
+          if ($encoder->isPasswordValid($objUserServ->getUser($email), $password)) {
+            // echo "entra";
+            return new JsonResponse(['wasAssigned' => true]);
+            
+
+          }else{
+            return new JsonResponse(['wasAssigned' => false]);
+          }
+          
+        }
+
+
         // load Ldap service
         $objLdapServ = $this->get('ldap');
 

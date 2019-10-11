@@ -38,7 +38,7 @@
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item seguimiento-m" href="{{path('project_request_index')}}">SEGUIMIENTO DE SOLICITUDES</a>
                 {% if app.user.role.description == "ROLE_ADMIN" %}
-                  <a class="dropdown-item admin-m" href="#">ADMINISTRAR USUARIOS</a>
+                  <a class="dropdown-item admin-m" href="{{path('ldap_user_index')}}">ADMINISTRAR USUARIOS</a>
                 {% endif %}
                 <a class="dropdown-item ayuda-m" href="{{path("ayuda")}}">AYUDA</a>
                 <a class="dropdown-item cerrar-m" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
