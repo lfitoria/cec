@@ -73,8 +73,8 @@ class DefaultController extends AbstractController {
           
         }
 
-        echo "login solo en local";
-        die();
+        // echo "login solo en local";
+        // die();
 
         $objLdapServ = $this->get('ldap');
         $arrLoginResult = $objLdapServ->login();
