@@ -125,6 +125,11 @@
 
                     <div class="col-4 login-box-body">
                         <p>INGRESE AL SISTEMA CON SUS CREDENCIALES INSTITUCIONALES</p>
+                        {% for message in app.flashes('notice') %}
+                            <div class="flash-notice">
+                                <p class="text-danger">{{ message }}</p>
+                            </div>
+                        {% endfor %}
                         <form class="form-signin" action="?checkLogin" method="post">
                             <div class="form-group has-feedback">
                                 <input name="email" type="text" class="form-control" placeholder="CORREO INSTITUCIONAL" value="{{ USER_EMAIL }}" autofocus required/>

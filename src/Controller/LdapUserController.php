@@ -118,12 +118,26 @@ class LdapUserController extends AbstractController {
   /**
    * @Route("/{id}/edit", name="ldap_user_edit", methods={"GET","POST"})
    */
-  public function edit(Request $request, LdapUser $ldapUser): Response {
+  public function edit(Request $request, LdapUser $ldapUser, UserPasswordEncoderInterface $encoder, LogManager $log): Response {
     $form = $this->createForm(LdapUserType::class, $ldapUser);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      // var_dump($ldapUser->getPassword());
+      // die();
+
+      $passEncryp = $encoder->encodePassword($ldapUser, $ldapUser->getPassword());
+
+
+      $ldapUser->setPassword($passEncryp);
+
+
       $this->getDoctrine()->getManager()->flush();
+
+      $logData = array(
+        "description" => "Edición de usuario: ".$ldapUser->getEmail(),
+      );
+      $log->insertLog($logData);
 
       return $this->redirectToRoute('ldap_user_index', [
                   'id' => $ldapUser->getId(),

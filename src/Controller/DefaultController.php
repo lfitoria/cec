@@ -68,6 +68,10 @@ class DefaultController extends AbstractController {
             return $this->redirectToRoute('project_request_index');
 
           }else{
+            $this->addFlash(
+              'notice',
+              'Usuario incorrecto.'
+            );
             return $this->redirectToRoute('login');
           }
           
@@ -82,11 +86,21 @@ class DefaultController extends AbstractController {
         $arrViewData = json_decode($arrLoginResult, TRUE);
 
         if (!empty($arrViewData['ERROR']) ) {
+          $this->addFlash(
+            'notice',
+            'Usuario incorrecto.'
+          );
           return $this->redirectToRoute('login');
         }
 
         if ($arrViewData['USERNAME'] != null) {
           return $this->redirectToRoute('project_request_index');
+        }else{
+          $this->addFlash(
+            'notice',
+            'Usuario incorrecto.'
+          );
+          return $this->redirectToRoute('login');
         }
       }
     }
