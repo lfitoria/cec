@@ -149,9 +149,12 @@ class ProjectRequestController extends AbstractController {
           "researchers" => $researchers,
           "projectWasFound" => true];
     }
-    return ["projectWasFound" => false, "externalCollaboration" => null,
-        "projectData" => null,
-        "researchers" => null];
+    return [
+              "projectWasFound" => false, 
+              "externalCollaboration" => false,
+              "projectData" => false,
+              "researchers" => false
+          ];
   }
 
   /**
@@ -390,6 +393,9 @@ class ProjectRequestController extends AbstractController {
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
     }
 
+    // var_dump($SipProject);
+    // die();
+
     return $this->render('project_request/details.html.twig', [
                 'project_request' => $projectRequest,
                 'project_info' => $projectInfo,
@@ -498,7 +504,9 @@ class ProjectRequestController extends AbstractController {
     $emOracle = $this->getDoctrine()->getManager('oracle');
 
     $projectData = $externalDataManager->getInfoByProject($emOracle, $projectCode);
+    
     if ($projectData) {
+      
       return $projectData;
     }
     return false;

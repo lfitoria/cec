@@ -19,7 +19,8 @@ class ExternalDataManager {
   public function getProjectInfoByCode($em, $projectCode) {
 
     if (strpos($projectCode, "-")) {
-      $code = explode("-", $projectCode)[0];
+      try {
+        $code = explode("-", $projectCode)[0];
       $year = explode("-", $projectCode)[1];
 
       $connection = $em->getConnection();
@@ -69,6 +70,14 @@ class ExternalDataManager {
       $results = $statement->fetchAll();
 
       return isset($results[0]) ? $results[0] : null;
+        
+      } catch (\Exception $e) {
+        // var_dump($e);
+        return null;
+      }
+
+
+      
     } else {
       return null;
     }
@@ -230,7 +239,7 @@ class ExternalDataManager {
 
       $results = $statement->fetchAll();
     } catch (\Exception $e) {
-      var_dump($e);
+      // var_dump($e);
       return null;
     }
     return $results;
@@ -275,7 +284,10 @@ class ExternalDataManager {
   //   return isset($results[0]) ? $results[0] : false;
   // }
   public function getInfoByProject($em, $projectCode) {
-    $code = explode("-", $projectCode)[0];
+
+    try {
+
+      $code = explode("-", $projectCode)[0];
     $year = explode("-", $projectCode)[1];
     $connection = $em->getConnection();
     $statement = $connection->prepare('SELECT
@@ -297,8 +309,39 @@ class ExternalDataManager {
     $statement->execute();
 
     $results = $statement->fetchAll();
+
     // $results_convert = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $results);
-    return isset($results[0]) ? $results[0] : null;
+    return isset($results[0]) ? $results[0] : false;
+
+    } catch (\Exception $e) {
+      // var_dump($e);
+      return false;
+    }
+    // $code = explode("-", $projectCode)[0];
+    // $year = explode("-", $projectCode)[1];
+    // $connection = $em->getConnection();
+    // $statement = $connection->prepare('SELECT
+    //     UPPER(TRIM(DSC_ANTECEDENTE)) DSC_ANTECEDENTE,
+    //     DSC_JUSTIFICACION,
+    //     DSC_METODOLOGIA,
+    //     DSC_BENEFICIOS_PBL
+    // from SPP_PROYECTO_DESCRIPCION Proy 
+    // where 
+    // Proy.id_formulario = :code
+    // AND Proy.id_periodo = :year
+    // AND Proy.id_tipo_proyecto = :type
+    // ');
+
+    // $statement->bindValue('code', $code);
+    // $statement->bindValue('year', $year);
+    // $statement->bindValue('type', 'Pry01');
+
+    // $statement->execute();
+
+    // $results = $statement->fetchAll();
+
+    // $results_convert = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $results);
+    // return isset($results[0]) ? $results[0] : null;
   }
 
   // public function getObjetivoPrincipalByProject($em, $project) {
@@ -310,7 +353,9 @@ class ExternalDataManager {
   //   return isset($results[0]) ? $results[0] : false;
   // }
   public function getObjetivoPrincipalByProject($em, $projectCode) {
-    $code = explode("-", $projectCode)[0];
+
+    try {
+      $code = explode("-", $projectCode)[0];
     $year = explode("-", $projectCode)[1];
 
     $connection = $em->getConnection();
@@ -349,6 +394,12 @@ class ExternalDataManager {
 
     $results = $statement->fetchAll();
     return isset($results[0]) ? $results[0] : null;
+      
+    } catch (\Exception $e) {
+      // var_dump($e);
+      return null;
+    }
+    
   }
 
 }
