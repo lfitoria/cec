@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}LdapUser{% endblock %}
+{# {% block title %}LdapUser{% endblock %} #}
 
 {% block body %}
     <p class="title-table-index">Usuario: {{ ldap_user.email }}</p>
@@ -54,9 +54,9 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('ldap_user_index') }}">back to list</a>
+    <a class="btn btn-primary" href="{{ path('ldap_user_index') }}">Volver al listado</a>
 
-    <a class="btn btn-blue" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">edit</a>
+    <a class="btn btn-blue" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">Editar</a>
 
     {{ include('ldap_user/_delete_form.html.twig') }}
 {% endblock %}
