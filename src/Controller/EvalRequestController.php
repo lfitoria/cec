@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Services\Utils\FileManager;
 use App\Entity\EvalRequest;
+use App\Entity\ProjectRequest;
 use App\Form\EvalRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Services\Utils\LogManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 /**
  * @Route("/eval/request")
@@ -29,9 +32,9 @@ class EvalRequestController extends AbstractController {
     }
 
     /**
-     * @Route("/new", name="eval_request_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="eval_request_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FileManager $fileManager): Response {
+    public function new(Request $request, FileManager $fileManager,ProjectRequest $projectRequest, LogManager $log): Response {
         $evalRequest = new EvalRequest();
         $form = $this->createForm(EvalRequestType::class, $evalRequest);
         $form->handleRequest($request);
@@ -45,7 +48,27 @@ class EvalRequestController extends AbstractController {
             
             $files = $fileManager->uploadFiles($tempFiles, $projectDir);
 
+            $finish = $form->get("form_finish_input")->getData();
+
+            $evalRequest->setRequest($projectRequest);
+            $evalRequest->setDate(new \DateTime());
+
             $evalRequest->setFiles($files);
+
+            if ($finish == "1") {
+                $evalRequest->setCurrent(true);
+                $projectRequest->setState($evalRequest->getStatus());
+                
+                $logData = array(
+                    "description" => $evalRequest->getStatus()->getDescription(),
+                    "request" => $projectRequest,
+                    "observations" => $evalRequest->getObservations()
+                );
+                $log->insertLog($logData);
+            } else {
+            $evalRequest->setCurrent(false);
+            }
+
             $em->persist($evalRequest);
             $em->flush();
 
@@ -68,13 +91,32 @@ class EvalRequestController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}/edit", name="eval_request_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/{id_request}", name="eval_request_edit", methods={"GET","POST"})
+     * @Entity("projectRequest", expr="repository.find(id_request)")
      */
-    public function edit(Request $request, EvalRequest $evalRequest): Response {
+    public function edit(Request $request, EvalRequest $evalRequest, ProjectRequest $projectRequest): Response {
         $form = $this->createForm(EvalRequestType::class, $evalRequest);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $finish = $form->get("form_finish_input")->getData();
+      
+            $evalRequest->setDate(new \DateTime());
+            
+            if ($finish == "1") {
+                $evalRequest->setCurrent(true);
+                $projectRequest->setState($evalRequest->getStatus());
+                $logData = array(
+                    "description" => $evalRequest->getStatus()->getDescription(),
+                    "request" => $projectRequest,
+                    "observations" => $evalRequest->getObservations()
+                );
+                $log->insertLog($logData);
+            } else {
+                $evalRequest->setCurrent(false);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('eval_request_index', [

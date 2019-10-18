@@ -9,6 +9,8 @@ use App\Entity\TeamWork;
 use App\Form\ProjectRequestType;
 use App\Entity\PreEvalRequest;
 use App\Form\PreEvalRequestType;
+use App\Entity\EvalRequest;
+use App\Form\EvalRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,7 +57,8 @@ class ProjectRequestController extends AbstractController {
         break;
       case "ROLE_EVALUATOR":
 
-        $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, 28);
+        // $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, 28);
+        $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, array(31, 28));
         break;
       default:
         $requestsFilter = array("state" => 2);
@@ -345,6 +348,57 @@ class ProjectRequestController extends AbstractController {
     }
 
     return $this->render('pre_eval_request/new.html.twig', [
+                'project_request' => $projectRequest,
+                'project_info' => $projectInfo,
+                'projectId_getMinuteCommissionTFG' => $projectId_getMinuteCommissionTFG,
+                'academicRequestInfo' => $academicRequestInfo,
+                'ethicEvalRequest' => $ethicEvalRequest,
+                'SipProjectExtraInformation' => $SipProjectExtraInformation,
+                'SipProject' => $SipProject,
+                'objetivoPrincipal' => $objetivoPrincipal,
+                'requestLogs' => $requestLogs,
+                'form' => $form->createView(),
+    ]);
+  }
+  /**
+   * @Route("/{id}/determinar", name="project_request_evaluate", methods={"GET"})
+   */
+  public function determinate(ProjectRequest $projectRequest, Request $request, ExternalDataManager $externalDataManager): Response {
+    $projectId_getMinuteCommissionTFG = $projectRequest->getInfoRequestFiles();
+
+    $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectRequest->getId());
+    $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectRequest->getId());
+
+    $projectInfo = null;
+    $SipProjectExtraInformation = null;
+    $SipProject = null;
+    $objetivoPrincipal = null;
+
+
+    $EvalRequestSaved = $this->getDoctrine()
+            ->getRepository(EvalRequest::class)
+            ->findOneBy(array("request" => $projectRequest, "current" => 0));
+    
+    $requestLogs = $this->getDoctrine()
+            ->getRepository(WorkLog::class)
+            ->findBy(array("request" => $projectRequest));
+
+    $EvalRequest = $EvalRequestSaved ? $EvalRequestSaved : new EvalRequest();
+    $EvalRequestAction = $EvalRequestSaved ? $this->generateUrl('eval_request_edit', array('id' => $EvalRequestSaved->getId(), 'id_request' => $projectRequest->getId())) : $this->generateUrl('eval_request_new', array('id' => $projectRequest->getId()));
+
+    $form = $this->createForm(EvalRequestType::class, $EvalRequest, [
+        'action' => $EvalRequestAction,
+    ]);
+    $form->handleRequest($request);
+    if ($projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER") {
+      $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $emOracle = $this->getDoctrine()->getManager('oracle');
+      $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
+    }
+
+    return $this->render('eval_request/new.html.twig', [
                 'project_request' => $projectRequest,
                 'project_info' => $projectInfo,
                 'projectId_getMinuteCommissionTFG' => $projectId_getMinuteCommissionTFG,

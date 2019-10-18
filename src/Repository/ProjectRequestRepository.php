@@ -19,9 +19,11 @@ class ProjectRequestRepository extends ServiceEntityRepository {
   }
 
   public function getProjectByEvaluator($evaluator, $state) {
+    // var_dump($state);
+    // die();
     return $this->createQueryBuilder('ProjectRequest')
                     ->andWhere(':user MEMBER OF ProjectRequest.users')
-                    ->andWhere('ProjectRequest.state = :state')
+                    ->andWhere('ProjectRequest.state IN (:state)')
                     ->setParameter('user', $evaluator)
                     ->setParameter('state', $state)
                     ->getQuery()

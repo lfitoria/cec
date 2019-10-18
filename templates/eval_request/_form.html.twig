@@ -1,4 +1,10 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form, {attr: {class: 'form-eval'}}) }}
+    {# {{ form_widget(form) }} #}
+    {{ form_row(form.category, {label_attr: {class: 'radio-custom no-label'} }) }}
+    {{ form_row(form.status, {label_attr: {class: 'radio-custom no-label'} }) }}
+    {{ form_row(form.observations, {label_attr: {class: 'no-label'} }) }}
+    {{ form_row(form.fakeFiles, {label_attr: {class: 'no-label'} }) }}
+    {# <button class="btn">{{ button_label|default('Save') }}</button> #}
 {{ form_end(form) }}
+{{ include('commons/_form_footer.html.twig', {'button_label':'Enviar revisión', 'button_label_save': 'Guardar sin enviar', finish: 1}) }}

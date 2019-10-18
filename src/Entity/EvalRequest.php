@@ -58,7 +58,7 @@ class EvalRequest
     private $current;
 
     /**
-     * @var \Criterion
+     * @var \StatusRequest
      *
      * @ORM\ManyToOne(targetEntity="Criterion")
      * @ORM\JoinColumns({
@@ -68,10 +68,24 @@ class EvalRequest
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="eval_request")
-     * @ORM\JoinColumn(nullable=false)
-     */
+   * @var \User
+   *
+   * @ORM\ManyToOne(targetEntity="User")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+   * })
+   */
     private $user;
+
+    /**
+   * @var ProjectRequest
+   *
+   * @ORM\ManyToOne(targetEntity="ProjectRequest")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="request_id", referencedColumnName="id")
+   * })
+   */
+    private $request;
     
     /**
      * @ORM\ManyToMany(targetEntity="File")
@@ -165,7 +179,13 @@ class EvalRequest
 
         return $this;
     }
-
+    function getRequest(): ProjectRequest {
+        return $this->request;
+    }
+    
+    function setRequest(ProjectRequest $request) {
+        $this->request = $request;
+    }
 
 
 
