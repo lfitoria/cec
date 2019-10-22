@@ -58,7 +58,9 @@ final class Version20190817193327 extends AbstractMigration {
     (1, 1, 'admin@cec.com', 'adminTester', 'Admin tester', NULL, NULL, '2019-08-15 06:13:45', NULL, NULL, 'A12345', '111111111'),
     (5, 2, 'student@cec.com', 'studentTester', 'Student tester', NULL, NULL, '2019-08-17 06:56:44', NULL, NULL, 'A12345', '111111111'),
     (6, 3, 'researcher@cec.com', 'researcherTester', 'Researcher tester', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, 'A12345', '111111111'),
-    (7, 4, 'evaluator@cec.com', 'evalutorTester', 'Evaluator tester', NULL, NULL, '2019-08-15 06:36:58', NULL, NULL, 'A12345', '111111111')");
+	(7, 4, 'evaluator@cec.com', 'evalutorTester', 'Evaluator tester', NULL, NULL, '2019-08-15 06:36:58', NULL, NULL, 'A12345', '111111111'),
+	(8, 4, 'lfitoria@eldomo.net', 'lfitoria', 'Luis Fitoria', NULL, 1, '2019-08-15 06:36:58', NULL, NULL, '2', '1')
+	");
   }
 
   public function down(Schema $schema): void {

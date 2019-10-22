@@ -30,9 +30,12 @@ class EvalRequest
     private $id;
 
     /**
-     * @var int|null
+     * @var \CategoryRequest
      *
-     * @ORM\Column(name="category", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Criterion")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category", referencedColumnName="id")
+     * })
      */
     private $category;
 
@@ -97,9 +100,9 @@ class EvalRequest
         return $this->id;
     }
 
-    function getCategory() {
-        return $this->category;
-    }
+    // function getCategory() {
+    //     return $this->category;
+    // }
 
     function getObservations() {
         return $this->observations;
@@ -113,9 +116,9 @@ class EvalRequest
         return $this->current;
     }
 
-    function getStatus() {
-        return $this->status;
-    }
+    // function getStatus() {
+    //     return $this->status;
+    // }
 
     function getUser(): ?User
     {
@@ -136,8 +139,17 @@ class EvalRequest
         $this->id = $id;
     }
 
-    function setCategory($category) {
-        $this->category = $category;
+    // function setCategory($category) {
+    //     $this->category = $category;
+    // }
+    public function getCategory(): ?Criterion {
+        return $this->category;
+    }
+
+    public function setCategory(?Criterion $category): self {
+    $this->category = $category;
+
+    return $this;
     }
 
     function setObservations($observations) {
@@ -152,8 +164,17 @@ class EvalRequest
         $this->current = $current;
     }
 
-    function setStatus(Criterion $status) {
-        $this->status = $status;
+    // function setStatus(Criterion $status) {
+    //     $this->status = $status;
+    // }
+    public function getStatus(): ?Criterion {
+        return $this->status;
+    }
+
+    public function setStatus(?Criterion $status): self {
+    $this->status = $status;
+
+    return $this;
     }
 
     public function setUser(?User $user): self

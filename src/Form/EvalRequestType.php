@@ -59,12 +59,13 @@ class EvalRequestType extends AbstractType {
                     'query_builder' => function(CriterionRepository $repo) {
                       return $repo->createPopulationQueryBuilder('categoryEvalStatus');
                     },
-                    'label' => 'Se pre-evalúa la solicitud como:'
+                    'label' => 'La presente propuesta es de tipo: '
                 ])
                 ->add('fakeFiles', FileType::class, array(
                     'multiple' => true, 
                     'mapped' => false,
-                    'label' => 'Documento'
+                    'label' => 'Documento',
+                    'required' => false,
                 ))
         ;
     }

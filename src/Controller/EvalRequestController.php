@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\LogManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use App\Services\Utils\NotificationManager;
 
 /**
  * @Route("/eval/request")
@@ -34,19 +35,23 @@ class EvalRequestController extends AbstractController {
     /**
      * @Route("/new/{id}", name="eval_request_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FileManager $fileManager,ProjectRequest $projectRequest, LogManager $log): Response {
+    public function new(Request $request, FileManager $fileManager,ProjectRequest $projectRequest, LogManager $log, NotificationManager $notificationManager): Response {
         $evalRequest = new EvalRequest();
         $form = $this->createForm(EvalRequestType::class, $evalRequest);
         $form->handleRequest($request);
 
+        $status = $form->get("status")->getData()->getId();
+
         if ($form->isSubmitted() && $form->isValid()) {
+            // var_dump($form->get("category")->getData());
+            // die();
             $em = $this->getDoctrine()->getManager();
 
             $tempFiles = $form->get("fakeFiles")->getData();
 
             $projectDir = $this->getParameter('brochures_directory');
             
-            $files = $fileManager->uploadFiles($tempFiles, $projectDir);
+            $files = $fileManager->uploadFiles($tempFiles, $projectDir,"evalFiles");
 
             $finish = $form->get("form_finish_input")->getData();
 
@@ -65,6 +70,57 @@ class EvalRequestController extends AbstractController {
                     "observations" => $evalRequest->getObservations()
                 );
                 $log->insertLog($logData);
+
+                switch ($status) {
+                    case '36':
+                        $subjectEmail = "Solicitud: ".$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '37':
+                        $subjectEmail = "Solicitud: ".$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '38':
+                        $subjectEmail = "Solicitud: ".$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '39':
+                        $subjectEmail = "Solicitud: ".$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '40':
+                        $subjectEmail = "Solicitud: ".$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '41':
+                        $subjectEmail = "Solicitud: ".$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '42':
+                        $subjectEmail = "Solicitud: ".$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    
+                    default:
+            
+                    break;
+                }
+            
+                $emailData = [
+                "subject" => $subjectEmail,
+                "from" => "catedrahumboldt.vi@ucr.ac.cr",
+                // "to" => $projectRequest->getOwner()->getEmail(),
+                "to" => "luisfitoria91@gmail.com",
+                "cc" => "lfitoria@eldomo.net",
+                "body" => $this->render('emails/evaluatorAssigment.html.twig', [
+                'project_request' => $projectRequest,
+                'details_eval' => $evalRequest->getObservations(),
+                ])
+                ];
+            
+                $notificationManager->sendEmail($emailData);
+
+
             } else {
             $evalRequest->setCurrent(false);
             }
@@ -72,7 +128,8 @@ class EvalRequestController extends AbstractController {
             $em->persist($evalRequest);
             $em->flush();
 
-            return $this->redirectToRoute('eval_request_index');
+            // return $this->redirectToRoute('eval_request_index');
+            return $this->redirectToRoute('project_request_index');
         }
 
         return $this->render('eval_request/new.html.twig', [

@@ -50,15 +50,15 @@ class ProjectRequestController extends AbstractController {
         $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
         break;
       case "ROLE_STUDENT":
-        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35]);
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,31,42]);
         break;
       case "ROLE_RESEARCHER":
-        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28]);
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,31,42]);
         break;
       case "ROLE_EVALUATOR":
 
         // $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, 28);
-        $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, array(31, 28));
+        $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, array(27, 28, 35, 36,31,42));
         break;
       default:
         $requestsFilter = array("state" => 2);
@@ -289,6 +289,10 @@ class ProjectRequestController extends AbstractController {
     $SipProject = null;
     $objetivoPrincipal = null;
 
+    $requestLogs = $this->getDoctrine()
+            ->getRepository(WorkLog::class)
+            ->findBy(array("request" => $projectRequest));
+
     if ($projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER") {
       $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
@@ -306,6 +310,7 @@ class ProjectRequestController extends AbstractController {
                 'SipProjectExtraInformation' => $SipProjectExtraInformation,
                 'SipProject' => $SipProject,
                 'objetivoPrincipal' => $objetivoPrincipal,
+                'requestLogs' => $requestLogs,
     ]);
   }
 

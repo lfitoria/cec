@@ -31,7 +31,18 @@
             </td>
             <td>{{ requestLog.description }}</td>
             <td>{{ requestLog.user.name }}</td>
-            <td>{{ requestLog.user.role.description }}</td>
+            <td>
+            {# {{ requestLog.user.role.description }} #}
+            {% if requestLog.user.role.description == "ROLE_ADMIN" %}
+                    Administrador
+                {% elseif requestLog.user.role.description == "ROLE_STUDENT" %}
+                    Estudiante                                  
+                {% elseif requestLog.user.role.description == "ROLE_RESEARCHER" %}
+                    Investigador
+                {% elseif requestLog.user.role.description == "ROLE_EVALUATOR" %}
+                    Evaluador
+                {% endif %}
+            </td>
             <td>{{ requestLog.observations|default('N/A') }}</td>
           </tr>
         {% else %}

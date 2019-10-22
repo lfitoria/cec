@@ -446,7 +446,17 @@ a.ingreso-admin-home:after {
   cursor: unset;
   font-weight: bold;
 }
-
+a.toolbox {
+  position: absolute;
+  font-size: 0.6em;
+  top: 5px;
+  right: -18px;
+  background-color: var(--N1);
+  border-radius: 50%;
+  padding: 0px 4px;
+  width: 14px;
+  color: #000;
+}
 
 @media (min-width: 576px) { 
 } /*fin*/

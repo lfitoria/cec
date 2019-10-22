@@ -22,17 +22,17 @@ final class Version20190916012815 extends AbstractMigration {
 
     $this->addSql("INSERT INTO `criterion` (`id`, `description`, `code`) VALUES
       (31, 'Revisión aprobada', 'preEvalStatus'),
-      (32, 'Pendiente de revisión', 'preEvalStatus'),
+      (32, 'Devuelto con observaciones ', 'preEvalStatus'),
       (33, 'Exenta', 'preEvalStatus'),
       (34, 'No requiere revisión', 'preEvalStatus'),
-      (35, 'Devuelta', 'preEvalStatus'),
+      (35, 'Devuelta(no compete)', 'preEvalStatus'),
       (36, 'Aprobada', 'evalStatus'),
       (37, 'Aprobada condicionada', 'evalStatus'),
-      (38, 'Pendiente de revisión', 'preEvalStatus'),
+      (38, 'Devuelto con observaciones', 'evalStatus'),
       (39, 'Exenta', 'evalStatus'),
       (40, 'Rechazada', 'evalStatus'),
       (41, 'No requiere revisión', 'evalStatus'),
-      (42, 'Devuelta', 'evalStatus'),
+      (42, 'Devuelta(no compete)', 'evalStatus'),
       (43, 'Biomédica observacional', 'categoryEvalStatus'),
       (44, 'Biomédica Intervencional', 'categoryEvalStatus'),
       (45, 'Sociocultural', 'categoryEvalStatus')

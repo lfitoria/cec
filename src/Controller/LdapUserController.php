@@ -189,7 +189,7 @@ class LdapUserController extends AbstractController {
       }
       
 
-      $body = $this->renderView('emails/evaluatorAssigment.html.twig', ['project_request' => $projectRequest]);
+      $body = $this->renderView('emails/evaluatorAssigment.html.twig', ['project_request' => $projectRequest,'details_eval' => '']);
       //evaluator@cec.com
       $emailData = [
           "subject" => "CEC – Solicitud de revisión asignada - CEC-" . $projectRequest->getId(),
@@ -206,7 +206,8 @@ class LdapUserController extends AbstractController {
       
       $logData = array(
           "description" => "Asignada a: " . implode (",", $newEvaluators),
-          "request" => $projectRequest
+          "request" => $projectRequest,
+          
       );
       $log->insertLog($logData);
 

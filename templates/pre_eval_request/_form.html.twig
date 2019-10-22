@@ -1,7 +1,46 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ form_start(form, {attr: {class: 'form-eval'}}) }}
-{{ form_row(form.status, {label_attr: {class: 'radio-custom no-label'} }) }}
-{{ form_row(form.observations, {label_attr: {class: 'no-label'} }) }}
+<!--Accordion wrapper-->
+<div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
 
-{{ form_end(form) }}
-{{ include('commons/_form_footer.html.twig', {'button_label':'Enviar revisión', 'button_label_save': 'Guardar sin enviar', finish: 1}) }}
+    <!-- Accordion card -->
+    <div class="card">
+
+        <!-- Card header -->
+        <div class="card-header" role="tab" id="headingOne1">
+            <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
+                <h5 class="mb-0">
+                    Revisión de solicitud
+                </h5>
+            </a>
+        </div>
+
+        <!-- Card body -->
+        <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1" data-parent="#accordionEx">
+            <div class="card-body">
+                {{ form_row(form.status, {label_attr: {class: 'radio-custom no-label'}}) }}
+                {{ form_row(form.observations, {label_attr: {class: 'no-label'} }) }}
+                {{ form_end(form) }}
+                {{ include('commons/_form_footer.html.twig', {'button_label':'Enviar revisión', 'button_label_save': 'Guardar sin enviar', finish: 1}) }}
+            </div>
+        </div>
+
+    </div>
+    <!-- Accordion card -->
+</div>
+<!-- Accordion wrapper -->
+
+
+<script>
+    console.log('readi');
+    jQuery("[for='pre_eval_request_status_31']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="El proceso de evaluación continúa para ser evaluada en una sesión ordinaria o extraordinaria del CEC">?</a>');
+    jQuery("[for='pre_eval_request_status_32']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
+    jQuery("[for='pre_eval_request_status_33']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="No implica ningún peligro ni comprometen a los participantes">?</a>');
+    jQuery("[for='pre_eval_request_status_34']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Por su naturaleza no están diseñadas para contribuir con nuevos conocimientos que sean generalizables (Ver “Lineamientos del Comité Ético Científico de la Universidad de Costa Rica para Investigaciones con Seres Humanos, Biomédicas y No Biomédicas”, numeral 9.3)">?</a>');
+    jQuery("[for='pre_eval_request_status_35']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Revisión de esta solicitud no compete al CEC">?</a>');
+
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

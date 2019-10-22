@@ -18,6 +18,9 @@
         </thead>
         <tbody>
         {% for eval_request in eval_requests %}
+        <pre>
+            {{ dump(eval_request) }}
+        </pre>
             <tr>
                 <td>{{ eval_request.id }}</td>
                 <td>{{ eval_request.category }}</td>
@@ -26,7 +29,7 @@
                 <td>{{ eval_request.current ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('eval_request_show', {'id': eval_request.id}) }}">show</a>
-                    <a href="{{ path('eval_request_edit', {'id': eval_request.id}) }}">edit</a>
+                    <a href="{{ path('eval_request_edit', {'id': eval_request.id,'id_request': eval_request.request.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +40,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('eval_request_new') }}">Create new</a>
+    {# <a href="{{ path('eval_request_new') }}">Create new</a> #}
 {% endblock %}

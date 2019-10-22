@@ -39,13 +39,15 @@ class DefaultController extends AbstractController {
     ]);
   }
 
-  // * @Route("/login", name="login")
+  
 
   /**
    * @Route("/", name="default")
    */
-  public function login(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils,UserPasswordEncoderInterface $encoder) {
-
+  public function login(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils,UserPasswordEncoderInterface $encoder,Security $security) {
+    // $loggedUser = $security->getUser();
+    // var_dump($loggedUser);
+    // die();
     if ($this->getUser() != null) {
       return $this->redirectToRoute('project_request_index');
     } else {

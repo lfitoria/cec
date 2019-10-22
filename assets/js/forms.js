@@ -63,14 +63,16 @@ const $ = require('jquery');
 
     function applyNumbering() {
       var number = 1;
+      // console.log(cache.question_labels);
       cache.question_labels.each(function () {
         var _this = $(this);
         _this.text(cache.form.data("number") + "." + number + " " + _this.text());
         number++;
       });
-    }
+    }   
 
     function bindEvents() {
+
       cache.nav_items.click(function () {
         cache.form_target[0].value = $(this).data('target');
         if (cache.form.valid()) {
@@ -87,7 +89,7 @@ const $ = require('jquery');
           console.log("submit-data");
           // console.log(cache.form_finish[0].value);
           if (cache.form_finish[0] !== undefined && cache.form_finish[0].value === 1) {
-           
+
               jQuery('#valdiate_send_user').modal('show');
 
               $('#valdiate_send_user_submit').click(function (event) {
@@ -403,6 +405,7 @@ const $ = require('jquery');
       showActivatedInputs();
       applyNumbering();
       bindEvents();
+      
     };
 
     return Object.freeze(_objectPublic);

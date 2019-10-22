@@ -26,9 +26,9 @@
     </thead>
     <tbody>
       {% for project_request in project_requests %}
-      <pre>
+      {# <pre>
         {{ dump(project_request) }}
-      </pre>
+      </pre> #}
         <tr>
           <td class="text-bold">
             <span>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</span>
@@ -41,39 +41,50 @@
           <td class="d-flex justify-content-between">
           
             <span>{{ project_request.state.description }}</span>
+            <a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
 
             {% if app.user.role.description == "ROLE_ADMIN" %}
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Asignar
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu checkbox-menu allow-focus evaluator_list_assigment">
-                  {% for evaluator in evaluators %}
+              {% if project_request.state.id not in [36] %}
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Asignar
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu checkbox-menu allow-focus evaluator_list_assigment">
+                    {% for evaluator in evaluators %}
+                      <li>
+                        <label>
+                          <input type="checkbox" name="evaluators" value="{{ evaluator.id }}" {% if evaluator.id in project_requests_users[project_request.id] %}checked{% endif %}>
+                          {{ evaluator.name }}
+                        </label>
+                      </li>
+                    {% endfor %}
                     <li>
-                      <label>
-                        <input type="checkbox" name="evaluators" value="{{ evaluator.id }}" {% if evaluator.id in project_requests_users[project_request.id] %}checked{% endif %}>
-                        {{ evaluator.name }}
-                      </label>
+                      <button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">Confirmar</button>
                     </li>
-                  {% endfor %}
-                  <li>
-                    <button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">Confirmar</button>
-                  </li>
-                </ul>
-              </div>
+                  </ul>
+                </div>
+              {% else %}
+                <a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
+              {% endif %}
             {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
-              {% if project_request.state.id in [27, 35] %}
+              {% if project_request.state.id in [27, 35, 42] %}
                 <a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
               {% endif %}
+              
+              
+
             {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_EVALUATOR"%}
               {% if project_request.state.id == 28 %}
                 <a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
               {% endif %}
               {% if project_request.state.id == 31 %}
-                <a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Determinar</a>
+                <a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
               {% endif %}
-            
+              
+              {# {% if project_request.state.id == 36 %}
+                <a href="{{ path('eval_request_show', {'id': eval_request.id}) }}">show</a>
+              {% endif %} #}
               
             {% endif %}
 
