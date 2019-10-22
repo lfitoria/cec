@@ -99,19 +99,22 @@ class PreEvalRequestController extends AbstractController {
           ])
         ];
       
-        $notificationManager->sendEmail($emailData);
+        //$notificationManager->sendEmail($emailData);
         $logData = array(
           "description" => $preEvalRequest->getStatus()->getDescription(),
           "request" => $projectRequest,
           "observations" => $preEvalRequest->getObservations()
         );
         $log->insertLog($logData);
+        $entityManager->persist($preEvalRequest);
 
       } else {
         $preEvalRequest->setCurrent(false);
+        // $projectRequest->setState($preEvalRequest->getStatus());
+        $entityManager->persist($preEvalRequest);
       }
 
-      $entityManager->persist($preEvalRequest);
+      
 
       $entityManager->flush();
       
@@ -138,7 +141,7 @@ class PreEvalRequestController extends AbstractController {
    * @Route("/{id}/edit/{id_request}", name="pre_eval_request_edit", methods={"GET","POST"})
    * @Entity("projectRequest", expr="repository.find(id_request)")
    */
-  public function edit(Request $request, PreEvalRequest $preEvalRequest ,ProjectRequest $projectRequest): Response {
+  public function edit(Request $request, PreEvalRequest $preEvalRequest ,ProjectRequest $projectRequest, LogManager $log): Response {
     $form = $this->createForm(PreEvalRequestType::class, $preEvalRequest);
     $form->handleRequest($request);
 
@@ -162,10 +165,11 @@ class PreEvalRequestController extends AbstractController {
       }
       
       $this->getDoctrine()->getManager()->flush();
+      return $this->redirectToRoute('project_request_index');
       
-      return $this->redirectToRoute('pre_eval_request_index', [
-                  'id' => $preEvalRequest->getId(),
-      ]);
+      // return $this->redirectToRoute('pre_eval_request_index', [
+      //             'id' => $preEvalRequest->getId(),
+      // ]);
     }
 
     return $this->render('pre_eval_request/edit.html.twig', [

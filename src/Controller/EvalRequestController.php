@@ -151,9 +151,23 @@ class EvalRequestController extends AbstractController {
      * @Route("/{id}/edit/{id_request}", name="eval_request_edit", methods={"GET","POST"})
      * @Entity("projectRequest", expr="repository.find(id_request)")
      */
-    public function edit(Request $request, EvalRequest $evalRequest, ProjectRequest $projectRequest): Response {
+    public function edit(Request $request, EvalRequest $evalRequest, ProjectRequest $projectRequest,LogManager $log, FileManager $fileManager): Response {
         $form = $this->createForm(EvalRequestType::class, $evalRequest);
         $form->handleRequest($request);
+
+        $tempFiles = $form->get("fakeFiles")->getData();
+
+        $projectDir = $this->getParameter('brochures_directory');
+        
+        $files = $fileManager->uploadFiles($tempFiles, $projectDir,"evalFiles");
+
+        $finish = $form->get("form_finish_input")->getData();
+
+        $evalRequest->setRequest($projectRequest);
+        $evalRequest->setDate(new \DateTime());
+
+        $evalRequest->setFiles($files);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -176,9 +190,11 @@ class EvalRequestController extends AbstractController {
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('eval_request_index', [
-                        'id' => $evalRequest->getId(),
-            ]);
+            return $this->redirectToRoute('project_request_index');
+
+            // return $this->redirectToRoute('eval_request_index', [
+            //             'id' => $evalRequest->getId(),
+            // ]);
         }
 
         return $this->render('eval_request/edit.html.twig', [
