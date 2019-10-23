@@ -136,7 +136,7 @@ class EthicEvalRequestController extends AbstractController {
   /**
    * @Route("/{id}/edit", name="ethic_eval_request_edit", methods={"GET","POST"})
    */
-  public function edit(Request $request, EthicEvalRequest $ethicEvalRequest, FileManager $fileManager, NotificationManager $notificationManager, LogManager $log): Response {
+  public function edit(Request $request, EthicEvalRequest $ethicEvalRequest, FileManager $fileManager, NotificationManager $notificationManager, LogManager $log, ProjectRequest $projectRequest): Response {
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
     $form->handleRequest($request);
 
