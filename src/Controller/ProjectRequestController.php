@@ -430,7 +430,7 @@ class ProjectRequestController extends AbstractController {
                 'form' => $form->createView(),
                 'eval_info' => false,
                 'eval' => $eval_info,
-                'pre_eval_info' => false`
+                'pre_eval_info' => false
     ]);
   }
 
