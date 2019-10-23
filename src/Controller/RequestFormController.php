@@ -108,6 +108,7 @@ class RequestFormController extends AbstractController {
       $entityManager = $this->getDoctrine()->getManager('sip');
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectCode);
+      $objetivoGeneral = $externalDataManager->getProjectInfoByCode($emOracle, $projectCode);
 
       return $this->render($templateRoute, [
                   'academic_request_info' => $academicRequestInfo,
@@ -115,6 +116,7 @@ class RequestFormController extends AbstractController {
                   'SipProject' => $SipProject,
                   'SipProjectExtraInformation' => $SipProjectExtraInformation,
                   'objetivoPrincipal' => $objetivoPrincipal,
+                  'objetivoGeneral' => $objetivoGeneral
       ]);
     }
     return $this->render($templateRoute, [

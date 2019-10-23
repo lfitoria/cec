@@ -27,8 +27,8 @@
         <p>
             <strong>Objetivo principal:</strong>
         </p>
-        {% if SipProject %}
-            <textarea class="form-control" name="" id="" rows="6" disabled>{{SipProject.projectData.dsc_proyecto|striptags|raw|default('Sin datos')}}</textarea>
+        {% if objetivoGeneral %}
+            <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoGeneral.dsc_objgeneral|striptags|raw|default('Sin datos')}}</textarea>
         {% else %}
             <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
         {% endif %}
@@ -77,6 +77,6 @@
     {{ dump(SipProjectExtraInformation) }}
 </pre>  #}
 
-<pre>
+{# <pre>
     {{ dump(objetivoPrincipal) }}
-</pre>  
+</pre>   #}
