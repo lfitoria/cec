@@ -14,7 +14,7 @@
     'SipProjectExtraInformation': SipProjectExtraInformation,
     'SipProject': SipProject,
     'objetivoPrincipal': objetivoPrincipal}) }}
-    <table class="table">
+    {# <table class="table">
     <thead>
       <tr>
         <th>Fecha</th>
@@ -34,7 +34,7 @@
             <td>{{ requestLog.description }}</td>
             <td>{{ requestLog.user.name }}</td>
             <td>
-            {# {{ requestLog.user.role.description }} #}
+            
             {% if requestLog.user.role.description == "ROLE_ADMIN" %}
                     Administrador
                 {% elseif requestLog.user.role.description == "ROLE_STUDENT" %}
@@ -54,7 +54,7 @@
         {% endfor %}
       {% endif %}
     </tbody>
-  </table>
+  </table> #}
 
     {{ include('eval_request/_form.html.twig') }}
 

@@ -373,7 +373,9 @@ class ProjectRequestController extends AbstractController {
                 'objetivoPrincipal' => $objetivoPrincipal,
                 'requestLogs' => $requestLogs,
                 'form' => $form->createView(),
-                'pre_eval_info' => $pre_eval_info,
+                'pre_eval_info' => false,
+                'pre_eval' => $pre_eval_info,
+                'eval_info' => false,
     ]);
   }
   /**
@@ -426,7 +428,9 @@ class ProjectRequestController extends AbstractController {
                 'objetivoPrincipal' => $objetivoPrincipal,
                 'requestLogs' => $requestLogs,
                 'form' => $form->createView(),
-                'eval_info' => $eval_info
+                'eval_info' => false,
+                'eval' => $eval_info,
+                'pre_eval_info' => false`
     ]);
   }
 
