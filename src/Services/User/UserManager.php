@@ -94,7 +94,7 @@ class UserManager {
       $objUser->setRole($role);
       $objUser->setCarnet($strEmail["carnet"]);
       $objUser->setName($strEmail["nombre"]);
-      $objUser->getCedulaUsuario($strEmail["id"]);
+      $objUser->setCedulaUsuario($strEmail["id"]);
       $objUser->setExternal(0);
       // save data
       $this->em->persist($objUser);
