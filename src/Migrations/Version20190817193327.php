@@ -59,7 +59,21 @@ final class Version20190817193327 extends AbstractMigration {
     (5, 2, 'student@cec.com', 'studentTester', 'Student tester', NULL, NULL, '2019-08-17 06:56:44', NULL, NULL, 'A12345', '111111111'),
     (6, 3, 'researcher@cec.com', 'researcherTester', 'Researcher tester', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, 'A12345', '111111111'),
 	(7, 4, 'evaluator@cec.com', 'evalutorTester', 'Evaluator tester', NULL, NULL, '2019-08-15 06:36:58', NULL, NULL, 'A12345', '111111111'),
-	(8, 4, 'lfitoria@eldomo.net', 'lfitoria', 'Luis Fitoria', NULL, 1, '2019-08-15 06:36:58', NULL, NULL, '2', '1')
+	(8, 4, 'lfitoria@eldomo.net', 'lfitoria', 'Luis Fitoria', NULL, 1, '2019-08-15 06:36:58', NULL, NULL, '2', '1'),
+	(9,4, 'alfonso.chaconmata@ucr.ac.cr', 'alfonso.chaconmata', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(10,4, 'manuel.triana@ucr.ac.cr', 'manuel.triana', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(11,4, 'jimmy.washburn@ucr.ac.cr', 'jimmy.washburn', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(12,4, 'sandra.silva@ucr.ac.cr', 'sandra.silva', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(13,4, 'rodrigo.morarodriguez@ucr.ac.cr', 'rodrigo.morarodriguez', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(14,4, 'maria.quesada@ucr.ac.cr', 'maria.quesada', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(15,4, 'karol.ramirez@ucr.ac.cr', 'karol.ramirez', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(16,4, 'derby.munoz@ucr.ac.cr', 'derby.munoz', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(17,4, 'ingrid.gomez@ucr.ac.cr', 'ingrid.gomez', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(18,4, 'freddy.arias_m@ucr.ac.cr', 'freddy.arias_m', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(19,4, 'oporrascr@gmail.com', 'oporrascr', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(20,4, 'anafournier@gmail.com', 'anafournier', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(21,1, 'cec@ucr.ac.cr', 'cec@ucr.ac.cr', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(22,1, 'daihanna.hernandez@ucr.ac.cr', 'daihanna.hernandez', NULL, NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL)
 	");
   }
 

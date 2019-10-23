@@ -15,8 +15,8 @@ use App\Repository\CriterionRepository;
 class AcademicRequestInfoType extends AbstractType {
 
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $sippres = 'Vacio';
-    $br = '\n';
+    // $sippres = 'Vacio';
+    // $br = '\n';
     $builder
             ->add('form_target_input', HiddenType::class, [
                 'attr' => ['class' => 'form_target_input'],
@@ -25,7 +25,7 @@ class AcademicRequestInfoType extends AbstractType {
             ])
             ->add('summaryObserv', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 1500 caracteres.<br>' . $sippres,
+                'help' => 'Máximo 1500 caracteres.' ,
                 'help_html' => true,
                 'label_format' => 'Observaciones:',
                 // 'label_format' => 'Resumen del estudio (antecedentes y justificación):',                
