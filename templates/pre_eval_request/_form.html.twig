@@ -30,6 +30,31 @@
 </div>
 <!-- Accordion wrapper -->
 
+{% if pre_eval_info %}
+<p class="title-table-index">{{'Resumen de evaluaciones previas'|upper}}</p>
+<div id="accordion">
+{% for pei in pre_eval_info %}
+    {# <pre>
+        {{ dump(pei) }}
+    </pre> #}
+    <div class="card">
+    <div class="card-header" id="head-{{pei.id}}">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{pei.id}}" aria-expanded="true" aria-controls="collapseOne">
+            Evaluación CEC-{{project_request.id}}-{{pei.date|date("Y")[2:3]}} | Fecha: {{pei.date|date("d/m/Y g:ia")}}
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapse-{{pei.id}}" class="collapse" aria-labelledby="head-{{pei.id}}" data-parent="#accordion">
+      <div class="card-body">
+        <p>{{pei.observations}}</p>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endif %} 
 
 <script>
     console.log('readi');

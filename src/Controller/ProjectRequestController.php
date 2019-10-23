@@ -300,6 +300,8 @@ class ProjectRequestController extends AbstractController {
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
     }
+    $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
+    $eval_info = $this->getDoctrine()->getRepository(EvalRequest::class)->getAllEvalInfo($projectRequest->getId());
 
     return $this->render('project_request/show.html.twig', [
                 'project_request' => $projectRequest,
@@ -311,6 +313,8 @@ class ProjectRequestController extends AbstractController {
                 'SipProject' => $SipProject,
                 'objetivoPrincipal' => $objetivoPrincipal,
                 'requestLogs' => $requestLogs,
+                'pre_eval_info' => $pre_eval_info,
+                'eval_info' => $eval_info
     ]);
   }
 
@@ -350,7 +354,13 @@ class ProjectRequestController extends AbstractController {
       $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
+      
     }
+
+    $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
+    
+    // var_dump($pre_eval_info);
+    // die();
 
     return $this->render('pre_eval_request/new.html.twig', [
                 'project_request' => $projectRequest,
@@ -363,6 +373,7 @@ class ProjectRequestController extends AbstractController {
                 'objetivoPrincipal' => $objetivoPrincipal,
                 'requestLogs' => $requestLogs,
                 'form' => $form->createView(),
+                'pre_eval_info' => $pre_eval_info,
     ]);
   }
   /**
@@ -402,6 +413,7 @@ class ProjectRequestController extends AbstractController {
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
     }
+    $eval_info = $this->getDoctrine()->getRepository(EvalRequest::class)->getAllEvalInfo($projectRequest->getId());
 
     return $this->render('eval_request/new.html.twig', [
                 'project_request' => $projectRequest,
@@ -414,6 +426,7 @@ class ProjectRequestController extends AbstractController {
                 'objetivoPrincipal' => $objetivoPrincipal,
                 'requestLogs' => $requestLogs,
                 'form' => $form->createView(),
+                'eval_info' => $eval_info
     ]);
   }
 

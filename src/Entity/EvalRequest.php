@@ -12,6 +12,7 @@ use \DateTime;
  *
  * @ORM\Table(name="eval_request", indexes={@ORM\Index(name="FK_eval_status", columns={"status"}), @ORM\Index(name="FK_eval_user", columns={"user_id"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\EvalRequestRepository")
  */
 class EvalRequest
 {
@@ -200,12 +201,16 @@ class EvalRequest
 
         return $this;
     }
-    function getRequest(): ProjectRequest {
+    public function getRequest(): ?ProjectRequest
+    {
         return $this->request;
     }
-    
-    function setRequest(ProjectRequest $request) {
+
+    public function setRequest(?ProjectRequest $request): self
+    {
         $this->request = $request;
+
+        return $this;
     }
 
 

@@ -11,6 +11,7 @@ use App\Entity\ProjectRequest;
  * 
  * @ORM\Table(name="pre_eval_request", indexes={@ORM\Index(name="FK_pre_eval_status", columns={"status"}), @ORM\Index(name="FK_pre_eval_user", columns={"user_id"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PreEvalRequestRepository")
  */
 class PreEvalRequest {
 
@@ -55,7 +56,7 @@ class PreEvalRequest {
   private $status;
 
   /**
-   * @var ProjectRequest
+   * @var \ProjectRequest
    *
    * @ORM\ManyToOne(targetEntity="ProjectRequest")
    * @ORM\JoinColumns({
@@ -128,11 +129,15 @@ class PreEvalRequest {
     return $this;
   }
   
-  function getRequest(): ProjectRequest {
-    return $this->request;
-  }
+  public function getRequest(): ?ProjectRequest
+    {
+        return $this->request;
+    }
 
-  function setRequest(ProjectRequest $request) {
-    $this->request = $request;
-  }
+    public function setRequest(?ProjectRequest $request): self
+    {
+        $this->request = $request;
+
+        return $this;
+    }
 }

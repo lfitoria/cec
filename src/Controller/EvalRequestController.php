@@ -62,17 +62,12 @@ class EvalRequestController extends AbstractController {
 
             if ($finish == "1") {
                 $evalRequest->setCurrent(true);
-                $projectRequest->setState($evalRequest->getStatus());
-                
-                $logData = array(
-                    "description" => $evalRequest->getStatus()->getDescription(),
-                    "request" => $projectRequest,
-                    "observations" => $evalRequest->getObservations()
-                );
-                $log->insertLog($logData);
+                // $projectRequest->setState($evalRequest->getStatus());
 
                 switch ($status) {
                     case '36':
+                        // var_dump("entra");
+                        // die();
                         $subjectEmail = "Solicitud: ".$evalRequest->getStatus()->getDescription();
                         $projectRequest->setState($evalRequest->getStatus());
                     break;
@@ -118,7 +113,14 @@ class EvalRequestController extends AbstractController {
                 ])
                 ];
             
-                $notificationManager->sendEmail($emailData);
+                //$notificationManager->sendEmail($emailData);
+
+                $logData = array(
+                    "description" => $evalRequest->getStatus()->getDescription(),
+                    "request" => $projectRequest,
+                    "observations" => $evalRequest->getObservations()
+                );
+                $log->insertLog($logData);
 
 
             } else {

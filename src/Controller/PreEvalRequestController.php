@@ -42,7 +42,6 @@ class PreEvalRequestController extends AbstractController {
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $entityManager = $this->getDoctrine()->getManager();
 
       $finish = $form->get("form_finish_input")->getData();
 
@@ -106,16 +105,19 @@ class PreEvalRequestController extends AbstractController {
           "observations" => $preEvalRequest->getObservations()
         );
         $log->insertLog($logData);
-        $entityManager->persist($preEvalRequest);
+        
 
       } else {
         $preEvalRequest->setCurrent(false);
         // $projectRequest->setState($preEvalRequest->getStatus());
-        $entityManager->persist($preEvalRequest);
+        
       }
 
-      
+      // var_dump($preEvalRequest);
+      // die();
 
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->persist($preEvalRequest);
       $entityManager->flush();
       
       return $this->redirectToRoute('project_request_index');

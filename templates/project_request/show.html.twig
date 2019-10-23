@@ -13,49 +13,11 @@
     'ethicEvalRequest': ethicEvalRequest,
     'SipProjectExtraInformation': SipProjectExtraInformation,
     'SipProject': SipProject,
-    'objetivoPrincipal': objetivoPrincipal}) }}
+    'objetivoPrincipal': objetivoPrincipal,
+    'requestLogs': requestLogs,
+    'pre_eval_info':pre_eval_info,
+    'eval_info':eval_info,
+    }) }}
 
-    <hr>
-    <p class="title-table-index">Registro de acciones relacionadas con la solicitud</p>
-    <table class="table">
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Acción</th>
-        <th>Usuario</th>
-        <th>Rol</th>
-        <th>Observaciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if requestLogs|length > 0 %}
-        {% for requestLog in requestLogs %}
-          <tr>
-            <td class="text-bold">
-              {{ requestLog.date|date("d/m/Y g:ia") }}
-            </td>
-            <td>{{ requestLog.description }}</td>
-            <td>{{ requestLog.user.name }}</td>
-            <td>
-            {# {{ requestLog.user.role.description }} #}
-                {% if requestLog.user.role.description == "ROLE_ADMIN" %}
-                    Administrador
-                {% elseif requestLog.user.role.description == "ROLE_STUDENT" %}
-                    Estudiante                                  
-                {% elseif requestLog.user.role.description == "ROLE_RESEARCHER" %}
-                    Investigador
-                {% elseif requestLog.user.role.description == "ROLE_EVALUATOR" %}
-                    Evaluador
-                {% endif %}
-            </td>
-            <td>{{ requestLog.observations|default('N/A') }}</td>
-          </tr>
-        {% else %}
-          <tr>
-            <td colspan="11">No hay evaluaciones previas</td>
-          </tr>
-        {% endfor %}
-      {% endif %}
-    </tbody>
-  </table>
+    
 {% endblock %}

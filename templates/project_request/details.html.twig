@@ -1,76 +1,77 @@
 <head>
     <meta charset="UTF-8">
 </head>
-<style>
-:root {
-  --A1: #4AA9CE;
-  --A2: #5194DC;
-  --A3: #41ADE7;
-  --A4: #005DAA;
-  --A5: #3A6C99;
-  --A6: #50C8E8;
-  --A7: #80A1B6;
-  --A8: #CFE0F3;
-  --A9: #F0F5FB;
-  --G1: #262626;
-  --G2: #666666;
-  --G3: #6D7172;
-  --R1: #CF1919;
-  --R2: #A01036;
-  --N1: #E7A614;
-  --light-green: #D4EDDA;
-  --green: #73C167;
-  --white: #FFFFFF;
+<style>:root
+{
+    --A1: #4AA9CE;
+    --A2: #5194DC;
+    --A3: #41ADE7;
+    --A4: #005DAA;
+    --A5: #3A6C99;
+    --A6: #50C8E8;
+    --A7: #80A1B6;
+    --A8: #CFE0F3;
+    --A9: #F0F5FB;
+    --G1: #262626;
+    --G2: #666666;
+    --G3: #6D7172;
+    --R1: #CF1919;
+    --R2: #A01036;
+    --N1: #E7A614;
+    --light-green: #D4EDDA;
+    --green: #73C167;
+    --white: #FFFFFF;
 }
-*{
+* {
     font-family: Arial;
 }
-    .table thead th {
+.table thead th {
     line-height: 1em;
-    }
-    table thead{
-  background-color: var(--A3);
-  color: var(--white);
+}
+table thead {
+    background-color: var(--A3);
+    color: var(--white);
 }
 
-table thead th{
-  border-bottom: none;
+table thead th {
+    border-bottom: none;
 }
 
 table tbody tr:nth-of-type(odd) {
-  background-color: var(--A9);
+    background-color: var(--A9);
 }
 
 table tbody tr:nth-of-type(even) {
-  background-color: var(--A8);
+    background-color: var(--A8);
 }
-table td, table th{
-  align-items: center;
-  border-right: 2px solid var(--white);
+table td,
+table th {
+    align-items: center;
+    border-right: 2px solid var(--white);
 }
 .login-box-body-admin {
-  margin: 0 auto !important;
+    margin: 0 auto !important;
 }
 a.ingreso-admin-home {
-  color: var(--G2);
-  font-size: 0.9em;
-  margin-top: 10px;
+    color: var(--G2);
+    font-size: 0.9em;
+    margin-top: 10px;
 }
 a.ingreso-admin-home:after {
-  content: '\f0a9';
-  font-family: FontAwesome;
-  color: var(--green);
-  margin: 5px;
+    content: '\f0a9';
+    font-family: FontAwesome;
+    color: var(--green);
+    margin: 5px;
 }
-.ingreso-general-box-text-admin h3{
-  text-align: center;
-  font-weight: bold;
-  color: var(--G2);
+.ingreso-general-box-text-admin h3 {
+    text-align: center;
+    font-weight: bold;
+    color: var(--G2);
 }
 .textareas-form {
-  background-color: var(--A9);
-  padding: 15px;
-  border: 1px solid #cecece;
+    background-color: var(--A9);
+    padding: 15px;
+    border: 1px solid #cecece;
 }
 
 #feedback_modal .modal-dialog {
@@ -81,536 +82,562 @@ a.ingreso-admin-home:after {
     overflow: auto;
 }
 .text-box {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
-.text-box p{
-  margin-bottom: 5px;
+.text-box p {
+    margin-bottom: 5px;
 }
 .step-view .nav_step {
-  border-radius: 50%;
-  color: var(--A4);
-  border: var(--A3) 2px solid;
-  width: 50px;
-  height: 50px;
-  display: block;
-  text-align: center;
-  line-height: 50px;
-  font-size: 2rem;
-  font-weight: 700;
-  margin: auto;
+    border-radius: 50%;
+    color: var(--A4);
+    border: var(--A3) 2px solid;
+    width: 50px;
+    height: 50px;
+    display: block;
+    text-align: center;
+    line-height: 50px;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: auto;
 }
 .step-view a.form_header_nav_item_link {
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 1.3em;
-  color: var(--A4);
-  margin-top: 15px;
-  display: block;
-  text-decoration: none;
-  cursor: unset;
-  font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.3em;
+    color: var(--A4);
+    margin-top: 15px;
+    display: block;
+    text-decoration: none;
+    cursor: unset;
+    font-weight: bold;
 }
 ul {
-  list-style:none;
-}
-</style>
+    list-style: none;
+}</style>{# {{path('project_request_index')}} #}<ul class="nav justify-content-center nav-pills step-view">
+<li>
+    <span class="nav_step">1</span>
+    <a class="form_header_nav_item_link" href="#">Información del proyecto</a>
+</li></ul><div class="text-box">
+<p>
+    <strong>1.1 Título del estudio o investigación:</strong>
+</p>
+<p class="text-muted font-italic">{{project_request.title}}</p></div>{% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
 
-
-{# {{path('project_request_index')}} #}
-<ul class="nav justify-content-center nav-pills step-view">
-    <li>
-        <span class="nav_step">1</span>
-        <a class="form_header_nav_item_link" href="#">Información del proyecto</a>
-    </li>
-</ul>
 <div class="text-box">
     <p>
-        <strong>1.1 Título del estudio o investigación:</strong>
+        <strong>1.2 Nombre del investigador (a) principal:</strong>
     </p>
-    <p class="text-muted font-italic">{{project_request.title}}</p>
+
+    {% if project_info is not null and project_info.researchers|length > 0 %}
+        <ul>
+            {% for researcher in project_info.researchers if researcher.dsc_tipo_participacion|trim is same as('Investigador principal / Responsable') or researcher.dsc_tipo_participacion|trim is same as('PRINCIPAL')  %}
+                <li class="text-muted">{{ researcher.NOMBRE }}
+                    {{ researcher.APELLIDO1 }}
+                    {{ researcher.APELLIDO2 }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <input type="text" readonly class="form-control no-data test" name="" value="No hay datos">
+    {% endif %}
 </div>
 
-{% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
-
-    <div class="text-box">
-        <p>
-            <strong>1.2 Nombre del investigador (a) principal:</strong>
-        </p>
-
-        {% if project_info is not null and project_info.researchers|length > 0 %}
-            <ul>
-                {% for researcher in project_info.researchers if researcher.dsc_tipo_participacion|trim is same as('Investigador principal / Responsable') or researcher.dsc_tipo_participacion|trim is same as('PRINCIPAL')  %}
-                    <li class="text-muted">{{ researcher.NOMBRE }}
-                        {{ researcher.APELLIDO1 }}
-                        {{ researcher.APELLIDO2 }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <input type="text" readonly class="form-control no-data test" name="" value="No hay datos">
-        {% endif %}
-    </div>
-
-    <div class="text-box">
-        <p>
-            <strong>1.3 Nombre(s) de investigador(es) colaborador(es):</strong>
-        </p>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Cédula</th>
-                    <th scope="col">Correo institucional</th>
-                </tr>
-            </thead>
-            <tbody class="project_researchers_table">
-                {% if project_info is not null and project_info.researchers|length > 0 %}
-                    {% for researcher in project_info.researchers if researcher.dsc_tipo_participacion|trim is same as('Colaborador / Asociado')  %}
-                        <tr>
-                            <td scope="col" class="text-muted">{{ researcher.NOMBRE }}
-                                {{ researcher.APELLIDO1 }}
-                                {{ researcher.APELLIDO2 }}
-                            </td>
-                            <td scope="col" class="text-muted">{{ researcher.ID_PARTICIPANTE }}</td>
-                            <td scope="col" class="text-muted">{{ researcher.ID_PARTICIPANTE }}</td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr class="no-data">
-                        <td scope="col" colspan="3" class="text-muted">No hay investigadores</td>
+<div class="text-box">
+    <p>
+        <strong>1.3 Nombre(s) de investigador(es) colaborador(es):</strong>
+    </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cédula</th>
+                <th scope="col">Correo institucional</th>
+            </tr>
+        </thead>
+        <tbody class="project_researchers_table">
+            {% if project_info is not null and project_info.researchers|length > 0 %}
+                {% for researcher in project_info.researchers if researcher.dsc_tipo_participacion|trim is same as('Colaborador / Asociado')  %}
+                    <tr>
+                        <td scope="col" class="text-muted">{{ researcher.NOMBRE }}
+                            {{ researcher.APELLIDO1 }}
+                            {{ researcher.APELLIDO2 }}
+                        </td>
+                        <td scope="col" class="text-muted">{{ researcher.ID_PARTICIPANTE }}</td>
+                        <td scope="col" class="text-muted">{{ researcher.ID_PARTICIPANTE }}</td>
                     </tr>
-                {% endif %}
-            </tbody>
-        </table>
-    </div>
-    <div class="text-box">
-        <p>
-            <strong>1.4 Unidad base del proyecto:</strong>
-        </p>
-        <p class="text-muted font-italic">
-            {{project_request.projectUnit}}
-        </p>
-    </div>
-    <div class="text-box">
-        <p>
-            <strong>1.5 Otras unidades e instituciones de la UCR participantes:</strong>
-        </p>
-        <ul id="project_ucr_units">
-            {% if project_info is not null and project_info.externalCollaboration|length > 0 %}
-                {% for external in project_info.externalCollaboration  %}
-                    <li scope="col">{{ external.nombre }}
-                    </li>
                 {% endfor %}
             {% else %}
-                <li class="text-muted">
-                    No hay unidades
-                </li>
+                <tr class="no-data">
+                    <td scope="col" colspan="3" class="text-muted">No hay investigadores</td>
+                </tr>
             {% endif %}
-        </ul>
-    </div>
-
-{% else %}
-
-    <div class="tutor_information_container">
-        <p>
-            <strong>1.2 Director(a) del trabajo final de graduación:</strong>
-        </p>
-        <ul>
+        </tbody>
+    </table>
+</div>
+<div class="text-box">
+    <p>
+        <strong>1.4 Unidad base del proyecto:</strong>
+    </p>
+    <p class="text-muted font-italic">
+        {{project_request.projectUnit}}
+    </p>
+</div>
+<div class="text-box">
+    <p>
+        <strong>1.5 Otras unidades e instituciones de la UCR participantes:</strong>
+    </p>
+    <ul id="project_ucr_units">
+        {% if project_info is not null and project_info.externalCollaboration|length > 0 %}
+            {% for external in project_info.externalCollaboration  %}
+                <li scope="col">{{ external.nombre }}
+                </li>
+            {% endfor %}
+        {% else %}
             <li class="text-muted">
-                <strong>Nombre del tutor:</strong>
-                {{project_request.tutorName}}</li>
-            <li class="text-muted">
-                <strong>Cédula:</strong>
-                {{project_request.tutorId}}</li>
-            <li class="text-muted">
-                <strong>Correo institucional:</strong>
-                {{project_request.tutorEmail}}</li>
-        </ul>
-    </div>
+                No hay unidades
+            </li>
+        {% endif %}
+    </ul>
+</div>{% else %}
 
-    {% if project_request.teamWork is not null %}
-        <p>
-            <strong>1.3 Miembros de proyecto</strong>
-        </p>
-        <table class="table table-striped">
-            <thead>
+<div class="tutor_information_container">
+    <p>
+        <strong>1.2 Director(a) del trabajo final de graduación:</strong>
+    </p>
+    <ul>
+        <li class="text-muted">
+            <strong>Nombre del tutor:</strong>
+            {{project_request.tutorName}}</li>
+        <li class="text-muted">
+            <strong>Cédula:</strong>
+            {{project_request.tutorId}}</li>
+        <li class="text-muted">
+            <strong>Correo institucional:</strong>
+            {{project_request.tutorEmail}}</li>
+    </ul>
+</div>
+
+{% if project_request.teamWork is not null %}
+    <p>
+        <strong>1.3 Miembros de proyecto</strong>
+    </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cédula</th>
+                <th scope="col">Correo institucional</th>
+
+            </tr>
+        </thead>
+        <tbody class="team_work_table">
+            {% for team in project_request.teamWork %}
                 <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Cédula</th>
-                    <th scope="col">Correo institucional</th>
+                    <td scope="col" class="text-muted">{{ team.name }}
+                    </td>
+                    <td scope="col" class="text-muted">{{ team.studentId }}</td>
+                    <td scope="col" class="text-muted">{{ team.studentEmail }}</td>
 
                 </tr>
-            </thead>
-            <tbody class="team_work_table">
-                {% for team in project_request.teamWork %}
-                    <tr>
-                        <td scope="col" class="text-muted">{{ team.name }}
-                        </td>
-                        <td scope="col" class="text-muted">{{ team.studentId }}</td>
-                        <td scope="col" class="text-muted">{{ team.studentEmail }}</td>
-
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
-    <div class="text-box">
-        <p>
-            <strong>1.4 Unidad de adscripción del proyecto:</strong>
-        </p>
-        <p class="text-muted font-italic">{{project_request.ascriptionUnit|default("Sin dato")}}</p>
-    </div>
-    <div class="text-box">
-        <p>
-            <strong>1.5 Otras unidades e instituciones de la UCR participantes:</strong>
-        </p>
-        <p class="text-muted font-italic">{{project_request.extInstitutions}}</p>
-    </div>
-
+            {% endfor %}
+        </tbody>
+    </table>
 {% endif %}
-
 <div class="text-box">
     <p>
-        <strong>1.6 Otras instituciones externas públicas o privadas:</strong>
+        <strong>1.4 Unidad de adscripción del proyecto:</strong>
     </p>
-    <p class="text-muted font-italic">{{ project_request.ascriptionUnit|default("Sin dato") }}</p>
+    <p class="text-muted font-italic">{{project_request.ascriptionUnit|default("Sin dato")}}</p>
 </div>
 <div class="text-box">
     <p>
-        <strong>1.7 Lugar donde se realizará el estudio (escuelas, comunidades, instituciones, colegios, etc).:</strong>
+        <strong>1.5 Otras unidades e instituciones de la UCR participantes:</strong>
     </p>
-    <p class="text-muted font-italic">{{ project_request.placeOfStudy }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>1.8 Autorización de la institución externa pública o privada:</strong>
-    </p>
-    {% if project_request.extInstitutionsAuthorization is empty %}
-        <p class="text-muted font-italic">No</p>
-    {% else %}
-        <ul>
-            {% for file in project_request.infoRequestFiles if file.questionCode is same as("extInstitutionsAuthorizationFiles")  %}
-                <li>
-                    <a href="{{file.originalName}}">{{file.originalName}}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
-<div class="text-box">
-    <p>
-        <strong>1.9 ¿La investigación involucra participantes humanos?:</strong>
-    </p>
-    {% if project_request.involvesHumans is empty %}
-        <p class="text-muted font-italic">No</p>
-    {% else %}
-        <p class="text-muted font-italic">Sí</p>
-    {% endif %}
-</div>
-<div class="text-box">
-    <p>
-        <strong>1.10 ¿La investigación requiere revisar información documental de seres humanos?</strong>
-    </p>
-    {% if project_request.involvesHumans is empty %}
-        <p class="text-muted font-italic">No</p>
-    {% else %}
-        <p class="text-muted font-italic">Sí</p>
-    {% endif %}
-</div>
-
-
-{% if project_request.owner.role.description is same as("ROLE_STUDENT") %}
-
-    <p>
-        <strong>1.11 Acta de la comisión científica del instituto o centro de investigaciones:</strong>
-    </p>
-    {% if project_request.minutesResearchCenter is empty %}
-        <p class="text-muted font-italic">No</p>
-    {% else %}
-        <ul>
-            {% for file in project_request.infoRequestFiles if file.questionCode is same as("minutesResearchCenterFiles")  %}
-                <li>
-                    <a href="{{file.originalName}}">{{file.originalName}}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endif %}
-
-
-{% if project_request.owner.role.description is same as("ROLE_STUDENT") %}
-    <p>
-        <strong>1.12 Acta de la comisión de trabajos finales de graduación:</strong>
-    </p>
-    {% if project_request.minuteFinalWork is null %}
-        <p class="text-muted font-italic">No</p>
-    {% else %}
-        <ul>
-            {% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteFinalWorkFiles")  %}
-                <li>
-                    <a href="{{file.originalName}}">{{file.originalName}}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <p class="text-muted font-italic">{{project_request.extInstitutions}}</p>
+</div>{% endif %}<div class="text-box">
+<p>
+    <strong>1.6 Otras instituciones externas públicas o privadas:</strong>
+</p>
+<p class="text-muted font-italic">{{ project_request.ascriptionUnit|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>1.7 Lugar donde se realizará el estudio (escuelas, comunidades, instituciones, colegios, etc).:</strong>
+</p>
+<p class="text-muted font-italic">{{ project_request.placeOfStudy }}</p></div><div class="text-box">
+<p>
+    <strong>1.8 Autorización de la institución externa pública o privada:</strong>
+</p>
+{% if project_request.extInstitutionsAuthorization is empty %}
+    <p class="text-muted font-italic">No</p>
 {% else %}
-    <p>
-        <strong>1.11 Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:</strong>
-    </p>
-    {% if project_request.minuteCommissionTFG is null %}
-        <p class="text-muted font-italic">No</p>
-    {% else %}
-        <ul>
-            {% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteCommissionTFGFiles")  %}
-                <li>
-                    <a href="{{file.originalName}}">{{file.originalName}}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endif %}
+    <ul>
+        {% for file in project_request.infoRequestFiles if file.questionCode is same as("extInstitutionsAuthorizationFiles")  %}
+            <li>
+                <a href="{{file.originalName}}">{{file.originalName}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}</div><div class="text-box">
+<p>
+    <strong>1.9 ¿La investigación involucra participantes humanos?:</strong>
+</p>
+{% if project_request.involvesHumans is empty %}
+    <p class="text-muted font-italic">No</p>
+{% else %}
+    <p class="text-muted font-italic">Sí</p>
+{% endif %}</div><div class="text-box">
+<p>
+    <strong>1.10 ¿La investigación requiere revisar información documental de seres humanos?</strong>
+</p>
+{% if project_request.involvesHumans is empty %}
+    <p class="text-muted font-italic">No</p>
+{% else %}
+    <p class="text-muted font-italic">Sí</p>
+{% endif %}</div>{% if project_request.owner.role.description is same as("ROLE_STUDENT") %}
 
-<hr>
-<ul class="nav justify-content-center nav-pills step-view">
-    <li>
-        <span class="nav_step">2</span>
-        <a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
-    </li>
-</ul>
-<div class="text-box">
-    {% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
+<p>
+    <strong>1.11 Acta de la comisión científica del instituto o centro de investigaciones:</strong>
+</p>
+{% if project_request.minutesResearchCenter is empty %}
+    <p class="text-muted font-italic">No</p>
+{% else %}
+    <ul>
+        {% for file in project_request.infoRequestFiles if file.questionCode is same as("minutesResearchCenterFiles")  %}
+            <li>
+                <a href="{{file.originalName}}">{{file.originalName}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}{% endif %}{% if project_request.owner.role.description is same as("ROLE_STUDENT") %}
+<p>
+    <strong>1.12 Acta de la comisión de trabajos finales de graduación:</strong>
+</p>
+{% if project_request.minuteFinalWork is null %}
+    <p class="text-muted font-italic">No</p>
+{% else %}
+    <ul>
+        {% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteFinalWorkFiles")  %}
+            <li>
+                <a href="{{file.originalName}}">{{file.originalName}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}{% else %}
+<p>
+    <strong>1.11 Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:</strong>
+</p>
+{% if project_request.minuteCommissionTFG is null %}
+    <p class="text-muted font-italic">No</p>
+{% else %}
+    <ul>
+        {% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteCommissionTFGFiles")  %}
+            <li>
+                <a href="{{file.originalName}}">{{file.originalName}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}{% endif %}<hr><ul class="nav justify-content-center nav-pills step-view">
+<li>
+    <span class="nav_step">2</span>
+    <a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
+</li></ul><div class="text-box">
+{% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
+    <p>
+        <strong>Resumen del estudio (antecedentes y justificación):</strong>
+    </p>
+
+    {% if SipProjectExtraInformation %}
+        {# <textarea class="form-control" name="" id="" rows="12" >{{SipProject.antecedentes|raw|striptags|convert_encoding('UTF-8', 'ISO-8859-1//TRANSLIT')}}{{SipProject.jusitificacion|striptags|raw|default('Sin datos')}}</textarea> #}
+        <div class="textareas-form text-muted">
+            {% autoescape %}
+                {{SipProjectExtraInformation.DSC_ANTECEDENTE|raw}}
+            {% endautoescape %}
+            {{SipProjectExtraInformation.DSC_JUSTIFICACION|striptags}}
+
+        </div>
+    {% else %}
+        <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+    {% endif %}
+    <br>
+    <div class="text-box">
         <p>
-            <strong>Resumen del estudio (antecedentes y justificación):</strong>
+            <strong>2.1 Observaciones:</strong>
+        </p>
+        <p class="text-muted font-italic">{{ academicRequestInfo.summaryObserv|default("Sin dato") }}</p>
+    </div>
+    <div class="form-group">
+        <p>
+            <strong>Objetivo principal:</strong>
         </p>
 
-        {% if SipProjectExtraInformation %}
-            {# <textarea class="form-control" name="" id="" rows="12" >{{SipProject.antecedentes|raw|striptags|convert_encoding('UTF-8', 'ISO-8859-1//TRANSLIT')}}{{SipProject.jusitificacion|striptags|raw|default('Sin datos')}}</textarea> #}
-            <div class="textareas-form text-muted">
-                {% autoescape %}
-                    {{SipProjectExtraInformation.DSC_ANTECEDENTE|raw}}
-                {% endautoescape %}
-                {{SipProjectExtraInformation.DSC_JUSTIFICACION|striptags}}
+        {% if SipProject.projectData %}
+            <textarea class="form-control" name="" id="" rows="6" disabled>{{SipProject.projectData.dsc_proyecto|striptags|raw|default('Sin datos')}}</textarea>
+        {% else %}
+            <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+        {% endif %}
 
+    </div>
+    <div class="form-group">
+        <p>
+            <strong>Objetivos:</strong>
+        </p>
+        {% if objetivoPrincipal %}
+            <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos')}}</textarea>
+        {% else %}
+            <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+        {% endif %}
+
+    </div>
+{% endif %}</div><div class="text-box">
+<p>
+    <strong>2.2 Preguntas de investigación (opcional):</strong>
+</p>
+<p class="text-muted font-italic">{{ academicRequestInfo.questions|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>2.3 Hipótesis:</strong>
+</p>
+<p class="text-muted font-italic">{{ academicRequestInfo.hypothesis|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>2.4 Tipo de investigación:</strong>
+</p>
+{% if academicRequestInfo.invType|length == 0 %}
+    <p class="text-muted font-italic">Sin dato</p>
+{% else %}
+    <ul>
+        {% for type in academicRequestInfo.invType %}
+            <li>
+                {{type}}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}</div><div class="text-box">
+{% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
+    <div class="form-group">
+        <p>
+            <strong>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de
+                                                                                                    muestras biológicas –si aplica:</strong>
+        </p>
+        {% if SipProjectExtraInformation %}
+            {# <textarea class="form-control" name="" id="" rows="10" disabled>{{SipProject.metodologia|striptags|raw|default('Sin datos')}}</textarea> #}
+            <div class="textareas-form">
+                {{SipProjectExtraInformation.DSC_METODOLOGIA|striptags|raw}}
             </div>
         {% else %}
             <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
         {% endif %}
-        <br>
-        <div class="text-box">
-            <p>
-                <strong>2.1 Observaciones:</strong>
-            </p>
-            <p class="text-muted font-italic">{{ academicRequestInfo.summaryObserv|default("Sin dato") }}</p>
-        </div>
-        <div class="form-group">
-            <p>
-                <strong>Objetivo principal:</strong>
-            </p>
-            
-            {% if SipProject.projectData %}
-                <textarea class="form-control" name="" id="" rows="6" disabled>{{SipProject.projectData.dsc_proyecto|striptags|raw|default('Sin datos')}}</textarea>
-            {% else %}
-                <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
-            {% endif %}
 
-        </div>
-        <div class="form-group">
-            <p>
-                <strong>Objetivos:</strong>
-            </p>
-            {% if objetivoPrincipal %}
-                <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos')}}</textarea>
-            {% else %}
-                <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
-            {% endif %}
+    </div>
+    <div class="text-box">
+        <p>
+            <strong>2.5 Observaciones:</strong>
+        </p>
+        <p class="text-muted font-italic">{{ academicRequestInfo.metodologyObserv|default("Sin dato") }}</p>
+    </div>
+{% endif %}</div><div class="text-box">
+<p>
+    <strong>2.6 Objetivos:</strong>
+</p>
+<p class="text-muted font-italic">{{ academicRequestInfo.objetives|default("Sin dato") }}</p></div><hr><ul class="nav justify-content-center nav-pills step-view">
+<li>
+    <span class="nav_step">3</span>
+    <a class="form_header_nav_item_link" href="#">Evaluación ética</a>
+</li></ul><div class="text-box">
+<p>
+    <strong>3.1 Participación de población vulnerable:</strong>
+</p>
+{% if ethicEvalRequest.population|length == 0 %}
+    <p class="text-muted font-italic">Sin dato</p>
+{% else %}
+    <ul>
+        {% for population in ethicEvalRequest.population %}
+            <li class="text-muted">
+                {{population}}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}</div><div class="text-box">
+<p>
+    <strong>3.2 Cantidad de participantes necesaria para lograr los objetivos, determinación estadística o justiﬁcación teórica:</strong>
+</p>
+<p class="text-muted font-italic">{{ ethicEvalRequest.amountParticipants|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>3.3 Criterios de inclusión y exclusión:</strong>
+</p>
+<p class="text-muted font-italic">{{ ethicEvalRequest.inExCriteria|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>3.4 Reclutamiento de los participantes (indicar cómo, quién, y cuándo se hará):</strong>
+</p>
+<p class="text-muted font-italic">{{ ethicEvalRequest.recruitmentParticipants|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>3.5 Recolección de información. Análisis de laboratorio, imágenes, pruebas psicológicas, cuestionarios, entrevistas u otros medios para generar datos o colectar información (Si aplica)</strong>
+</p>
+<p class="text-muted font-italic">{{ ethicEvalRequest.collectionInformation|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>3.6 Indicar qué tipos de datos se recopilarán en la investigación y marcar los que aplican:</strong>
+</p>
+{% if ethicEvalRequest.dataType|length == 0 %}
+    <p class="text-muted font-italic">Sin dato</p>
+{% else %}
+    <ul>
+        {% for dataType in ethicEvalRequest.dataType %}
+            <li class="text-muted">
+                {{dataType}}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}</div><div class="text-box">
+<p>
+    <strong>3.7 Declaración de riesgos de la investigación</strong>
+</p>
+<p class="text-muted font-italic">{{ ethicEvalRequest.riskDeclaration|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>3.8 Beneﬁcios para la población:</strong>
+</p>
+<p class="text-muted font-italic">{{ ethicEvalRequest.benefitsForParticipant|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>3.9 Beneﬁcios para el participante individual:</strong>
+</p>
+<p class="text-muted font-italic">{{ ethicEvalRequest.benefitsForPopulation|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>3.10 Previsiones para resguardar la privacidad, conﬁdencialidad y almacenamiento de los datos, tiempo de resguardo, detalle de la anonimización de los datos de los participantes:</strong>
+</p>
+<p class="text-muted font-italic">{{ ethicEvalRequest.benefitsForPopulation|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>3.11 Indique el uso futuro de las muestras biológicas y de los datos del participante:</strong>
+</p>
+<p class="text-muted font-italic">{{ ethicEvalRequest.futureUse|default("Sin dato") }}</p></div><div class="text-box">
+<p>
+    <strong>3.12 Requiere consentimiento informado:</strong>
+</p>
+{% if ethicEvalRequest.ethicEvalFiles is empty %}
+    <p class="text-muted font-italic">Sin Documento</p>
+{% else %}
+    <ul>
+        {% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedConsentFiles")  %}
+            <li>
+                <a href="{{file.originalName}}">{{file.originalName}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}</div><div class="text-box">
+<p>
+    <strong>3.13 Requiere asentimiento informado:</strong>
+</p>
+{% if ethicEvalRequest.ethicEvalFiles is empty %}
+    <p class="text-muted font-italic">Sin Documento</p>
+{% else %}
+    <ul>
+        {% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedAssentFiles")  %}
+            <li>
+                <a href="{{file.originalName}}">{{file.originalName}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}</div><hr><p class="title-table-index">Registro de acciones relacionadas con la solicitud</p><table class="table">
+<thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Acción</th>
+        <th>Usuario</th>
+        <th>Rol</th>
+        <th>Observaciones</th>
+    </tr>
+</thead>
+<tbody>
+    {% if requestLogs|length > 0 %}
+        {% for requestLog in requestLogs %}
+            <tr>
+                <td class="text-bold">
+                    {{ requestLog.date|date("d/m/Y g:ia") }}
+                </td>
+                <td>{{ requestLog.description }}</td>
+                <td>{{ requestLog.user.name }}</td>
+                <td>
+                    {# {{ requestLog.user.role.description }} #}
+                    {% if requestLog.user.role.description == "ROLE_ADMIN" %}
+                        Administrador
+                    {% elseif requestLog.user.role.description == "ROLE_STUDENT" %}
+                        Estudiante
+                    {% elseif requestLog.user.role.description == "ROLE_RESEARCHER" %}
+                        Investigador
+                    {% elseif requestLog.user.role.description == "ROLE_EVALUATOR" %}
+                        Evaluador
+                    {% endif %}
+                </td>
+                <td>{{ requestLog.observations|default('N/A') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">No hay evaluaciones previas</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+</tbody></table>
 
-        </div>
-    {% endif %}
-</div>
+<p class="title-table-index">{{'RESULTADOS DE EVALUACIÓN DE LA SOLICITUD'|upper}}</p>
+{% if pre_eval_info %}
+
+<p class="label"><strong>Revisión de solicitud</strong></p>
+{% for pei in pre_eval_info %}
+    <div class="text-box">
+    <p>
+        <strong>Fecha:</strong>
+    </p>
+    <p class="text-muted font-italic">{{pei.date|date("d/m/Y g:ia")}}</p>
+    </div>
+    <div class="text-box">
+    <p>
+        <strong>Estado de la revisión:</strong>
+    </p>
+    <p class="text-muted font-italic">{{pei.status}}</p>
+    </div>
+    <div class="text-box">
+    <p>
+        <strong>Observaciones:</strong>
+    </p>
+    <p class="text-muted font-italic">{{pei.observations}}</p>
+    </div>
+    <hr>
+
+{% endfor %}
+{% endif %}
+{% if eval_info %}
+<p class="label"><strong>Dictamen de solicitud</strong></p>
+{% for pei in eval_info %}
+
+{# 
+    <h3>Evaluación CEC-{{project_request.id}}-{{pei.date|date("Y")[2:3]}}
+        | Fecha:
+        {{pei.date|date("d/m/Y g:ia")}}
+    </h3>
+    <p>{{pei.observations}}</p> #}
 
 
-<div class="text-box">
-    <p>
-        <strong>2.2 Preguntas de investigación (opcional):</strong>
-    </p>
-    <p class="text-muted font-italic">{{ academicRequestInfo.questions|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>2.3 Hipótesis:</strong>
-    </p>
-    <p class="text-muted font-italic">{{ academicRequestInfo.hypothesis|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>2.4 Tipo de investigación:</strong>
-    </p>
-    {% if academicRequestInfo.invType|length == 0 %}
-        <p class="text-muted font-italic">Sin dato</p>
-    {% else %}
-        <ul>
-            {% for type in academicRequestInfo.invType %}
-                <li>
-                    {{type}}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
-<div class="text-box">
-    {% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
-        <div class="form-group">
-            <p>
-                <strong>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de
-                                                    muestras biológicas –si aplica:</strong>
-            </p>
-            {% if SipProjectExtraInformation %}
-                {# <textarea class="form-control" name="" id="" rows="10" disabled>{{SipProject.metodologia|striptags|raw|default('Sin datos')}}</textarea> #}
-                <div class="textareas-form">
-                    {{SipProjectExtraInformation.DSC_METODOLOGIA|striptags|raw}}
-                </div>
-            {% else %}
-                <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
-            {% endif %}
 
-        </div>
-        <div class="text-box">
-            <p>
-                <strong>2.5 Observaciones:</strong>
-            </p>
-            <p class="text-muted font-italic">{{ academicRequestInfo.metodologyObserv|default("Sin dato") }}</p>
-        </div>
-    {% endif %}
-</div>
-<div class="text-box">
+    <div class="text-box">
     <p>
-        <strong>2.6 Objetivos:</strong>
+        <strong>Fecha:</strong>
     </p>
-    <p class="text-muted font-italic">{{ academicRequestInfo.objetives|default("Sin dato") }}</p>
-</div>
-<hr>
-<ul class="nav justify-content-center nav-pills step-view">
-    <li>
-        <span class="nav_step">3</span>
-        <a class="form_header_nav_item_link" href="#">Evaluación ética</a>
-    </li>
-</ul>
-<div class="text-box">
+    <p class="text-muted font-italic">{{pei.date|date("d/m/Y g:ia")}}</p>
+    </div>
+    <div class="text-box">
     <p>
-        <strong>3.1 Participación de población vulnerable:</strong>
+        <strong>La presente propuesta es de tipo:</strong>
     </p>
-    {% if ethicEvalRequest.population|length == 0 %}
-        <p class="text-muted font-italic">Sin dato</p>
-    {% else %}
-        <ul>
-            {% for population in ethicEvalRequest.population %}
-                <li class="text-muted">
-                    {{population}}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
-<div class="text-box">
+    
+    <p class="text-muted font-italic">{{pei.category}}</p>
+    </div>
+    <div class="text-box">
     <p>
-        <strong>3.2 Cantidad de participantes necesaria para lograr los objetivos, determinación estadística o justiﬁcación teórica:</strong>
+        <strong>Estado de la revisión:</strong>
     </p>
-    <p class="text-muted font-italic">{{ ethicEvalRequest.amountParticipants|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
+    <p class="text-muted font-italic">{{pei.status}}</p>
+    </div>
+    <div class="text-box">
     <p>
-        <strong>3.3 Criterios de inclusión y exclusión:</strong>
+        <strong>Observaciones:</strong>
     </p>
-    <p class="text-muted font-italic">{{ ethicEvalRequest.inExCriteria|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>3.4 Reclutamiento de los participantes (indicar cómo, quién, y cuándo se hará):</strong>
-    </p>
-    <p class="text-muted font-italic">{{ ethicEvalRequest.recruitmentParticipants|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>3.5 Recolección de información. Análisis de laboratorio, imágenes, pruebas psicológicas, cuestionarios, entrevistas u otros medios para generar datos o colectar información (Si aplica)</strong>
-    </p>
-    <p class="text-muted font-italic">{{ ethicEvalRequest.collectionInformation|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>3.6 Indicar qué tipos de datos se recopilarán en la investigación y marcar los que aplican:</strong>
-    </p>
-    {% if ethicEvalRequest.dataType|length == 0 %}
-        <p class="text-muted font-italic">Sin dato</p>
-    {% else %}
-        <ul>
-            {% for dataType in ethicEvalRequest.dataType %}
-                <li class="text-muted">
-                    {{dataType}}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
-<div class="text-box">
-    <p>
-        <strong>3.7 Declaración de riesgos de la investigación</strong>
-    </p>
-    <p class="text-muted font-italic">{{ ethicEvalRequest.riskDeclaration|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>3.8 Beneﬁcios para la población:</strong>
-    </p>
-    <p class="text-muted font-italic">{{ ethicEvalRequest.benefitsForParticipant|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>3.9 Beneﬁcios para el participante individual:</strong>
-    </p>
-    <p class="text-muted font-italic">{{ ethicEvalRequest.benefitsForPopulation|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>3.10 Previsiones para resguardar la privacidad, conﬁdencialidad y almacenamiento de los datos, tiempo de resguardo, detalle de la anonimización de los datos de los participantes:</strong>
-    </p>
-    <p class="text-muted font-italic">{{ ethicEvalRequest.benefitsForPopulation|default("Sin dato") }}</p>
-</div>
+    <p class="text-muted font-italic">{{pei.observations}}</p>
+    </div>
+    <hr>
 
-<div class="text-box">
-    <p>
-        <strong>3.11 Indique el uso futuro de las muestras biológicas y de los datos del participante:</strong>
-    </p>
-    <p class="text-muted font-italic">{{ ethicEvalRequest.futureUse|default("Sin dato") }}</p>
-</div>
-<div class="text-box">
-    <p>
-        <strong>3.12 Requiere consentimiento informado:</strong>
-    </p>
-    {% if ethicEvalRequest.ethicEvalFiles is empty %}
-        <p class="text-muted font-italic">Sin Documento</p>
-    {% else %}
-        <ul>
-            {% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedConsentFiles")  %}
-                <li>
-                    <a href="{{file.originalName}}">{{file.originalName}}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
-<div class="text-box">
-    <p>
-        <strong>3.13 Requiere asentimiento informado:</strong>
-    </p>
-    {% if ethicEvalRequest.ethicEvalFiles is empty %}
-        <p class="text-muted font-italic">Sin Documento</p>
-    {% else %}
-        <ul>
-            {% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedAssentFiles")  %}
-                <li>
-                    <a href="{{file.originalName}}">{{file.originalName}}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
+{% endfor %}{% endif %}
