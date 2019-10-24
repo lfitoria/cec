@@ -399,7 +399,7 @@ ul {
 <p>
     <strong>2.4 Tipo de investigación:</strong>
 </p>
-{% if academicRequestInfo.invType is null %}
+{% if academicRequestInfo.invType is defined %}
 
 {% if academicRequestInfo.invType|length == 0 %}
     <p class="text-muted font-italic">Sin dato</p>
