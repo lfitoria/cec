@@ -40,7 +40,27 @@ const $ = require('jquery');
           success: function (file) {
             if (file.wasDeleted) {
               _this.parent().remove();
+              
             }
+
+            if (file.wasAssigned){
+              Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: `${file.countEvals} evaluador(es) asignado(s)`,
+                showConfirmButton: false,
+                timer: 2200
+              })
+            }else{
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: 'Evaluador(es) desasignado(s)',
+                showConfirmButton: false,
+                timer: 2200
+              })
+            }
+            console.log(file.countEvals);
           }
         });
       });

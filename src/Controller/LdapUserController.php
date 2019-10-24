@@ -203,15 +203,32 @@ class LdapUserController extends AbstractController {
 
       $projectRequest->setUsers($newEvaluators);
       $entityManager->flush();
+
+      // var_dump($newEvaluators[0]->getEmail());
+      // die();
+      $emailLog = "";
+
+      for ($i=0; $i < count($newEvaluators) ; $i++) { 
+        
+          $emailLog .= $newEvaluators[$i]->getEmail();
+        
+          if ( $i < count($newEvaluators) ) {
+            $emailLog .= ", ";
+          }
+        
+      }
+      $countEvals = count($newEvaluators);
       
+
       $logData = array(
-          "description" => "Asignada a: " . implode (",", $newEvaluators),
+          // "description" => "Asignada a: " . implode (",", $emailLog),
+          "description" => "Asignada a: " . $emailLog,
           "request" => $projectRequest,
           
       );
       $log->insertLog($logData);
 
-      return new JsonResponse(['wasAssigned' => true]);
+      return new JsonResponse(['wasAssigned' => true, 'countEvals' => $countEvals]);
     }
 
     return new JsonResponse(['wasAssigned' => false]);
