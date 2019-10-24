@@ -250,9 +250,9 @@ class ProjectRequestController extends AbstractController {
 
     $em = $this->getDoctrine()->getManager('oracle');
     $student = $externalDataManager->getStudentById($em, $studentId); //'B04278'
-    echo "<pre>"
+    echo "<pre>";
     var_dump($student);
-    echo "</pre>"
+    echo "</pre>";
     die();
 
     if ($student) {
