@@ -104,7 +104,7 @@ const $ = require('jquery');
                 var fd = new FormData(myform);
                 console.log(fd);
                 var _this = $(this);
-                var path = "/CEC/public/validate_user_send";
+                var path = "/cec/public/validate_user_send";
                 $.ajax({
                   type: 'POST',
                   enctype: "multipart/form-data",
