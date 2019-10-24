@@ -69,12 +69,12 @@ class LdapUserController extends AbstractController {
 
         $passEncryp = $encoder->encodePassword($objUser, $form->get("password")->getData());
 
-        // var_dump($passEncryp);
+        // var_dump($passEncryp);s
         // die();
 
         $objUser->setPassword($passEncryp);
         $objUser->setRole($form->get("role")->getData());
-        $objUser->setCarnet($form->get("carnet")->getData());
+        // $objUser->setCarnet($form->get("carnet")->getData());
         
         $objUser->setName($form->get("name")->getData());
         $objUser->setCedulaUsuario($form->get("cedula_usuario")->getData());

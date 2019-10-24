@@ -88,8 +88,8 @@ const $ = require('jquery');
         if (cache.form.valid()) {
           console.log("submit-data");
           console.log(cache.form_finish[0]);
-          console.log(cache.form_finish[0].value);
-          console.log(typeof(cache.form_finish[0].value));
+          //console.log(cache.form_finish[0].value);
+          //console.log(typeof(cache.form_finish[0].value));
           if (cache.form_finish[0] !== undefined && cache.form_finish[0].value == 1) {
 
               jQuery('#valdiate_send_user').modal('show');

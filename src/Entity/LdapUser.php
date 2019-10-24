@@ -87,14 +87,14 @@ class LdapUser implements UserInterface {
      /**
      * @var string
      *
-     * @ORM\Column(name="carnet", type="string", length=200, nullable=false)
+     * @ORM\Column(name="carnet", type="string", length=200, nullable=true)
      */
     private $carnet;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cedula_usuario", type="string", length=200, nullable=false)
+     * @ORM\Column(name="cedula_usuario", type="string", length=200, nullable=true)
      */
     private $cedula_usuario;
 

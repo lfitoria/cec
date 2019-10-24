@@ -555,8 +555,11 @@ ul {
                 <td>{{ requestLog.description }}</td>
                 <td>{{ requestLog.user.name }}</td>
                 <td>
-                    {# {{ requestLog.user.role.description }} #}
-                    {% if requestLog.user.role.description == "ROLE_ADMIN" %}
+                    {{ requestLog.user.role.label }}
+                    {# <pre>
+                        {{ dump(requestLog) }}
+                    </pre> #}
+                    {# {% if requestLog.user.role.description == "ROLE_ADMIN" %}
                         Administrador
                     {% elseif requestLog.user.role.description == "ROLE_STUDENT" %}
                         Estudiante
@@ -564,7 +567,7 @@ ul {
                         Investigador
                     {% elseif requestLog.user.role.description == "ROLE_EVALUATOR" %}
                         Evaluador
-                    {% endif %}
+                    {% endif %} #}
                 </td>
                 <td>{{ requestLog.observations|default('N/A') }}</td>
             </tr>

@@ -29,6 +29,16 @@ tbody tr:nth-of-type(even) {
   font-weight: bold;
   color: var(--A4);
 }
+.title-form-evals{
+  font-size: 1.4em;
+  color: var(--N1);
+  text-align: center;
+  font-weight: bold;
+
+}
+span.st-eval{
+  position: relative;
+}
 
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
   color: #fff;

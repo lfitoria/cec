@@ -48,11 +48,11 @@ final class Version20190817193327 extends AbstractMigration {
 	(25, 'Investigación con información privada codiﬁcada o muestras biológicas no obtenidas para el presente proyecto y donde los investigadores no pueden determinar la identidad de la persona a la que pertenece la muestra.', 'investigationType'),
 	(26, 'Investigación social que no producen información', 'investigationType')");
 
-    $this->addSql("INSERT INTO `users_roles` (`id`, `description`) VALUES
-    (1, 'ROLE_ADMIN'),
-    (2, 'ROLE_STUDENT'),
-    (3, 'ROLE_RESEARCHER'),
-    (4, 'ROLE_EVALUATOR')");
+    $this->addSql("INSERT INTO `users_roles` (`id`, `description`,`label`) VALUES
+    (1, 'ROLE_ADMIN', 'Administrador'),
+    (2, 'ROLE_STUDENT', 'Estudiante'),
+    (3, 'ROLE_RESEARCHER', 'Investigador'),
+    (4, 'ROLE_EVALUATOR', 'Evaluador')");
     
     $this->addSql("INSERT INTO `ldap_user` (`id`, `role_id`, `email`, `username`, `name`, `password`, `external`, `last_login_date`, `creation_date`, `deletion_date`, `carnet`, `cedula_usuario`) VALUES
     (1, 1, 'admin@cec.com', 'adminTester', 'Admin tester', NULL, NULL, '2019-08-15 06:13:45', NULL, NULL, 'A12345', '111111111'),

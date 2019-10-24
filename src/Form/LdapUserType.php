@@ -35,6 +35,7 @@ class LdapUserType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => false),
                 'second_options' => array('label' => false),
+                'required' => false,
             ))
             ->add('external', ChoiceType::class, array(
                 'choices' => array(
@@ -48,8 +49,12 @@ class LdapUserType extends AbstractType
             // ->add('lastLoginDate')
             // ->add('creationDate')
             // ->add('deletionDate')
-            ->add('carnet')
-            ->add('cedula_usuario')
+            // ->add('carnet',[
+            //     'required' => false,
+            // ])
+            ->add('cedula_usuario', TextType::class,[
+                'required' => false,
+            ])
             // ->add('role')
             // ->add('role', TextType::class, [
             //     'mapped' => false,

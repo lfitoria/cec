@@ -23,6 +23,11 @@ class UsersRoles
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $label;
     
     function getId() {
         return $this->id;
@@ -41,5 +46,12 @@ class UsersRoles
     }
     public function __toString() {
         return $this->description;
+    }
+    function getLabel() {
+        return $this->id;
+    }
+
+    function setLabel(): ?string {
+        return $this->label;
     }
 }

@@ -1,5 +1,6 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ form_start(form, {attr: {class: 'form-eval'}}) }}
+<p class="title-form-evals">{{'PARA USO EXLUSIVO DEL COMITÉ ETICO CIENTÍFICO'|upper}}</p>
 <!--Accordion wrapper-->
 <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
 
@@ -64,10 +65,11 @@
 <script>
     console.log('readi');
     jQuery("[for='eval_request_status_36']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se aprueban sin ningún tipo de objeción, en el marco de una sesión ordinaria o extraordinaria del CEC">?</a>');
-    jQuery("[for='eval_request_status_38]").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
+    jQuery("[for='eval_request_status_37']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Solicitud cuya aprobación definitiva, depende del cumplimiento de un requisito o requisitos mínimos">?</a>');
+    jQuery("[for='eval_request_status_38']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
     jQuery("[for='eval_request_status_39']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="No implica ningún peligro ni comprometen a los participantes">?</a>');
     jQuery("[for='eval_request_status_40']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Incumple con requisitos de las consideraciones éticas, previstos en la Ley 9234, el Reglamento UCR y los Lineamientos del CEC">?</a>');
-    jQuery("[for='eval_request_status_42']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección.">?</a>');
+    jQuery("[for='eval_request_status_42']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
 
 
     $(document).ready(function () {
