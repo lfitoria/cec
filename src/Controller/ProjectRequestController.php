@@ -325,6 +325,8 @@ class ProjectRequestController extends AbstractController {
     $projectId_getMinuteCommissionTFG = $projectRequest->getInfoRequestFiles();
 
     $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectRequest->getId());
+    var_dump($academicRequestInfo);
+    die();
     $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectRequest->getId());
 
     $projectInfo = null;
