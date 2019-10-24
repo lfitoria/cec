@@ -124,6 +124,7 @@ class DefaultController extends AbstractController {
         
         $email = $request->get('email');
         $password = $request->get('password');
+        $objUserServ = $this->container->get('user_manager');
 
         if ($objUserServ->checkUserExists($email)) {
           
