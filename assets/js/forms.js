@@ -257,7 +257,7 @@ const $ = require('jquery');
                 `<tr class="student_row">
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_name][${studentCount}]" value="${response.student.NOMBRE} ${response.student.APELLIDO1} ${response.student['APELLIDO2']}"></td>
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_id][${studentCount}]" value="${response.student['IDENTIFICACION']}"></td>
-                <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_email][${studentCount}]" value="${response.student['CARNE']}"></td>
+                <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_email][${studentCount}]" value="${response.student['E.DIRECCION_ELECTRONICA_INST']}"></td>
                 <td scope="col"><a class="selected_teamwork_item--delete" href="#">Eliminar</a></td>
               </tr>`;
 
