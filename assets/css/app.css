@@ -39,6 +39,9 @@ tbody tr:nth-of-type(even) {
 span.st-eval{
   position: relative;
 }
+.menu-user-box .dropdown-menu.show {
+  left: -60px !important;
+}
 
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
   color: #fff;
