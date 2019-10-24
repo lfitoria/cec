@@ -251,6 +251,9 @@ class ProjectRequestController extends AbstractController {
     $em = $this->getDoctrine()->getManager('oracle');
     $student = $externalDataManager->getStudentById($em, $studentId); //'B04278'
 
+    var_dump($student);
+    die();
+
     if ($student) {
       return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
     }
