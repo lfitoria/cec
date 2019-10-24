@@ -134,7 +134,7 @@ const $ = require('jquery');
               });
             //cache.form.submit();
           } else {
-            //cache.form.submit();
+            cache.form.submit();
           }
         }
       });
