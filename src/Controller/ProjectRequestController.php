@@ -174,6 +174,7 @@ class ProjectRequestController extends AbstractController {
     $extInstitutionsAuthorizationFiles = [];
     $minuteFinalWorkFiles = [];
     $minutesResearchCenterFiles = [];
+    $categoryBiomedicaFiles = [];
 
     if ($form->isSubmitted() && $form->isValid()) {
 
@@ -191,12 +192,14 @@ class ProjectRequestController extends AbstractController {
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
       }
+      $categoryBiomedicaFilesCenterUploadedFiles = $form->get("categoryBiomedicaFiles")->getData();
+      $categoryBiomedicaFiles = $fileManager->uploadFiles($categoryBiomedicaFilesCenterUploadedFiles, $projectDir, "categoryBiomedicaFiles");
 
       $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
       $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
 
 
-      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
 
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       // $projectRequest->setTitle($state);
@@ -520,12 +523,15 @@ class ProjectRequestController extends AbstractController {
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
       }
+      $categoryBiomedicaFilesCenterUploadedFiles = $form->get("categoryBiomedicaFiles")->getData();
+      $categoryBiomedicaFiles = $fileManager->uploadFiles($categoryBiomedicaFilesCenterUploadedFiles, $projectDir, "categoryBiomedicaFiles");
 
       $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
       $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
 
 
-      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
+
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       $projectRequest->setState($state);
       $target = $form->get("form_target_input")->getData();

@@ -25,7 +25,7 @@
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
     <div class="form-group">
         <p>
-            <strong>Objetivo principal:</strong>
+            <label>Objetivo principal:</label>
         </p>
         {% if objetivoGeneral %}
             <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoGeneral.dsc_objgeneral|striptags|raw|default('Sin datos')}}</textarea>
@@ -36,7 +36,7 @@
     </div>
     <div class="form-group">
         <p>
-            <strong>Objetivos:</strong>
+            <label>Objetivos:</label>
         </p>
         {% if objetivoPrincipal %}
             <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos')}}</textarea>
@@ -47,14 +47,15 @@
     </div>
     
 {% endif %}
-{# {{ form_row(form.objetives) }} #}
+<div class="d-none">
+{{ form_row(form.objetives) }}
+</div>
 {{ form_row(form.questions) }}
 {{ form_row(form.hypothesis) }}
 {{ form_row(form.invType, {label_attr: {class: 'checkbox-custom'} }) }}
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
     <div class="form-group">
-        <p>
-            <strong>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de muestras biológicas –si aplica:</strong>
+        <label>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de muestras biológicas –si aplica:</label>
         </p>
         {% if SipProjectExtraInformation %}
             {# <textarea class="form-control" name="" id="" rows="10" disabled>{{SipProject.metodologia|striptags|raw|default('Sin datos')}}</textarea> #}
@@ -67,6 +68,7 @@
 
     </div>
 {% endif %}
+<p><strong>Observaciones:</strong></p>
 {{ form_row(form.metodologyObserv) }}
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}

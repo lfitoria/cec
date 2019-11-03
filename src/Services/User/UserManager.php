@@ -33,13 +33,17 @@ class UserManager {
     // die();
     // array(4) { ["cedula"]=> string(30) "xxxxx" ["id"]=> string(10) "0115190268" ["carnet"]=> string(6) "B04278" ["tipo_usuario_ldap"]=> array(2) { ["count"]=> int(1) [0]=> string(10) "ESTUDIANTE" } }
 
+    
+
     if (!$this->checkUserExists($strEmail['cedula'])) {
       // create new user
       // $tipo_usuario
       $this->createUser($strEmail);
+      
     }
+    
 
-    $this->createLoginSession();
+    $this->createLoginSession($strEmail['opt_eval_form']);
   }
 
   // get user data from database
@@ -113,7 +117,19 @@ class UserManager {
   }
 
   // creates login session
-  public function createLoginSession() {
+  public function createLoginSession($opt_eval_form) {
+
+    // var_dump($opt_eval_form);
+
+    // var_dump($this->user);
+
+    // var_dump($this->user->getRole()->getId());
+
+    if($this->user->getRole()->getId() == 4 && $opt_eval_form == 1){
+      $role = $this->em->getRepository(UsersRoles::class)->find(4);
+      $this->user->setRole($role);
+    }
+
     $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
 
     // update user last login

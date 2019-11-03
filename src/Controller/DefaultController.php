@@ -54,11 +54,16 @@ class DefaultController extends AbstractController {
       $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
       $this->container = $container;
       $objUserServ = $this->container->get('user_manager');
+      
       // Checks if the login form has been submitted
       if ($request->getMethod() == 'POST') {
 
         $email = $request->get('email');
         $password = $request->get('password');
+        $evaluator = $request->get('evaluator');
+
+        // var_dump($evaluator);
+        // die();
 
         if ($objUserServ->checkUserExists($email)) {
           
@@ -66,6 +71,7 @@ class DefaultController extends AbstractController {
             // echo "entra";
             $objUserServ->loginAction(array(
               "cedula" => $email,
+              "opt_eval_form" => $evaluator
             ));
             return $this->redirectToRoute('project_request_index');
 
@@ -116,7 +122,10 @@ class DefaultController extends AbstractController {
   public function ValidateUserSendProject(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils, Security $security): Response {
     $data = $request->request->all();
 
-    if($data["email"] !== "camacho.le@gmail.com"){
+    // var_dump($data);
+    // die();
+
+    if( $data["email"] !== "student@cec.com" ){
       $this->container = $container;
 
       $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
@@ -196,7 +205,7 @@ class DefaultController extends AbstractController {
   /**
    * @Route("/login_test/{type}", name="login_test", methods={"GET"})
    */
-  public function loginTest(ContainerInterface $container, $type) {
+  public function loginTest(ContainerInterface $container, $type,Request $request) {
     $this->container = $container;
     $objUserServ = $this->container->get('user_manager');
     $email = '';
@@ -217,9 +226,10 @@ class DefaultController extends AbstractController {
         $email = "admin@cec.com";
         break;
     }
-    
+    $evaluator = $request->get('evaluator');
     $objUserServ->loginAction(array(
         "cedula" => $email,
+        "opt_eval_form" => $evaluator
     ));
 
     return $this->redirectToRoute('project_request_index');

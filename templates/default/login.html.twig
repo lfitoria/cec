@@ -107,7 +107,7 @@
                         <p>Las solicitudes son evaluadas por el Comité Ético Científico de la Universidad de Costa Rica.</p>
                         <p>Todo el proceso de solicitud y evaluación se realiza de forma virtual y en esta misma plataforma podrá dar seguimiento al proceso de evaluación de su solicitud.</p>
                         <p class="small font-italic text-duda-login">Si tiene consultas, comuníquese al (506) 2511-4201 o a través del correo electrónico
-                            <a href="mailto:cec.vi@ucr.ac.cr">cec.vi@ucr.ac.cr</a>
+                            <a href="mailto:cec@ucr.ac.cr">cec@ucr.ac.cr</a>
                         </p>
                     </div>
                     <div class="ingreso-general-box-text-admin d-none">
@@ -117,7 +117,7 @@
                                 <p>Por medio de este panel podrá evaluar las solicitudes de revisión de proyectos de investigación o trabajos finales de graduación, que hayan sido efectuados por personas investigadoras o estudiantes de la Universidad de Costa Rica.</p>
                                 <p>Todo el proceso de solicitud, revisión y evaluación se realiza de forma virtual. Las y los involucrados serán notificados sobre el avance del proceso.</p>
                                 <p class="small font-italic text-duda-login">Si tiene consultas, comuníquese al (506) 2511-4201 o a través del correo electrónico
-                            <a href="mailto:cec.vi@ucr.ac.cr">cec.vi@ucr.ac.cr</a>
+                            <a href="mailto:cec@ucr.ac.cr">cec@ucr.ac.cr</a>
                         </p>
                             </div>
                         </div>
@@ -139,6 +139,7 @@
                                 <input type="password" class="form-control" placeholder="CLAVE" name="password" value="{{ PASSWORD }}" required/>
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
+                            <input type="hidden" name="evaluator" value="0">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">{{'Ingresar'|upper}}</button>
                         </form>
                     </div>
@@ -159,7 +160,7 @@
                             <p>Comité Ético Científico</p>
                             <p class="tel">Teléfono: (506) 2511-4201 / (506) 2511-1398</p>
                             <p class="email">Correo electrónico:
-                                <a href="mailto:cec.vi@ucr.ac.cr">cec@ucr.ac.cr</a>
+                                <a href="mailto:cec@ucr.ac.cr">cec@ucr.ac.cr</a>
                             </p>
                             <p class="copy">Todos los derechos reservados. 2019. Universidad de Costa Rica.</p>
                         </div>
@@ -188,7 +189,18 @@
                 $(".login-box-body").toggleClass("login-box-body-admin");
                 $(this).toggleText('INGRESO ADMINISTRATIVO', 'Regresar');
 
+                let op = $("input[name=evaluator]").val();
+                console.log("op: "+op);
+
+                if(op == 0){
+                    $("input[name=evaluator]").val("1");
+                }else{
+                    $("input[name=evaluator]").val("0");
+                }
+                
+
             });
+
         </script>
 
         {% block javascripts %}

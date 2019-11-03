@@ -21,12 +21,12 @@ final class Version20190916012815 extends AbstractMigration {
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
     $this->addSql("INSERT INTO `criterion` (`id`, `description`, `code`) VALUES
-      (31, 'Revisión aprobada', 'preEvalStatus'),
+      (31, 'Revisión preliminar', 'preEvalStatus'),
       (32, 'Devuelto con observaciones ', 'preEvalStatus'),
       (33, 'Exenta', 'preEvalStatus'),
       (34, 'No requiere revisión', 'preEvalStatus'),
       (35, 'Devuelta(no compete)', 'preEvalStatus'),
-      (36, 'Aprobada', 'evalStatus'),
+      (36, 'Solicitud aprobada', 'evalStatus'),
       (37, 'Aprobada condicionada', 'evalStatus'),
       (38, 'Devuelto con observaciones', 'evalStatus'),
       (39, 'Exenta', 'evalStatus'),

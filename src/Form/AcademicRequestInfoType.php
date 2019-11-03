@@ -36,6 +36,7 @@ class AcademicRequestInfoType extends AbstractType {
                 'help' => 'Máximo 1500 caracteres.',
                 'label' => 'Objetivos:',
                 'required' => false,
+                'mapped' => false
             ])
             ->add('questions', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
@@ -52,7 +53,8 @@ class AcademicRequestInfoType extends AbstractType {
             ->add('metodologyObserv', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1500 caracteres.',
-                'label' => 'Observaciones:',
+                // 'label' => 'Observaciones:',
+                'label' => false,
                 'required' => false,
             ])
             ->add('invType', EntityType::class, [

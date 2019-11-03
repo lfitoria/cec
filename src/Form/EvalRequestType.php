@@ -64,7 +64,7 @@ class EvalRequestType extends AbstractType {
                 ->add('fakeFiles', FileType::class, array(
                     'multiple' => true, 
                     'mapped' => false,
-                    'label' => 'Documento',
+                    'label' => 'Documentos relacionados con este dictamen',
                     'required' => false,
                 ))
         ;

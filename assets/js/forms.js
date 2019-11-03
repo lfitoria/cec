@@ -49,6 +49,8 @@ const $ = require('jquery');
 
     }
     function showActivatedInputs() {
+      console.log("entra: showActivatedInputs")
+      console.log(cache.decision_inputs)
       cache.decision_inputs.each(function () {
         var _this = $(this);
         var targetId = "#" + _this.parent().parent().data("code");
@@ -58,6 +60,25 @@ const $ = require('jquery');
           $(targetId).addClass("d-none");
           $(targetId).find("input").attr('required', false);
         }
+      });
+    }
+    function showCatInputs() {
+      console.log("entra: showCatInputs")
+      // var targetId = "#categoryBiomedicaFiles";
+      // if ($("#project_request_category input").is(":checked") && $(this).val() === '43' || $("#project_request_category input").is(":checked") && $(this).val() === '44') {
+      //     $(targetId).removeClass("d-none");
+      //   } 
+      
+      cache.decision_inputs.each(function () {
+        console.log($(this).val());
+        var _this = $(this);
+        var targetId = "#categoryBiomedicaFiles";
+        if ($(this).is(":checked") && $(this).val() === '43') {
+          $(targetId).removeClass("d-none");
+        } 
+        if ($(this).is(":checked") && $(this).val() === '44') {
+          $(targetId).removeClass("d-none");
+        } 
       });
     }
 
@@ -104,7 +125,8 @@ const $ = require('jquery');
                 var fd = new FormData(myform);
                 console.log(fd);
                 var _this = $(this);
-                var path = "/cec/public/validate_user_send";
+                // var path = "/cec/public/validate_user_send";
+                var path = "/validate_user_send";
                 $.ajax({
                   type: 'POST',
                   enctype: "multipart/form-data",
@@ -158,6 +180,15 @@ const $ = require('jquery');
           $(targetId).addClass("d-none");
           $(targetId).find("input").attr('required', false);
         }
+      });
+
+      cache.project_request_category.change(function () {
+        var _this = $(this);
+        var targetId = "#categoryBiomedicaFiles" ;
+        if ($(this).is(":checked") && $(this).val() === '43' || $(this).is(":checked") && $(this).val() === '44') {
+          $(targetId).removeClass("d-none");
+          
+        } 
       });
 
       cache.uploaded_item_delete.click(function (e) {
@@ -388,6 +419,7 @@ const $ = require('jquery');
       cache.form_finish = $('.form_finish_input');
       cache.form = $('.form-request, .form-eval');
       cache.decision_inputs = $(".decision_question input");
+      cache.project_request_category = $("#project_request_category input");
       cache.uploaded_item_delete = $(".uploaded_files_list_item--delete");
       cache.selected_item_delete = $(".selected_files_list_item--delete");
       cache.question_labels = $("form .form-group legend.col-form-label:not(.no-label), \n\
@@ -405,6 +437,7 @@ const $ = require('jquery');
       }
 
       showActivatedInputs();
+      showCatInputs();
       applyNumbering();
       bindEvents();
       

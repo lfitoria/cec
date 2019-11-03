@@ -311,6 +311,10 @@ ul {
 <p>
     <strong>1.12 Acta de la comisión de trabajos finales de graduación:</strong>
 </p>
+{# <p>
+        <strong>1.13 La presente propuesta es de tipo:</strong>
+    </p>
+    <p class="text-muted font-italic">{{project_request.category|default("Sin dato")}}</p> #}
 {% if project_request.minuteFinalWork is null %}
     <p class="text-muted font-italic">No</p>
 {% else %}
@@ -321,7 +325,23 @@ ul {
             </li>
         {% endfor %}
     </ul>
-{% endif %}{% else %}
+{% endif %}
+
+{% if project_request.category is null %}
+    <p class="text-muted font-italic">No</p>
+{% else %}
+<p> <strong>1.13 La presente propuesta es de tipo:</strong></p>
+<p class="text-muted font-italic">{{project_request.category|default("Sin dato")}}</p> 
+    <ul>
+        {% for file in project_request.infoRequestFiles if file.questionCode is same as("categoryBiomedicaFiles")  %}
+            <li>
+                <a href="{{file.originalName}}">{{file.originalName}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% else %}
 <p>
     <strong>1.11 Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:</strong>
 </p>
@@ -335,7 +355,13 @@ ul {
             </li>
         {% endfor %}
     </ul>
-{% endif %}{% endif %}<hr><ul class="nav justify-content-center nav-pills step-view">
+{% endif %}
+<p>
+        <strong>1.12 La presente propuesta es de tipo:</strong>
+    </p>
+    <p class="text-muted font-italic">{{project_request.category|default("Sin dato")}}</p>
+{% endif %}
+<hr><ul class="nav justify-content-center nav-pills step-view">
 <li>
     <span class="nav_step">2</span>
     <a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
@@ -357,6 +383,9 @@ ul {
     {% else %}
         <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
     {% endif %}
+    <div class="text-box">
+    
+</div>
     <br>
     <div class="text-box">
         <p>

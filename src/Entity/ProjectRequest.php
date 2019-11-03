@@ -201,6 +201,26 @@ class ProjectRequest {
      * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
+  
+  /**
+     * @var \CategoryProjectRequest
+     *
+     * @ORM\ManyToOne(targetEntity="Criterion")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category", referencedColumnName="id")
+     * })
+     */
+    private $category;
+
+    public function getCategory(): ?Criterion {
+      return $this->category;
+    }
+
+    public function setCategory(?Criterion $category): self {
+    $this->category = $category;
+
+    return $this;
+    }
 
     function getDate() {
       return $this->date;
