@@ -95,7 +95,7 @@ class EthicEvalRequestController extends AbstractController {
         ];
         // var_dump($emailData);
         // die();
-        //$notificationManager->sendEmail($emailData);
+        $notificationManager->sendEmail($emailData);
         $logData = array(
             "description" => "Enviada por solicitante",
             "request" => $projectRequest
@@ -170,7 +170,7 @@ class EthicEvalRequestController extends AbstractController {
             ])
         ];
         
-        //$notificationManager->sendEmail($emailData);
+        $notificationManager->sendEmail($emailData);
 
         $logData = array(
             "description" => "Enviada/Editado por solicitante",
@@ -235,7 +235,7 @@ class EthicEvalRequestController extends AbstractController {
     ];
     // var_dump($emailData);
     // 
-    //$notificationManager->sendEmail($emailData);
+    $notificationManager->sendEmail($emailData);
 
     
     die();

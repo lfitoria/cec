@@ -1,5 +1,5 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-{{ form_start(form, {attr: {class: 'form-eval'}}) }}
+
 <p class="title-form-evals">{{'PARA USO EXLUSIVO DEL COMITÉ ETICO CIENTÍFICO'|upper}}</p>
 <!--Accordion wrapper-->
 <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
@@ -21,13 +21,15 @@
             <div class="card-body">
                 
                 {# {{ form_widget(form) }} #}
+                {{ form_start(form, {attr: {class: 'form-eval'}}) }}
                 {{ form_row(form.category, {label_attr: {class: 'radio-custom no-label'} }) }}
                 {{ form_row(form.status, {label_attr: {class: 'radio-custom no-label'} }) }}
                 {{ form_row(form.observations, {label_attr: {class: 'no-label'} }) }}
                 {{ form_row(form.fakeFiles, {label_attr: {class: 'no-label'} }) }}
                 {# <button class="btn">{{ button_label|default('Save') }}</button> #}
                 {{ form_end(form) }}
-                {{ include('commons/_form_footer.html.twig', {'button_label':'Enviar dictamen', 'button_label_save': 'Guardar sin enviar', finish: 1}) }}
+                {{ include('commons/_form_footer.html.twig', {'button_label':'Enviar dictamen', 'button_label_save': 'Guardar sin enviar', 'finish': 1}) }}
+                {{ include('commons/_modal_validate_user.html.twig') }}
             </div>
         </div>
 

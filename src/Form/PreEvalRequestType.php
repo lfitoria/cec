@@ -46,6 +46,11 @@ class PreEvalRequestType extends AbstractType
                
                 
             ])
+            ->add('form_finish_input', HiddenType::class, [
+                'attr' => ['class' => 'form_finish_input'],
+                'required' => false,
+                'mapped' => false
+            ])
             // ->add('status', ChoiceType::class,
             // [ 'choices' => ['a' => 'a', 'b' => 'b']
             // , 'expanded' => true

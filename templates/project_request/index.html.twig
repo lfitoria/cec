@@ -21,13 +21,24 @@
         </th>
         {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Investigador / estudiante</th>{% endif %}
         {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Unidad</th>{% endif %}
-        <th colspan="2">Estado</th>
+        {# <th colspan="2">Estado</th> #}
+        <th>Estado</th>
+        {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Evaluadores asignados</th>{% endif %}
       </tr>
     </thead>
     <tbody>
       {% for project_request in project_requests %}
       {# <pre>
         {{ dump(project_request) }}
+        <td>
+                  <ul>
+                  {% for evaluator in evaluators %}
+                    <li>{{ evaluator.name }}</li>
+                    {% if evaluator.id in project_requests_users[project_request.id] %}
+                    <li>{{ evaluator.name }}</li>
+                    {% endif %}
+                  {% endfor %}
+          </td>
       </pre> #}
         <tr>
           <td class="text-bold">
@@ -90,6 +101,15 @@
               
             {% endif %}
 
+          </td>
+          <td>
+            <ul style="padding: 0 0 0 15px;">
+                  {% for evaluator in evaluators %}
+                    {% if evaluator.id in project_requests_users[project_request.id] %}
+                    <li>{{ evaluator.name }}</li>
+                    {% endif %}
+                  {% endfor %}
+            </ul>
           </td>
         </tr>
       {% else %}

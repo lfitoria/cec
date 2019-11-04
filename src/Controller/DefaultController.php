@@ -119,7 +119,7 @@ class DefaultController extends AbstractController {
   /**
    * @Route("/validate_user_send", name="validate_user_send", methods={"POST"})
    */
-  public function ValidateUserSendProject(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils, Security $security): Response {
+  public function ValidateUserSendProject(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils, Security $security, UserPasswordEncoderInterface $encoder): Response {
     $data = $request->request->all();
 
     // var_dump($data);

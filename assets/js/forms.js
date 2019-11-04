@@ -125,8 +125,8 @@ const $ = require('jquery');
                 var fd = new FormData(myform);
                 console.log(fd);
                 var _this = $(this);
-                // var path = "/cec/public/validate_user_send";
-                var path = "/validate_user_send";
+                var path = "/cec/public/validate_user_send";
+                // var path = "/validate_user_send";
                 $.ajax({
                   type: 'POST',
                   enctype: "multipart/form-data",
@@ -194,7 +194,7 @@ const $ = require('jquery');
       cache.uploaded_item_delete.click(function (e) {
         e.preventDefault();
         var _this = $(this);
-        var path = "/CEC/public/file/removeFile";
+        var path = "/cec/public/file/removeFile";
         $.ajax({
           type: 'POST',
           url: path,

@@ -24,9 +24,11 @@ class LdapUserController extends AbstractController {
    * @Route("/", name="ldap_user_index", methods={"GET"})
    */
   public function index(): Response {
+    $requestsFilter = array("role" => [4]);
     $ldapUsers = $this->getDoctrine()
             ->getRepository(LdapUser::class)
-            ->findAll();
+            // ->findAll();
+            ->findBy($requestsFilter);
 
     return $this->render('ldap_user/index.html.twig', [
                 'ldap_users' => $ldapUsers,

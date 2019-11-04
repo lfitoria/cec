@@ -51,6 +51,7 @@ const $ = require('jquery');
                 showConfirmButton: false,
                 timer: 2200
               })
+              location.reload();
             }else{
               Swal.fire({
                 position: 'center',
@@ -59,6 +60,7 @@ const $ = require('jquery');
                 showConfirmButton: false,
                 timer: 2200
               })
+              location.reload();
             }
             console.log(file.countEvals);
           }

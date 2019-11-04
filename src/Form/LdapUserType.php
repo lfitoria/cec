@@ -59,12 +59,22 @@ class LdapUserType extends AbstractType
             // ->add('role', TextType::class, [
             //     'mapped' => false,
             // ]);
-            ->add('role', EntityType::class, [
-                'class' => UsersRoles::class,
-                'multiple' => false,
-                'expanded' => true,
+            //bueno abajo
+            // ->add('role', EntityType::class, [
+            //     'class' => UsersRoles::class,
+            //     'multiple' => false,
+            //     'expanded' => true,
                 
-                ])
+            //     ])
+            ->add('role', ChoiceType::class, array(
+                'choices' => array(
+                    'Administrador' => '1',
+                    'Evaluador' => '4',
+                ),
+                'expanded' => true,
+                'label' => 'Rol:',
+                'required' => true
+            ));
         ;
     }
 

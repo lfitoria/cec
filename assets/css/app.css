@@ -38,6 +38,7 @@ tbody tr:nth-of-type(even) {
 }
 span.st-eval{
   position: relative;
+  white-space: nowrap;
 }
 .menu-user-box .dropdown-menu.show {
   left: -60px !important;
