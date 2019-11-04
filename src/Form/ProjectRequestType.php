@@ -135,10 +135,20 @@ class ProjectRequestType extends AbstractType {
                     'label' => '¿Es un proyecto de trabajo final de graduación grupal?',
                 ));
 
-                $form->add('ascriptionUnit', TextType::class, [
-                    'label' => 'Unidad de adscripción del proyecto:',
-                    'required' => false,
-                ]);
+                // $form->add('ascriptionUnit', TextType::class, [
+                //     'label' => 'Unidad de adscripción del proyecto:',
+                //     'required' => false,
+                // ]);
+                // $form->add('ascriptionUnit', ChoiceType::class, array(
+                //     'choices' => array(
+                //         'No' => '0',
+                //         'Sí' => '1',
+                //     ),
+                    
+                //     'expanded' => false,
+                //     'label' => 'Unidad de adscripción del proyecto:',
+                // ));
+                
 
                 $form->add('ucrInstitutions', TextareaType::class, [
                     'attr' => ['class' => 'tinymce', 'rows' => '4'],

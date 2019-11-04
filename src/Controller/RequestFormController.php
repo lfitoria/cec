@@ -34,7 +34,7 @@ class RequestFormController extends AbstractController {
   /**
    * @Route("/informacion", name="tab_general_info_request_new")
    */
-  public function tabOneRequest(Request $request) {
+  public function tabOneRequest(Request $request, ExternalDataManager $externalDataManager) {
 
     $projectRequest = new ProjectRequest();
 
@@ -43,10 +43,15 @@ class RequestFormController extends AbstractController {
     ]);
     $form->handleRequest($request);
 
+    $entityManager = $this->getDoctrine()->getManager('sip');
+    $allUnitsSIP = $externalDataManager->getAllUnitsSIP($entityManager);
+    // $allUnitsSIP = false;
+
     return $this->render('project_request/new.html.twig', [
                 'project_request' => $projectRequest,
                 'project_info' => null,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'allUnitsSIP' => $allUnitsSIP
     ]);
   }
 

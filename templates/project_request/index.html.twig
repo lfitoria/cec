@@ -102,15 +102,21 @@
             {% endif %}
 
           </td>
+
+          {% if app.user.role.description in ["ROLE_ADMIN"] %}
           <td>
             <ul style="padding: 0 0 0 15px;">
+                {% if evaluators is defined %}
+                
                   {% for evaluator in evaluators %}
                     {% if evaluator.id in project_requests_users[project_request.id] %}
                     <li>{{ evaluator.name }}</li>
                     {% endif %}
                   {% endfor %}
+                  {% endif %}
             </ul>
           </td>
+          {% endif %}
         </tr>
       {% else %}
         <tr>

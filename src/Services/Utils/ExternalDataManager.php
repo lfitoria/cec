@@ -401,5 +401,53 @@ class ExternalDataManager {
     }
     
   }
+  public function getUnitInfoByIDA($em, $projectCode) {
+
+    // $connection = $this->em->getConnection();
+    // $statement = $connection->prepare("
+    //     SELECT u.descrip as name, u.director, u.unidad, a.descrip as area, u.uacademica as area_acad, u.gestoru, u.gestoric FROM sip.dbo.unidades u inner join
+    // sip.dbo.areas a on u.area = a.area
+    //     where u.uacademica LIKE '$id%'");
+
+    // $statement->execute();
+
+    // $results = $statement->fetchAll();
+    // return $results[0];
+    //new
+
+    $query = 'SELECT u.descrip as name, u.director, u.unidad, a.descrip as area, u.uacademica as area_acad, u.gestoru, u.gestoric FROM sip.dbo.unidades u inner join
+    sip.dbo.areas a on u.area = a.area
+        where u.uacademica LIKE :projectCode';
+    try {
+
+      $connection = $em->getConnection();
+      $statement = $connection->prepare($query);
+      $statement->bindValue('projectCode', $projectCode);
+      $statement->execute();
+
+      $results = $statement->fetchAll();
+    } catch (\Exception $e) {
+      // var_dump($e);
+      return null;
+    }
+    return $results;
+  }
+  public function getAllUnitsSIP($em) {
+    
+    $query = 'SELECT * FROM unidades';
+    try {
+
+      $connection = $em->getConnection();
+      $statement = $connection->prepare($query);
+      
+      $statement->execute();
+
+      $results = $statement->fetchAll();
+    } catch (\Exception $e) {
+      // var_dump($e);
+      return null;
+    }
+    return $results;
+  }
 
 }

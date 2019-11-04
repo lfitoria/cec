@@ -160,7 +160,20 @@
       <small id="project_request_team_work_help" class="form-text text-muted">Para agregar un nuevo miembro al equipo, coloque en número de carné y presione el botón "Agregar miembro".</small>
     </div>
   </div>
-  {{ form_row(form.ascriptionUnit) }}
+  {# {{ form_row(form.ascriptionUnit) }} #}
+  <pre>
+        {{ dump(allUnitsSIP) }}
+      </pre>
+  <div class="form-group">
+  <label class="required" for="project_request_ascriptionUnit">Unidad de adscripción del proyecto:</label>
+    <select id="project_request_ascriptionUnit" name="project_request[ascriptionUnit]" class="form-control">
+      {# <option value="0">No</option>
+      <option value="1">Sí</option> #}
+      
+    </select>
+  </div>
+
+  
   {{ form_row(form.ucrInstitutions) }}
 {% endif %}
 {{ form_row(form.extInstitutions) }}

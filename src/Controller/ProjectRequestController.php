@@ -163,7 +163,7 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/new", name="project_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, FileManager $fileManager, Security $security): Response {
+  public function new(Request $request, FileManager $fileManager, Security $security, ExternalDataManager $externalDataManager): Response {
     $loggedUser = $security->getUser();
 
     $projectRequest = new ProjectRequest();
@@ -221,9 +221,14 @@ class ProjectRequestController extends AbstractController {
       return $this->redirectToRoute($route, $data);
     }
 
+    // $entityManager = $this->getDoctrine()->getManager('sip');
+    // // $allUnitsSIP = $externalDataManager->getAllUnitsSIP($entityManager);
+    // $allUnitsSIP = false;
+
     return $this->render('project_request/new.html.twig', [
                 'project_request' => $projectRequest,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                
     ]);
   }
 

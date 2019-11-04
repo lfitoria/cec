@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use App\Services\Utils\LogManager;
 use App\Services\Utils\NotificationManager;
+use App\Services\Utils\ExternalDataManager;
 
 /**
  * @Route("/pre/eval/request")
@@ -34,7 +35,7 @@ class PreEvalRequestController extends AbstractController {
   /**
    * @Route("/new/{id}", name="pre_eval_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, ProjectRequest $projectRequest, LogManager $log,NotificationManager $notificationManager): Response {
+  public function new(Request $request, ProjectRequest $projectRequest, LogManager $log,NotificationManager $notificationManager,ExternalDataManager $externalDataManager): Response {
     // var_dump($projectRequest->getOwner()->getEmail());
     // die();
     $preEvalRequest = new PreEvalRequest();
@@ -85,6 +86,7 @@ class PreEvalRequestController extends AbstractController {
   
             break;
         }
+        
   
         $emailData = [
           "subject" => $subjectEmail,
