@@ -41,7 +41,8 @@ class UserManager {
       $this->createUser($strEmail);
       
     }
-    
+    var_dump($strEmail);
+    die();
 
     $this->createLoginSession($strEmail['opt_eval_form']);
   }
