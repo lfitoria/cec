@@ -46,7 +46,7 @@ class LdapUser implements UserInterface {
     /**
      * @var string|null
      *
-     * @ORM\Column(name="password", type="string", length=45, nullable=true)
+     * @ORM\Column(name="password", type="string", length=300, nullable=true)
      */
     private $password;
 
