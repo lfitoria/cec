@@ -29,6 +29,20 @@ tbody tr:nth-of-type(even) {
   font-weight: bold;
   color: var(--A4);
 }
+.title-form-evals{
+  font-size: 1.4em;
+  color: var(--N1);
+  text-align: center;
+  font-weight: bold;
+
+}
+span.st-eval{
+  position: relative;
+  white-space: nowrap;
+}
+.menu-user-box .dropdown-menu.show {
+  left: -60px !important;
+}
 
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
   color: #fff;
@@ -446,7 +460,17 @@ a.ingreso-admin-home:after {
   cursor: unset;
   font-weight: bold;
 }
-
+a.toolbox {
+  position: absolute;
+  font-size: 0.6em;
+  top: 5px;
+  right: -18px;
+  background-color: var(--N1);
+  border-radius: 50%;
+  padding: 0px 4px;
+  width: 14px;
+  color: #000;
+}
 
 @media (min-width: 576px) { 
 } /*fin*/

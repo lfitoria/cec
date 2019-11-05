@@ -12,36 +12,7 @@
     'SipProject': SipProject,
     'objetivoPrincipal': objetivoPrincipal}) }}
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Acción</th>
-        <th>Usuario</th>
-        <th>Rol</th>
-        <th>Observaciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if requestLogs|length > 0 %}
-        {% for requestLog in requestLogs %}
-          <tr>
-            <td class="text-bold">
-              {{ requestLog.date|date("d/m/Y g:ia") }}
-            </td>
-            <td>{{ requestLog.description }}</td>
-            <td>{{ requestLog.user.name }}</td>
-            <td>{{ requestLog.user.role.description }}</td>
-            <td>{{ requestLog.observations|default('N/A') }}</td>
-          </tr>
-        {% else %}
-          <tr>
-            <td colspan="11">No hay evaluaciones previas</td>
-          </tr>
-        {% endfor %}
-      {% endif %}
-    </tbody>
-  </table>
+  
   {{ include('pre_eval_request/_form.html.twig') }}
 
 {% endblock %}

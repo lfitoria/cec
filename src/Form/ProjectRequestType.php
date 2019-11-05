@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\Criterion;
+use App\Repository\CriterionRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ProjectRequestType extends AbstractType {
 
@@ -54,6 +57,23 @@ class ProjectRequestType extends AbstractType {
                 'allow_add' => true,
                 'required' => true,
                 'label' => false
+            ])
+            ->add('categoryBiomedicaFiles', CollectionType::class, [
+                'entry_type' => FileType::class,
+                'entry_options' => ['label' => false],
+                'mapped' => false,
+                'allow_add' => true,
+                'required' => true,
+                'label' => false
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Criterion::class,
+                'multiple' => false,
+                'expanded' => true,
+                'query_builder' => function(CriterionRepository $repo) {
+                  return $repo->createPopulationQueryBuilder('categoryEvalStatus');
+                },
+                'label' => 'La presente propuesta es de tipo: '
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
 
@@ -115,10 +135,20 @@ class ProjectRequestType extends AbstractType {
                     'label' => '¿Es un proyecto de trabajo final de graduación grupal?',
                 ));
 
-                $form->add('ascriptionUnit', TextType::class, [
-                    'label' => 'Unidad de adscripción del proyecto:',
-                    'required' => false,
-                ]);
+                // $form->add('ascriptionUnit', TextType::class, [
+                //     'label' => 'Unidad de adscripción del proyecto:',
+                //     'required' => false,
+                // ]);
+                // $form->add('ascriptionUnit', ChoiceType::class, array(
+                //     'choices' => array(
+                //         'No' => '0',
+                //         'Sí' => '1',
+                //     ),
+                    
+                //     'expanded' => false,
+                //     'label' => 'Unidad de adscripción del proyecto:',
+                // ));
+                
 
                 $form->add('ucrInstitutions', TextareaType::class, [
                     'attr' => ['class' => 'tinymce', 'rows' => '4'],

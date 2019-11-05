@@ -21,11 +21,25 @@
         </th>
         {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Investigador / estudiante</th>{% endif %}
         {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Unidad</th>{% endif %}
-        <th colspan="2">Estado</th>
+        {# <th colspan="2">Estado</th> #}
+        <th>Estado</th>
+        {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Evaluadores asignados</th>{% endif %}
       </tr>
     </thead>
     <tbody>
       {% for project_request in project_requests %}
+      {# <pre>
+        {{ dump(project_request) }}
+        <td>
+                  <ul>
+                  {% for evaluator in evaluators %}
+                    <li>{{ evaluator.name }}</li>
+                    {% if evaluator.id in project_requests_users[project_request.id] %}
+                    <li>{{ evaluator.name }}</li>
+                    {% endif %}
+                  {% endfor %}
+          </td>
+      </pre> #}
         <tr>
           <td class="text-bold">
             <span>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</span>
@@ -36,41 +50,73 @@
           {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<td>{{ project_request.owner.name }}</td>{% endif %}
           {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<td>{{ project_request.projectUnit }}</td>{% endif %}
           <td class="d-flex justify-content-between">
-            <span>{{ project_request.state.description }}</span>
-
-
+          
+            <span class="st-eval" for="eval_request_status_{{ project_request.state.id }}">{{ project_request.state.description }}</span>
+            <a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
 
             {% if app.user.role.description == "ROLE_ADMIN" %}
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Asignar
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu checkbox-menu allow-focus evaluator_list_assigment">
-                  {% for evaluator in evaluators %}
+              {% if project_request.state.id not in [36,27] %}
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Asignar
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu checkbox-menu allow-focus evaluator_list_assigment">
+                    {% for evaluator in evaluators %}
+                      <li>
+                        <label>
+                          <input type="checkbox" name="evaluators" value="{{ evaluator.id }}" {% if evaluator.id in project_requests_users[project_request.id] %}checked{% endif %}>
+                          {{ evaluator.name }}
+                        </label>
+                      </li>
+                    {% endfor %}
                     <li>
-                      <label>
-                        <input type="checkbox" name="evaluators" value="{{ evaluator.id }}" {% if evaluator.id in project_requests_users[project_request.id] %}checked{% endif %}>
-                        {{ evaluator.name }}
-                      </label>
+                      <button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">Confirmar</button>
                     </li>
-                  {% endfor %}
-                  <li>
-                    <button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">Confirmar</button>
-                  </li>
-                </ul>
-              </div>
+                  </ul>
+                </div>
+              {% else %}
+                {% if app.user.role.description not in ["ROLE_ADMIN"] %}
+                <a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
+                {% endif %}
+              {% endif %}
             {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
-              {% if project_request.state.id in [27, 35] %}
+              {% if project_request.state.id in [27, 35, 42] %}
                 <a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
               {% endif %}
+              
+              
+
             {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_EVALUATOR"%}
               {% if project_request.state.id == 28 %}
                 <a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
               {% endif %}
+              {% if project_request.state.id == 31 %}
+                <a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+              {% endif %}
+              
+              {# {% if project_request.state.id == 36 %}
+                <a href="{{ path('eval_request_show', {'id': eval_request.id}) }}">show</a>
+              {% endif %} #}
+              
             {% endif %}
 
           </td>
+
+          {% if app.user.role.description in ["ROLE_ADMIN"] %}
+          <td>
+            <ul style="padding: 0 0 0 15px;">
+                {% if evaluators is defined %}
+                
+                  {% for evaluator in evaluators %}
+                    {% if evaluator.id in project_requests_users[project_request.id] %}
+                    <li>{{ evaluator.name }}</li>
+                    {% endif %}
+                  {% endfor %}
+                  {% endif %}
+            </ul>
+          </td>
+          {% endif %}
         </tr>
       {% else %}
         <tr>
@@ -124,6 +170,29 @@
       </div>
     </div>
   </div>
+
+  <script>
+    console.log('readi index_project');
+    jQuery("[for='eval_request_status_27']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="La solicitud se encuentra en proceso de llenado">?</a>');
+    jQuery("[for='eval_request_status_28']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="La solicitud fue enviada al CEC para su revisión y evaluación">?</a>');
+    jQuery("[for='eval_request_status_31']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="El proceso de evaluación continúa para ser evaluada en una sesión ordinaria o extraordinaria del CEC">?</a>');
+    jQuery("[for='eval_request_status_32']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
+    jQuery("[for='eval_request_status_33']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="No implica ningún peligro ni comprometen a los participantes">?</a>');
+    jQuery("[for='eval_request_status_34']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Por su naturaleza no están diseñadas para contribuir con nuevos conocimientos que sean generalizables (Ver “Lineamientos del Comité Ético Científico de la Universidad de Costa Rica para Investigaciones con Seres Humanos, Biomédicas y No Biomédicas”, numeral 9.3)">?</a>');
+    jQuery("[for='eval_request_status_35']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Revisión de esta solicitud no compete al CEC">?</a>');
+    jQuery("[for='eval_request_status_36']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se aprueban sin ningún tipo de objeción, en el marco de una sesión ordinaria o extraordinaria del CEC">?</a>');
+    jQuery("[for='eval_request_status_37']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Solicitud cuya aprobación definitiva, depende del cumplimiento de un requisito o requisitos mínimos">?</a>');
+    jQuery("[for='eval_request_status_38']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
+    jQuery("[for='eval_request_status_39']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="No implica ningún peligro ni comprometen a los participantes">?</a>');
+    jQuery("[for='eval_request_status_40']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Incumple con requisitos de las consideraciones éticas, previstos en la Ley 9234, el Reglamento UCR y los Lineamientos del CEC">?</a>');
+    jQuery("[for='eval_request_status_42']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
+
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
 {% endblock %}
 {% block specific_javascripts %}
   {{ encore_entry_script_tags('evaluator') }}

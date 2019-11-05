@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use App\Services\Utils\LogManager;
+use App\Services\Utils\NotificationManager;
+use App\Services\Utils\ExternalDataManager;
 
 /**
  * @Route("/pre/eval/request")
@@ -33,39 +35,95 @@ class PreEvalRequestController extends AbstractController {
   /**
    * @Route("/new/{id}", name="pre_eval_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, ProjectRequest $projectRequest, LogManager $log): Response {
+  public function new(Request $request, ProjectRequest $projectRequest, LogManager $log,NotificationManager $notificationManager,ExternalDataManager $externalDataManager): Response {
+    // var_dump($projectRequest->getOwner()->getEmail());
+    // die();
     $preEvalRequest = new PreEvalRequest();
     $form = $this->createForm(PreEvalRequestType::class, $preEvalRequest);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $entityManager = $this->getDoctrine()->getManager();
 
       $finish = $form->get("form_finish_input")->getData();
+
+      // object
+      $status = $form->get("status")->getData()->getId();
+
+      // var_dump($finish);
+      // var_dump($preEvalRequest->getStatus());
+      // die();
       
       $preEvalRequest->setRequest($projectRequest);
       $preEvalRequest->setDate(new \DateTime());
       
       if ($finish == "1") {
         $preEvalRequest->setCurrent(true);
-        $projectRequest->setState($preEvalRequest->getStatus());
+        // $projectRequest->setState($preEvalRequest->getStatus());
+
+        switch ($status) {
+          case '31':
+              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          case '32':
+              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          case '33':
+              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          case '34':
+              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          case '35':
+              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          
+          default:
+  
+            break;
+        }
         
+  
+        $emailData = [
+          "subject" => $subjectEmail,
+          "from" => "catedrahumboldt.vi@ucr.ac.cr",
+          // "to" => $projectRequest->getOwner()->getEmail(),
+          "to" => "luisfitoria91@gmail.com",
+          "cc" => "lfitoria@eldomo.net",
+          "body" => $this->render('emails/evaluatorAssigment.html.twig', [
+          'project_request' => $projectRequest,
+          'details_eval' => $preEvalRequest->getObservations(),
+          ])
+        ];
+      
+        $notificationManager->sendEmail($emailData);
         $logData = array(
-            "description" => $preEvalRequest->getStatus()->getDescription(),
-            "request" => $projectRequest,
-            "observations" => $preEvalRequest->getObservations()
+          "description" => $preEvalRequest->getStatus()->getDescription(),
+          "request" => $projectRequest,
+          "observations" => $preEvalRequest->getObservations()
         );
         $log->insertLog($logData);
+        
+
       } else {
         $preEvalRequest->setCurrent(false);
+        // $projectRequest->setState($preEvalRequest->getStatus());
+        
       }
 
+      // var_dump($preEvalRequest);
+      // die();
 
+      $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($preEvalRequest);
-
       $entityManager->flush();
-
-      return $this->redirectToRoute('pre_eval_request_index');
+      
+      return $this->redirectToRoute('project_request_index');
+      // return $this->redirectToRoute('pre_eval_request_index');
     }
 
     return $this->render('pre_eval_request/new.html.twig', [
@@ -111,10 +169,11 @@ class PreEvalRequestController extends AbstractController {
       }
       
       $this->getDoctrine()->getManager()->flush();
+      return $this->redirectToRoute('project_request_index');
       
-      return $this->redirectToRoute('pre_eval_request_index', [
-                  'id' => $preEvalRequest->getId(),
-      ]);
+      // return $this->redirectToRoute('pre_eval_request_index', [
+      //             'id' => $preEvalRequest->getId(),
+      // ]);
     }
 
     return $this->render('pre_eval_request/edit.html.twig', [

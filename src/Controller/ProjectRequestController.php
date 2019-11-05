@@ -9,6 +9,8 @@ use App\Entity\TeamWork;
 use App\Form\ProjectRequestType;
 use App\Entity\PreEvalRequest;
 use App\Form\PreEvalRequestType;
+use App\Entity\EvalRequest;
+use App\Form\EvalRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,14 +50,15 @@ class ProjectRequestController extends AbstractController {
         $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
         break;
       case "ROLE_STUDENT":
-        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35]);
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,31,42]);
         break;
       case "ROLE_RESEARCHER":
-        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28]);
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,31,42]);
         break;
       case "ROLE_EVALUATOR":
 
-        $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, 28);
+        // $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, 28);
+        $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, array(27, 28, 35, 36,31,42));
         break;
       default:
         $requestsFilter = array("state" => 2);
@@ -149,15 +152,18 @@ class ProjectRequestController extends AbstractController {
           "researchers" => $researchers,
           "projectWasFound" => true];
     }
-    return ["projectWasFound" => false, "externalCollaboration" => null,
-        "projectData" => null,
-        "researchers" => null];
+    return [
+              "projectWasFound" => false, 
+              "externalCollaboration" => false,
+              "projectData" => false,
+              "researchers" => false
+          ];
   }
 
   /**
    * @Route("/new", name="project_request_new", methods={"GET","POST"})
    */
-  public function new(Request $request, FileManager $fileManager, Security $security): Response {
+  public function new(Request $request, FileManager $fileManager, Security $security, ExternalDataManager $externalDataManager): Response {
     $loggedUser = $security->getUser();
 
     $projectRequest = new ProjectRequest();
@@ -168,6 +174,7 @@ class ProjectRequestController extends AbstractController {
     $extInstitutionsAuthorizationFiles = [];
     $minuteFinalWorkFiles = [];
     $minutesResearchCenterFiles = [];
+    $categoryBiomedicaFiles = [];
 
     if ($form->isSubmitted() && $form->isValid()) {
 
@@ -185,12 +192,14 @@ class ProjectRequestController extends AbstractController {
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
       }
+      $categoryBiomedicaFilesCenterUploadedFiles = $form->get("categoryBiomedicaFiles")->getData();
+      $categoryBiomedicaFiles = $fileManager->uploadFiles($categoryBiomedicaFilesCenterUploadedFiles, $projectDir, "categoryBiomedicaFiles");
 
       $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
       $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
 
 
-      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
 
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       // $projectRequest->setTitle($state);
@@ -212,9 +221,14 @@ class ProjectRequestController extends AbstractController {
       return $this->redirectToRoute($route, $data);
     }
 
+    // $entityManager = $this->getDoctrine()->getManager('sip');
+    // // $allUnitsSIP = $externalDataManager->getAllUnitsSIP($entityManager);
+    // $allUnitsSIP = false;
+
     return $this->render('project_request/new.html.twig', [
                 'project_request' => $projectRequest,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                
     ]);
   }
 
@@ -244,6 +258,10 @@ class ProjectRequestController extends AbstractController {
 
     $em = $this->getDoctrine()->getManager('oracle');
     $student = $externalDataManager->getStudentById($em, $studentId); //'B04278'
+    // echo "<pre>";
+    // var_dump($student);
+    // echo "</pre>";
+    // die();
 
     if ($student) {
       return new JsonResponse(["student" => $student[0], "studentWasFound" => true]);
@@ -283,6 +301,10 @@ class ProjectRequestController extends AbstractController {
     $SipProject = null;
     $objetivoPrincipal = null;
 
+    $requestLogs = $this->getDoctrine()
+            ->getRepository(WorkLog::class)
+            ->findBy(array("request" => $projectRequest));
+
     if ($projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER") {
       $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
@@ -290,6 +312,8 @@ class ProjectRequestController extends AbstractController {
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
     }
+    $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
+    $eval_info = $this->getDoctrine()->getRepository(EvalRequest::class)->getAllEvalInfo($projectRequest->getId());
 
     return $this->render('project_request/show.html.twig', [
                 'project_request' => $projectRequest,
@@ -300,6 +324,9 @@ class ProjectRequestController extends AbstractController {
                 'SipProjectExtraInformation' => $SipProjectExtraInformation,
                 'SipProject' => $SipProject,
                 'objetivoPrincipal' => $objetivoPrincipal,
+                'requestLogs' => $requestLogs,
+                'pre_eval_info' => $pre_eval_info,
+                'eval_info' => $eval_info
     ]);
   }
 
@@ -310,6 +337,7 @@ class ProjectRequestController extends AbstractController {
     $projectId_getMinuteCommissionTFG = $projectRequest->getInfoRequestFiles();
 
     $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectRequest->getId());
+
     $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectRequest->getId());
 
     $projectInfo = null;
@@ -339,7 +367,13 @@ class ProjectRequestController extends AbstractController {
       $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
+      
     }
+
+    $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
+    
+    // var_dump($pre_eval_info);
+    // die();
 
     return $this->render('pre_eval_request/new.html.twig', [
                 'project_request' => $projectRequest,
@@ -352,6 +386,64 @@ class ProjectRequestController extends AbstractController {
                 'objetivoPrincipal' => $objetivoPrincipal,
                 'requestLogs' => $requestLogs,
                 'form' => $form->createView(),
+                'pre_eval_info' => false,
+                'pre_eval' => $pre_eval_info,
+                'eval_info' => false,
+    ]);
+  }
+  /**
+   * @Route("/{id}/determinar", name="project_request_evaluate", methods={"GET"})
+   */
+  public function determinate(ProjectRequest $projectRequest, Request $request, ExternalDataManager $externalDataManager): Response {
+    $projectId_getMinuteCommissionTFG = $projectRequest->getInfoRequestFiles();
+
+    $academicRequestInfo = $this->getDoctrine()->getRepository(AcademicRequestInfo::class)->getAcademicRequestInfoByRequest($projectRequest->getId());
+    $ethicEvalRequest = $this->getDoctrine()->getRepository(EthicEvalRequest::class)->getEthicEvalRequestByRequest($projectRequest->getId());
+
+    $projectInfo = null;
+    $SipProjectExtraInformation = null;
+    $SipProject = null;
+    $objetivoPrincipal = null;
+
+
+    $EvalRequestSaved = $this->getDoctrine()
+            ->getRepository(EvalRequest::class)
+            ->findOneBy(array("request" => $projectRequest, "current" => 0));
+    
+    $requestLogs = $this->getDoctrine()
+            ->getRepository(WorkLog::class)
+            ->findBy(array("request" => $projectRequest));
+
+    $EvalRequest = $EvalRequestSaved ? $EvalRequestSaved : new EvalRequest();
+    $EvalRequestAction = $EvalRequestSaved ? $this->generateUrl('eval_request_edit', array('id' => $EvalRequestSaved->getId(), 'id_request' => $projectRequest->getId())) : $this->generateUrl('eval_request_new', array('id' => $projectRequest->getId()));
+
+    $form = $this->createForm(EvalRequestType::class, $EvalRequest, [
+        'action' => $EvalRequestAction,
+    ]);
+    $form->handleRequest($request);
+    if ($projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER") {
+      $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
+      $emOracle = $this->getDoctrine()->getManager('oracle');
+      $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
+    }
+    $eval_info = $this->getDoctrine()->getRepository(EvalRequest::class)->getAllEvalInfo($projectRequest->getId());
+
+    return $this->render('eval_request/new.html.twig', [
+                'project_request' => $projectRequest,
+                'project_info' => $projectInfo,
+                'projectId_getMinuteCommissionTFG' => $projectId_getMinuteCommissionTFG,
+                'academicRequestInfo' => $academicRequestInfo,
+                'ethicEvalRequest' => $ethicEvalRequest,
+                'SipProjectExtraInformation' => $SipProjectExtraInformation,
+                'SipProject' => $SipProject,
+                'objetivoPrincipal' => $objetivoPrincipal,
+                'requestLogs' => $requestLogs,
+                'form' => $form->createView(),
+                'eval_info' => false,
+                'eval' => $eval_info,
+                'pre_eval_info' => false
     ]);
   }
 
@@ -389,6 +481,9 @@ class ProjectRequestController extends AbstractController {
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
     }
+
+    // var_dump($SipProject);
+    // die();
 
     return $this->render('project_request/details.html.twig', [
                 'project_request' => $projectRequest,
@@ -433,12 +528,15 @@ class ProjectRequestController extends AbstractController {
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
       }
+      $categoryBiomedicaFilesCenterUploadedFiles = $form->get("categoryBiomedicaFiles")->getData();
+      $categoryBiomedicaFiles = $fileManager->uploadFiles($categoryBiomedicaFilesCenterUploadedFiles, $projectDir, "categoryBiomedicaFiles");
 
       $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
       $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
 
 
-      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? []));
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
+
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       $projectRequest->setState($state);
       $target = $form->get("form_target_input")->getData();
@@ -498,7 +596,9 @@ class ProjectRequestController extends AbstractController {
     $emOracle = $this->getDoctrine()->getManager('oracle');
 
     $projectData = $externalDataManager->getInfoByProject($emOracle, $projectCode);
+    
     if ($projectData) {
+      
       return $projectData;
     }
     return false;

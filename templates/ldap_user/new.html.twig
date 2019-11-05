@@ -1,11 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New LdapUser{% endblock %}
+{# {% block title %}New LdapUser{% endblock %} #}
 
 {% block body %}
-    <h1>Create new LdapUser</h1>
+    {# <h1>Crear usuario:</h1> #}
+    <p class="title-table-index">CREAR USUARIO</p>
+
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            <p class="text-danger">{{ message }}</p>
+        </div>
+    {% endfor %}
+    
 
     {{ include('ldap_user/_form.html.twig') }}
 
-    <a href="{{ path('ldap_user_index') }}">back to list</a>
+    <a href="{{ path('ldap_user_index') }}" class="btn btn-primary">Volver al listado de usuarios</a>
 {% endblock %}

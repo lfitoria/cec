@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\NotificationManager;
 use App\Services\Utils\LogManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @Route("/ldap/user")
@@ -22,9 +24,11 @@ class LdapUserController extends AbstractController {
    * @Route("/", name="ldap_user_index", methods={"GET"})
    */
   public function index(): Response {
+    $requestsFilter = array("role" => [4]);
     $ldapUsers = $this->getDoctrine()
             ->getRepository(LdapUser::class)
-            ->findAll();
+            // ->findAll();
+            ->findBy($requestsFilter);
 
     return $this->render('ldap_user/index.html.twig', [
                 'ldap_users' => $ldapUsers,
@@ -34,22 +38,73 @@ class LdapUserController extends AbstractController {
   /**
    * @Route("/new", name="ldap_user_new", methods={"GET","POST"})
    */
-  public function new(Request $request): Response {
+  public function new(Request $request, UserPasswordEncoderInterface $encoder, LogManager $log, ContainerInterface $container): Response {
     $ldapUser = new LdapUser();
     $form = $this->createForm(LdapUserType::class, $ldapUser);
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-      $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->persist($ldapUser);
-      $entityManager->flush();
+    $error = false;
 
-      return $this->redirectToRoute('ldap_user_index');
+    // var_dump($request->get('error'));
+    // die();
+
+    // if ($request->get('error') == '1') {
+    //   $error = true;
+    // }
+
+    $this->container = $container;
+    $objUserServ = $this->container->get('user_manager');
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+
+      if (!$objUserServ->checkUserExists($form->get("email")->getData())) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $objCurrentDatetime = new \Datetime();
+
+        $objUser = new LdapUser();
+        $objUser->setEmail($form->get("email")->getData());
+        $objUser->setCreationDate($objCurrentDatetime);
+        $objUser->setLastLoginDate($objCurrentDatetime);
+        $objUser->setUsername($form->get("username")->getData());
+
+        $passEncryp = $encoder->encodePassword($objUser, $form->get("password")->getData());
+
+        // var_dump($passEncryp);s
+        // die();
+
+        $objUser->setPassword($passEncryp);
+        $objUser->setRole($form->get("role")->getData());
+        // $objUser->setCarnet($form->get("carnet")->getData());
+        
+        $objUser->setName($form->get("name")->getData());
+        $objUser->setCedulaUsuario($form->get("cedula_usuario")->getData());
+        $objUser->setExternal($form->get("external")->getData());
+
+        $entityManager->persist($objUser);
+        $entityManager->flush();
+
+
+        $logData = array(
+          "description" => "Insercion de usuario: ".$form->get("email")->getData(),
+        );
+        $log->insertLog($logData);
+
+        return $this->redirectToRoute('ldap_user_index');
+      }else{
+        $this->addFlash(
+          'notice',
+          'Correo ya existe.'
+        );
+        return $this->redirectToRoute('ldap_user_new');
+      }
     }
 
     return $this->render('ldap_user/new.html.twig', [
                 'ldap_user' => $ldapUser,
                 'form' => $form->createView(),
+
     ]);
   }
 
@@ -65,12 +120,26 @@ class LdapUserController extends AbstractController {
   /**
    * @Route("/{id}/edit", name="ldap_user_edit", methods={"GET","POST"})
    */
-  public function edit(Request $request, LdapUser $ldapUser): Response {
+  public function edit(Request $request, LdapUser $ldapUser, UserPasswordEncoderInterface $encoder, LogManager $log): Response {
     $form = $this->createForm(LdapUserType::class, $ldapUser);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      // var_dump($ldapUser->getPassword());
+      // die();
+
+      $passEncryp = $encoder->encodePassword($ldapUser, $ldapUser->getPassword());
+
+
+      $ldapUser->setPassword($passEncryp);
+
+
       $this->getDoctrine()->getManager()->flush();
+
+      $logData = array(
+        "description" => "Edición de usuario: ".$ldapUser->getEmail(),
+      );
+      $log->insertLog($logData);
 
       return $this->redirectToRoute('ldap_user_index', [
                   'id' => $ldapUser->getId(),
@@ -86,11 +155,16 @@ class LdapUserController extends AbstractController {
   /**
    * @Route("/{id}", name="ldap_user_delete", methods={"DELETE"})
    */
-  public function delete(Request $request, LdapUser $ldapUser): Response {
+  public function delete(Request $request, LdapUser $ldapUser, LogManager $log): Response {
     if ($this->isCsrfTokenValid('delete' . $ldapUser->getId(), $request->request->get('_token'))) {
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->remove($ldapUser);
       $entityManager->flush();
+
+      $logData = array(
+        "description" => "Eliminación de usuario: ".$ldapUser->getEmail(),
+      );
+      $log->insertLog($logData);
     }
 
     return $this->redirectToRoute('ldap_user_index');
@@ -117,7 +191,7 @@ class LdapUserController extends AbstractController {
       }
       
 
-      $body = $this->renderView('emails/evaluatorAssigment.html.twig', ['project_request' => $projectRequest]);
+      $body = $this->renderView('emails/evaluatorAssigment.html.twig', ['project_request' => $projectRequest,'details_eval' => '']);
       //evaluator@cec.com
       $emailData = [
           "subject" => "CEC – Solicitud de revisión asignada - CEC-" . $projectRequest->getId(),
@@ -131,14 +205,32 @@ class LdapUserController extends AbstractController {
 
       $projectRequest->setUsers($newEvaluators);
       $entityManager->flush();
+
+      // var_dump($newEvaluators[0]->getEmail());
+      // die();
+      $emailLog = "";
+
+      for ($i=0; $i < count($newEvaluators) ; $i++) { 
+        
+          $emailLog .= $newEvaluators[$i]->getEmail();
+        
+          if ( $i < count($newEvaluators) ) {
+            $emailLog .= ", ";
+          }
+        
+      }
+      $countEvals = count($newEvaluators);
       
+
       $logData = array(
-          "description" => "Asignada a: " . implode (",", $newEvaluators),
-          "request" => $projectRequest
+          // "description" => "Asignada a: " . implode (",", $emailLog),
+          "description" => "Asignada a: " . $emailLog,
+          "request" => $projectRequest,
+          
       );
       $log->insertLog($logData);
 
-      return new JsonResponse(['wasAssigned' => true]);
+      return new JsonResponse(['wasAssigned' => true, 'countEvals' => $countEvals]);
     }
 
     return new JsonResponse(['wasAssigned' => false]);

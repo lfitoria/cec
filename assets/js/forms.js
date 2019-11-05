@@ -49,6 +49,8 @@ const $ = require('jquery');
 
     }
     function showActivatedInputs() {
+      console.log("entra: showActivatedInputs")
+      console.log(cache.decision_inputs)
       cache.decision_inputs.each(function () {
         var _this = $(this);
         var targetId = "#" + _this.parent().parent().data("code");
@@ -60,17 +62,38 @@ const $ = require('jquery');
         }
       });
     }
+    function showCatInputs() {
+      console.log("entra: showCatInputs")
+      // var targetId = "#categoryBiomedicaFiles";
+      // if ($("#project_request_category input").is(":checked") && $(this).val() === '43' || $("#project_request_category input").is(":checked") && $(this).val() === '44') {
+      //     $(targetId).removeClass("d-none");
+      //   } 
+      
+      cache.decision_inputs.each(function () {
+        console.log($(this).val());
+        var _this = $(this);
+        var targetId = "#categoryBiomedicaFiles";
+        if ($(this).is(":checked") && $(this).val() === '43') {
+          $(targetId).removeClass("d-none");
+        } 
+        if ($(this).is(":checked") && $(this).val() === '44') {
+          $(targetId).removeClass("d-none");
+        } 
+      });
+    }
 
     function applyNumbering() {
       var number = 1;
+      // console.log(cache.question_labels);
       cache.question_labels.each(function () {
         var _this = $(this);
         _this.text(cache.form.data("number") + "." + number + " " + _this.text());
         number++;
       });
-    }
+    }   
 
     function bindEvents() {
+
       cache.nav_items.click(function () {
         cache.form_target[0].value = $(this).data('target');
         if (cache.form.valid()) {
@@ -85,9 +108,11 @@ const $ = require('jquery');
         }
         if (cache.form.valid()) {
           console.log("submit-data");
-          // console.log(cache.form_finish[0].value);
-          if (cache.form_finish[0] !== undefined && cache.form_finish[0].value === 1) {
-           
+          console.log(cache.form_finish[0]);
+          //console.log(cache.form_finish[0].value);
+          //console.log(typeof(cache.form_finish[0].value));
+          if (cache.form_finish[0] !== undefined && cache.form_finish[0].value == 1) {
+
               jQuery('#valdiate_send_user').modal('show');
 
               $('#valdiate_send_user_submit').click(function (event) {
@@ -100,7 +125,8 @@ const $ = require('jquery');
                 var fd = new FormData(myform);
                 console.log(fd);
                 var _this = $(this);
-                var path = "/CEC/public/validate_user_send";
+                var path = "/cec/public/validate_user_send";
+                // var path = "/validate_user_send";
                 $.ajax({
                   type: 'POST',
                   enctype: "multipart/form-data",
@@ -156,10 +182,19 @@ const $ = require('jquery');
         }
       });
 
+      cache.project_request_category.change(function () {
+        var _this = $(this);
+        var targetId = "#categoryBiomedicaFiles" ;
+        if ($(this).is(":checked") && $(this).val() === '43' || $(this).is(":checked") && $(this).val() === '44') {
+          $(targetId).removeClass("d-none");
+          
+        } 
+      });
+
       cache.uploaded_item_delete.click(function (e) {
         e.preventDefault();
         var _this = $(this);
-        var path = "/CEC/public/file/removeFile";
+        var path = "/cec/public/file/removeFile";
         $.ajax({
           type: 'POST',
           url: path,
@@ -253,7 +288,7 @@ const $ = require('jquery');
                 `<tr class="student_row">
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_name][${studentCount}]" value="${response.student.NOMBRE} ${response.student.APELLIDO1} ${response.student['APELLIDO2']}"></td>
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_id][${studentCount}]" value="${response.student['IDENTIFICACION']}"></td>
-                <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_email][${studentCount}]" value="${response.student['CARNE']}"></td>
+                <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_email][${studentCount}]" value="${response.student['E.DIRECCION_ELECTRONICA_INST']}"></td>
                 <td scope="col"><a class="selected_teamwork_item--delete" href="#">Eliminar</a></td>
               </tr>`;
 
@@ -384,6 +419,7 @@ const $ = require('jquery');
       cache.form_finish = $('.form_finish_input');
       cache.form = $('.form-request, .form-eval');
       cache.decision_inputs = $(".decision_question input");
+      cache.project_request_category = $("#project_request_category input");
       cache.uploaded_item_delete = $(".uploaded_files_list_item--delete");
       cache.selected_item_delete = $(".selected_files_list_item--delete");
       cache.question_labels = $("form .form-group legend.col-form-label:not(.no-label), \n\
@@ -401,8 +437,10 @@ const $ = require('jquery');
       }
 
       showActivatedInputs();
+      showCatInputs();
       applyNumbering();
       bindEvents();
+      
     };
 
     return Object.freeze(_objectPublic);

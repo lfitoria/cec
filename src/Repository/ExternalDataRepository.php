@@ -23,7 +23,10 @@ class ExternalDataRepository extends ServiceEntityRepository {
    */
   public function getSIPProjectByCode($em, $projectCode) {
 
-    $connection = $em->getConnection();
+
+    try {
+
+      $connection = $em->getConnection();
     $statement = $connection->prepare("
             select xprouni.unidadc as codigo_unidad, proyectos.descrip as nombre, proyectos.proyecto as codigo_proyecto, unidades.descrip as unidad, TI.descrip AS tipo_invest, CR.descrip as tipo_finan,  
 					EP.descrip as estado, descr_ubi as ubicacion, TP.descrip as tipo_proyecto 
@@ -42,6 +45,16 @@ class ExternalDataRepository extends ServiceEntityRepository {
 
     $results = $statement->fetchAll();
     return $results[0];
+    
+    } catch (\Exception $e) {
+      // var_dump($e);
+      return null;
+    }
+    
+
+
+    
+    // return $results[0];
   }
 
   public function getExternalCollaborationByProject($em, $projectCode) {

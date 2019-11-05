@@ -15,8 +15,8 @@ use App\Repository\CriterionRepository;
 class AcademicRequestInfoType extends AbstractType {
 
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $sippres = 'Vacio';
-    $br = '\n';
+    // $sippres = 'Vacio';
+    // $br = '\n';
     $builder
             ->add('form_target_input', HiddenType::class, [
                 'attr' => ['class' => 'form_target_input'],
@@ -25,7 +25,7 @@ class AcademicRequestInfoType extends AbstractType {
             ])
             ->add('summaryObserv', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 1500 caracteres.<br>' . $sippres,
+                'help' => 'Máximo 1500 caracteres.' ,
                 'help_html' => true,
                 'label_format' => 'Observaciones:',
                 // 'label_format' => 'Resumen del estudio (antecedentes y justificación):',                
@@ -36,6 +36,7 @@ class AcademicRequestInfoType extends AbstractType {
                 'help' => 'Máximo 1500 caracteres.',
                 'label' => 'Objetivos:',
                 'required' => false,
+                'mapped' => false
             ])
             ->add('questions', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
@@ -52,7 +53,8 @@ class AcademicRequestInfoType extends AbstractType {
             ->add('metodologyObserv', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '4'],
                 'help' => 'Máximo 1500 caracteres.',
-                'label' => 'Observaciones:',
+                // 'label' => 'Observaciones:',
+                'label' => false,
                 'required' => false,
             ])
             ->add('invType', EntityType::class, [

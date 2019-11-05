@@ -4,7 +4,8 @@
 
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
   <p>
-    <strong>Para cargar la información de un proyecto, digite el código del proyecto y presione el botón "Cargar información".</strong>
+    {# <strong>Para cargar la información de un proyecto, digite el código del proyecto y presione el botón "Cargar información".</strong> #}
+    <strong>Digite el código del proyecto y presione el botón "Cargar información"</strong>
   </p>
   <div class="input-group mb-3 w-50">
     <input type="text" class="form-control add_project_info_input" name="project_code" value="{{ project_request.sipProject|default('') }}" placeholder="Código del proyecto" aria-label="Código del proyecto" aria-describedby="button-addon2">
@@ -159,7 +160,20 @@
       <small id="project_request_team_work_help" class="form-text text-muted">Para agregar un nuevo miembro al equipo, coloque en número de carné y presione el botón "Agregar miembro".</small>
     </div>
   </div>
-  {{ form_row(form.ascriptionUnit) }}
+  {# {{ form_row(form.ascriptionUnit) }} #}
+  <pre>
+        {{ dump(allUnitsSIP) }}
+      </pre>
+  <div class="form-group">
+  <label class="required" for="project_request_ascriptionUnit">Unidad de adscripción del proyecto:</label>
+    <select id="project_request_ascriptionUnit" name="project_request[ascriptionUnit]" class="form-control">
+      {# <option value="0">No</option>
+      <option value="1">Sí</option> #}
+      
+    </select>
+  </div>
+
+  
   {{ form_row(form.ucrInstitutions) }}
 {% endif %}
 {{ form_row(form.extInstitutions) }}
@@ -220,7 +234,19 @@
       Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
     <hr>
   </div>
+  
 {% endif %}
+<div class="inline-custom-radio">
+  {# {{ form_row(form.category,{label_attr: {class: 'radio-custom'} }) }} #}
+  {{ form_row(form.category, {attr: {'data-code': 'categoryBiomedicaFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+</div>
+<div id="categoryBiomedicaFiles" class="d-none">
+    {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.categoryBiomedicaFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'categoryBiomedicaFiles', 'delete_label': 'Eliminar'}) }}
+    <small class="form-text text-muted">
+      <span class="file-advice">*Campo obligatorio.</span>
+      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+    <hr>
+  </div>
 
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}

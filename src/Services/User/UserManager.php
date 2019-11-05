@@ -33,23 +33,37 @@ class UserManager {
     // die();
     // array(4) { ["cedula"]=> string(30) "xxxxx" ["id"]=> string(10) "0115190268" ["carnet"]=> string(6) "B04278" ["tipo_usuario_ldap"]=> array(2) { ["count"]=> int(1) [0]=> string(10) "ESTUDIANTE" } }
 
+    
+
     if (!$this->checkUserExists($strEmail['cedula'])) {
       // create new user
       // $tipo_usuario
       $this->createUser($strEmail);
+      
     }
+    var_dump($strEmail);
+    die();
 
-    $this->createLoginSession();
+    $this->createLoginSession($strEmail['opt_eval_form']);
   }
 
   // get user data from database
   public function getUser($strEmail) {
     return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail));
+    // var_dump($strEmail);
+    // die();
+  }
+  public function getPass($strEmail) {
+    return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail));
+    // var_dump($strEmail);
+    // die();
   }
 
   // Check if a user exists on database
   public function checkUserExists($strEmail) {
     $this->user = $this->getUser($strEmail);
+    // var_dump($strEmail);
+    // die();
     return (!empty($this->user)) ? true : false;
   }
 
@@ -85,7 +99,7 @@ class UserManager {
       $objUser->setRole($role);
       $objUser->setCarnet($strEmail["carnet"]);
       $objUser->setName($strEmail["nombre"]);
-      $objUser->setCedula_usuario($strEmail["id"]);
+      $objUser->setCedulaUsuario($strEmail["id"]);
       $objUser->setExternal(0);
       // save data
       $this->em->persist($objUser);
@@ -104,7 +118,19 @@ class UserManager {
   }
 
   // creates login session
-  public function createLoginSession() {
+  public function createLoginSession($opt_eval_form) {
+
+    // var_dump($opt_eval_form);
+
+    // var_dump($this->user);
+
+    // var_dump($this->user->getRole()->getId());
+
+    if($this->user->getRole()->getId() == 4 && $opt_eval_form == 1){
+      $role = $this->em->getRepository(UsersRoles::class)->find(4);
+      $this->user->setRole($role);
+    }
+
     $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
 
     // update user last login

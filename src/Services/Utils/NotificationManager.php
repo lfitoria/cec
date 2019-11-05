@@ -31,7 +31,7 @@ class NotificationManager {
   private function validateEmails($emails) {
     
     foreach ($emails as $email) {
-      var_dump($email);
+      // var_dump($email);
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new Exception("Invalid email format: " . $email);
       }
@@ -44,11 +44,14 @@ class NotificationManager {
             ->setFrom($emailData["from"])
             ->setContentType($emailData["contentType"] ?? 'text/html')
             ->setTo($emailData["to"])
-            ->addCc($emailData["cc"])
+            // ->addCc( ($emailData["cc"]?$emailData["cc"]:null ) )
             ->setBody($emailData["body"] ?? 'No body');
 
     if (isset($emailData["bcc"])) {
       $message->setBcc($emailData["bcc"]);
+    }
+    if (isset($emailData["cc"])) {
+      $message->setBcc($emailData["cc"]);
     }
     if (isset($emailData["attatchments"])) {
       $this->attatchFiles($emailData["attatchments"], $message);
@@ -69,7 +72,16 @@ class NotificationManager {
   }
 
   public function sendEmail($emailData) {
-    $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"], $emailData["cc"]]));
+    // var_dump(isset($emailData["cc"]));
+    // die();
+    if ( isset($emailData["cc"]) ) {
+      // $emailData["cc"] = null;
+      $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"], $emailData["cc"]]));
+    }else{
+      $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"] ]));
+    }
+    // die();
+    
 
     $message = $this->configureEmail($emailData);
 

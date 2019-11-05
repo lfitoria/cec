@@ -81,32 +81,17 @@ class EthicEvalRequestController extends AbstractController {
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
         $loggedUser = $security->getUser();
         $role = $loggedUser->getRole()->getDescription();
-        // $body_html = '<img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_correo.png" alt="">
-        //               <hr>
-        //               <p>Se ha recibido una nueva solicitud de revisión con el número CEC-'.$projectRequest->getId().'</p>
-        //               <p><strong>Proyecto: </strong>'.$projectRequest->getTitle().'</p>
-        //               <p><strong>Unidad: </strong>'.$projectRequest->getProjectUnit().'</p>
-        //               <p><strong>Investigador/estudiante responsable:</strong> '.$projectRequest->getTutorName().'</p>
-        //               <a href="#" target="_blank">Asignar a evaluador</a>
-        //               ';
-        $body_html = '<img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_header_ucr.png" alt="">
-                      <br>
-                      <img src="http://catedrahumboldt.ucr.ac.cr/cec/public/images/logo_correo.png" alt="">
-                      <hr>
-                      <p>Se ha recibido una nueva solicitud de revisión con el número CEC-' . $projectRequest->getId() . '</p>
-                      <p><strong>Proyecto: </strong>' . $projectRequest->getTitle() . '</p>
-                      <p><strong>Unidad: </strong>' . $projectRequest->getProjectUnit() . '</p>
-                      <p><strong>Investigador/estudiante responsable:</strong> ' . $loggedUser->getName() . '</p>
-                      <a href="' . $request->headers->get('host') . $this->generateUrl('project_request_index') . '" target="_blank">Asignar a evaluador</a>
-                      
-                      ';
+        
         $emailData = [
             "subject" => "Nueva solicitud",
             "from" => "catedrahumboldt.vi@ucr.ac.cr",
             "to" => "lfitoria@eldomo.net",
             // "to" => "camacho.le@gmail.com",
             "cc" => "camacho.le@gmail.com",
-            "body" => $body_html
+            "body" => $this->render('emails/evaluatorAssigment.html.twig', [
+              'project_request' => $projectRequest,
+              'details_eval' => ''
+            ])
         ];
         // var_dump($emailData);
         // die();
@@ -151,7 +136,7 @@ class EthicEvalRequestController extends AbstractController {
   /**
    * @Route("/{id}/edit", name="ethic_eval_request_edit", methods={"GET","POST"})
    */
-  public function edit(Request $request, EthicEvalRequest $ethicEvalRequest, FileManager $fileManager, NotificationManager $notificationManager, LogManager $log): Response {
+  public function edit(Request $request, EthicEvalRequest $ethicEvalRequest, FileManager $fileManager, NotificationManager $notificationManager, LogManager $log, ProjectRequest $projectRequest): Response {
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest);
     $form->handleRequest($request);
 
@@ -172,17 +157,23 @@ class EthicEvalRequestController extends AbstractController {
 
       if ($finish == "1") {
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
+        
         $emailData = [
-            "subject" => "TEST",
+            "subject" => "Nueva solicitud",
             "from" => "catedrahumboldt.vi@ucr.ac.cr",
             "to" => "lfitoria@eldomo.net",
             // "to" => "camacho.le@gmail.com",
             "cc" => "camacho.le@gmail.com",
-            "body" => "BODY TEST public function edit"
+            "body" => $this->render('emails/evaluatorAssigment.html.twig', [
+              'project_request' => $projectRequest,
+              'details_eval' => ''
+            ])
         ];
+        
         $notificationManager->sendEmail($emailData);
+
         $logData = array(
-            "description" => "Enviada por solicitante",
+            "description" => "Enviada/Editado por solicitante",
             "request" => $ethicEvalRequest->getRequest()
         );
         $log->insertLog($logData);
@@ -220,6 +211,37 @@ class EthicEvalRequestController extends AbstractController {
     }
 
     return $this->redirectToRoute('ethic_eval_request_index');
+  }
+
+  /**
+   * @Route("/emailTestSend/email", name="emailtestsend", methods={"GET","POST"})
+   */
+  public function emailTestSend(Request $request, NotificationManager $notificationManager ): Response {
+    echo "entra";
+    
+    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(53);
+    // var_dump($projectRequest);
+    // die();
+    $emailData = [
+      "subject" => "Nueva solicitud",
+      "from" => "catedrahumboldt.vi@ucr.ac.cr",
+      "to" => "lfitoria@eldomo.net",
+      // "to" => "camacho.le@gmail.com",
+      //"cc" => "camacho.le@gmail.com",
+      "body" => $this->render('emails/evaluatorAssigment.html.twig', [
+                  'project_request' => $projectRequest,
+                  'details_eval' => ''
+                ])
+    ];
+    // var_dump($emailData);
+    // 
+    $notificationManager->sendEmail($emailData);
+
+    
+    die();
+    return $this->render('ethic_eval_request/show.html.twig', [
+                'ethic_eval_request' => $ethicEvalRequest,
+    ]);
   }
 
 }

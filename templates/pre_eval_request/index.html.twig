@@ -17,6 +17,9 @@
         </thead>
         <tbody>
         {% for pre_eval_request in pre_eval_requests %}
+        <pre>
+            {{ dump(pre_eval_request) }}
+        </pre>
             <tr>
                 <td>{{ pre_eval_request.id }}</td>
                 <td>{{ pre_eval_request.observations }}</td>
@@ -24,7 +27,7 @@
                 <td>{{ pre_eval_request.current ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('pre_eval_request_show', {'id': pre_eval_request.id}) }}">show</a>
-                    <a href="{{ path('pre_eval_request_edit', {'id': pre_eval_request.id}) }}">edit</a>
+                    {# <a href="{{ path('pre_eval_request_edit', {'id': pre_eval_request.id,'id_request': pre_eval_request.id_request}) }}">edit</a> #}
                 </td>
             </tr>
         {% else %}
@@ -35,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('pre_eval_request_new') }}">Create new</a>
+    {# <a href="{{ path('pre_eval_request_new') }}">Create new</a> #}
 {% endblock %}

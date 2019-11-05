@@ -11,6 +11,7 @@ use App\Repository\CriterionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PreEvalRequestType extends AbstractType
 {
@@ -37,11 +38,28 @@ class PreEvalRequestType extends AbstractType
                 'class' => Criterion::class,
                 'multiple' => false,
                 'expanded' => true,
+                
                 'query_builder' => function(CriterionRepository $repo) {
                   return $repo->createPopulationQueryBuilder('preEvalStatus');
                 },
-                'label' => 'Se pre-evalúa la solicitud como:'
+                'label' => 'Se preevalúa la solicitud como:',
+               
+                
             ])
+            ->add('form_finish_input', HiddenType::class, [
+                'attr' => ['class' => 'form_finish_input'],
+                'required' => false,
+                'mapped' => false
+            ])
+            // ->add('status', ChoiceType::class,
+            // [ 'choices' => ['a' => 'a', 'b' => 'b']
+            // , 'expanded' => true
+            // , 'multiple' => true
+            // , 'attr' => ['class' => 'AAA']
+            // ,  'choice_attr' => ['a' => ['title' => 'BBB', 'required' => true], 'b' => ['class' => 'BBB', 'required' => true]]
+            // , 'required' => true
+            // , 'mapped' => false
+            // ])
         ;
     }
 

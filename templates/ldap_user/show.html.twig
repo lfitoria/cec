@@ -1,62 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}LdapUser{% endblock %}
+{# {% block title %}LdapUser{% endblock %} #}
 
 {% block body %}
-    <h1>LdapUser</h1>
+    <p class="title-table-index">Usuario: {{ ldap_user.email }}</p>
 
     <table class="table">
         <tbody>
-            <tr>
+            {# <tr>
                 <th>Id</th>
                 <td>{{ ldap_user.id }}</td>
-            </tr>
+            </tr> #}
             <tr>
-                <th>Email</th>
+                <th>Correo</th>
                 <td>{{ ldap_user.email }}</td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>Nombre de usuario</th>
                 <td>{{ ldap_user.username }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nombre</th>
                 <td>{{ ldap_user.name }}</td>
             </tr>
-            <tr>
+            {# <tr>
                 <th>Password</th>
                 <td>{{ ldap_user.password }}</td>
+            </tr> #}
+            <tr>
+                <th>Externo</th>
+                <td>{{ ldap_user.external ? 'Sí' : 'No' }}</td>
             </tr>
             <tr>
-                <th>External</th>
-                <td>{{ ldap_user.external ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>LastLoginDate</th>
+                <th>Última visita</th>
                 <td>{{ ldap_user.lastLoginDate ? ldap_user.lastLoginDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>CreationDate</th>
+                <th>Fecha de creación</th>
                 <td>{{ ldap_user.creationDate ? ldap_user.creationDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
-            <tr>
+            {# <tr>
                 <th>DeletionDate</th>
                 <td>{{ ldap_user.deletionDate ? ldap_user.deletionDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+            </tr> #}
             <tr>
-                <th>Carnet</th>
+                <th>Carné</th>
                 <td>{{ ldap_user.carnet }}</td>
             </tr>
             <tr>
-                <th>Cedula_usuario</th>
+                <th>Cédula</th>
                 <td>{{ ldap_user.cedulaUsuario }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('ldap_user_index') }}">back to list</a>
+    <a class="btn btn-primary" href="{{ path('ldap_user_index') }}">Volver al listado</a>
 
-    <a href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">edit</a>
+    <a class="btn btn-blue" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">Editar</a>
 
     {{ include('ldap_user/_delete_form.html.twig') }}
 {% endblock %}

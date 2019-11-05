@@ -48,17 +48,33 @@ final class Version20190817193327 extends AbstractMigration {
 	(25, 'Investigación con información privada codiﬁcada o muestras biológicas no obtenidas para el presente proyecto y donde los investigadores no pueden determinar la identidad de la persona a la que pertenece la muestra.', 'investigationType'),
 	(26, 'Investigación social que no producen información', 'investigationType')");
 
-    $this->addSql("INSERT INTO `users_roles` (`id`, `description`) VALUES
-    (1, 'ROLE_ADMIN'),
-    (2, 'ROLE_STUDENT'),
-    (3, 'ROLE_RESEARCHER'),
-    (4, 'ROLE_EVALUATOR')");
+    $this->addSql("INSERT INTO `users_roles` (`id`, `description`,`label`) VALUES
+    (1, 'ROLE_ADMIN', 'Administrador'),
+    (2, 'ROLE_STUDENT', 'Estudiante'),
+    (3, 'ROLE_RESEARCHER', 'Investigador'),
+    (4, 'ROLE_EVALUATOR', 'Evaluador')");
     
     $this->addSql("INSERT INTO `ldap_user` (`id`, `role_id`, `email`, `username`, `name`, `password`, `external`, `last_login_date`, `creation_date`, `deletion_date`, `carnet`, `cedula_usuario`) VALUES
     (1, 1, 'admin@cec.com', 'adminTester', 'Admin tester', NULL, NULL, '2019-08-15 06:13:45', NULL, NULL, 'A12345', '111111111'),
     (5, 2, 'student@cec.com', 'studentTester', 'Student tester', NULL, NULL, '2019-08-17 06:56:44', NULL, NULL, 'A12345', '111111111'),
     (6, 3, 'researcher@cec.com', 'researcherTester', 'Researcher tester', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, 'A12345', '111111111'),
-    (7, 4, 'evaluator@cec.com', 'evalutorTester', 'Evaluator tester', NULL, NULL, '2019-08-15 06:36:58', NULL, NULL, 'A12345', '111111111')");
+	(7, 4, 'evaluator@cec.com', 'evalutorTester', 'Evaluator tester', NULL, NULL, '2019-08-15 06:36:58', NULL, NULL, 'A12345', '111111111'),
+	(8, 4, 'lfitoria@eldomo.net', 'lfitoria', 'Luis Fitoria', NULL, 1, '2019-08-15 06:36:58', NULL, NULL, '2', '1'),
+	(9,4, 'alfonso.chaconmata@ucr.ac.cr', 'alfonso.chaconmata', 'alfonso.chaconmata', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(10,4, 'manuel.triana@ucr.ac.cr', 'manuel.triana', 'manuel.triana', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(11,4, 'jimmy.washburn@ucr.ac.cr', 'jimmy.washburn', 'jimmy.washburn', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(12,4, 'sandra.silva@ucr.ac.cr', 'sandra.silva', 'sandra.silva', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(13,4, 'rodrigo.morarodriguez@ucr.ac.cr', 'rodrigo.morarodriguez', 'rodrigo.morarodriguez', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(14,4, 'maria.quesada@ucr.ac.cr', 'maria.quesada', 'maria.quesada', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(15,4, 'karol.ramirez@ucr.ac.cr', 'karol.ramirez', 'karol.ramirez', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(16,4, 'derby.munoz@ucr.ac.cr', 'derby.munoz', 'derby.munoz', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(17,4, 'ingrid.gomez@ucr.ac.cr', 'ingrid.gomez', 'ingrid.gomez', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(18,4, 'freddy.arias_m@ucr.ac.cr', 'freddy.arias_m', 'freddy.arias_m', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(19,4, 'oporrascr@gmail.com', 'oporrascr', 'oporrascr', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(20,4, 'anafournier@gmail.com', 'anafournier', 'anafournier@gmail.com', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(21,1, 'cec@ucr.ac.cr', 'cec@ucr.ac.cr', 'cec@ucr.ac.cr', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL),
+	(22,1, 'daihanna.hernandez@ucr.ac.cr', 'daihanna.hernandez', 'daihanna.hernandez', NULL, NULL, '2019-08-17 06:40:33', NULL, NULL, NULL, NULL)
+	");
   }
 
   public function down(Schema $schema): void {

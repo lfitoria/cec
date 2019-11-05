@@ -38,7 +38,7 @@
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item seguimiento-m" href="{{path('project_request_index')}}">SEGUIMIENTO DE SOLICITUDES</a>
                 {% if app.user.role.description == "ROLE_ADMIN" %}
-                  <a class="dropdown-item admin-m" href="#">ADMINISTRAR USUARIOS</a>
+                  <a class="dropdown-item admin-m" href="{{path('ldap_user_index')}}">ADMINISTRAR USUARIOS</a>
                 {% endif %}
                 <a class="dropdown-item ayuda-m" href="{{path("ayuda")}}">AYUDA</a>
                 <a class="dropdown-item cerrar-m" href="{{path("app_logout")}}">CERRAR SESIÓN</a>
@@ -57,7 +57,7 @@
             <div class="row">
               <div class="col-4">
                 <p style="text-transform: capitalize;"><span class="label">{{'Nombre'|upper}}:</span> <strong>{{app.user.name|lower}}</strong></p>
-                <p><span class="label">{{'Puesto'|upper}}:</span><strong> 
+                <p><span class="label">{{'Perfil'|upper}}:</span><strong> 
                     {% if app.user.role.description == "ROLE_ADMIN" %}
                       Administrador
                     {% elseif app.user.role.description == "ROLE_STUDENT" %}
@@ -108,7 +108,7 @@
             <div class="infooter-box">
               <p>Comité Ético Científico</p>
               <p class="tel">Teléfono: (506) 2511-4201 / (506) 2511-1398</p>
-              <p class="email">Correo electrónico: <a href="mailto:cec.vi@ucr.ac.cr">cec@ucr.ac.cr</a></p>
+              <p class="email">Correo electrónico: <a href="mailto:cec@ucr.ac.cr">cec@ucr.ac.cr</a></p>
               <p class="copy">Todos los derechos reservados. 2019. Universidad de Costa Rica.</p>
             </div> 
           </div>
@@ -119,6 +119,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
 
 
 

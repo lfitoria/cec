@@ -7,10 +7,14 @@
     <hr>
   </div>
   <div class="email_template_body">
-    <p>Una nueva solicitud de revisión le ha sido asignada con el número CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</p>
+    <p>Solicitud número: CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</p>
     <p>Proyecto: {{project_request.title}}</p>
     <p>Unidad: {{project_request.projectUnit}}</p>
     <p>Investigador / Estudiante responsable: {{project_request.owner.name}}</p>
     <a href="http://catedrahumboldt.ucr.ac.cr{{path('project_request_index')}}" target="_blank">Revisar solicitud</a>  
+    {% if details_eval is not empty %}
+      <p>Observación: {{details_eval}}</p>
+    {% endif %}
+    
   </div>
 </div>

@@ -26,7 +26,7 @@ final class Version20190820014004 extends AbstractMigration {
 
     $this->addSql("INSERT INTO `criterion` (`id`, `description`, `code`) VALUES
     (27, 'En edición', 'requestStatus'),
-    (28, 'Completado', 'requestStatus'),
+    (28, 'Solicitud completada', 'requestStatus'),
     (29, 'En revisión', 'requestStatus'),
     (30, 'Aprobado', 'requestStatus')");
   }

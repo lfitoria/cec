@@ -46,7 +46,7 @@ class LdapUser implements UserInterface {
     /**
      * @var string|null
      *
-     * @ORM\Column(name="password", type="string", length=45, nullable=true)
+     * @ORM\Column(name="password", type="string", length=300, nullable=true)
      */
     private $password;
 
@@ -87,14 +87,14 @@ class LdapUser implements UserInterface {
      /**
      * @var string
      *
-     * @ORM\Column(name="carnet", type="string", length=200, nullable=false)
+     * @ORM\Column(name="carnet", type="string", length=200, nullable=true)
      */
     private $carnet;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cedula_usuario", type="string", length=200, nullable=false)
+     * @ORM\Column(name="cedula_usuario", type="string", length=200, nullable=true)
      */
     private $cedula_usuario;
 
@@ -194,8 +194,11 @@ class LdapUser implements UserInterface {
     public function setPassword($password) {
         $this->password = $password;
     }
+    // public function getPassword() {
+    //     return null;
+    // }
     public function getPassword() {
-        return null;
+        return $this->password;
     }
 
     public function getRoles() {
@@ -215,4 +218,5 @@ class LdapUser implements UserInterface {
     function setUsername($username) {
         $this->username = $username;
     }
+    
 }

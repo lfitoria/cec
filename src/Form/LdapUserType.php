@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 use App\Repository\UsersRolesRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -28,7 +30,13 @@ class LdapUserType extends AbstractType
             ])
             ->add('username')
             ->add('name')
-            ->add('password')
+            // ->add('password')
+            ->add('password', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options'  => array('label' => false),
+                'second_options' => array('label' => false),
+                'required' => false,
+            ))
             ->add('external', ChoiceType::class, array(
                 'choices' => array(
                     'No' => '0',
@@ -41,18 +49,32 @@ class LdapUserType extends AbstractType
             // ->add('lastLoginDate')
             // ->add('creationDate')
             // ->add('deletionDate')
-            ->add('carnet')
-            ->add('cedula_usuario')
+            // ->add('carnet',[
+            //     'required' => false,
+            // ])
+            ->add('cedula_usuario', TextType::class,[
+                'required' => false,
+            ])
             // ->add('role')
             // ->add('role', TextType::class, [
             //     'mapped' => false,
             // ]);
-            ->add('role', EntityType::class, [
-                'class' => UsersRoles::class,
-                'multiple' => false,
-                'expanded' => true,
+            //bueno abajo
+            // ->add('role', EntityType::class, [
+            //     'class' => UsersRoles::class,
+            //     'multiple' => false,
+            //     'expanded' => true,
                 
-                ])
+            //     ])
+            ->add('role', ChoiceType::class, array(
+                'choices' => array(
+                    'Administrador' => '1',
+                    'Evaluador' => '4',
+                ),
+                'expanded' => true,
+                'label' => 'Rol:',
+                'required' => true
+            ));
         ;
     }
 

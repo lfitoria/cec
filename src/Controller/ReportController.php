@@ -22,6 +22,8 @@ use App\Entity\UsersRoles;
 
 use App\Entity\AcademicRequestInfo;
 use App\Entity\EthicEvalRequest;
+use App\Entity\EvalRequest;
+use App\Entity\WorkLog;
 
 // use Knp\Snappy\Pdf;
 // use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -64,7 +66,12 @@ class ReportController extends AbstractController {
         $emOracle = $this->getDoctrine()->getManager('oracle');
         $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
     }
+    $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
+    $eval_info = $this->getDoctrine()->getRepository(EvalRequest::class)->getAllEvalInfo($projectRequest->getId());
 
+    $requestLogs = $this->getDoctrine()
+            ->getRepository(WorkLog::class)
+            ->findBy(array("request" => $projectRequest));
 
     $html = $this->renderView('project_request/details.html.twig', [
         'project_request' => $projectRequest,
@@ -75,6 +82,9 @@ class ReportController extends AbstractController {
         'SipProjectExtraInformation' => $SipProjectExtraInformation,
         'SipProject' => $SipProject,
         'objetivoPrincipal' => $objetivoPrincipal,
+        'requestLogs' => $requestLogs,
+        'pre_eval_info' => $pre_eval_info,
+        'eval_info' => $eval_info
     ]);
     
     $fecha = $projectRequest->getDate();
