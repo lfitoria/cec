@@ -87,7 +87,7 @@ class PreEvalRequestController extends AbstractController {
    * @Route("/{id}/edit/{id_request}", name="pre_eval_request_edit", methods={"GET","POST"})
    * @Entity("projectRequest", expr="repository.find(id_request)")
    */
-  public function edit(Request $request, PreEvalRequest $preEvalRequest ,ProjectRequest $projectRequest): Response {
+  public function edit(Request $request, PreEvalRequest $preEvalRequest ,ProjectRequest $projectRequest, LogManager $log): Response {
     $form = $this->createForm(PreEvalRequestType::class, $preEvalRequest);
     $form->handleRequest($request);
 

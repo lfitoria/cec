@@ -28,7 +28,7 @@ class UsersRoles
         return $this->id;
     }
 
-    function getDescription(): ?string {
+    function getDescription() {
         return $this->description;
     }
 
