@@ -240,7 +240,7 @@ class ProjectRequest {
       return $this->uacademica;
     }
   
-    function setUacademica($Uacademica) {
+    function setUacademica($uacademica) {
       $this->uacademica = $uacademica;
     }
   function getOwner(): LdapUser {
