@@ -28,11 +28,6 @@
   {{ form_row(form.title, {attr: {'value': project_request.title|default('')} }) }}
   <div class="form-group" id="project_principal_researchers">
     <label for="project_request_extInstitutions">Nombre del investigador (a) principal:</label>
-    {# {% for researcher in project_info.researchers %}
-          <pre>
-            {{ dump(researcher) }}
-          </pre>
-        {% endfor %} #}
     {% if project_info is not null and project_info.researchers|length > 0 %}
       {% for researcher in project_info.researchers if researcher.dsc_tipo_participacion|trim is same as('Investigador principal / Responsable') or researcher.dsc_tipo_participacion|trim is same as('PRINCIPAL')  %}
         <input type="text" readonly class="form-control mb-2 project_principal_researchers_row" name="" value="{{ researcher.NOMBRE }} {{ researcher.APELLIDO1 }} {{ researcher.APELLIDO2 }} ">
@@ -161,9 +156,7 @@
     </div>
   </div>
   {# {{ form_row(form.ascriptionUnit) }} #}
-  <pre>
-        {{ dump(allUnitsSIP) }}
-      </pre>
+
   <div class="form-group">
   <label class="required" for="project_request_ascriptionUnit">Unidad de adscripción del proyecto:</label>
     <select id="project_request_ascriptionUnit" name="project_request[ascriptionUnit]" class="form-control">

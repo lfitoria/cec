@@ -48,7 +48,7 @@ class UsersRoles
         return $this->description;
     }
     function getLabel() {
-        return $this->id;
+        return $this->label;
     }
 
     function setLabel(): ?string {

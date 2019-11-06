@@ -18,6 +18,16 @@ const $ = require('jquery');
 
   CEC.Forms.Events = function () {
     var cache = {};
+    var mimeTypes = [
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'application/msword',
+      'application/vnd.ms-powerpoint',
+      'application/vnd.oasis.opendocument.text',
+      'image/png',
+      'image/jpeg'
+    ];
     var _objectPublic = {};
 
     function addTagForm($collectionHolder, $newLinkLi) {
@@ -44,13 +54,11 @@ const $ = require('jquery');
       var $newFormLi = $('<li></li>').append(inputGroup);
 
 
-      $newFormLi.find(".input-group-cont").append('<div class="input-group-append"><a class="selected_files_list_item--delete btn-blue" href="#">Eliminar</a></div>');
+      $newFormLi.find(".input-group-cont").append('<div class="input-group-append"><a class="selected_files_list_item--delete" href="#">Eliminar</a></div>');
       $newLinkLi.before($newFormLi);
 
     }
     function showActivatedInputs() {
-      console.log("entra: showActivatedInputs")
-      console.log(cache.decision_inputs)
       cache.decision_inputs.each(function () {
         var _this = $(this);
         var targetId = "#" + _this.parent().parent().data("code");
@@ -63,40 +71,34 @@ const $ = require('jquery');
       });
     }
     function showCatInputs() {
-      console.log("entra: showCatInputs")
-      // var targetId = "#categoryBiomedicaFiles";
-      // if ($("#project_request_category input").is(":checked") && $(this).val() === '43' || $("#project_request_category input").is(":checked") && $(this).val() === '44') {
-      //     $(targetId).removeClass("d-none");
-      //   } 
-      
       cache.decision_inputs.each(function () {
         console.log($(this).val());
         var _this = $(this);
         var targetId = "#categoryBiomedicaFiles";
         if ($(this).is(":checked") && $(this).val() === '43') {
           $(targetId).removeClass("d-none");
-        } 
+        }
         if ($(this).is(":checked") && $(this).val() === '44') {
           $(targetId).removeClass("d-none");
-        } 
+        }
       });
     }
 
     function applyNumbering() {
       var number = 1;
-      // console.log(cache.question_labels);
+
       cache.question_labels.each(function () {
         var _this = $(this);
         _this.text(cache.form.data("number") + "." + number + " " + _this.text());
         number++;
       });
-    }   
+    }
 
     function bindEvents() {
 
       cache.nav_items.click(function () {
         cache.form_target[0].value = $(this).data('target');
-        if (cache.form.valid()) {
+        if (cache.form.valid() && validFilesSize(cache.fileInputs)) {
           cache.form.submit();
         }
       });
@@ -106,57 +108,63 @@ const $ = require('jquery');
         if (cache.form_finish[0]) {
           cache.form_finish[0].value = $(this).data('finish');
         }
-        if (cache.form.valid()) {
-          console.log("submit-data");
-          console.log(cache.form_finish[0]);
-          //console.log(cache.form_finish[0].value);
-          //console.log(typeof(cache.form_finish[0].value));
+        if (cache.form.valid() && validFilesSize(cache.fileInputs)) {
           if (cache.form_finish[0] !== undefined && cache.form_finish[0].value == 1) {
 
-              jQuery('#valdiate_send_user').modal('show');
+            jQuery('#valdiate_send_user').modal('show');
 
-              $('#valdiate_send_user_submit').click(function (event) {
-                event.preventDefault();
-                console.log("catch-event");
-                var myform = document.getElementById("valdiate_send_user_form");
-                var action = document.getElementById("valdiate_send_user_form").action;
-                console.log(action);
-                console.log(myform);
-                var fd = new FormData(myform);
-                console.log(fd);
-                var _this = $(this);
-                var path = "/cec/public/validate_user_send";
-                // var path = "/validate_user_send";
-                $.ajax({
-                  type: 'POST',
-                  enctype: "multipart/form-data",
-                  url: path,
-                  context: _this,
-                  data: fd,
-                  processData: false,
-                  contentType: false,
-                  beforeSend: loadStart,
-                  complete: loadStop,
-                  dataType: 'json',
-                }).done(function (data) {
-                  console.log(data);
-                  if (data.wasAssigned == false) {
-                    
-                    jQuery("#errorUserReq").removeClass("d-none");
-                  } else {
-                    jQuery("#errorUserReq").addClass("d-none");
-                    $("#valdiate_send_user_form").hide();
-                    cache.form.submit();
-                    
-                  }
+            $('#valdiate_send_user_submit').click(function (event) {
+              event.preventDefault();
+              var myform = document.getElementById("valdiate_send_user_form");
+              var action = document.getElementById("valdiate_send_user_form").action;
+              var fd = new FormData(myform);
+              var _this = $(this);
+              var path = "/cec/public/validate_user_send";
+              // var path = "/validate_user_send";
+              $.ajax({
+                type: 'POST',
+                enctype: "multipart/form-data",
+                url: path,
+                context: _this,
+                data: fd,
+                processData: false,
+                contentType: false,
+                beforeSend: loadStart,
+                complete: loadStop,
+                dataType: 'json'
+              }).done(function (data) {
+                if (data.wasAssigned === false) {
+
+                  jQuery("#errorUserReq").removeClass("d-none");
+                } else {
+                  jQuery("#errorUserReq").addClass("d-none");
+                  $("#valdiate_send_user_form").hide();
+                  cache.form.submit();
+
+                  Swal.fire({
+                    position: 'center',
+                    type: 'info',
+                    title: 'Guardando información',
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                }
 
 
-                });
-                // finajax
               });
-            //cache.form.submit();
+              // finajax
+            });
           } else {
+
             cache.form.submit();
+
+            Swal.fire({
+              position: 'center',
+              type: 'info',
+              title: 'Guardando información',
+              showConfirmButton: false,
+              timer: 1500
+            });
           }
         }
       });
@@ -168,6 +176,32 @@ const $ = require('jquery');
       function loadStop() {
         $(".loadbox").addClass("d-none");
         $("#valdiate_send_user_form").show();
+      }
+
+      function validFilesSize(inputs) {
+        $("#size-files-error").addClass("d-none");
+        $("#extension-files-error").addClass("d-none");
+
+        var totalSize = 0;
+        var hasValidExtension = true;
+        inputs.each(function () {
+          totalSize += this.files[0].size;
+
+          if (mimeTypes.indexOf(this.files[0].type) < 0) {
+            hasValidExtension = false;
+            this.classList.add("invalid-extension");
+          }
+        });
+        totalSize = totalSize / 1000000;
+        if (totalSize > 40) {
+          $("#size-files-error").removeClass("d-none");
+          return false;
+        }
+        if (!hasValidExtension) {
+          $("#extension-files-error").removeClass("d-none");
+          return false;
+        }
+        return true;
       }
 
       cache.decision_inputs.change(function () {
@@ -184,11 +218,11 @@ const $ = require('jquery');
 
       cache.project_request_category.change(function () {
         var _this = $(this);
-        var targetId = "#categoryBiomedicaFiles" ;
+        var targetId = "#categoryBiomedicaFiles";
         if ($(this).is(":checked") && $(this).val() === '43' || $(this).is(":checked") && $(this).val() === '44') {
           $(targetId).removeClass("d-none");
-          
-        } 
+
+        }
       });
 
       cache.uploaded_item_delete.click(function (e) {
@@ -243,8 +277,17 @@ const $ = require('jquery');
         removeSelectedTeamWork(_this);
       });
 
+      cache.letter_counter_inputs.on("change keyup paste", function (e) {
+        var _this = $(this);
+        if ((_this.data("max") - _this.val().length) >= 0) {
+          return setLetterCounter(_this);
+        }
+
+      });
+
       cache.fileInputs.on('change', function (event) {
         showlabel(event);
+
       });
 
       cache.addFileButton.on('click', function (e) {
@@ -258,6 +301,11 @@ const $ = require('jquery');
         cache.fileInputs = $('.custom-file-input');
         cache.fileInputs.on('change', function (event) {
           showlabel(event);
+          if (mimeTypes.indexOf(event.currentTarget.files[0].type) < 0) {
+            this.classList.add("invalid-extension");
+          } else {
+            this.classList.remove("invalid-extension");
+          }
         });
 
         cache.selected_item_delete = $(".selected_files_list_item--delete");
@@ -282,10 +330,9 @@ const $ = require('jquery');
           // dataType: 'json',
           success: function (response) {
             if (response.studentWasFound) {
-              console.log(response.student);
               const studentCount = $(".student_row").length;
               const studentRow =
-                `<tr class="student_row">
+                      `<tr class="student_row">
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_name][${studentCount}]" value="${response.student.NOMBRE} ${response.student.APELLIDO1} ${response.student['APELLIDO2']}"></td>
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_id][${studentCount}]" value="${response.student['IDENTIFICACION']}"></td>
                 <td scope="col"><input type="text" readonly class="form-control-plaintext" name="teamWork[student_email][${studentCount}]" value="${response.student['E.DIRECCION_ELECTRONICA_INST']}"></td>
@@ -400,8 +447,13 @@ const $ = require('jquery');
     function showlabel(event) {
       var inputFile = event.currentTarget;
       $(inputFile).parent()
-        .find('.custom-file-label')
-        .html(inputFile.files[0].name);
+              .find('.custom-file-label')
+              .html(inputFile.files[0].name);
+    }
+
+    function setLetterCounter(_this) {
+      _this.parent().find(".count").text(_this.data("max") - _this.val().length);
+      return true;
     }
 
     function removeSelectedFile(_this) {
@@ -414,6 +466,7 @@ const $ = require('jquery');
 
     _objectPublic.init = function () {
       cache.nav_items = $('.form_header_nav_item');
+      cache.letter_counter_inputs = $('.letter-counter');
       cache.form_buttons = $('.form_footer_button');
       cache.form_target = $('.form_target_input');
       cache.form_finish = $('.form_finish_input');
@@ -440,6 +493,14 @@ const $ = require('jquery');
       showCatInputs();
       applyNumbering();
       bindEvents();
+      
+      cache.letter_counter_inputs.each(function (e) {
+        var _this = $(this);
+        if ((_this.data("max") - _this.val().length) >= 0) {
+          setLetterCounter(_this);
+        }
+
+      });
       
     };
 

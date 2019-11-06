@@ -42,6 +42,7 @@
             <file>file:/C:/xampp/htdocs/cec/src/Repository/AcademicRequestInfoRepository.php</file>
             <file>file:/C:/xampp/htdocs/cec/nbproject/private/private.xml</file>
             <file>file:/C:/xampp/htdocs/cec/src/Controller/FileController.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20191010022234.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/LogManager.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20190827225948.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/commons/_form_footer.html.twig</file>
@@ -82,9 +83,11 @@
             <file>file:/C:/xampp/htdocs/cec/src/Entity/ExtraInformationRequest.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/commons/_form_header.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/ProjectRequest.php</file>
+            <file>file:/C:/xampp/htdocs/cec/templates/commons/_modal_validate_user.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Controller/ReportController.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/LdapUser.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Repository/CriterionRepository.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20191010022528.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/eval_request/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/templates/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/EvalRequest.php</file>
@@ -96,8 +99,10 @@
             <file>file:/C:/xampp/htdocs/cec/src/Entity/File.php</file>
             <file>file:/C:/xampp/htdocs/cec/webpack.config.js</file>
             <file>file:/C:/xampp/htdocs/cec/src/Services/Utils/ExternalDataManager.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20190929222313.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Form/TeamWorkType.php</file>
             <file>file:/C:/xampp/htdocs/cec/assets/js/evaluator.js</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20191021210422.php</file>
             <file>file:/C:/xampp/htdocs/cec/config/packages/webpack_encore.yaml</file>
             <file>file:/C:/xampp/htdocs/cec/src/Entity/WorkLog.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/pre_eval_request/new.html.twig</file>
@@ -108,6 +113,7 @@
             <file>file:/C:/xampp/htdocs/cec/src/Entity/PreEvalRequest.php</file>
             <file>file:/C:/xampp/htdocs/cec/templates/ethic_eval_request/edit.html.twig</file>
             <file>file:/C:/xampp/htdocs/cec/src/Repository/ExternalDataRepository.php</file>
+            <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20191017221411.php</file>
             <file>file:/C:/xampp/htdocs/cec/src/Controller/EvalRequestController.php</file>
             <file>file:/C:/xampp/htdocs/cec/config/routes.yaml</file>
             <file>file:/C:/xampp/htdocs/cec/src/Migrations/Version20190820010045.php</file>

@@ -33,56 +33,65 @@ class EthicEvalRequestType extends AbstractType {
                 'mapped' => false
             ])
             ->add('amountParticipants', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 1000 caracteres.',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1000, 'maxlength' => 1000],
+                'help' => 'Máximo 1000 caracteres. <span class="count">1000</span> caracter(es) restante(s)',
+                'help_html' => true,
                 'label' => 'Cantidad de participantes necesaria para lograr los objetivos, determinación estadística o justiﬁcación teórica',
                 'required' => false,
             ])
             ->add('inExCriteria', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 1500 caracteres.',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
+                'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)',
+                'help_html' => true,
                 'label' => 'Criterios de inclusión y exclusión:',
                 'required' => false,
             ])
             ->add('recruitmentParticipants', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 1500 caracteres.',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
+                'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)',
+                'help_html' => true,
                 'label' => 'Reclutamiento de los participantes (indicar cómo, quién, y cuándo se hará):',
                 'required' => false,
             ])
             ->add('collectionInformation', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 1500 caracteres.',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
+                'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)',
+                'help_html' => true,
                 'label' => 'Recolección de información. Análisis de laboratorio, imágenes, pruebas psicológicas, cuestionarios, entrevistas u otros medios para generar datos o colectar información (Si aplica)',
                 'required' => false,
             ])
             ->add('riskDeclaration', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 1000 caracteres.',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1000, 'maxlength' => 1000],
+                'help' => 'Máximo 1000 caracteres. <span class="count">1000</span> caracter(es) restante(s)',
+                'help_html' => true,
                 'label' => 'Declaración de riesgos de la investigación',
                 'required' => false,
             ])
             ->add('benefitsForParticipant', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 500 caracteres.',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 500, 'maxlength' => 500],
+                'help' => 'Máximo 500 caracteres. <span class="count">500</span> caracter(es) restante(s)',
+                'help_html' => true,
                 'label' => 'Beneﬁcios para la población:',
                 'required' => false,
             ])
             ->add('benefitsForPopulation', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 500 caracteres.',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 500, 'maxlength' => 500],
+                'help' => 'Máximo 500 caracteres. <span class="count">500</span> caracter(es) restante(s)',
+                'help_html' => true,
                 'label' => 'Beneﬁcios para el participante individual:',
                 'required' => false,
             ])
             ->add('previsionsPrivacy', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 500 caracteres.',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 500, 'maxlength' => 500],
+                'help' => 'Máximo 500 caracteres. <span class="count">500</span> caracter(es) restante(s)',
+                'help_html' => true,
                 'label' => 'Previsiones para resguardar la privacidad, conﬁdencialidad y almacenamiento de los datos, tiempo de resguardo, detalle de la anonimización de los datos de los participantes:',
                 'required' => false,
             ])
             ->add('futureUse', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4'],
-                'help' => 'Máximo 500 caracteres.',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 500, 'maxlength' => 500],
+                'help' => 'Máximo 500 caracteres. <span class="count">500</span> caracter(es) restante(s)',
+                'help_html' => true,
                 'label' => ' Indique el uso futuro de las muestras biológicas y de los datos del participante:',
                 'required' => false,
             ])

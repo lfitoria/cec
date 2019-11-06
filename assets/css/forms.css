@@ -68,6 +68,14 @@ form .input-group{
   margin-bottom: 10px;
 }
 
+.custom-file-input.invalid-extension ~ .custom-file-label, .custom-file-input.error ~ .custom-file-label{
+  border-color: red;
+}
+
+.custom-file-input ~ label.error{
+  display: none !important;
+}
+
 form .custom-file .custom-file-label{
   border-radius: 0;
   padding-left: 90px;
