@@ -237,7 +237,7 @@ class ProjectRequest {
       $this->date = $date;
     }
     function getUacademica() {
-      return $this->date;
+      return $this->uacademica;
     }
   
     function setUacademica($Uacademica) {
