@@ -120,7 +120,8 @@ class UserManager {
   // creates login session
   public function createLoginSession($opt_eval_form) {
 
-    // var_dump($opt_eval_form);
+    var_dump($opt_eval_form);
+    die();
 
     // var_dump($this->user);
 
