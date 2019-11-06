@@ -75,6 +75,12 @@ class ProjectRequestType extends AbstractType {
                 },
                 'label' => 'La presente propuesta es de tipo: '
             ])
+            ->add('uacademica', TextType::class, [
+                'attr' => ['readonly' => true, 'class'=> 'd-none'],
+                'label' => false,
+                'required' => false,
+                'mapped' => false,
+            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
 
               $projectRequest = $event->getData();
@@ -197,12 +203,6 @@ class ProjectRequestType extends AbstractType {
                 $form->add('title', TextType::class, [
                     'attr' => ['readonly' => true, 'class'=> 'project_title_researcher','id'=>'project_title'],
                     'label' => 'Título del estudio o investigación:',
-                ]);
-                $form->add('uacademica', TextType::class, [
-                    'attr' => ['readonly' => true, 'class'=> 'd-none'],
-                    'label' => false,
-                    'required' => false,
-                    'mapped' => false,
                 ]);
 
                 $form->add('projectUnit', TextType::class, [
