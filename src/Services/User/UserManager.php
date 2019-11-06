@@ -125,7 +125,8 @@ class UserManager {
 
     // var_dump($this->user);
 
-    // var_dump($this->user->getRole()->getId());
+    var_dump($this->user->getRole()->getId());
+    die();
 
     if($this->user->getRole()->getId() == 4 && $opt_eval_form == "1"){
       // $role = $this->em->getRepository(UsersRoles::class)->find(4);
