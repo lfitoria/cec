@@ -128,14 +128,12 @@ class UserManager {
       
       $objUserN->setUsername($this->user->getUsername());
       $objUserN->setRole($role);
-      $objUserN->setCarnet($this->user->getCarnet());
-      $objUserN->setName($this->user->getName());
+      $objUserN->setCarnet($this->user->getCarnet);
+      $objUserN->setName($this->user->getName);
       $objUserN->setCedulaUsuario($this->user->getCedulaUsuario());
       
 
-      $objToken = new UsernamePasswordToken($objUserN, null, 'main', array("ROLE_ADMIN"));
-    // $objToken = new UsernamePasswordToken($objUserN, null, 'main', $this->user->getRoles());
-
+    $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
 
     // update user last login
     $this->user->setLastLoginDate(new \Datetime());
