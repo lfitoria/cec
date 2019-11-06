@@ -136,12 +136,12 @@ class UserManager {
       // die();
       $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
     }else if($this->user->getRole()->getId() == 4 && $opt_eval_form == "0"){
-      role = array("ROLE_RESEARCHER");
+      $role = array("ROLE_RESEARCHER");
       // echo "4-0";
       // die();
       // $role = $this->em->getRepository(UsersRoles::class)->find(3);
       // $this->user->setRole($role);
-      $objToken = new UsernamePasswordToken($this->user, null, 'main', $role;
+      $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
     }else{
       // echo "default";
       // die();
