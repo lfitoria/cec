@@ -148,6 +148,10 @@ class UserManager {
       $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
     }
 
+    
+    var_dump($objToken);
+    die();
+
 
     // $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
 
