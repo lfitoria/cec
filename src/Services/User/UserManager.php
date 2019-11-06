@@ -120,40 +120,8 @@ class UserManager {
   // creates login session
   public function createLoginSession($opt_eval_form) {
 
-    // var_dump($opt_eval_form);
-    // die();
 
-    // var_dump($this->user);
-
-    // var_dump($this->user->getRole()->getId());
-    // die();
-
-    if($this->user->getRole()->getId() == 4 && $opt_eval_form == "1"){
-      // $role = $this->em->getRepository(UsersRoles::class)->find(4);
-      // $this->user->setRole($role);
-      $role = array( "0" => "ROLE_EVALUATOR");
-      // echo "4-1";
-      // die();
-      $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
-    }else if($this->user->getRole()->getId() == 4 && $opt_eval_form == "0"){
-      $role = array( "0" => "ROLE_RESEARCHER");
-      // echo "4-0";
-      // die();
-      // $role = $this->em->getRepository(UsersRoles::class)->find(3);
-      // $this->user->setRole($role);
-      $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
-    }else{
-      // echo "default";
-      // die();
-      $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
-    }
-
-    
-    var_dump($objToken);
-    die();
-
-
-    // $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
+    $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
 
     // update user last login
     $this->user->setLastLoginDate(new \Datetime());
