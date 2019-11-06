@@ -121,7 +121,7 @@ class UserManager {
   public function createLoginSession($opt_eval_form) {
 
 
-    $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles(1));
+    $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
 
     // update user last login
     $this->user->setLastLoginDate(new \Datetime());
