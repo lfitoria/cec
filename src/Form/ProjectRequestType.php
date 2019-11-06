@@ -202,6 +202,7 @@ class ProjectRequestType extends AbstractType {
                     'attr' => ['readonly' => true, 'class'=> 'd-none'],
                     'label' => false,
                     'required' => false,
+                    'mapped' => false,
                 ]);
 
                 $form->add('projectUnit', TextType::class, [
