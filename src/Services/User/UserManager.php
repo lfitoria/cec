@@ -130,6 +130,10 @@ class UserManager {
       $role = $this->em->getRepository(UsersRoles::class)->find(4);
       $this->user->setRole($role);
     }
+    if($this->user->getRole()->getId() == 4 && $opt_eval_form == 0){
+      $role = $this->em->getRepository(UsersRoles::class)->find(3);
+      $this->user->setRole($role);
+    }
 
     $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
 
