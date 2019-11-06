@@ -89,7 +89,11 @@ class DefaultController extends AbstractController {
         // die();
 
         $objLdapServ = $this->get('ldap');
-        $arrLoginResult = $objLdapServ->login();
+        $arrLoginResult = $objLdapServ->login(
+          array(
+              "opt_eval_form" => $evaluator
+            )
+        );
         // Ldap login result
         $arrViewData = json_decode($arrLoginResult, TRUE);
 
