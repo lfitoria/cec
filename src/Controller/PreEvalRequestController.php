@@ -86,7 +86,18 @@ class PreEvalRequestController extends AbstractController {
   
             break;
         }
+        $entityManager = $this->getDoctrine()->getManager('sip');
+        $emOracle = $this->getDoctrine()->getManager('oracle');
+
+        // $projectData = $externalDataManager->getProjectInfoByCode($entityManager, $projectCode);
+        $unit = $service->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
+        $gestor1 = $service->getGestoresByID($unit["gestoru"]);
+        $gestor2 = $service->getGestoresByID($unit["gestoric"]);
+
+        var_dump($gestor1["correo"]);
+        var_dump($gestor2["correo"]);
+        die();
   
         $emailData = [
           "subject" => $subjectEmail,
