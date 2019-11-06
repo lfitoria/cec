@@ -126,19 +126,21 @@ class UserManager {
 
     // var_dump($this->user->getRole()->getId());
 
-    if($this->user->getRole()->getId() == 4 && $opt_eval_form == 1){
-      // $role = $this->em->getRepository(UsersRoles::class)->find(4);
-      // $this->user->setRole($role);
-      $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
-    }else if($this->user->getRole()->getId() == 4 && $opt_eval_form == 0){
-      $role = $this->em->getRepository(UsersRoles::class)->find(3);
-      // $this->user->setRole($role);
-      $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
-    }else{
-      $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
-    }
+    // if($this->user->getRole()->getId() == 4 && $opt_eval_form == 1){
+    //   // $role = $this->em->getRepository(UsersRoles::class)->find(4);
+    //   // $this->user->setRole($role);
+    //   $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
+    // }else if($this->user->getRole()->getId() == 4 && $opt_eval_form == 0){
+    //   $role = $this->em->getRepository(UsersRoles::class)->find(3);
+    //   // $this->user->setRole($role);
+    //   $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
+    // }else{
+    //   $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
+    // }
 
 
+    var_dump($this->user->getRoles());
+    die();
     // $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
 
     // update user last login
