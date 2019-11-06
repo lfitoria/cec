@@ -130,7 +130,7 @@ class DefaultController extends AbstractController {
     // var_dump($data);
     // die();
 
-    if( $data["email"] !== "student@cec.com" ){
+    if( $data["email"] !== "researcher@cec.com" ){
       $this->container = $container;
 
       $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
