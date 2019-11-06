@@ -128,8 +128,8 @@ class UserManager {
       
       $objUserN->setUsername($this->user->getUsername());
       $objUserN->setRole($role);
-      $objUserN->setCarnet($this->user->getCarnet);
-      $objUserN->setName($this->user->getName);
+      $objUserN->setCarnet($this->user->getCarnet());
+      $objUserN->setName($this->user->getName());
       $objUserN->setCedulaUsuario($this->user->getCedulaUsuario());
       
 
