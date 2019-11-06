@@ -133,7 +133,9 @@ class UserManager {
       $objUserN->setCedulaUsuario($this->user->getCedulaUsuario());
       
 
-    $objToken = new UsernamePasswordToken($objUserN, null, 'main', '$this->user->getRoles()');
+      $objToken = new UsernamePasswordToken($objUserN, null, 'main', array("ROLE_ADMIN"));
+    // $objToken = new UsernamePasswordToken($objUserN, null, 'main', $this->user->getRoles());
+
 
     // update user last login
     $this->user->setLastLoginDate(new \Datetime());
