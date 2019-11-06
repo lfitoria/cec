@@ -133,7 +133,7 @@ class UserManager {
       $objUserN->setCedulaUsuario($this->user->getCedulaUsuario());
       
 
-    $objToken = new UsernamePasswordToken($objUserN, null, 'main', $this->user->getRoles());
+    $objToken = new UsernamePasswordToken($objUserN, null, 'main', '$this->user->getRoles()');
 
     // update user last login
     $this->user->setLastLoginDate(new \Datetime());
@@ -142,7 +142,7 @@ class UserManager {
 
     // save token
     $objTokenStorage = $this->container->get("security.token_storage")->setToken($objToken);
-    $this->session->set('_security_main', $objToken);
+    $this->session->set('_security_main', serialize($objToken));
   }
 
   // logout a user
