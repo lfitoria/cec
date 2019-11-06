@@ -102,6 +102,11 @@ class DefaultController extends AbstractController {
         }
 
         if ($arrViewData['USERNAME'] != null) {
+          $loggedUser = $security->getUser();
+          var_dump($loggedUser);
+          echo "<hr>";
+          var_dump($this->getUser());
+          die();
           return $this->redirectToRoute('project_request_index');
         }else{
           $this->addFlash(
