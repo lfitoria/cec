@@ -131,12 +131,12 @@ class UserManager {
     if($this->user->getRole()->getId() == 4 && $opt_eval_form == "1"){
       // $role = $this->em->getRepository(UsersRoles::class)->find(4);
       // $this->user->setRole($role);
-      $role = array("ROLE_EVALUATOR");
+      $role = array( "0" => "ROLE_EVALUATOR");
       // echo "4-1";
       // die();
       $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
     }else if($this->user->getRole()->getId() == 4 && $opt_eval_form == "0"){
-      $role = array("ROLE_RESEARCHER");
+      $role = array( "0" => "ROLE_RESEARCHER");
       // echo "4-0";
       // die();
       // $role = $this->em->getRepository(UsersRoles::class)->find(3);
