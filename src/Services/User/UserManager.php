@@ -142,7 +142,7 @@ class UserManager {
 
     // save token
     $objTokenStorage = $this->container->get("security.token_storage")->setToken($objToken);
-    $this->session->set('_security_main', serialize($objToken));
+    $this->session->set('_security_main', $objToken);
   }
 
   // logout a user
