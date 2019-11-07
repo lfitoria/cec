@@ -111,7 +111,7 @@ class LdapUser implements UserInterface {
 
     function getRole() {
       $this->session = $_SESSION;
-      if($this->session['isResearcher']){
+      if(isset($this->session['isResearcher'])){
         $role = new UsersRoles();
         $role->setId(3);
         $role->setDescription("ROLE_RESEARCHER");        

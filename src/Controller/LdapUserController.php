@@ -14,6 +14,7 @@ use App\Services\Utils\LogManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use App\Entity\UsersRoles;
 
 /**
  * @Route("/ldap/user")
@@ -129,6 +130,21 @@ class LdapUserController extends AbstractController {
       // die();
 
       $passEncryp = $encoder->encodePassword($ldapUser, $ldapUser->getPassword());
+
+
+      // $role_opt = $form->get("ldap_user_role")->getData();
+      $role_opt = $request->request->get('ldap_user');
+      
+      // var_dump($role_opt['role']);
+      // die();
+
+      if ($role_opt['role'] == "4") {
+        $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
+      }else{
+        $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(1);
+      }
+
+      $ldapUser->setRole($role);
 
 
       $ldapUser->setPassword($passEncryp);
