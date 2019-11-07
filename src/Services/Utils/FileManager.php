@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\File;
 
 class FileManager {
 
@@ -54,7 +55,7 @@ class FileManager {
   public function deleteFile(File $file, $targetDirectory) {
     $filePath = $targetDirectory . $file->getFilename();
     $wasDeleted = false;
-
+  
     if (file_exists($filePath)) {
       unlink($filePath);
 
