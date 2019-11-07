@@ -384,6 +384,8 @@ const $ = require('jquery');
 
               $("#project_request_title").val(response.projectData.dsc_proyecto);
               $("#project_request_projectUnit").val(response.projectData.dsc_unidad);
+              console.log(response.projectData.id_unidad);
+              $("#project_request_uacademica").val(response.projectData.id_unidad);
 
               $(".project_researchers_table").html("");
               $(".project_principal_researchers_row").remove("");

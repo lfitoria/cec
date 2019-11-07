@@ -89,7 +89,7 @@ class DefaultController extends AbstractController {
         // die();
 
         $objLdapServ = $this->get('ldap');
-        $arrLoginResult = $objLdapServ->login();
+        $arrLoginResult = $objLdapServ->login($evaluator);
         // Ldap login result
         $arrViewData = json_decode($arrLoginResult, TRUE);
 
@@ -102,6 +102,11 @@ class DefaultController extends AbstractController {
         }
 
         if ($arrViewData['USERNAME'] != null) {
+          // $loggedUser = $security->getUser();
+          // var_dump($loggedUser);
+          // echo "<hr>";
+          // var_dump($this->getUser());
+          // die();
           return $this->redirectToRoute('project_request_index');
         }else{
           $this->addFlash(
@@ -125,7 +130,7 @@ class DefaultController extends AbstractController {
     // var_dump($data);
     // die();
 
-    if( $data["email"] !== "student@cec.com" ){
+    if( $data["email"] !== "researcher@cec.com" ){
       $this->container = $container;
 
       $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);

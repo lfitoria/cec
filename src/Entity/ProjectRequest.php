@@ -213,6 +213,13 @@ class ProjectRequest {
      */
     private $category;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="uacademica", type="string", length=300, nullable=true)
+     */
+    private $uacademica;
+
     public function getCategory(): ?Criterion {
       return $this->category;
     }
@@ -229,6 +236,13 @@ class ProjectRequest {
   
     function setDate($date) {
       $this->date = $date;
+    }
+    function getUacademica() {
+      return $this->uacademica;
+    }
+  
+    function setUacademica($uacademica) {
+      $this->uacademica = $uacademica;
     }
   function getOwner(): LdapUser {
     return $this->owner;

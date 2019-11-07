@@ -75,6 +75,12 @@ class ProjectRequestType extends AbstractType {
                 },
                 'label' => 'La presente propuesta es de tipo: '
             ])
+            ->add('uacademica', TextType::class, [
+                'attr' => ['readonly' => true, 'class'=> 'd-none'],
+                'label' => false,
+                'required' => false,
+                'mapped' => false,
+            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
 
               $projectRequest = $event->getData();
@@ -135,10 +141,10 @@ class ProjectRequestType extends AbstractType {
                     'label' => '¿Es un proyecto de trabajo final de graduación grupal?',
                 ));
 
-                // $form->add('ascriptionUnit', TextType::class, [
-                //     'label' => 'Unidad de adscripción del proyecto:',
-                //     'required' => false,
-                // ]);
+                $form->add('ascriptionUnit', TextType::class, [
+                    'label' => 'Unidad de adscripción del proyecto:',
+                    'required' => false,
+                ]);
                 // $form->add('ascriptionUnit', ChoiceType::class, array(
                 //     'choices' => array(
                 //         'No' => '0',
@@ -198,6 +204,7 @@ class ProjectRequestType extends AbstractType {
                     'attr' => ['readonly' => true, 'class'=> 'project_title_researcher','id'=>'project_title'],
                     'label' => 'Título del estudio o investigación:',
                 ]);
+
                 $form->add('projectUnit', TextType::class, [
                     'attr' => ['readonly' => true,'id'=>'project_request_projectUnit'],
                     'label' => 'Unidad base del proyecto:',
