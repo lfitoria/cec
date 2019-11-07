@@ -2,10 +2,20 @@
 
 {% if label_question is defined %}<label>{{ label_question }}</label>{% else %}<hr>{% endif %}
 <ul class="collecion_list uploaded_files_list tags" data-list-target='{{ questionCode }}' data-prototype="{{ form_widget(form_prototype)|e('html_attr') }}">
-<small class="form-text text-muted">Haga clic en "Agregar archivo" y seleccione "Buscar" para agregar un archivo desde su computadora</small>
+  <small class="form-text text-muted">Haga clic en "Agregar archivo" y seleccione "Buscar" para agregar un archivo desde su computadora</small>
   {# iterate over each existing tag and render its only field: name #}
+  {% if oneItemMinimun %}
+    <li>
+      <div class="input-group input-group-cont">
+        <div class="custom-file">
+          <input type="file" id="project_request_{{ questionCode }}_0" name="project_request[{{ questionCode }}][0]" required="required" class="custom-file-input">
+          <label for="project_request_{{ questionCode }}_0" class="custom-file-label"></label>
+        </div>
+      </div>
+    </li>
+  {% endif %}}  
   {% for file in files if file.questionCode == questionCode %}
-  
+
     <li class="uploaded_files_list_item">{{ file.originalName }} ({{ file.size }})
       <a class="uploaded_files_list_item--delete" data-id='{{ file.id }}' href="#">{{ delete_label }}</a>
     </li>

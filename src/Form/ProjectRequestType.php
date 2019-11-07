@@ -113,16 +113,16 @@ class ProjectRequestType extends AbstractType {
                 ]);
                 $form->add('tutorName', TextType::class, [
                     'label' => 'Nombre del tutor:',
-                    'constraints' => array(
-                        new NotBlank(array("message" => "Please provide a valid email")),
-                    )
+                    'required' => false,
                 ]);
 
                 $form->add('tutorId', TextType::class, [
-                    'label' => 'Cédula:'
+                    'label' => 'Cédula:',
+                    'required' => false
                 ]);
                 $form->add('tutorEmail', TextType::class, [
-                    'label' => 'Correo institucional:'
+                    'label' => 'Correo institucional:',
+                    'required' => false
                 ]);
                 /*
                   $form->add('teamWork', CollectionType::class, [
@@ -209,6 +209,7 @@ class ProjectRequestType extends AbstractType {
                     'attr' => ['readonly' => true,'id'=>'project_request_projectUnit'],
                     'label' => 'Unidad base del proyecto:',
                 ]);
+                
                
                 $form->add('minuteCommissionTFGFiles', CollectionType::class, [
                     'entry_type' => FileType::class,

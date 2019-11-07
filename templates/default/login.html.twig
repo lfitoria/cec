@@ -139,7 +139,7 @@
                                 <input type="password" class="form-control" placeholder="CLAVE" name="password" value="{{ PASSWORD }}" required/>
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
-                            <input type="hidden" name="evaluator" value="0">
+                            <input type="hidden" name="login_admin" value="0">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">{{'Ingresar'|upper}}</button>
                         </form>
                     </div>
@@ -180,22 +180,19 @@
                 }
             });
 
-            console.log("readi");
             $(".ingreso-admin-home").click(function (e) {
                 e.preventDefault();
-                console.log("entra");
                 $(".ingreso-general-box-text").toggleClass("d-none");
                 $(".ingreso-general-box-text-admin").toggleClass("d-none");
                 $(".login-box-body").toggleClass("login-box-body-admin");
                 $(this).toggleText('INGRESO ADMINISTRATIVO', 'Regresar');
 
-                let op = $("input[name=evaluator]").val();
-                console.log("op: "+op);
+                let op = $("input[name=login_admin]").val();
 
                 if(op == 0){
-                    $("input[name=evaluator]").val("1");
+                    $("input[name=login_admin]").val("1");
                 }else{
-                    $("input[name=evaluator]").val("0");
+                    $("input[name=login_admin]").val("0");
                 }
                 
 

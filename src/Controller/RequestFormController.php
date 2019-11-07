@@ -25,17 +25,19 @@ class RequestFormController extends AbstractController {
   protected $repository;
   protected $em;
   protected $container;
+  protected $security;
 
-  function __construct(EntityManagerInterface $em, ContainerInterface $container) {
+  function __construct(EntityManagerInterface $em, ContainerInterface $container, Security $security) {
     $this->em = $em;
     $this->container = $container;
+    $this->security = $security;
   }
 
   /**
    * @Route("/informacion", name="tab_general_info_request_new")
    */
   public function tabOneRequest(Request $request, ExternalDataManager $externalDataManager) {
-
+    $loggedUser = $this->security->getUser();
     $projectRequest = new ProjectRequest();
 
     $form = $this->createForm(ProjectRequestType::class, $projectRequest, [
@@ -43,8 +45,13 @@ class RequestFormController extends AbstractController {
     ]);
     $form->handleRequest($request);
 
-    $entityManager = $this->getDoctrine()->getManager('sip');
-    $allUnitsSIP = $externalDataManager->getAllUnitsSIP($entityManager);
+    $allUnitsSIP = null;
+    if ($loggedUser->getRole()->getDescription() === "ROLE_RESEARCHER") {
+      $entityManager = $this->getDoctrine()->getManager('sip');
+      $allUnitsSIP = $externalDataManager->getAllUnitsSIP($entityManager);
+    }
+
+
     // $allUnitsSIP = false;
 
     return $this->render('project_request/new.html.twig', [
@@ -99,17 +106,17 @@ class RequestFormController extends AbstractController {
         'action' => $this->generateUrl($formRoute, $formData),
     ]);
     $form->handleRequest($request);
-    
+
     $projectCode = $projectRequest->getSipProject();
 
     if ($loggedUser->getRole()->getDescription() === "ROLE_RESEARCHER") {
       $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
-      
+
 
       $SipProject = $this->getInformationByProject($externalDataManager, $projectCode);
 
       $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectCode);
-      
+
       $entityManager = $this->getDoctrine()->getManager('sip');
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectCode);
@@ -125,13 +132,12 @@ class RequestFormController extends AbstractController {
       ]);
     }
     return $this->render($templateRoute, [
-      'academic_request_info' => $academicRequestInfo,
-      'form' => $form->createView(),
-      //'SipProject' => $SipProject,
-      // 'SipProjectExtraInformation' => $SipProjectExtraInformation,
-      // 'objetivoPrincipal' => $objetivoPrincipal,
+                'academic_request_info' => $academicRequestInfo,
+                'form' => $form->createView(),
+                    //'SipProject' => $SipProject,
+                    // 'SipProjectExtraInformation' => $SipProjectExtraInformation,
+                    // 'objetivoPrincipal' => $objetivoPrincipal,
     ]);
-
   }
 
   /**
@@ -174,12 +180,12 @@ class RequestFormController extends AbstractController {
       $researchers = $externalDataManager->getResearchersByProject($emOracle, $projectCode);
       return ["externalCollaboration" => $externalCollaboration,
           "projectData" => $projectData,
-          "researchers" => $researchers, 
+          "researchers" => $researchers,
           "projectWasFound" => true];
     }
     return ["projectWasFound" => false, "externalCollaboration" => null,
-          "projectData" => null,
-          "researchers" => null];
+        "projectData" => null,
+        "researchers" => null];
   }
 
   private function getExtraInformationByProject($externalDataManager, $projectCode) {

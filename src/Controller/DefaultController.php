@@ -45,9 +45,6 @@ class DefaultController extends AbstractController {
    * @Route("/", name="default")
    */
   public function login(ContainerInterface $container, Request $request, AuthenticationUtils $authUtils,UserPasswordEncoderInterface $encoder,Security $security) {
-    // $loggedUser = $security->getUser();
-    // var_dump($loggedUser);
-    // die();
     if ($this->getUser() != null) {
       return $this->redirectToRoute('project_request_index');
     } else {
@@ -60,18 +57,14 @@ class DefaultController extends AbstractController {
 
         $email = $request->get('email');
         $password = $request->get('password');
-        $evaluator = $request->get('evaluator');
-
-        // var_dump($evaluator);
-        // die();
+        $login_admin = $request->get('login_admin');
 
         if ($objUserServ->checkUserExists($email)) {
           
           if ($encoder->isPasswordValid($objUserServ->getUser($email), $password)) {
-            // echo "entra";
             $objUserServ->loginAction(array(
               "cedula" => $email,
-              "opt_eval_form" => $evaluator
+              "opt_eval_form" => $login_admin
             ));
             return $this->redirectToRoute('project_request_index');
 
@@ -85,11 +78,8 @@ class DefaultController extends AbstractController {
           
         }
 
-        // echo "login solo en local";
-        // die();
-
         $objLdapServ = $this->get('ldap');
-        $arrLoginResult = $objLdapServ->login($evaluator);
+        $arrLoginResult = $objLdapServ->login($login_admin);
         // Ldap login result
         $arrViewData = json_decode($arrLoginResult, TRUE);
 
@@ -102,11 +92,6 @@ class DefaultController extends AbstractController {
         }
 
         if ($arrViewData['USERNAME'] != null) {
-          // $loggedUser = $security->getUser();
-          // var_dump($loggedUser);
-          // echo "<hr>";
-          // var_dump($this->getUser());
-          // die();
           return $this->redirectToRoute('project_request_index');
         }else{
           $this->addFlash(
@@ -231,10 +216,10 @@ class DefaultController extends AbstractController {
         $email = "admin@cec.com";
         break;
     }
-    $evaluator = $request->get('evaluator');
+    
     $objUserServ->loginAction(array(
         "cedula" => $email,
-        "opt_eval_form" => $evaluator
+        "opt_eval_form" => "0"
     ));
 
     return $this->redirectToRoute('project_request_index');

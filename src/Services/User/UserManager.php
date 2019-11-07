@@ -29,41 +29,24 @@ class UserManager {
 
   // checks if user exists when login form has been submitted
   public function loginAction($strEmail) {
-    // var_dump($strEmail);
-    // die();
-    // array(4) { ["cedula"]=> string(30) "xxxxx" ["id"]=> string(10) "0115190268" ["carnet"]=> string(6) "B04278" ["tipo_usuario_ldap"]=> array(2) { ["count"]=> int(1) [0]=> string(10) "ESTUDIANTE" } }
-
-    
-
     if (!$this->checkUserExists($strEmail['cedula'])) {
       // create new user
-      // $tipo_usuario
-      $this->createUser($strEmail);
-      
+      $this->createUser($strEmail);      
     }
-    // var_dump($strEmail);
-    // die();
-
     $this->createLoginSession($strEmail['opt_eval_form']);
   }
 
   // get user data from database
   public function getUser($strEmail) {
     return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail));
-    // var_dump($strEmail);
-    // die();
   }
   public function getPass($strEmail) {
     return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail));
-    // var_dump($strEmail);
-    // die();
   }
 
   // Check if a user exists on database
   public function checkUserExists($strEmail) {
     $this->user = $this->getUser($strEmail);
-    // var_dump($strEmail);
-    // die();
     return (!empty($this->user)) ? true : false;
   }
 
@@ -72,12 +55,6 @@ class UserManager {
     $boolResult = false;
     $objCurrentDatetime = new \Datetime();
 
-    // echo "<pre>";
-    // var_dump($tipo_usuario);
-    // var_dump($tipo_usuario_ldap);
-    // echo "</pre>";
-    // die();
-
     try {
 
       if (isset($strEmail["tipo_usuario_ldap"][1]) && $strEmail["tipo_usuario_ldap"][1] == "DOCENTE") {
@@ -85,9 +62,6 @@ class UserManager {
       } else {
         $role_find = 2;
       }
-
-      // var_dump($role_find);
-      // die();
 
       $role = $this->em->getRepository(UsersRoles::class)->find($role_find);
 
@@ -119,27 +93,20 @@ class UserManager {
 
   // creates login session
   public function createLoginSession($opt_eval_form) {
-
-      // $role = $this->em->getRepository(UsersRoles::class)->find(1);
-
-      // $objUserN = new LdapUser();
-      // $objUserN->setEmail($this->user->getEmail());
-      
-      
-      // $objUserN->setUsername($this->user->getUsername());
-      // $objUserN->setRole($role);
-      // $objUserN->setCarnet($this->user->getCarnet);
-      // $objUserN->setName($this->user->getName);
-      // $objUserN->setCedulaUsuario($this->user->getCedulaUsuario());
-      
-
-    $objToken = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
-
-    // update user last login
+    $_SESSION["isResearcher"] = false;
+    $role = $this->user->getRoles();
+    
+    if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"])   && $opt_eval_form === "0"){
+      $role = ["ROLE_RESEARCHER"];
+      $_SESSION["isResearcher"] = true;
+    }
+    
     $this->user->setLastLoginDate(new \Datetime());
     $this->em->persist($this->user);
     $this->em->flush();
-
+    
+    $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
+    
     // save token
     $objTokenStorage = $this->container->get("security.token_storage")->setToken($objToken);
     $this->session->set('_security_main', serialize($objToken));

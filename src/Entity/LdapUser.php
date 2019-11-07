@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Entity\UsersRoles;
 /**
  * LdapUser
  *
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity
  */
 class LdapUser implements UserInterface {
-
+    
     /**
      * @var int
      *
@@ -28,6 +29,8 @@ class LdapUser implements UserInterface {
      * @ORM\Column(name="email", type="string", length=200, nullable=false)
      */
     private $email;
+    
+    private $isResearcher;
 
     /**
      * @var string
@@ -107,7 +110,15 @@ class LdapUser implements UserInterface {
     }
 
     function getRole() {
-        return $this->role;
+      $this->session = $_SESSION;
+      if($this->session['isResearcher']){
+        $role = new UsersRoles();
+        $role->setId(3);
+        $role->setDescription("ROLE_RESEARCHER");        
+        return $role;
+
+      }
+      return $this->role;
     }
 
     // function getLastLoginDate(): \DateTime {
@@ -172,6 +183,7 @@ class LdapUser implements UserInterface {
     }
 
     function setRole($role) {
+        
         $this->role = $role;
     }
 
@@ -199,6 +211,14 @@ class LdapUser implements UserInterface {
     // }
     public function getPassword() {
         return $this->password;
+    }
+
+    function getIsResearcher() {
+      return $this->isResearcher;
+    }
+
+    function setIsResearcher($isResearcher) {
+      $this->isResearcher = $isResearcher;
     }
 
     public function getRoles() {

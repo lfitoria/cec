@@ -193,12 +193,13 @@ const $ = require('jquery');
           }
         });
         totalSize = totalSize / 1000000;
-        if (totalSize > 40) {
-          $("#size-files-error").removeClass("d-none");
-          return false;
-        }
-        if (!hasValidExtension) {
-          $("#extension-files-error").removeClass("d-none");
+        if (totalSize > 40 || !hasValidExtension) {
+          if (totalSize > 40) {
+            $("#size-files-error").removeClass("d-none");
+          }
+          if (!hasValidExtension) {
+            $("#extension-files-error").removeClass("d-none");
+          }
           return false;
         }
         return true;
