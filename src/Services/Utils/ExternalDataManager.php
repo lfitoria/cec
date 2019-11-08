@@ -409,7 +409,7 @@ class ExternalDataManager {
         where u.uacademica LIKE ':projectCode%'";
 
 var_dump($query);
-die();
+// die();
     try {
 
       $connection = $em->getConnection();
@@ -419,7 +419,8 @@ die();
 
       $results = $statement->fetchAll();
     } catch (\Exception $e) {
-      // var_dump($e);
+       var_dump($e);
+       die();
       return null;
     }
     return $results;
