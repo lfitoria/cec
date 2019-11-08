@@ -25,6 +25,7 @@ class ExternalDataManager {
 
       $connection = $em->getConnection();
       $statement = $connection->prepare('SELECT
+                    Proy.IND_VINCULO_EXTERNO,
                     Proy.id_formulario "ID_FORMULARIO",
                     Proy.id_periodo,
                     Proy.fec_inicio "fecha_inicio",
