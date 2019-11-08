@@ -100,8 +100,10 @@ class PreEvalRequestController extends AbstractController {
         $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
         $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
 
-        var_dump($gestor1["correo"]);
-        var_dump($gestor2["correo"]);
+        var_dump($gestor1);
+        var_dump($gestor2);
+        var_dump($gestor1["0"]["correo"]);
+        var_dump($gestor2["0"]["correo"]);
         die();
   
         $emailData = [
