@@ -107,18 +107,27 @@ class PreEvalRequestController extends AbstractController {
         // var_dump($gestor2);
         // var_dump($gestor1["0"]["correo"]);
         // var_dump($gestor2["0"]["correo"]);
-         die();
+        //  die();
         
         $correos = array();
 
-        array_push($correos, "gabriela.chaconzamora@ucr.ac.cr");
+        if ($$vinculo["IND_VINCULO_EXTERNO"] == "1") {
+          array_push($correos, trim($gestor2["0"]["correo"]));
+       }else{
+          array_push($correos, trim($gestor1["0"]["correo"]));
+       }
+
+        array_push($correos, "lfitoria@eldomo.net");
+
+        var_dump($correos);
+         die();
 
         $emailData = [
           "subject" => $subjectEmail,
           "from" => "catedrahumboldt.vi@ucr.ac.cr",
           // "to" => $projectRequest->getOwner()->getEmail(),
           "to" => "luisfitoria91@gmail.com",
-          "cc" => "lfitoria@eldomo.net",
+          "cc" => $correos,
           "body" => $this->render('emails/evaluatorAssigment.html.twig', [
           'project_request' => $projectRequest,
           'details_eval' => $preEvalRequest->getObservations(),
