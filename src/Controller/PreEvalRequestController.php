@@ -91,7 +91,7 @@ class PreEvalRequestController extends AbstractController {
 
         // $projectData = $externalDataManager->getProjectInfoByCode($entityManager, $projectCode);
         var_dump($projectRequest->getUacademica());
-        
+
         $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
 
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
@@ -107,7 +107,7 @@ class PreEvalRequestController extends AbstractController {
         // var_dump($gestor2);
         // var_dump($gestor1["0"]["correo"]);
         // var_dump($gestor2["0"]["correo"]);
-        // die();
+         die();
         
         $correos = array();
 
