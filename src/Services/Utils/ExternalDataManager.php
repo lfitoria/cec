@@ -402,10 +402,14 @@ class ExternalDataManager {
     
   }
   public function getUnitInfoByIDA($em, $projectCode) {
-
+    var_dump($projectCode);
+    
     $query = "SELECT u.descrip as name, u.director, u.unidad, a.descrip as area, u.uacademica as area_acad, u.gestoru, u.gestoric FROM sip.dbo.unidades u inner join
     sip.dbo.areas a on u.area = a.area
         where u.uacademica LIKE ':projectCode%'";
+
+var_dump($query);
+die();
     try {
 
       $connection = $em->getConnection();
