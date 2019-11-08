@@ -166,9 +166,9 @@ class ProjectRequestController extends AbstractController {
   public function new(Request $request, FileManager $fileManager, Security $security, ExternalDataManager $externalDataManager): Response {
 
     $data = $request->request->all();
-
+    echo = "<pre>";
     var_dump($data);
-
+    echo = "</pre>";
     $loggedUser = $security->getUser();
 
     $projectRequest = new ProjectRequest();
