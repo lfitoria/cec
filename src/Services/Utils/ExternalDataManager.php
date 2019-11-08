@@ -403,24 +403,30 @@ class ExternalDataManager {
   }
   public function getUnitInfoByIDA($em, $projectCode) {
     
-    try {
-      var_dump($projectCode);
+    // try {
+    //   var_dump($projectCode);
     
-      $query = "SELECT u.descrip as name, u.director, u.unidad, a.descrip as area, u.uacademica as area_acad, u.gestoru, u.gestoric FROM sip.dbo.unidades u inner join sip.dbo.areas a on u.area = a.area where u.uacademica LIKE ':projectCode%'";
+    //   $query = "SELECT u.descrip as name, u.director, u.unidad, a.descrip as area, u.uacademica as area_acad, u.gestoru, u.gestoric FROM sip.dbo.unidades u inner join sip.dbo.areas a on u.area = a.area where u.uacademica LIKE ':projectCode%'";
 
-      var_dump($query);
-      // die();
-      $connection = $em->getConnection();
-      $statement = $connection->prepare($query);
-      $statement->bindValue('projectCode', $projectCode);
-      $statement->execute();
+    //   var_dump($query);
+    //   // die();
+    //   $connection = $em->getConnection();
+    //   $statement = $connection->prepare($query);
+    //   $statement->bindValue('projectCode', $projectCode);
+    //   $statement->execute();
 
-      $results = $statement->fetchAll();
-    } catch (\Exception $e) {
-       var_dump($e);
-       die();
-      return null;
-    }
+    //   $results = $statement->fetchAll();
+    // } catch (\Exception $e) {
+    //    var_dump($e);
+    //    die();
+    //   return null;
+    // }
+    // return $results;
+    $connection = $em->getConnection();
+    $statement = $connection->prepare("SELECT u.descrip as name, u.director, u.unidad, a.descrip as area, u.uacademica as area_acad, u.gestoru, u.gestoric FROM sip.dbo.unidades u inner join sip.dbo.areas a on u.area = a.area where u.uacademica LIKE 'projectCode%'");
+    $statement->execute();
+
+    $results = $statement->fetchAll();
     return $results;
   }
   public function getGestoresByID($em, $id) {
