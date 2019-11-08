@@ -97,8 +97,8 @@ class PreEvalRequestController extends AbstractController {
         var_dump($unit);
         echo "</pre>";
         
-        $gestor1 = $externalDataManager->getGestoresByID($unit["0"]["gestoru"]);
-        $gestor2 = $externalDataManager->getGestoresByID($unit["0"]["gestoric"]);
+        $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
+        $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
 
         var_dump($gestor1["correo"]);
         var_dump($gestor2["correo"]);
