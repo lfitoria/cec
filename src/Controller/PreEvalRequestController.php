@@ -91,21 +91,28 @@ class PreEvalRequestController extends AbstractController {
 
         // $projectData = $externalDataManager->getProjectInfoByCode($entityManager, $projectCode);
         var_dump($projectRequest->getUacademica());
+        
+        $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
+
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
         echo "<pre>";
-        var_dump($unit);
+        var_dump($vinculo);
         echo "</pre>";
         
         $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
         $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
 
-        var_dump($gestor1);
-        var_dump($gestor2);
-        var_dump($gestor1["0"]["correo"]);
-        var_dump($gestor2["0"]["correo"]);
-        die();
-  
+        // var_dump($gestor1);
+        // var_dump($gestor2);
+        // var_dump($gestor1["0"]["correo"]);
+        // var_dump($gestor2["0"]["correo"]);
+        // die();
+        
+        $correos = array();
+
+        array_push($correos, "gabriela.chaconzamora@ucr.ac.cr");
+
         $emailData = [
           "subject" => $subjectEmail,
           "from" => "catedrahumboldt.vi@ucr.ac.cr",
