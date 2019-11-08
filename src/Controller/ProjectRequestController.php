@@ -206,8 +206,9 @@ class ProjectRequestController extends AbstractController {
 
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
 
-      var_dump($form->get("project_request_uacademica")->getData());
-      die();
+      // var_dump($form->get("project_request_uacademica")->getData());
+      $projectRequest->setState($request->request->get('uacademica'));
+      // die();
 
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       // $projectRequest->setTitle($state);
