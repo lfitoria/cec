@@ -164,6 +164,7 @@ class ProjectRequestController extends AbstractController {
    * @Route("/new", name="project_request_new", methods={"GET","POST"})
    */
   public function new(Request $request, FileManager $fileManager, Security $security, ExternalDataManager $externalDataManager): Response {
+    $data = $request->request->all();
     $loggedUser = $security->getUser();
 
     $projectRequest = new ProjectRequest();
