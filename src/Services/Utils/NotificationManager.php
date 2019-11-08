@@ -74,12 +74,12 @@ class NotificationManager {
   public function sendEmail($emailData) {
     // var_dump($emailData);
     // die();
-    if ( isset($emailData["cc"]) ) {
-      // $emailData["cc"] = null;
-      $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"], $emailData["cc"]]));
-    }else{
-      $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"] ]));
-    }
+    // if ( isset($emailData["cc"]) ) {
+    //   // $emailData["cc"] = null;
+    //   $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"], $emailData["cc"]]));
+    // }else{
+    //   $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"] ]));
+    // }
     // die();
     
 
