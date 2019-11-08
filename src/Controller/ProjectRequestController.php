@@ -208,7 +208,7 @@ class ProjectRequestController extends AbstractController {
 
       // var_dump($form->get("project_request_uacademica")->getData());
       // $u_academica = $request->request->get('uacademica');
-      var_dump($data["uacademica"]);
+      var_dump($data["project_request"]["uacademica"]);
       die();
       $projectRequest->setState($request->request->get('uacademica'));
       // die();
