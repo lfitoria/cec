@@ -90,10 +90,10 @@ class PreEvalRequestController extends AbstractController {
         $emOracle = $this->getDoctrine()->getManager('oracle');
 
         // $projectData = $externalDataManager->getProjectInfoByCode($entityManager, $projectCode);
-        $unit = $service->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
+        $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
-        $gestor1 = $service->getGestoresByID($unit["gestoru"]);
-        $gestor2 = $service->getGestoresByID($unit["gestoric"]);
+        $gestor1 = $externalDataManager->getGestoresByID($unit["gestoru"]);
+        $gestor2 = $externalDataManager->getGestoresByID($unit["gestoric"]);
 
         var_dump($gestor1["correo"]);
         var_dump($gestor2["correo"]);
