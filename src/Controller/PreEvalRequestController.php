@@ -89,38 +89,26 @@ class PreEvalRequestController extends AbstractController {
         $entityManager = $this->getDoctrine()->getManager('sip');
         $emOracle = $this->getDoctrine()->getManager('oracle');
 
-        // $projectData = $externalDataManager->getProjectInfoByCode($entityManager, $projectCode);
-        var_dump($projectRequest->getUacademica());
-
         $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
 
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
-        echo "<pre>";
-        var_dump($vinculo);
-        echo "</pre>";
-        
         $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
         $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
-
-        // var_dump($gestor1);
-        // var_dump($gestor2);
-        // var_dump($gestor1["0"]["correo"]);
-        // var_dump($gestor2["0"]["correo"]);
-        //  die();
         
         $correos = array();
 
-        if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
-          array_push($correos, trim($gestor2["0"]["correo"]));
-       }else{
-          array_push($correos, trim($gestor1["0"]["correo"]));
-       }
+      //   if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
+      //     array_push($correos, trim($gestor2["0"]["correo"]));
+      //  }else{
+      //     array_push($correos, trim($gestor1["0"]["correo"]));
+      //  }
 
         array_push($correos, "lfitoria@eldomo.net");
+        array_push($correos, "nsalas@eldomo.net");
 
-        var_dump($correos);
-         die();
+        // var_dump($correos);
+        //  die();
 
         $emailData = [
           "subject" => $subjectEmail,
