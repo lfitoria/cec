@@ -110,12 +110,14 @@ class PreEvalRequestController extends AbstractController {
         // var_dump($correos);
         //  die();
 
+        $correos_fix = implode(", ", $correos);
+
         $emailData = [
           "subject" => $subjectEmail,
           "from" => "catedrahumboldt.vi@ucr.ac.cr",
           // "to" => $projectRequest->getOwner()->getEmail(),
           "to" => "luisfitoria91@gmail.com",
-          "cc" => $correos,
+          "cc" => $correos_fix,
           "body" => $this->render('emails/evaluatorAssigment.html.twig', [
           'project_request' => $projectRequest,
           'details_eval' => $preEvalRequest->getObservations(),
