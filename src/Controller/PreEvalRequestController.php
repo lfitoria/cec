@@ -111,7 +111,7 @@ class PreEvalRequestController extends AbstractController {
         
         $correos = array();
 
-        if ($$vinculo["IND_VINCULO_EXTERNO"] == "1") {
+        if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
           array_push($correos, trim($gestor2["0"]["correo"]));
        }else{
           array_push($correos, trim($gestor1["0"]["correo"]));
