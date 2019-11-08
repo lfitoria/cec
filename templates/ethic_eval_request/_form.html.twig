@@ -40,5 +40,37 @@
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig', {'finish': 1}) }}
 {{ include('commons/_modal_validate_user.html.twig') }}
+{{ include('commons/_modal_info.html.twig') }}
 
+<script>
+  console.log('readi');
+  $( document ).ready(function() {
+    function show_popup(){
+    console.log( "ready!" );
+    $( "#ethic_eval_request_population" ).prev().css( {"width": "auto","position":"relative" });
+    $( "#ethic_eval_request_population" ).parent().find("legend").append('<a class="toolbox" href="javascript:void(0)" onClick="divFunction(this)" id="ethic_eval_request_population_modal">?</a>');
+    //2
+    $( "#ethic_eval_request_inExCriteria" ).prev().css( {"width": "auto","position":"relative" });
+    $( "#ethic_eval_request_inExCriteria" ).parent().find("label").append('<a class="toolbox" href="javascript:void(0)" onClick="divFunction(this)" id="ethic_eval_request_inExCriteria_modal">?</a>');
+    //3
+    $( "#ethic_eval_request_dataType" ).prev().css( {"width": "auto","position":"relative" });
+    $( "#ethic_eval_request_dataType" ).parent().find("legend").append('<a class="toolbox" href="javascript:void(0)" onClick="divFunction(this)" id="ethic_eval_request_dataType_modal">?</a>');
+    //4
+    $( "#ethic_eval_request_informedAssent" ).prev().css( {"width": "auto","position":"relative" });
+    $( "#ethic_eval_request_informedAssent" ).parent().find("legend").append('<a class="toolbox" href="javascript:void(0)" onClick="divFunction(this)" id="ethic_eval_request_informedAssent_modal">?</a>');
+    
+    }
+    window.setTimeout( show_popup, 500 ); // 5 seconds
+
+});
+  function divFunction(){
+    console.log(this);
+    console.log(this.document.activeElement.id);
+
+    let id = this.document.activeElement.id
+
+    jQuery('#'+id+'_open').modal('show');
+
+  }
+</script>
 

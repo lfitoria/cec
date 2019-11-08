@@ -32,7 +32,7 @@ final class Version20190817193327 extends AbstractMigration {
 	(9, 'Participantes privados de libertad', 'population'),
 	(10, 'Estudiantes de las actividades docentes del investigador.', 'population'),
 	(11, 'Adultos mayores', 'population'),
-	(12, 'No aplica', 'population'),
+	(12, 'Población no vulnerable', 'population'),
 	(13, 'Personales', 'dataType'),
 	(14, 'Conﬁdenciales', 'dataType'),
 	(15, 'Sensibles ', 'dataType'),

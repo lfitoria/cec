@@ -115,7 +115,7 @@ class DefaultController extends AbstractController {
     // var_dump($data);
     // die();
 
-    if( $data["email"] !== "researcher@cec.com" ){
+    if( $data["email"] !== "student@cec.com" ){
       $this->container = $container;
 
       $arrViewData = array('USER_EMAIL' => NULL, 'PASSWORD' => NULL, 'ERROR' => NULL);
@@ -189,7 +189,7 @@ class DefaultController extends AbstractController {
    */
   public function logout() {
     // controller can be blank: it will never be executed!
-    throw new \Exception('Don\'t forget to activate logout in security.yaml');
+    throw new \Exception('Don\'t forget to activate logout in security.yaml'); 
   }
 
   /**

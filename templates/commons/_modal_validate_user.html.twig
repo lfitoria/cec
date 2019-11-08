@@ -39,3 +39,24 @@
         </div>
     </div>
 </div>
+<!-- Modal new user -->
+<div class="modal fade" id="new_user_modal_open" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close btn-close-modalnew" data-dismiss="modal" aria-label="Close">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="col">
+                    <p>entra</p>
+                    {# {{ include('ldap_user/_form.html.twig') }} #}
+                    {{ render(path('ldap_user_new')) }}
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-close-modalnew" data-dismiss="modal">Cancelar envio</button>
+        </div>
+    </div>
+</div>

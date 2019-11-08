@@ -72,6 +72,7 @@
 {{ form_row(form.metodologyObserv) }}
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}
+{{ include('commons/_modal_info.html.twig') }}
 {# <div contenteditable="true">
 {{SipProject.antecedentes|raw}}
 </div>#}
@@ -82,3 +83,26 @@
 {# <pre>
     {{ dump(objetivoPrincipal) }}
 </pre>   #}
+
+<script>
+  console.log('readi');
+  $( document ).ready(function() {
+    function show_popup(){
+    console.log( "ready!" );
+    $( "#academic_request_info_hypothesis" ).prev().css( {"width": "auto","position":"relative" });
+    $( "#academic_request_info_hypothesis" ).parent().find("label").append('<a class="toolbox" href="javascript:void(0)" onClick="divFunction(this)" id="academic_request_info_hypothesis_modal">?</a>');
+    
+    }
+    window.setTimeout( show_popup, 500 ); // 5 seconds
+
+});
+  function divFunction(){
+    console.log(this);
+    console.log(this.document.activeElement.id);
+
+    let id = this.document.activeElement.id
+
+    jQuery('#'+id+'_open').modal('show');
+
+  }
+</script>

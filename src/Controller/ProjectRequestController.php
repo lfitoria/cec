@@ -164,6 +164,11 @@ class ProjectRequestController extends AbstractController {
    * @Route("/new", name="project_request_new", methods={"GET","POST"})
    */
   public function new(Request $request, FileManager $fileManager, Security $security, ExternalDataManager $externalDataManager): Response {
+
+    $data = $request->request->all();
+
+    var_dump($data);
+
     $loggedUser = $security->getUser();
 
     $projectRequest = new ProjectRequest();
@@ -200,6 +205,9 @@ class ProjectRequestController extends AbstractController {
 
 
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
+
+      var_dump($form->get("project_request_uacademica")->getData());
+      die();
 
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       // $projectRequest->setTitle($state);

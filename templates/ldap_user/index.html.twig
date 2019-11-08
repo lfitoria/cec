@@ -67,4 +67,16 @@
     </table>
 
     <a href="{{ path('ldap_user_new') }}" class="btn btn-success">Crear usuario +</a>
+
+    <a href="#" id="o_m_u" class="btn btn-success">Crear +</a>
+    {{ include('commons/_modal_validate_user.html.twig') }}
+    
+
+    <script>
+        $('#o_m_u').click(function(e){
+            e.preventDefault();
+            jQuery('#new_user_modal_open').modal('show');
+        });
+    </script>
+
 {% endblock %}

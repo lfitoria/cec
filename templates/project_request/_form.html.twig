@@ -163,7 +163,9 @@
 {{ form_row(form.extInstitutions) }}
 {{ form_row(form.placeOfStudy) }}
 <div class="inline-custom-radio">
+  
   {{ form_row(form.extInstitutionsAuthorization, {attr: {'data-code': 'extInstitutionsAuthorizationFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+  
 </div>
 <div id="extInstitutionsAuthorizationFiles" class="d-none">
   {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.extInstitutionsAuthorizationFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'extInstitutionsAuthorizationFiles', 'delete_label': 'Eliminar'}) }}
@@ -235,3 +237,34 @@
 
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}
+{{ include('commons/_modal_info.html.twig') }}
+
+
+
+<script>
+  console.log('readi');
+  $( document ).ready(function() {
+    function show_popup(){
+    console.log( "ready!" );
+    $( "#project_request_extInstitutionsAuthorization" ).prev().css( {"width": "auto","position":"relative" });
+    $( "#project_request_extInstitutionsAuthorization" ).parent().parent().find("legend").append('<a class="toolbox" href="javascript:void(0)" onClick="divFunction(this)" id="project_request_extInstitutionsAuthorization_modal">?</a>');
+    //2
+    $( "#project_request_involvesHumans" ).prev().css( {"width": "auto","position":"relative" });
+    $( "#project_request_involvesHumans" ).parent().parent().find("legend").append('<a class="toolbox" href="javascript:void(0)" onClick="divFunction(this)" id="project_request_involvesHumans_modal">?</a>');
+    //3
+    $( "#project_request_docHumanInformation" ).prev().css( {"width": "auto","position":"relative" });
+    $( "#project_request_docHumanInformation" ).parent().parent().find("legend").append('<a class="toolbox" href="javascript:void(0)" onClick="divFunction(this)" id="project_request_docHumanInformation_modal">?</a>');
+    }
+    window.setTimeout( show_popup, 500 ); // 5 seconds
+
+});
+  function divFunction(){
+    console.log(this);
+    console.log(this.document.activeElement.id);
+
+    let id = this.document.activeElement.id
+
+    jQuery('#'+id+'_open').modal('show');
+
+  }
+</script>
