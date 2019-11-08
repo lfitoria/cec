@@ -164,11 +164,6 @@ class ProjectRequestController extends AbstractController {
    * @Route("/new", name="project_request_new", methods={"GET","POST"})
    */
   public function new(Request $request, FileManager $fileManager, Security $security, ExternalDataManager $externalDataManager): Response {
-
-    $data = $request->request->all();
-    echo "<pre>";
-    var_dump($data);
-    echo "</pre>";
     $loggedUser = $security->getUser();
 
     $projectRequest = new ProjectRequest();
@@ -206,17 +201,13 @@ class ProjectRequestController extends AbstractController {
 
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
 
-      // var_dump($form->get("project_request_uacademica")->getData());
-      // $u_academica = $request->request->get('uacademica');
-      var_dump($data["project_request"]["uacademica"]);
-      die();
-      $projectRequest->setState($request->request->get('uacademica'));
-      // die();
-
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       // $projectRequest->setTitle($state);
       $projectRequest->setState($state);
       $projectRequest->setDate(new \DateTime('now'));
+
+      $projectRequest->setUacademica($data["project_request"]["uacademica"]);
+      
       $entityManager = $this->getDoctrine()->getManager();
 
       $entityManager->persist($projectRequest);
