@@ -82,12 +82,17 @@ class EthicEvalRequestController extends AbstractController {
         $loggedUser = $security->getUser();
         $role = $loggedUser->getRole()->getDescription();
         
+        $correos = array();
+
+        array_push($correos, "lfitoria@eldomo.net");
+        array_push($correos, "camacho.le@gmail.com");
+        
         $emailData = [
             "subject" => "Nueva solicitud",
             "from" => "catedrahumboldt.vi@ucr.ac.cr",
-            "to" => "lfitoria@eldomo.net",
+            "to" => "daihanna.hernandez@ucr.ac.cr",
             // "to" => "camacho.le@gmail.com",
-            "cc" => "camacho.le@gmail.com",
+            "cc" => $correos,
             "body" => $this->render('emails/evaluatorAssigment.html.twig', [
               'project_request' => $projectRequest,
               'details_eval' => ''

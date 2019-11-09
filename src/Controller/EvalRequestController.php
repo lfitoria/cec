@@ -100,13 +100,34 @@ class EvalRequestController extends AbstractController {
             
                     break;
                 }
+
+                $entityManager = $this->getDoctrine()->getManager('sip');
+                $emOracle = $this->getDoctrine()->getManager('oracle');
+
+                $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
+
+                $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
+                
+                $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
+                $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
+                
+                $correos = array();
+
+                if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
+                    array_push($correos, trim($gestor2["0"]["correo"]));
+                }else{
+                    array_push($correos, trim($gestor1["0"]["correo"]));
+                }
+
+                    array_push($correos, "lfitoria@eldomo.net");
+                    array_push($correos, "camacho.le@gmail.com");
             
                 $emailData = [
                 "subject" => $subjectEmail,
                 "from" => "catedrahumboldt.vi@ucr.ac.cr",
-                // "to" => $projectRequest->getOwner()->getEmail(),
-                "to" => "luisfitoria91@gmail.com",
-                "cc" => "lfitoria@eldomo.net",
+                "to" => $projectRequest->getOwner()->getEmail(),
+                //"to" => "luisfitoria91@gmail.com",
+                "cc" => $correos,
                 "body" => $this->render('emails/evaluatorAssigment.html.twig', [
                 'project_request' => $projectRequest,
                 'details_eval' => $evalRequest->getObservations(),
