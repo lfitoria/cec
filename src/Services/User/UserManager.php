@@ -34,8 +34,8 @@ class UserManager {
       $this->createUser($strEmail);      
     }else{
       // $objUser->setCarnet($strEmail["carnet"]);
-      $this->user = $this->setCarnet($strEmail["carnet"]);
-      $this->user = $this->setCedulaUsuario($strEmail["id"]);
+      $this->user->setCarnet($strEmail["carnet"]);
+      $this->user->setCedulaUsuario($strEmail["id"]);
     }
     $this->createLoginSession($strEmail['opt_eval_form']);
   }
