@@ -77,8 +77,7 @@ class Ldap {
               "tipo_usuario_ldap" => $data[0]["ucrrelacion"],
               "opt_eval_form" => $evaluator
           ));
-          $objUser->setCarnet($strEmail["carnet"]);
-          $objUser->setCedulaUsuario($strEmail["id"]);
+          
         }
       } catch (Exception $e) {
         ldap_close($ldap['conn']);

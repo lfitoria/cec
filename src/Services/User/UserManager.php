@@ -32,6 +32,10 @@ class UserManager {
     if (!$this->checkUserExists($strEmail['cedula'])) {
       // create new user
       $this->createUser($strEmail);      
+    }else{
+      // $objUser->setCarnet($strEmail["carnet"]);
+      $this->user = $this->setCarnet($strEmail["carnet"]);
+      $this->user = $this->setCedulaUsuario($strEmail["id"]);
     }
     $this->createLoginSession($strEmail['opt_eval_form']);
   }
