@@ -134,7 +134,7 @@ class EvalRequestController extends AbstractController {
                 ])
                 ];
             
-                $notificationManager->sendEmail($emailData);
+                //$notificationManager->sendEmail($emailData);
 
                 $logData = array(
                     "description" => $evalRequest->getStatus()->getDescription(),

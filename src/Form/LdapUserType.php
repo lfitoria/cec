@@ -28,8 +28,12 @@ class LdapUserType extends AbstractType
             ->add('email', TextType::class, [
                 'label' => false
             ])
-            ->add('username')
-            ->add('name')
+            ->add('username',TextType::class,[
+                'required' => false,
+            ])
+            ->add('name',TextType::class,[
+                'required' => false,
+            ])
             // ->add('password')
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,

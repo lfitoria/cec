@@ -102,7 +102,7 @@ const $ = require('jquery');
           cache.form.submit();
         }
       });
-
+      
       cache.form_buttons.click(function () {
         cache.form_target[0].value = $(this).data('target');
         if (cache.form_finish[0]) {
@@ -119,8 +119,8 @@ const $ = require('jquery');
               var action = document.getElementById("valdiate_send_user_form").action;
               var fd = new FormData(myform);
               var _this = $(this);
-              var path = "/cec/public/validate_user_send";
-              // var path = "/validate_user_send";
+              // var path = "/cec/public/validate_user_send";
+              var path = "/validate_user_send";
               $.ajax({
                 type: 'POST',
                 enctype: "multipart/form-data",
@@ -167,6 +167,58 @@ const $ = require('jquery');
             });
           }
         }
+      });
+      cache.btn_new_user_modal.click(function (event) {
+        event.preventDefault();
+        console.log("entrenew");
+        var myform = document.getElementById("ldap_user_new_modal_form");
+              var action = document.getElementById("ldap_user_new_modal_form").action;
+              var fd = new FormData(myform);
+              var _this = $(this);
+              // var path = "/cec/public/validate_user_send";
+              var path = "/ldap/user/new-modal";
+              console.log(action);
+              console.log(path);
+              $.ajax({
+                type: 'POST',
+                enctype: "multipart/form-data",
+                url: action,
+                context: _this,
+                data: fd,
+                processData: false,
+                contentType: false,
+                // beforeSend: loadStart,
+                // complete: loadStop,
+                
+                dataType: 'json'
+              }).done(function (data) {
+                console.log('respuesta:'+ data.wasAssigned);
+                console.log('respuesta:'+ data.error);
+                
+                
+                if (data.wasAssigned === false) {
+
+                  Swal.fire({
+                    position: 'center',
+                    type: 'error',
+                    title: 'Error. Correo ya existe.',
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                } else {
+
+                  Swal.fire({
+                    position: 'center',
+                    type: 'info',
+                    title: 'Usuario creado',
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                  jQuery('#new_user_modal_open').modal('hide');
+                  location.reload();
+                }
+              });
+              // finajax
       });
 
       function loadStart() {
@@ -471,6 +523,7 @@ const $ = require('jquery');
       cache.nav_items = $('.form_header_nav_item');
       cache.letter_counter_inputs = $('.letter-counter');
       cache.form_buttons = $('.form_footer_button');
+      cache.btn_new_user_modal = $('#btn_new_user_modal');
       cache.form_target = $('.form_target_input');
       cache.form_finish = $('.form_finish_input');
       cache.form = $('.form-request, .form-eval');

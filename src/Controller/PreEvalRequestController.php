@@ -119,7 +119,7 @@ class PreEvalRequestController extends AbstractController {
           ])
         ];
       
-        $notificationManager->sendEmail($emailData);
+        //$notificationManager->sendEmail($emailData);
         $logData = array(
           "description" => $preEvalRequest->getStatus()->getDescription(),
           "request" => $projectRequest,

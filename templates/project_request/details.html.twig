@@ -127,7 +127,7 @@ ul {
     <p>
         <strong>1.2 Nombre del investigador (a) principal:</strong>
     </p>
-
+    
     {% if project_info is not null and project_info.researchers|length > 0 %}
         <ul>
             {% for researcher in project_info.researchers if researcher.dsc_tipo_participacion|trim is same as('Investigador principal / Responsable') or researcher.dsc_tipo_participacion|trim is same as('PRINCIPAL')  %}
@@ -155,6 +155,7 @@ ul {
             </tr>
         </thead>
         <tbody class="project_researchers_table">
+        
             {% if project_info is not null and project_info.researchers|length > 0 %}
                 {% for researcher in project_info.researchers if researcher.dsc_tipo_participacion|trim is same as('Colaborador / Asociado')  %}
                     <tr>
@@ -231,6 +232,8 @@ ul {
             </tr>
         </thead>
         <tbody class="team_work_table">
+            {% if project_request.teamWork|length > 0 %}
+            
             {% for team in project_request.teamWork %}
                 <tr>
                     <td scope="col" class="text-muted">{{ team.name }}
@@ -240,6 +243,12 @@ ul {
 
                 </tr>
             {% endfor %}
+            
+            {% else %}
+            <tr class="no-data">
+                    <td scope="col" colspan="3" class="text-muted">No hay miembros de grupo </td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 {% endif %}
@@ -272,7 +281,7 @@ ul {
     <ul>
         {% for file in project_request.infoRequestFiles if file.questionCode is same as("extInstitutionsAuthorizationFiles")  %}
             <li>
-                <a href="{{file.originalName}}">{{file.originalName}}</a>
+                <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
             </li>
         {% endfor %}
     </ul>
@@ -297,13 +306,14 @@ ul {
 <p>
     <strong>1.11 Acta de la comisión científica del instituto o centro de investigaciones:</strong>
 </p>
+
 {% if project_request.minutesResearchCenter is empty %}
     <p class="text-muted font-italic">No</p>
 {% else %}
     <ul>
         {% for file in project_request.infoRequestFiles if file.questionCode is same as("minutesResearchCenterFiles")  %}
             <li>
-                <a href="{{file.originalName}}">{{file.originalName}}</a>
+                <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
             </li>
         {% endfor %}
     </ul>
@@ -311,17 +321,14 @@ ul {
 <p>
     <strong>1.12 Acta de la comisión de trabajos finales de graduación:</strong>
 </p>
-{# <p>
-        <strong>1.13 La presente propuesta es de tipo:</strong>
-    </p>
-    <p class="text-muted font-italic">{{project_request.category|default("Sin dato")}}</p> #}
+
 {% if project_request.minuteFinalWork is null %}
     <p class="text-muted font-italic">No</p>
 {% else %}
     <ul>
         {% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteFinalWorkFiles")  %}
             <li>
-                <a href="{{file.originalName}}">{{file.originalName}}</a>
+                <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
             </li>
         {% endfor %}
     </ul>
@@ -335,7 +342,7 @@ ul {
     <ul>
         {% for file in project_request.infoRequestFiles if file.questionCode is same as("categoryBiomedicaFiles")  %}
             <li>
-                <a href="{{file.originalName}}">{{file.originalName}}</a>
+                <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
             </li>
         {% endfor %}
     </ul>
@@ -351,7 +358,7 @@ ul {
     <ul>
         {% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteCommissionTFGFiles")  %}
             <li>
-                <a href="{{file.originalName}}">{{file.originalName}}</a>
+                <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
             </li>
         {% endfor %}
     </ul>
@@ -445,8 +452,7 @@ ul {
 {% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
     <div class="form-group">
         <p>
-            <strong>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de
-                                                                                                    muestras biológicas –si aplica:</strong>
+            <strong>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de muestras biológicas –si aplica:</strong>
         </p>
         {% if SipProjectExtraInformation %}
             {# <textarea class="form-control" name="" id="" rows="10" disabled>{{SipProject.metodologia|striptags|raw|default('Sin datos')}}</textarea> #}
@@ -546,7 +552,7 @@ ul {
     <ul>
         {% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedConsentFiles")  %}
             <li>
-                <a href="{{file.originalName}}">{{file.originalName}}</a>
+                <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
             </li>
         {% endfor %}
     </ul>
@@ -560,7 +566,7 @@ ul {
     <ul>
         {% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedAssentFiles")  %}
             <li>
-                <a href="{{file.originalName}}">{{file.originalName}}</a>
+                <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
             </li>
         {% endfor %}
     </ul>

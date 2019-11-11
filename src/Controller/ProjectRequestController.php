@@ -517,10 +517,13 @@ class ProjectRequestController extends AbstractController {
       $projectDir = $this->getParameter('brochures_directory');
 
       if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
+        // var_dump($form->get("minuteFinalWorkFiles")->getData());
         $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
         $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
 
         $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
+        // var_dump($projectDir);
+        // die();
         $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
 
         $uploadedTeamWork = $request->request->get('teamWork');

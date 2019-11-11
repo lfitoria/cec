@@ -39,6 +39,8 @@ class FileManager {
   }
 
   public function uploadFiles($files, $targetDirectory, $questionCode) {
+    // var_dump($files);
+    // die();
     $uploadedFiles = array();
     if ($files) {
       foreach ($files as $file) {

@@ -25,15 +25,97 @@ class LdapUserController extends AbstractController {
    * @Route("/", name="ldap_user_index", methods={"GET"})
    */
   public function index(): Response {
-    $requestsFilter = array("role" => [4]);
+    $requestsFilter = array("role" => [1,4]);
     $ldapUsers = $this->getDoctrine()
             ->getRepository(LdapUser::class)
             // ->findAll();
             ->findBy($requestsFilter);
 
+    $ldapUser = new LdapUser();
+
+    $form = $this->createForm(LdapUserType::class, $ldapUser, [
+        'action' => $this->generateUrl('ldap_user_new_modal')
+    ]);
+    // $form->handleRequest($request);
+
     return $this->render('ldap_user/index.html.twig', [
                 'ldap_users' => $ldapUsers,
+                'form' => $form->createView()
     ]);
+  }
+  /**
+   * @Route("/new-modal", name="ldap_user_new_modal", methods={"GET","POST"})
+   */
+  public function newUserModal(Request $request, UserPasswordEncoderInterface $encoder, LogManager $log, ContainerInterface $container): Response {
+    $ldapUser = new LdapUser();
+    $form = $this->createForm(LdapUserType::class, $ldapUser);
+    $form->handleRequest($request);
+    $error = false;
+    $this->container = $container;
+    $objUserServ = $this->container->get('user_manager');
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+      if (!$objUserServ->checkUserExists($form->get("email")->getData())) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $objCurrentDatetime = new \Datetime();
+
+        $objUser = new LdapUser();
+        $objUser->setEmail($form->get("email")->getData());
+        $objUser->setCreationDate($objCurrentDatetime);
+        $objUser->setLastLoginDate($objCurrentDatetime);
+        $objUser->setUsername($form->get("username")->getData());
+
+        $passEncryp = $encoder->encodePassword($objUser, $form->get("password")->getData());
+
+        $role_opt = $request->request->get('ldap_user');
+        
+        if ($role_opt['role'] !== '0'){ 
+          if ($role_opt['role'] == "4") {
+            $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
+          }else{
+            $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(1);
+          }
+          $objUser->setRole($role);
+        }
+        
+
+        
+
+        $objUser->setPassword($passEncryp);
+        //$objUser->setRole($form->get("role")->getData());
+        
+        $objUser->setName($form->get("name")->getData());
+        $objUser->setCedulaUsuario($form->get("cedula_usuario")->getData());
+        $objUser->setExternal($form->get("external")->getData());
+
+        $entityManager->persist($objUser);
+        $entityManager->flush();
+
+
+        $logData = array(
+          "description" => "Insercion de usuario: ".$form->get("email")->getData(),
+        );
+        $log->insertLog($logData);
+
+        return new JsonResponse(['wasAssigned' => true]);
+      }else{
+        $this->addFlash(
+          'notice',
+          'Correo ya existe.'
+          
+        );
+        return new JsonResponse(['wasAssigned' => false,'error' => 'Correo ya existe.']);
+        
+        
+      }
+    }else{
+      return new JsonResponse(['wasAssigned' => false]);
+    }
+
+    
+
   }
 
   /**
@@ -131,12 +213,7 @@ class LdapUserController extends AbstractController {
 
       $passEncryp = $encoder->encodePassword($ldapUser, $ldapUser->getPassword());
 
-
-      // $role_opt = $form->get("ldap_user_role")->getData();
       $role_opt = $request->request->get('ldap_user');
-      
-      // var_dump($role_opt['role']);
-      // die();
 
       if ($role_opt['role'] == "4") {
         $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
