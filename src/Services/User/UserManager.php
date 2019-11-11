@@ -34,7 +34,7 @@ class UserManager {
       $this->createUser($strEmail);      
     }else{
       // $objUser->setCarnet($strEmail["carnet"]);
-      if ($strEmail["carnet"] !== '') {
+      if ( isset($strEmail["carnet"]) ) {
         $this->user->setCarnet($strEmail["carnet"]);
         $this->user->setCedulaUsuario($strEmail["id"]);
       }
