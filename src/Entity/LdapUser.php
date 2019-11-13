@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\UsersRoles;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * LdapUser
  *
@@ -27,6 +28,7 @@ class LdapUser implements UserInterface {
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=200, nullable=false)
+     * @Assert\NotBlank(message="Campo requerido")
      */
     private $email;
     

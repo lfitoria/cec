@@ -106,12 +106,14 @@ class LdapUserController extends AbstractController {
           'Correo ya existe.'
           
         );
-        return new JsonResponse(['wasAssigned' => false,'error' => 'Correo ya existe.']);
+        return new JsonResponse(['wasAssigned' => false,'error' => $form->getErrors() ]);
         
         
       }
     }else{
-      return new JsonResponse(['wasAssigned' => false]);
+      // var_dump($form->getErrors());
+      // return new JsonResponse(['wasAssigned' => false]);
+      return new JsonResponse(['wasAssigned' => false,'error' => $form->getErrors() ]);
     }
 
     

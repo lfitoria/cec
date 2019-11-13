@@ -179,6 +179,7 @@ const $ = require('jquery');
               var path = "/ldap/user/new-modal";
               console.log(action);
               console.log(path);
+              if (cache.form.valid()) {
               $.ajax({
                 type: 'POST',
                 enctype: "multipart/form-data",
@@ -219,6 +220,7 @@ const $ = require('jquery');
                 }
               });
               // finajax
+            }
       });
 
       function loadStart() {
@@ -526,7 +528,7 @@ const $ = require('jquery');
       cache.btn_new_user_modal = $('#btn_new_user_modal');
       cache.form_target = $('.form_target_input');
       cache.form_finish = $('.form_finish_input');
-      cache.form = $('.form-request, .form-eval');
+      cache.form = $('.form-request, .form-eval, #ldap_user_new_modal_form');
       cache.decision_inputs = $(".decision_question input");
       cache.project_request_category = $("#project_request_category input");
       cache.uploaded_item_delete = $(".uploaded_files_list_item--delete");

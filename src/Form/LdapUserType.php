@@ -25,9 +25,7 @@ class LdapUserType extends AbstractType
     {
         $builder
             
-            ->add('email', TextType::class, [
-                'label' => false
-            ])
+            ->add('email')
             ->add('username',TextType::class,[
                 'required' => false,
             ])
@@ -76,9 +74,19 @@ class LdapUserType extends AbstractType
                     'Evaluador' => '4',
                 ),
                 'expanded' => true,
+                'data' => '4',
                 'label' => 'Rol:',
                 'required' => true
             ));
+            // $form->add('involvesHumans', ChoiceType::class, array(
+            //     'choices' => array(
+            //         'No' => '0',
+            //         'Sí' => '1',
+            //     ),
+            //     'data' => $projectRequest->getInvolvesHumans() ? $projectRequest->getInvolvesHumans() : '0',
+            //     'expanded' => true,
+            //     'label' => '¿La investigación involucra participantes humanos?',
+            // ));
         ;
     }
 
@@ -86,6 +94,9 @@ class LdapUserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => LdapUser::class,
+            'attr' => [
+                'novalidate' => 'novalidate'
+            ]
         ]);
     }
 }
