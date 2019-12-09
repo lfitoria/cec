@@ -631,7 +631,7 @@ class ProjectRequestController extends AbstractController {
 // $url = 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones';
 //  $url = 'https://pokeapi.co/api/v2/pokemon/ditto/';
 //Initiate cURL.
-$ch = curl_init($url);
+// $ch = curl_init($url);
  
 //The JSON data.
 // $jsonData = array(
