@@ -637,7 +637,7 @@ $ch = curl_init($url);
 $jsonData = array(
         'pvc_Usuario' => 'SysUsrVicerrectoriaInvestigacion',
         'pvc_Clave' => 'FN5uMcTVBDqv0',
-        'pvn_NumeroEmpleado' => '1000',
+        'pvn_NumeroEmpleado' => '0113060256',
 );
  
 //Encode the array into JSON.
