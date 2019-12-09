@@ -27,6 +27,7 @@ use App\Entity\EthicEvalRequest;
 use App\Entity\WorkLog;
 use Knp\Snappy\Pdf;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Symfony\Component\HttpClient\HttpClient;
 
 /**
  * @Route("/solicitud")
@@ -613,7 +614,7 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/rest-api", name="rest_api", methods={"GET","POST"})
    */
-  public function restApi(): Response {
+  public function restApi( HttpClient $client ): Response {
 
   
   $response = $client->request('POST', 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones', [
