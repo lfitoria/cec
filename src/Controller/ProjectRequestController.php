@@ -614,9 +614,26 @@ class ProjectRequestController extends AbstractController {
    * @Route("/rest-api", name="rest_api", methods={"GET","POST"})
    */
   public function restApi(): Response {
+
+  
+  $response = $client->request('POST', 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones', [
+      // use a different HTTP Basic authentication only for this request
+      //0113060256 amolina
+      // 'auth_basic' => ['SysUsrVicerrectoriaInvestigacion', 'FN5uMcTVBDqv0'],
+      'query' => [
+        'pvc_Usuario' => 'SysUsrVicerrectoriaInvestigacion',
+        'pvc_Clave' => 'FN5uMcTVBDqv0',
+        'pvn_NumeroEmpleado' => '0113060256',
+        
+    ],
+      // ...
+  ]);
+  $content = $response->getContent();
+  var_dump($content);
+  echo "<hr>";
     echo "test";
     die();
-    
+
     return false;
   }
 }
