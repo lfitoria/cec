@@ -28,6 +28,8 @@ use App\Entity\WorkLog;
 use Knp\Snappy\Pdf;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpClient\CurlHttpClient;
+use Symfony\Component\HttpClient\NativeHttpClient;
 
 /**
  * @Route("/solicitud")
@@ -614,9 +616,9 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/rest-api", name="rest_api", methods={"GET","POST"})
    */
-  public function restApi( HttpClient $client ): Response {
+  public function restApi(  ): Response {
 
-  
+    $client = new CurlHttpClient();
   $response = $client->request('POST', 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones', [
       // use a different HTTP Basic authentication only for this request
       //0113060256 amolina
