@@ -655,9 +655,9 @@ class ProjectRequestController extends AbstractController {
 //Execute the request
 // $result = curl_exec($ch);
 
-$base = 'https://pokeapi.co/api/v2/pokemon/';
+$base = 'https://pokeapi.co/api/v2/pokemon/1';
 $id = 1;
-$data = file_get_contents($base.$id.'/');
+$data = file_get_contents($base);
 $result = json_decode($data);
 
   var_dump($result);
