@@ -618,21 +618,43 @@ class ProjectRequestController extends AbstractController {
    */
   public function restApi(  ): Response {
 
-    $client = new CurlHttpClient();
-  $response = $client->request('POST', 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones', [
-      // use a different HTTP Basic authentication only for this request
-      //0113060256 amolina
-      // 'auth_basic' => ['SysUsrVicerrectoriaInvestigacion', 'FN5uMcTVBDqv0'],
-      'query' => [
+  //   $client = new CurlHttpClient();
+  //   $response = $client->request('POST', 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones', [
+  //     'query' => [
+  //       'pvc_Usuario' => 'SysUsrVicerrectoriaInvestigacion',
+  //       'pvc_Clave' => 'FN5uMcTVBDqv0',
+  //       'pvn_NumeroEmpleado' => '0113060256',
+  //   ],
+  // ]);
+  // $content = $response->getContent();
+  //API Url
+$url = 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones';
+ 
+//Initiate cURL.
+$ch = curl_init($url);
+ 
+//The JSON data.
+$jsonData = array(
         'pvc_Usuario' => 'SysUsrVicerrectoriaInvestigacion',
         'pvc_Clave' => 'FN5uMcTVBDqv0',
-        'pvn_NumeroEmpleado' => '0113060256',
-        
-    ],
-      // ...
-  ]);
-  $content = $response->getContent();
-  var_dump($content);
+        'pvn_NumeroEmpleado' => '1000',
+);
+ 
+//Encode the array into JSON.
+$jsonDataEncoded = json_encode($jsonData);
+ 
+//Tell cURL that we want to send a POST request.
+curl_setopt($ch, CURLOPT_POST, 1);
+ 
+//Attach our encoded JSON string to the POST fields.
+curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+ 
+//Set the content type to application/json
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+ 
+//Execute the request
+$result = curl_exec($ch);
+  var_dump($result);
   echo "<hr>";
     echo "test";
     die();
