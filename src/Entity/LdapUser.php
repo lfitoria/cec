@@ -25,10 +25,10 @@ class LdapUser implements UserInterface {
     private $id;
 
     /**
+     * @Assert\NotBlank(message="test")
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=200, nullable=false)
-     * @Assert\NotBlank(message="Campo requerido")
      */
     private $email;
     

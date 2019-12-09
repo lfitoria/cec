@@ -53,9 +53,9 @@
                 <td>{{ ldap_user.carnet }}</td>
                 <td>{{ ldap_user.cedulausuario }}</td>
                 <td class="d-flex justify-content-between">
-                    <a class="btn" href="{{ path('ldap_user_show', {'id': ldap_user.id}) }}">Mostrar </a>
+                    <a class="btn-blue" href="{{ path('ldap_user_show', {'id': ldap_user.id}) }}">Mostrar </a>
                     
-                    <a class="btn" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">Editar</a>
+                    <a class="btn-blue" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}

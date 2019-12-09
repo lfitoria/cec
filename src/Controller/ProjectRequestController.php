@@ -610,4 +610,13 @@ class ProjectRequestController extends AbstractController {
     }
     return false;
   }
+  /**
+   * @Route("/rest-api", name="rest_api", methods={"GET","POST"})
+   */
+  public function restApi(): Response {
+    echo "test";
+    die();
+    
+    return false;
+  }
 }

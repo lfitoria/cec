@@ -7,6 +7,7 @@ parameters:
     # brochures_directory: '%kernel.project_dir%\public\uploads\files\'
     brochures_directory: '%kernel.project_dir%/public/uploads/files/'
     email_attatchments_directory: '%kernel.project_dir%\public\uploads\email_attatchments'
+    local: 'es'
 
 services:
     ldap:
