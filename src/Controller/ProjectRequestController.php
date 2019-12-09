@@ -629,7 +629,7 @@ class ProjectRequestController extends AbstractController {
   // $content = $response->getContent();
   //API Url
 // $url = 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones';
- $url = 'https://pokeapi.co/api/v2/evolution-chain/?limit=20&offset=20';
+ $url = 'https://pokeapi.co/api/v2/pokemon/ditto/';
 //Initiate cURL.
 $ch = curl_init($url);
  
