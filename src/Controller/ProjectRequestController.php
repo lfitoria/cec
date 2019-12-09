@@ -659,8 +659,9 @@ $base = 'https://pokeapi.co/api/v2/pokemon/1';
 $id = 1;
 $data = file_get_contents($base);
 $result = json_decode($data);
-
+echo "<pre>";
   var_dump($result);
+  echo "</pre>";
   echo "<hr>";
     echo "test";
     die();
