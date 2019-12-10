@@ -500,7 +500,7 @@ const $ = require('jquery');
       //new
       cache.getObtenerNumeroDeEmpleado.click(function (e) {
         e.preventDefault();
-        var _this = $(this);
+        // var _this = $(this);
         // let num = $(".add_getObtenerNumeroDeEmpleado_input").val();
         let num = 205770949;
         let u = "SysUsrVicerrectoriaInvestigacion";
@@ -512,7 +512,7 @@ const $ = require('jquery');
         $.ajax({
           type: 'POST',
           url: 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_DatosPersonales.svc/rest/ObtenerNumeroDeEmpleado',
-          context: _this,
+          // context: _this,
           data: {
             pvc_Usuario: u ,
             pvc_Clave: p,
