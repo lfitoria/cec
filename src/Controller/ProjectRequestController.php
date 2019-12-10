@@ -679,7 +679,7 @@ $payload = json_encode($data);
 
 // Prepare new cURL resource
 // $ch = curl_init('https://sla_serviciosexternos.ads.ci.ucr.ac.cr/Ws_DatosPersonales.svc');
-$ch = curl_init('https://sla_serviciosexternos.ads.ci.ucr.ac.cr/Ws_DatosPersonales.svc/ObtenerNumeroDeEmpleado');
+$ch = curl_init('https://sla_serviciosexternos.ads.ci.ucr.ac.cr/Ws_DatosPersonales/ObtenerNumeroDeEmpleado.svc');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 curl_setopt($ch, CURLOPT_POST, true);
