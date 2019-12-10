@@ -654,7 +654,8 @@ class ProjectRequestController extends AbstractController {
  
 //Execute the request
 // $result = curl_exec($ch);
-
+//poke
+/*
 $base = 'https://pokeapi.co/api/v2/pokemon/1';
 $id = 1;
 $data = file_get_contents($base);
@@ -665,6 +666,39 @@ echo "<pre>";
   echo "<hr>";
     echo "test";
     die();
+*/
+
+$data = array(
+  'pvc_Usuario' => 'SysUsrVicerrectoriaInvestigacion',
+  'pvc_Clave' => 'FN5uMcTVBDqv0',
+  'pvn_NumeroEmpleado' => '0113060256',
+);
+
+$payload = json_encode($data);
+
+// Prepare new cURL resource
+$ch = curl_init('https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+// Set HTTP Header for POST request 
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+  'Content-Type: application/json',
+  'Content-Length: ' . strlen($payload))
+);
+
+// Submit the POST request
+$result = curl_exec($ch);
+
+// Close cURL session handle
+curl_close($ch);
+var_dump($result);
+  echo "</pre>";
+  echo "<hr>";
+  echo "test";
+  die();
 
     return false;
   }
