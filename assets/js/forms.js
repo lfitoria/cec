@@ -502,7 +502,7 @@ const $ = require('jquery');
         e.preventDefault();
         // var _this = $(this);
         // let num = $(".add_getObtenerNumeroDeEmpleado_input").val();
-        let num = 205770949;
+        let num = "205770949";
         let u = "SysUsrVicerrectoriaInvestigacion";
         let p = "FN5uMcTVBDqv0";
 
