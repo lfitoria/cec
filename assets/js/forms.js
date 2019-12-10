@@ -497,6 +497,35 @@ const $ = require('jquery');
           }
         });
       });
+      //new
+      cache.getObtenerNumeroDeEmpleado.click(function (e) {
+        e.preventDefault();
+        var _this = $(this);
+        // let num = $(".add_getObtenerNumeroDeEmpleado_input").val();
+        let num = 205770949;
+        let u = "SysUsrVicerrectoriaInvestigacion";
+        let p = "FN5uMcTVBDqv0";
+
+        console.log("entranum");
+        console.log(num);
+        //var path = _this[0].dataset.path;
+        $.ajax({
+          type: 'POST',
+          url: 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_DatosPersonales.svc/rest/ObtenerNumeroDeEmpleado',
+          context: _this,
+          data: {
+            pvc_Usuario: u ,
+            pvc_Clave: p,
+            pvn_IdTipoIdentificacion: 1,
+            pvc_IdPersonal: num,
+          },
+          dataType: 'json',
+          success: function (response) {
+            console.log("respuesta ajax"+response)
+          }
+        });
+        
+      });
     }
 
 
@@ -541,6 +570,7 @@ const $ = require('jquery');
       cache.selected_student_delete = $(".selected_teamwork_item--delete");
       cache.uploaded_student_delete = $(".uploaded_teamwork_item--delete");
       cache.addProjectInfoButton = $(".add_project_info_button");
+      cache.getObtenerNumeroDeEmpleado = $(".getObtenerNumeroDeEmpleado");
 
       var collectionFileHolder = $('.collecion_list');
       for (var i = 0; i < collectionFileHolder.length; i++) {

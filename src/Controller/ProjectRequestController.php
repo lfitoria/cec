@@ -616,7 +616,7 @@ class ProjectRequestController extends AbstractController {
   /**
    * @Route("/rest-api", name="rest_api", methods={"GET","POST"})
    */
-  public function restApi(  ): Response {
+  public function restApi(): Response {
 
   //   $client = new CurlHttpClient();
   //   $response = $client->request('POST', 'https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones', [
@@ -667,7 +667,8 @@ echo "<pre>";
     echo "test";
     die();
 */
-
+//JOSE
+/*
 $data = array(
   'pvc_Usuario' => 'SysUsrVicerrectoriaInvestigacion',
   'pvc_Clave' => 'FN5uMcTVBDqv0',
@@ -703,5 +704,7 @@ var_dump($result);
   die();
 
     return false;
+  }*/
+  return $this->render('project_request/rest-api.html.twig');
   }
 }
