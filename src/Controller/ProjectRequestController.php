@@ -671,14 +671,15 @@ echo "<pre>";
 $data = array(
   'pvc_Usuario' => 'SysUsrVicerrectoriaInvestigacion',
   'pvc_Clave' => 'FN5uMcTVBDqv0',
-  'pvn_NumeroEmpleado' => '205770949',
-  'pvn_IdTipoIdentificacion' => '1'
+  'pvn_IdTipoIdentificacion' => '205770949',
+  
 );
 
 $payload = json_encode($data);
 
 // Prepare new cURL resource
-$ch = curl_init('https://sla_serviciosexternos.ads.ci.ucr.ac.cr/Ws_DatosPersonales.svc');
+// $ch = curl_init('https://sla_serviciosexternos.ads.ci.ucr.ac.cr/Ws_DatosPersonales.svc');
+$ch = curl_init('https://sla_serviciosexternos.ads.ci.ucr.ac.cr/ObtenerNumeroDeEmpleado.svc');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 curl_setopt($ch, CURLOPT_POST, true);
