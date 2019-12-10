@@ -677,7 +677,7 @@ $data = array(
 $payload = json_encode($data);
 
 // Prepare new cURL resource
-$ch = curl_init('https://sla_serviciosexternos.sdp.ucr.ac.cr/Ws_Certificaciones.svc/rest/Ws_Certificaciones');
+$ch = curl_init('https://sla_serviciosexternos.ads.ci.ucr.ac.cr/Ws_DatosPersonales.svc');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 curl_setopt($ch, CURLOPT_POST, true);
