@@ -523,9 +523,11 @@ const $ = require('jquery');
           success: function (response) {
             console.log("respuesta ajax"+response)
           },
-          error: function (jqXHR, textStatus, errorThrown) { 
-            console.log(`respuesta error ${jqXHR}, ${textStatus}, ${errorThrown}`)
-           }
+          error: function (xhr, textStatus, error) { 
+            console.log(xhr.statusText);
+            console.log(textStatus);
+            console.log(error);
+          }
         });
         
       });
