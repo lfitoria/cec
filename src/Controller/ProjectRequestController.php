@@ -671,7 +671,7 @@ echo "<pre>";
 $data = array(
   'pvc_Usuario' => 'SysUsrVicerrectoriaInvestigacion',
   'pvc_Clave' => 'FN5uMcTVBDqv0',
-  'pvn_IdTipoIdentificacion' => '205770949',
+  'pvn_IdTipoIdentificacion' => 205770949,
   
 );
 
