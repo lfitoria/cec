@@ -517,7 +517,7 @@ const $ = require('jquery');
             pvc_Usuario: u ,
             pvc_Clave: p,
             pvn_IdTipoIdentificacion: 1,
-            pvc_IdPersonal: num,
+            pvc_IdPersonal: "205770949",
           },
           dataType: 'json',
           success: function (response) {
