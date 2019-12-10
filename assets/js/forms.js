@@ -522,7 +522,10 @@ const $ = require('jquery');
           dataType: 'json',
           success: function (response) {
             console.log("respuesta ajax"+response)
-          }
+          },
+          error: function (jqXHR, textStatus, errorThrown) { 
+            console.log(`respuesta error ${jqXHR}, ${textStatus}, ${errorThrown}`)
+           }
         });
         
       });
