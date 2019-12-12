@@ -511,7 +511,7 @@ const $ = require('jquery');
         //var path = _this[0].dataset.path;
         $.ajax({
           type: 'POST',
-          url: 'https://sla_serviciosexternos.ads.ci.ucr.ac.cr/Ws_DatosPersonales.svc/rest/ObtenerNumeroDeEmpleado',
+          url: 'https://172.16.96.10/Ws_DatosPersonales.svc/rest/ObtenerNumeroDeEmpleado',
           // context: _this,
           data: {
             pvc_Usuario: u ,
