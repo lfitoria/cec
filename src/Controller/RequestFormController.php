@@ -160,6 +160,10 @@ class RequestFormController extends AbstractController {
       $ethicEvalRequest = new EthicEvalRequest();
     }
 
+    $form_user = $this->createForm(LdapUserType::class, $ldapUser, [
+      'action' => $this->generateUrl('ldap_user_new_modal')
+    ]);
+
     $form = $this->createForm(EthicEvalRequestType::class, $ethicEvalRequest, [
         'action' => $this->generateUrl($formRoute, $formData),
     ]);
@@ -167,7 +171,8 @@ class RequestFormController extends AbstractController {
 
     return $this->render($templateRoute, [
                 'ethic_eval_request' => $ethicEvalRequest,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'form_user' => $form_user->createView(),
     ]);
   }
 

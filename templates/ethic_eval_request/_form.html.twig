@@ -39,14 +39,14 @@
 
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig', {'finish': 1}) }}
-{{ include('commons/_modal_validate_user.html.twig') }}
+{{ include('commons/_modal_validate_user.html.twig',{'form': form_user}) }}
 {{ include('commons/_modal_info.html.twig') }}
 
 <script>
-  console.log('readi');
+  
   $( document ).ready(function() {
     function show_popup(){
-    console.log( "ready!" );
+    
     $( "#ethic_eval_request_population" ).prev().css( {"width": "auto","position":"relative" });
     $( "#ethic_eval_request_population" ).parent().find("legend").append('<a class="toolbox" href="javascript:void(0)" onClick="divFunction(this)" id="ethic_eval_request_population_modal">?</a>');
     //2
