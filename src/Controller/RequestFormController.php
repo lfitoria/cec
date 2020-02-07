@@ -16,6 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Services\Utils\ExternalDataManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\LdapUser;
+use App\Form\LdapUserType;
 
 /**
  * @Route("/solicitud")
