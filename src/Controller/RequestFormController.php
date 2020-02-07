@@ -159,7 +159,7 @@ class RequestFormController extends AbstractController {
     } else {
       $ethicEvalRequest = new EthicEvalRequest();
     }
-
+    $ldapUser = new LdapUser();
     $form_user = $this->createForm(LdapUserType::class, $ldapUser, [
       'action' => $this->generateUrl('ldap_user_new_modal')
     ]);
