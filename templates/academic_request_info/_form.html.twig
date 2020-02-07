@@ -39,7 +39,7 @@
             <label>Objetivos:</label>
         </p>
         {% if objetivoPrincipal %}
-            <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos')}}</textarea>
+            <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|default('Sin datos')|striptags|raw}}</textarea>
         {% else %}
             <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
         {% endif %}
