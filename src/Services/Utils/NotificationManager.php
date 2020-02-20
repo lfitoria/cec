@@ -21,15 +21,15 @@ class NotificationManager {
     $this->fileManager = $fileManager;
 
     // Create the Transport
-    // $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
-    //         ->setUsername('catedrahumboldt.vi@ucr.ac.cr')
-    //         ->setPassword('$Humbo_2019#');
+    $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
+            ->setUsername('catedrahumboldt.vi@ucr.ac.cr')
+            ->setPassword('$Humbo_2019#');
     // $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
     //          ->setUsername('cec@ucr.ac.cr')
     //          ->setPassword('CECUCR.16');
-    $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
-            ->setUsername('jonathan.rojas@ucr.ac.cr')
-            ->setPassword('Gxs1607V***');
+    // $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
+    //         ->setUsername('jonathan.rojas@ucr.ac.cr')
+    //         ->setPassword('Gxs1607V***');
 
     $this->mailer = (new \Swift_Mailer($this->transport));
   }

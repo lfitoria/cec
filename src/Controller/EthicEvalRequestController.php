@@ -231,7 +231,7 @@ class EthicEvalRequestController extends AbstractController {
     // die();
     $emailData = [
       "subject" => "Nueva solicitud",
-      "from" => "jonathan.rojas@ucr.ac.cr",
+      "from" => "catedrahumboldt.vi@ucr.ac.cr",
       "to" => "lfitoria@eldomo.net",
       // "to" => "camacho.le@gmail.com",
       //"cc" => "camacho.le@gmail.com",
