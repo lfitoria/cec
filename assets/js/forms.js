@@ -59,11 +59,15 @@ const $ = require('jquery');
 
     }
     function showActivatedInputs() {
+      console.log("click--");
       cache.decision_inputs.each(function () {
         var _this = $(this);
         var targetId = "#" + _this.parent().parent().data("code");
         if ($(this).is(":checked") && $(this).val() === '1') {
           $(targetId).removeClass("d-none");
+          $(".add_file_button").click();
+          
+
         } else {
           $(targetId).addClass("d-none");
           $(targetId).find("input").attr('required', false);
@@ -119,8 +123,8 @@ const $ = require('jquery');
               var action = document.getElementById("valdiate_send_user_form").action;
               var fd = new FormData(myform);
               var _this = $(this);
-              // var path = "/cec/public/validate_user_send";
-              var path = "/validate_user_send";
+              var path = "/cec/public/validate_user_send";
+              //var path = "/validate_user_send";
               $.ajax({
                 type: 'POST',
                 enctype: "multipart/form-data",
