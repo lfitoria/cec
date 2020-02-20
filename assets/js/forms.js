@@ -59,7 +59,7 @@ const $ = require('jquery');
 
     }
     function showActivatedInputs() {
-      console.log("click--");
+      
       cache.decision_inputs.each(function () {
         var _this = $(this);
         var targetId = "#" + _this.parent().parent().data("code");
@@ -118,13 +118,15 @@ const $ = require('jquery');
             jQuery('#valdiate_send_user').modal('show');
 
             $('#valdiate_send_user_submit').click(function (event) {
+              cache.form.submit()
               event.preventDefault();
               var myform = document.getElementById("valdiate_send_user_form");
               var action = document.getElementById("valdiate_send_user_form").action;
               var fd = new FormData(myform);
               var _this = $(this);
-              var path = "/cec/public/validate_user_send";
-              //var path = "/validate_user_send";
+              //var path = "/cec/public/validate_user_send";
+              console.log("valdiate_send_user_submit");
+              var path = "/validate_user_send";
               $.ajax({
                 type: 'POST',
                 enctype: "multipart/form-data",
@@ -137,6 +139,8 @@ const $ = require('jquery');
                 complete: loadStop,
                 dataType: 'json'
               }).done(function (data) {
+                console.log(data.wasAssigned);
+                //console.log(cache.form.submit());
                 if (data.wasAssigned === false) {
 
                   jQuery("#errorUserReq").removeClass("d-none");

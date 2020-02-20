@@ -21,12 +21,12 @@ class NotificationManager {
     $this->fileManager = $fileManager;
 
     // Create the Transport
-    // $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
-    //         ->setUsername('catedrahumboldt.vi@ucr.ac.cr')
-    //         ->setPassword('$Humbo_2019#');
     $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
-             ->setUsername('cec@ucr.ac.cr')
-             ->setPassword('CECUCR.16');
+            ->setUsername('catedrahumboldt.vi@ucr.ac.cr')
+            ->setPassword('$Humbo_2019#');
+    // $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
+    //          ->setUsername('cec@ucr.ac.cr')
+    //          ->setPassword('CECUCR.16');
     
 
     $this->mailer = (new \Swift_Mailer($this->transport));
@@ -85,7 +85,8 @@ class NotificationManager {
     //   $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"] ]));
     // }
     // die();
-    
+    // var_dump($emailData);
+    // die();
 
     $message = $this->configureEmail($emailData);
 

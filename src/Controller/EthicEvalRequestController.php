@@ -92,7 +92,7 @@ class EthicEvalRequestController extends AbstractController {
             "from" => "catedrahumboldt.vi@ucr.ac.cr",
             //"to" => "daihanna.hernandez@ucr.ac.cr",
             "to" => "luisfitoria91@gmail.com",
-            "cc" => $correos,
+            //"cc" => $correos,
             "body" => $this->render('emails/evaluatorAssigment.html.twig', [
               'project_request' => $projectRequest,
               'details_eval' => ''
@@ -233,14 +233,11 @@ class EthicEvalRequestController extends AbstractController {
       "to" => "lfitoria@eldomo.net",
       // "to" => "camacho.le@gmail.com",
       //"cc" => "camacho.le@gmail.com",
-      "body" => $this->render('emails/evaluatorAssigment.html.twig', [
-                  'project_request' => $projectRequest,
-                  'details_eval' => ''
-                ])
+      "body" => "body"
     ];
     // var_dump($emailData);
     // 
-    //$notificationManager->sendEmail($emailData);
+    $notificationManager->sendEmail($emailData);
 
     
     die();
