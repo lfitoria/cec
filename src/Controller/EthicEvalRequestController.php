@@ -226,7 +226,7 @@ class EthicEvalRequestController extends AbstractController {
   public function emailTestSend(Request $request, NotificationManager $notificationManager ): Response {
     echo "entra";
     
-    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(53);
+    //$projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(53);
     // var_dump($projectRequest);
     // die();
     $emailData = [
