@@ -22,8 +22,8 @@ class NotificationManager {
 
     // Create the Transport
     $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
-            ->setUsername('catedrahumboldt.vi@ucr.ac.cr')
-            ->setPassword('$Humbo_2019#');
+            ->setUsername('capsulagirasol.vi@ucr.ac.cr')
+            ->setPassword('Giravi:75013');
     // $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
     //          ->setUsername('cec@ucr.ac.cr')
     //          ->setPassword('CECUCR.16');
@@ -93,6 +93,7 @@ class NotificationManager {
     try {
       return $this->mailer->send($message);
     } catch (Exception $ex) {
+      echo $ex;
       throw new Exception("There was an error while the email was sended");
     }
   }
