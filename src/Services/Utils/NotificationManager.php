@@ -94,6 +94,7 @@ class NotificationManager {
     try {
       return $this->mailer->send($message);
     } catch (Exception $ex) {
+      echo $ex;
       throw new Exception("There was an error while the email was sended");
     }
   }
