@@ -26,7 +26,7 @@ class AcademicRequestInfoType extends AbstractType {
                 'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
                 'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)' ,
                 'help_html' => true,
-                'label_format' => 'Observaciones:',              
+                'label_format' => 'Objetivos:',              
                 'required' => false,
             ])
             ->add('objetives', TextareaType::class, [

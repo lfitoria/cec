@@ -105,12 +105,12 @@
           {{ form_widget(form.tutorName) }}
         </div>
       </div>
-      <div class="form-group row">
+      {# <div class="form-group row">
         <label for="tutor_id" class="col-sm-3 col-form-label text-right no-label">Cédula:</label>
         <div class="col-sm-9">
           {{ form_widget(form.tutorId) }}
         </div>
-      </div>
+      </div> #}
       <div class="form-group row">
         <label for="tutor_name" class="col-sm-3 col-form-label text-right no-label">Correo institucional:</label>
         <div class="col-sm-9">
@@ -156,12 +156,33 @@
     </div>
   </div>
   {{ form_row(form.ascriptionUnit) }}   
-  {{ form_row(form.ucrInstitutions) }}
+  
+  <div class="form-group">
+  {# 'label' => 'Otras unidades o instituciones de la UCR participantes:', #}
+   
+  <label>Otras unidades e instituciones de la UCR participantes:</label>
+    {{ form_row(form.disable_question_ucrInstitutions,{label_attr: {class: 'checkbox-custom disable_q'} }) }}
+    {{ form_row(form.ucrInstitutions) }}
+  </div>
   {{ form_row(form.uacademica) }}
 {% endif %}
 {{ form_row(form.uacademica) }}
-{{ form_row(form.extInstitutions) }}
-{{ form_row(form.placeOfStudy) }}
+{# {{ form_row(form.extInstitutions) }} #}
+<div class="form-group">
+  {# 'label' => 'Otras unidades o instituciones de la UCR participantes:', #}
+   
+  <label>Otras instituciones externas públicas o privadas:</label>
+    {{ form_row(form.disable_question_extInstitutions,{label_attr: {class: 'checkbox-custom disable_q'} }) }}
+    {{ form_row(form.extInstitutions) }}
+  </div>
+{# {{ form_row(form.placeOfStudy) }} #}
+<div class="form-group">
+  {# 'label' => 'Otras unidades o instituciones de la UCR participantes:', #}
+   
+  <label>Lugar donde se realizará el estudio (indique la ubicación geográfica):</label>
+    {{ form_row(form.disable_question_place,{label_attr: {class: 'checkbox-custom disable_q'} }) }}
+    {{ form_row(form.placeOfStudy) }}
+  </div>
 <div class="inline-custom-radio">
   
   {{ form_row(form.extInstitutionsAuthorization, {attr: {'data-code': 'extInstitutionsAuthorizationFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}

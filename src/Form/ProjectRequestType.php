@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -37,12 +38,14 @@ class ProjectRequestType extends AbstractType {
     $builder
             ->add('extInstitutions', TextareaType::class, [
                 'attr' => ['class' => 'tinymce', 'rows' => '4'],
-                'label' => 'Otras instituciones externas públicas o privadas:',
+                // 'label' => 'Otras instituciones externas públicas o privadas:',
+                'label' => false,
                 'required' => false
             ])
             ->add('placeOfStudy', TextareaType::class, [
                 'attr' => ['class' => 'tinymce', 'rows' => '4'],
-                'label' => 'Lugar donde se realizará el estudio (escuelas, comunidades, instituciones, colegios, etc).',
+                // 'label' => 'Lugar donde se realizará el estudio (indique la ubicación geográfica).',
+                'label' => false,
                 'required' => false
             ])
             ->add('form_target_input', HiddenType::class, [
@@ -81,6 +84,7 @@ class ProjectRequestType extends AbstractType {
                 'required' => false,
                 'mapped' => false,
             ])
+            
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
 
               $projectRequest = $event->getData();
@@ -105,6 +109,27 @@ class ProjectRequestType extends AbstractType {
                   'attr' => ['class' => 'extInstitutionsAuthorization'],
                   'required' => true
               ));
+              $form->add('disable_question_ucrInstitutions', CheckboxType::class, array(
+                    
+                'attr' => ['class'=> 'd_disable_question'],
+                'label' => 'No aplica',
+                'required' => false,
+                'mapped' => false,
+            ));
+            $form->add('disable_question_extInstitutions', CheckboxType::class, array(
+                    
+                'attr' => ['class'=> 'd_disable_question'],
+                'label' => 'No aplica',
+                'required' => false,
+                'mapped' => false,
+            ));
+            $form->add('disable_question_place', CheckboxType::class, array(
+                    
+                'attr' => ['class'=> 'd_disable_question'],
+                'label' => 'No aplica',
+                'required' => false,
+                'mapped' => false,
+            ));
 
               $userType = $this->user->getRole()->getDescription();
               if ($userType === "ROLE_STUDENT") {
@@ -116,10 +141,10 @@ class ProjectRequestType extends AbstractType {
                     'required' => false,
                 ]);
 
-                $form->add('tutorId', TextType::class, [
-                    'label' => 'Cédula:',
-                    'required' => false
-                ]);
+                // $form->add('tutorId', TextType::class, [
+                //     'label' => 'Cédula:',
+                //     'required' => false
+                // ]);
                 $form->add('tutorEmail', TextType::class, [
                     'label' => 'Correo institucional:',
                     'required' => false
@@ -158,7 +183,8 @@ class ProjectRequestType extends AbstractType {
 
                 $form->add('ucrInstitutions', TextareaType::class, [
                     'attr' => ['class' => 'tinymce', 'rows' => '4'],
-                    'label' => 'Otras unidades o instituciones de la UCR participantes:',
+                    // 'label' => 'Otras unidades o instituciones de la UCR participantes:',
+                    'label' => false,
                     'required' => false,
                 ]);
 

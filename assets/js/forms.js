@@ -247,11 +247,12 @@ const $ = require('jquery');
         var totalSize = 0;
         var hasValidExtension = true;
         inputs.each(function () {
-          totalSize += this.files[0].size;
-
-          if (mimeTypes.indexOf(this.files[0].type) < 0) {
-            hasValidExtension = false;
-            this.classList.add("invalid-extension");
+          if(this.files[0]){
+              totalSize += this.files[0].size;
+            if (mimeTypes.indexOf(this.files[0].type) < 0) {
+              hasValidExtension = false;
+              this.classList.add("invalid-extension");
+            }
           }
         });
         totalSize = totalSize / 1000000;
@@ -268,6 +269,7 @@ const $ = require('jquery');
       }
 
       cache.decision_inputs.change(function () {
+        
         var _this = $(this);
         var targetId = "#" + _this.parent().parent().data("code");
         if ($(this).is(":checked") && $(this).val() === '1') {
@@ -276,6 +278,18 @@ const $ = require('jquery');
         } else {
           $(targetId).addClass("d-none");
           $(targetId).find("input").attr('required', false);
+          
+        }
+      });
+      cache.d_disable_question.change(function () {
+        console.log("d_disable_question")
+        // var _this = $(this);
+        //$(this).parent().parent().parent().find('textarea').attr('disabled',true);
+        // var targetId = "#" + _this.parent().parent().data("code");
+        if ($(this).is(":checked")) {
+          $(this).parent().parent().parent().find('textarea').attr('disabled',true);
+        } else {
+          $(this).parent().parent().parent().find('textarea').attr('disabled',false);
         }
       });
 
@@ -572,6 +586,7 @@ const $ = require('jquery');
       cache.form_finish = $('.form_finish_input');
       cache.form = $('.form-request, .form-eval, #ldap_user_new_modal_form');
       cache.decision_inputs = $(".decision_question input");
+      cache.d_disable_question = $("input.d_disable_question");
       cache.project_request_category = $("#project_request_category input");
       cache.uploaded_item_delete = $(".uploaded_files_list_item--delete");
       cache.selected_item_delete = $(".selected_files_list_item--delete");
