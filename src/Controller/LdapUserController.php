@@ -290,7 +290,8 @@ class LdapUserController extends AbstractController {
       //evaluator@cec.com
       $emailData = [
           "subject" => "CEC – Solicitud de revisión asignada - CEC-" . $projectRequest->getId(),
-          "from" => "catedrahumboldt.vi@ucr.ac.cr",
+          // "from" => "catedrahumboldt.vi@ucr.ac.cr",
+          "from" => "jonathan.rojas@ucr.ac.cr",
           "to" => $emailEvaluators,
           // "cc" => "camacho.le@gmail.com",
           "cc" => "lfitoria@eldomo.net",
