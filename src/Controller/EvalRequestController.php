@@ -125,8 +125,8 @@ class EvalRequestController extends AbstractController {
                 $emailData = [
                 "subject" => $subjectEmail,
                 "from" => "catedrahumboldt.vi@ucr.ac.cr",
-                //"to" => $projectRequest->getOwner()->getEmail(),
-                "to" => "luisfitoria91@gmail.com",
+                "to" => $projectRequest->getOwner()->getEmail(),
+                //"to" => "luisfitoria91@gmail.com",
                 "cc" => $correos,
                 "body" => $this->render('emails/evaluatorAssigment.html.twig', [
                 'project_request' => $projectRequest,
