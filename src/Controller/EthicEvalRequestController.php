@@ -89,7 +89,7 @@ class EthicEvalRequestController extends AbstractController {
         
         $emailData = [
             "subject" => "Nueva solicitud",
-            "from" => "catedrahumboldt.vi@ucr.ac.cr",
+            "from" => "cec@ucr.ac.cr",
             //"from" => "jonathan.rojas@ucr.ac.cr",
             "to" => "daihanna.hernandez@ucr.ac.cr",
             //"to" => "luisfitoria91@gmail.com",
@@ -168,7 +168,7 @@ class EthicEvalRequestController extends AbstractController {
         
         $emailData = [
             "subject" => "Nueva solicitud",
-            "from" => "catedrahumboldt.vi@ucr.ac.cr",
+            "from" => "cec@ucr.ac.cr",
             //"from" => "jonathan.rojas@ucr.ac.cr",
             "to" => "daihanna.hernandez@ucr.ac.cr",
             //"to" => "luisfitoria91@gmail.com",
@@ -233,7 +233,7 @@ class EthicEvalRequestController extends AbstractController {
     // die();
     $emailData = [
       "subject" => "Nueva solicitud",
-      "from" => "catedrahumboldt.vi@ucr.ac.cr",
+      "from" => "cec@ucr.ac.cr",
       // "from" => "jonathan.rojas@ucr.ac.cr",
       "to" => "lfitoria@eldomo.net",
       // "to" => "camacho.le@gmail.com",

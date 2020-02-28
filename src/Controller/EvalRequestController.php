@@ -124,7 +124,7 @@ class EvalRequestController extends AbstractController {
             
                 $emailData = [
                 "subject" => $subjectEmail,
-                "from" => "catedrahumboldt.vi@ucr.ac.cr",
+                "from" => "cec@ucr.ac.cr",
                 //"from" => "jonathan.rojas@ucr.ac.cr",
                 "to" => $projectRequest->getOwner()->getEmail(),
                 //"to" => "luisfitoria91@gmail.com",
