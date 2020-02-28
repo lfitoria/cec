@@ -52,6 +52,7 @@ security:
         # - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login_test, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/faqs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
         
 

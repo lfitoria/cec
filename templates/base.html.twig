@@ -47,6 +47,14 @@
             </div>
 
           {% else %}
+          <div class="dropdown menu-user">
+              <button class="btn-menu-home dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Menú
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{{path('default')}}">Inicio</a>
+              </div>
+            </div>
 
           {% endif %}
         </div>
@@ -86,6 +94,20 @@
             </div>
           </div>
         </div>
+      {% else %}
+        <div class="box-info-home">
+          <div class="container">
+            <div class="row">
+              <div class="col-4">
+                
+              </div>
+              <div class="col box-r">
+
+              </div>
+
+            </div>
+          </div>
+        </div>
       {% endif %}
     </div>
 
@@ -112,6 +134,9 @@
               <p class="email">Correo electrónico: <a href="mailto:cec@ucr.ac.cr">cec@ucr.ac.cr</a></p>
               <p class="copy">Todos los derechos reservados. 2019. Universidad de Costa Rica.</p>
             </div> 
+          </div>
+          <div class="col-sm-5">
+            <a href="{{path("faqs")}}" class="fasq_home">FAQ's</a>
           </div>
         </div>
       </div>

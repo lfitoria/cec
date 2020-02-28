@@ -21,6 +21,49 @@ tbody tr:nth-of-type(even) {
   background-color: var(--green);
   border-color: var(--green);
 }
+h3{  
+    font-size: 1.4em;
+    color: var(--A4);
+    margin-top: 15px;
+    display: block;
+    text-decoration: none;
+    cursor: unset;
+    font-weight: bold;
+}
+h4{  
+  font-size: 1.2em;
+  color: var(--A4);
+  margin-top: 15px;
+  display: block;
+  text-decoration: none;
+  cursor: unset;
+  font-weight: bold;
+}
+h5{  
+  font-size: 1em;
+  color: var(--A4);
+  margin-top: 15px;
+  display: block;
+  text-decoration: none;
+  cursor: unset;
+  font-weight: bold;
+}
+a.fasq_home {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px 10px;
+  float: right;
+  transition: 0.2s ease-in-out;
+}
+a.fasq_home:hover {
+  border: 1px solid white;
+  background-color: white;
+  color: var(--G2);
+  text-decoration: none;
+}
+span.txt-green{
+  color: var(--green);
+}
 #valdiate_send_user{
   text-align: center;
 }
@@ -217,6 +260,14 @@ p.email:before{
   padding: 0 15px 0px 0;
   color: var(--G2);
 }
+.btn-menu-home {
+  background-color: transparent;
+  border: none;
+  text-transform: capitalize;
+  position: relative;
+  padding: 0 15px 0px 0;
+  color: var(--G2);
+}
 .btn-menu-user:before{
   content: '\f007';
   font-family: FontAwesome;
@@ -237,7 +288,7 @@ p.email:before{
   padding-left: 10px;
 
 }
-.menu-user .btn-menu-user {
+.menu-user .btn-menu-user,.menu-user .btn-menu-home {
   line-height: 80px;
 }
 .menu-user .dropdown-menu a{
@@ -357,7 +408,12 @@ span.file-advice {
   background-color: rgba(81, 148, 220, 0.15);
   padding: 5px;
 }
-#new_project h4,h4{
+.page-help img.img-help{
+  display: block;
+  margin: auto;
+  max-width: 100%;
+}
+#new_project h4{
   color: var(--G2);
   text-transform: uppercase;
 }
