@@ -58,13 +58,15 @@ class DefaultController extends AbstractController {
         $email = $request->get('email');
         $password = $request->get('password');
         $login_admin = $request->get('login_admin');
+        $role_login = $request->get('role_login');
 
-        if ($objUserServ->checkUserExists($email)) {
+        if ( $objUserServ->checkUserExists($email,$role_login) ) {
           
-          if ($encoder->isPasswordValid($objUserServ->getUser($email), $password)) {
+          if ($encoder->isPasswordValid($objUserServ->getUser($email,$role_login), $password)) {
             $objUserServ->loginAction(array(
               "cedula" => $email,
-              "opt_eval_form" => $login_admin
+              "opt_eval_form" => $login_admin,
+              "role_login" => $role_login
             ));
             return $this->redirectToRoute('project_request_index');
 
@@ -77,6 +79,7 @@ class DefaultController extends AbstractController {
           }
           
         }
+
 
         $objLdapServ = $this->get('ldap');
         $arrLoginResult = $objLdapServ->login($login_admin);

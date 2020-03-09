@@ -29,7 +29,8 @@ class UserManager {
 
   // checks if user exists when login form has been submitted
   public function loginAction($strEmail) {
-    if (!$this->checkUserExists($strEmail['cedula'])) {
+
+    if (!$this->checkUserExists($strEmail['cedula'], $strEmail['opt_eval_form'] == "0" ? $strEmail['role_login'] : null )) {
       // create new user
       $this->createUser($strEmail);      
     }else{
@@ -38,23 +39,34 @@ class UserManager {
         $this->user->setCarnet($strEmail["carnet"]);
         $this->user->setCedulaUsuario($strEmail["id"]);
       }
-      
-
     }
+
     $this->createLoginSession($strEmail['opt_eval_form']);
   }
 
   // get user data from database
-  public function getUser($strEmail) {
-    return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail));
+  public function getUser($strEmail,$role_id) {
+    $array_search = array('email' => $strEmail);
+    
+    if($role_id){
+      
+      $role = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
+      
+      $array_search['role'] = $role;
+    } 
+    
+    // return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail,'role' => $role));
+    return $this->em->getRepository(LdapUser::class)->findOneBy($array_search);
   }
   public function getPass($strEmail) {
     return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail));
   }
 
   // Check if a user exists on database
-  public function checkUserExists($strEmail) {
-    $this->user = $this->getUser($strEmail);
+  public function checkUserExists($strEmail,$role_id) {
+    $this->user = $this->getUser($strEmail,$role_id);
+    
+  
     return (!empty($this->user)) ? true : false;
   }
 
