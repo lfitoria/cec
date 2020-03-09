@@ -126,9 +126,14 @@ class UserManager {
       $_SESSION["isResearcher"] = true;
     }
 
-    if($role_id && $opt_eval_form === "0"){
+    if($role_id){
       $role_search = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
-      $this->user->setRole($role_search);
+      if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"])){
+
+      }else{
+        $this->user->setRole($role_search);
+      }
+      
     }
     
     // var_dump($this->user);
