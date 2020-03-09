@@ -192,6 +192,8 @@ class DefaultController extends AbstractController {
    */
   public function logout() {
     // controller can be blank: it will never be executed!
+    $objUserServ = $this->container->get('user_manager');
+    $objUserServ->logOutUser();
     throw new \Exception('Don\'t forget to activate logout in security.yaml'); 
   }
 

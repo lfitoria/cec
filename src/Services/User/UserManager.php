@@ -31,7 +31,7 @@ class UserManager {
   public function loginAction($strEmail) {
 
     // if (!$this->checkUserExists($strEmail['cedula'], $strEmail['opt_eval_form'] == "0" ? $strEmail['role_login'] : null )) {
-    if (!$this->checkUserExists($strEmail['cedula'], null )) {
+    if (!$this->checkUserExists($strEmail['cedula'], $strEmail['opt_eval_form'] == "0" ? $strEmail['role_login'] : null )) {
       // create new user
       $this->createUser($strEmail);      
     }else{
@@ -47,7 +47,6 @@ class UserManager {
 
   // get user data from database
   public function getUser($strEmail,$role_id) {
-    $role_id = null;
     $array_search = array('email' => $strEmail);
     
     if($role_id){
@@ -56,9 +55,7 @@ class UserManager {
       
       $array_search['role'] = $role;
     } 
-    // var_dump($role_id);
-    // var_dump($array_search);
-    // die();
+    
     // return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail,'role' => $role));
     return $this->em->getRepository(LdapUser::class)->findOneBy($array_search);
   }
@@ -68,7 +65,6 @@ class UserManager {
 
   // Check if a user exists on database
   public function checkUserExists($strEmail,$role_id) {
-    $role_id = null;
     $this->user = $this->getUser($strEmail,$role_id);
     
   
@@ -121,23 +117,18 @@ class UserManager {
     $_SESSION["isResearcher"] = false;
     $role = $this->user->getRoles();
     
-    if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"]) && $opt_eval_form === "0"){
+    if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"])   && $opt_eval_form === "0"){
       $role = ["ROLE_RESEARCHER"];
       $_SESSION["isResearcher"] = true;
     }
-
     if($role_id){
-      $role_search = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
-      if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"])){
-
-      }else{
-        $this->user->setRole($role_search);
-      }
-      
+      $role = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
+      $this->user->setRole($role);
     }
     
-    // var_dump($this->user);
-    // die();
+    
+    var_dump($this->user);
+    die();
     $this->user->setLastLoginDate(new \Datetime());
     $this->em->persist($this->user);
     $this->em->flush();
