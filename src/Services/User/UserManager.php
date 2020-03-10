@@ -125,7 +125,13 @@ class UserManager {
       // die();
     }
 
-    if($role[0] !==  "ROLE_ADMIN" || $role[0] !==  "ROLE_EVALUATOR" ){
+    if($role[0] !==  "ROLE_ADMIN" ){
+      if($role_id && $opt_eval_form === "0"){
+      $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
+      $this->user->setRole($role_s);
+      }
+    }
+    if($role[0] !==  "ROLE_EVALUATOR" ){
       if($role_id && $opt_eval_form === "0"){
       $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
       $this->user->setRole($role_s);
