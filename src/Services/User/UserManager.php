@@ -49,12 +49,12 @@ class UserManager {
   public function getUser($strEmail,$role_id) {
     $array_search = array('email' => $strEmail);
     
-    if($role_id){
+    // if($role_id){
       
-      $role = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
+    //   $role = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
       
-      $array_search['role'] = $role;
-    } 
+    //   $array_search['role'] = $role;
+    // } 
     
     // return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail,'role' => $role));
     return $this->em->getRepository(LdapUser::class)->findOneBy($array_search);
@@ -116,23 +116,28 @@ class UserManager {
   public function createLoginSession($opt_eval_form,$role_id) {
     $_SESSION["isResearcher"] = false;
     $role = $this->user->getRoles();
-    
+    // var_dump($role[0]);
+    //   die();
     if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"])   && $opt_eval_form === "0"){
       $role = ["ROLE_RESEARCHER"];
       $_SESSION["isResearcher"] = true;
+      // var_dump("entra");
+      // die();
     }
-    if($role_id){
-      $role = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
-      $this->user->setRole($role);
+
+    if($role[0] !==  "ROLE_ADMIN" || $role[0] !==  "ROLE_ADMIN" ){
+      if($role_id && $opt_eval_form === "0"){
+      $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
+      $this->user->setRole($role_s);
+      }
     }
     
-    
-    var_dump($this->user);
-    die();
     $this->user->setLastLoginDate(new \Datetime());
     $this->em->persist($this->user);
     $this->em->flush();
     
+  
+
     $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
     
     // save token
