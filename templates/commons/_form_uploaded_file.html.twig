@@ -8,12 +8,19 @@
     <li>
       <div class="input-group input-group-cont">
         <div class="custom-file">
+        {% if files|length > 0 %}
+          <input type="file" id="project_request_{{ questionCode }}_0" name="project_request[{{ questionCode }}][0]" class="custom-file-input">
+        {% else %}
           <input type="file" id="project_request_{{ questionCode }}_0" name="project_request[{{ questionCode }}][0]" required="required" class="custom-file-input">
+        {% endif %}
+        
+          <input type="file" id="project_request_{{ questionCode }}_0" name="project_request[{{ questionCode }}][0]" class="custom-file-input">
           <label for="project_request_{{ questionCode }}_0" class="custom-file-label"></label>
         </div>
       </div>
     </li>
   {% endif %}
+  {{files|length}}
   {% for file in files if file.questionCode == questionCode %}
 
     <li class="uploaded_files_list_item">{{ file.originalName }} ({{ file.size }})

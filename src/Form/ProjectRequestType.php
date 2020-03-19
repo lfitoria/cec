@@ -243,7 +243,7 @@ class ProjectRequestType extends AbstractType {
                     'entry_options' => ['label' => false],
                     'mapped' => false,
                     'allow_add' => true,
-                    'required' => true,
+                    'required' => false,
                     'label' => false
                 ]);
               }
