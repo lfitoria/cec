@@ -123,32 +123,34 @@ class UserManager {
     $_SESSION["isResearcher"] = false;
     $role = $this->user->getRoles();
     // var_dump($role);
-    // var_dump($this->user->getRole()->getDescription());
     //die();
-    if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"]) && $opt_eval_form === "0"){
+    // if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"]) && $opt_eval_form === "0"){
+    //   $role = ["ROLE_RESEARCHER"];
+    //   $_SESSION["isResearcher"] = true;
+    // }
+    if(in_array($this->user->getRole()->getDescription(), ["ROLE_ADMIN"]) && $opt_eval_form === "0"){
       $role = ["ROLE_RESEARCHER"];
       $_SESSION["isResearcher"] = true;
-      // var_dump("entra");
-      // die();
-    }
-    // var_dump($opt_eval_form);
-    if(in_array($role,["ROLE_ADMIN", "ROLE_EVALUATOR"] )){
-      // var_dump("entra");
-      // die();
+    }else{
       if($role_id){
-      $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
-      $this->user->setRole($role_s);
-      }
+        $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
+        $this->user->setRole($role_s);
+        }
     }
-    // var_dump("no entra");
-    // die();
+    
+    // if(in_array($role,["ROLE_ADMIN"] )){
+    //   if($role_id){
+    //   $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
+    //   $this->user->setRole($role_s);
+    //   }
+    // }elseif(in_array($role,["ROLE_EVALUATOR"] )){
+
+    // }
     
     $this->user->setLastLoginDate(new \Datetime());
     $this->em->persist($this->user);
     $this->em->flush();
     
-  
-
     $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
     
     // save token
