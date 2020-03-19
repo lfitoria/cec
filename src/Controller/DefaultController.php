@@ -82,7 +82,7 @@ class DefaultController extends AbstractController {
 
 
         $objLdapServ = $this->get('ldap');
-        $arrLoginResult = $objLdapServ->login($login_admin);
+        $arrLoginResult = $objLdapServ->login($login_admin,$role_login);
         // Ldap login result
         $arrViewData = json_decode($arrLoginResult, TRUE);
 

@@ -36,7 +36,7 @@ class Ldap {
   }
 
   // Load LDAP config
-  public function login($evaluator) {
+  public function login($evaluator,$role_login) {
 
     $request = $this->requestStack->getCurrentRequest();
     $username = $request->request->get('email');
@@ -75,7 +75,8 @@ class Ldap {
               "nombre" => $data[0]["cn"][0],
               "carnet" => $data[0]["ucrstudentid"][0],
               "tipo_usuario_ldap" => $data[0]["ucrrelacion"],
-              "opt_eval_form" => $evaluator
+              "opt_eval_form" => $evaluator,
+              "role_login" => $role_login
           ));
           
         }
