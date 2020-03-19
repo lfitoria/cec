@@ -109,13 +109,7 @@ class ProjectRequestType extends AbstractType {
                   'attr' => ['class' => 'extInstitutionsAuthorization'],
                   'required' => true
               ));
-              $form->add('disable_question_ucrInstitutions', CheckboxType::class, array(
-                    
-                'attr' => ['class'=> 'd_disable_question'],
-                'label' => 'No aplica',
-                'required' => false,
-                'mapped' => false,
-            ));
+              
             $form->add('disable_question_extInstitutions', CheckboxType::class, array(
                     
                 'attr' => ['class'=> 'd_disable_question'],
@@ -133,6 +127,13 @@ class ProjectRequestType extends AbstractType {
 
               $userType = $this->user->getRole()->getDescription();
               if ($userType === "ROLE_STUDENT") {
+                $form->add('disable_question_ucrInstitutions', CheckboxType::class, array(
+                    
+                    'attr' => ['class'=> 'd_disable_question'],
+                    'label' => 'No aplica',
+                    'required' => false,
+                    'mapped' => false,
+                ));
                 $form->add('title', TextType::class, [
                     'label' => 'Titulo del proyecto:',
                 ]);

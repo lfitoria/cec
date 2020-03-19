@@ -14,6 +14,12 @@ form{
   padding: 15px;
   cursor: pointer;
 }
+#project_request_disable_question_ucrInstitutions{
+  display: none;
+}
+label [for~="project_request_disable_question_ucrInstitutions"] {
+  display: none;
+}
 
 .form_header > .form_header_nav > .form_header_nav_item > .nav_step{
   border-radius: 50%;

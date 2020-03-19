@@ -31,6 +31,8 @@ class UserManager {
   public function loginAction($strEmail) {
 
     // if (!$this->checkUserExists($strEmail['cedula'], $strEmail['opt_eval_form'] == "0" ? $strEmail['role_login'] : null )) {
+    var_dump($strEmail);
+    die();
     if (!$this->checkUserExists($strEmail['cedula'], $strEmail['opt_eval_form'] == "0" ? $strEmail['role_login'] : null )) {
       // create new user
       $this->createUser($strEmail);      
@@ -91,6 +93,8 @@ class UserManager {
       $objUser->setCreationDate($objCurrentDatetime);
       $objUser->setLastLoginDate($objCurrentDatetime);
       $objUser->setUsername(explode("@", $strEmail["cedula"])[0]);
+      // var_dump("entra");
+      // die();
       $objUser->setRole($role);
       $objUser->setCarnet($strEmail["carnet"]);
       $objUser->setName($strEmail["nombre"]);
@@ -116,21 +120,26 @@ class UserManager {
   public function createLoginSession($opt_eval_form,$role_id) {
     $_SESSION["isResearcher"] = false;
     $role = $this->user->getRoles();
-    // var_dump($role[0]);
-    //   die();
-    if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"])   && $opt_eval_form === "0"){
+    // var_dump($role);
+    // var_dump($this->user->getRole()->getDescription());
+    //die();
+    if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"]) && $opt_eval_form === "0"){
       $role = ["ROLE_RESEARCHER"];
       $_SESSION["isResearcher"] = true;
       // var_dump("entra");
       // die();
     }
-
-    if(!in_array($role, ["ROLE_EVALUATOR", "ROLE_ADMIN"])){
-      if($role_id && $opt_eval_form === "0"){
+    // var_dump($opt_eval_form);
+    if(in_array($role,["ROLE_ADMIN", "ROLE_EVALUATOR"] )){
+      // var_dump("entra");
+      // die();
+      if($role_id){
       $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
       $this->user->setRole($role_s);
       }
     }
+    // var_dump("no entra");
+    // die();
     
     $this->user->setLastLoginDate(new \Datetime());
     $this->em->persist($this->user);

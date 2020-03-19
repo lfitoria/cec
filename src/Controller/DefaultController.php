@@ -81,28 +81,28 @@ class DefaultController extends AbstractController {
         }
 
 
-        $objLdapServ = $this->get('ldap');
-        $arrLoginResult = $objLdapServ->login($login_admin);
-        // Ldap login result
-        $arrViewData = json_decode($arrLoginResult, TRUE);
+        // $objLdapServ = $this->get('ldap');
+        // $arrLoginResult = $objLdapServ->login($login_admin);
+        // // Ldap login result
+        // $arrViewData = json_decode($arrLoginResult, TRUE);
 
-        if (!empty($arrViewData['ERROR']) ) {
-          $this->addFlash(
-            'notice',
-            'Usuario incorrecto.'
-          );
-          return $this->redirectToRoute('login');
-        }
+        // if (!empty($arrViewData['ERROR']) ) {
+        //   $this->addFlash(
+        //     'notice',
+        //     'Usuario incorrecto.'
+        //   );
+        //   return $this->redirectToRoute('login');
+        // }
 
-        if ($arrViewData['USERNAME'] != null) {
-          return $this->redirectToRoute('project_request_index');
-        }else{
-          $this->addFlash(
-            'notice',
-            'Usuario incorrecto.'
-          );
-          return $this->redirectToRoute('login');
-        }
+        // if ($arrViewData['USERNAME'] != null) {
+        //   return $this->redirectToRoute('project_request_index');
+        // }else{
+        //   $this->addFlash(
+        //     'notice',
+        //     'Usuario incorrecto.'
+        //   );
+        //   return $this->redirectToRoute('login');
+        // }
       }
     }
 

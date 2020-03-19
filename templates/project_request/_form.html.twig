@@ -36,7 +36,7 @@
       <input type="text" readonly class="form-control no-data test" name="" value="No hay datos">
     {% endif %}
   </div>
-  <div class="form-group">
+  {# <div class="form-group">
     <label for="project_request_extInstitutions">Nombre(s) de investigador(es) colaborador(es):</label>
     <table class="table table-striped">
       <thead>
@@ -65,7 +65,7 @@
         {% endif %}
       </tbody>
     </table>
-  </div>
+  </div> #}
   <div class="form-group">
     {# <label for="project_request_extInstitutions">Unidad base del proyecto:</label> #}
     {# <input type="text" readonly class="form-control" id="project_unit" name="" value="{{ project_info.projectData.unidad|default('No hay dato') }}"> project_request_projectUnit#}
@@ -255,6 +255,7 @@
       Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
     <hr>
   </div>
+
 
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}

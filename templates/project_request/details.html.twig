@@ -142,7 +142,7 @@ ul {
     {% endif %}
 </div>
 
-<div class="text-box">
+{# <div class="text-box">
     <p>
         <strong>1.3 Nombre(s) de investigador(es) colaborador(es):</strong>
     </p>
@@ -174,10 +174,10 @@ ul {
             {% endif %}
         </tbody>
     </table>
-</div>
+</div> #}
 <div class="text-box">
     <p>
-        <strong>1.4 Unidad base del proyecto:</strong>
+        <strong>1.3 Unidad base del proyecto:</strong>
     </p>
     <p class="text-muted font-italic">
         {{project_request.projectUnit}}
@@ -185,7 +185,7 @@ ul {
 </div>
 <div class="text-box">
     <p>
-        <strong>1.5 Otras unidades e instituciones de la UCR participantes:</strong>
+        <strong>1.4 Otras unidades e instituciones de la UCR participantes:</strong>
     </p>
     <ul id="project_ucr_units">
         {% if project_info is not null and project_info.externalCollaboration|length > 0 %}
@@ -203,7 +203,7 @@ ul {
 
 <div class="tutor_information_container">
     <p>
-        <strong>1.2 Director(a) del trabajo final de graduación:</strong>
+        <strong>1.3 Director(a) del trabajo final de graduación:</strong>
     </p>
     <ul>
         <li class="text-muted">
@@ -220,7 +220,7 @@ ul {
 
 {% if project_request.teamWork is not null %}
     <p>
-        <strong>1.3 Miembros de proyecto</strong>
+        <strong>1.4 Miembros de proyecto</strong>
     </p>
     <table class="table table-striped">
         <thead>
@@ -254,26 +254,26 @@ ul {
 {% endif %}
 <div class="text-box">
     <p>
-        <strong>1.4 Unidad de adscripción del proyecto:</strong>
+        <strong>1.5 Unidad de adscripción del proyecto:</strong>
     </p>
     <p class="text-muted font-italic">{{project_request.ascriptionUnit|default("Sin dato")}}</p>
 </div>
 <div class="text-box">
     <p>
-        <strong>1.5 Otras unidades e instituciones de la UCR participantes:</strong>
+        <strong>1.6 Otras unidades e instituciones de la UCR participantes:</strong>
     </p>
     <p class="text-muted font-italic">{{project_request.extInstitutions}}</p>
 </div>{% endif %}<div class="text-box">
 <p>
-    <strong>1.6 Otras instituciones externas públicas o privadas:</strong>
+    <strong>1.7 Otras instituciones externas públicas o privadas:</strong>
 </p>
 <p class="text-muted font-italic">{{ project_request.ascriptionUnit|default("Sin dato") }}</p></div><div class="text-box">
 <p>
-    <strong>1.7 Lugar donde se realizará el estudio (escuelas, comunidades, instituciones, colegios, etc).:</strong>
+    <strong>1.8 Lugar donde se realizará el estudio (escuelas, comunidades, instituciones, colegios, etc).:</strong>
 </p>
 <p class="text-muted font-italic">{{ project_request.placeOfStudy }}</p></div><div class="text-box">
 <p>
-    <strong>1.8 Autorización de la institución externa pública o privada:</strong>
+    <strong>1.9 Autorización de la institución externa pública o privada:</strong>
 </p>
 {% if project_request.extInstitutionsAuthorization is empty %}
     <p class="text-muted font-italic">No</p>
@@ -287,7 +287,7 @@ ul {
     </ul>
 {% endif %}</div><div class="text-box">
 <p>
-    <strong>1.9 ¿La investigación involucra participantes humanos?:</strong>
+    <strong>1.10 ¿La investigación involucra participantes humanos?:</strong>
 </p>
 {% if project_request.involvesHumans is empty %}
     <p class="text-muted font-italic">No</p>
@@ -295,7 +295,7 @@ ul {
     <p class="text-muted font-italic">Sí</p>
 {% endif %}</div><div class="text-box">
 <p>
-    <strong>1.10 ¿La investigación requiere revisar información documental de seres humanos?</strong>
+    <strong>1.11 ¿La investigación requiere revisar información documental de seres humanos?</strong>
 </p>
 {% if project_request.involvesHumans is empty %}
     <p class="text-muted font-italic">No</p>
@@ -304,7 +304,7 @@ ul {
 {% endif %}</div>{% if project_request.owner.role.description is same as("ROLE_STUDENT") %}
 
 <p>
-    <strong>1.11 Acta de la comisión científica del instituto o centro de investigaciones:</strong>
+    <strong>1.12 Acta de la comisión científica del instituto o centro de investigaciones:</strong>
 </p>
 
 {% if project_request.minutesResearchCenter is empty %}
@@ -319,7 +319,7 @@ ul {
     </ul>
 {% endif %}{% endif %}{% if project_request.owner.role.description is same as("ROLE_STUDENT") %}
 <p>
-    <strong>1.12 Acta de la comisión de trabajos finales de graduación:</strong>
+    <strong>1.13 Acta de la comisión de trabajos finales de graduación:</strong>
 </p>
 
 {% if project_request.minuteFinalWork is null %}
@@ -350,7 +350,7 @@ ul {
 
 {% else %}
 <p>
-    <strong>1.11 Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:</strong>
+    <strong>1.14 Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:</strong>
 </p>
 {% if project_request.minuteCommissionTFG is null %}
     <p class="text-muted font-italic">No</p>
@@ -364,7 +364,7 @@ ul {
     </ul>
 {% endif %}
 <p>
-        <strong>1.12 La presente propuesta es de tipo:</strong>
+        <strong>1.15 La presente propuesta es de tipo:</strong>
     </p>
     <p class="text-muted font-italic">{{project_request.category|default("Sin dato")}}</p>
 {% endif %}

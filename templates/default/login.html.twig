@@ -142,7 +142,7 @@
                             </div>
                             <input type="hidden" name="login_admin" value="0">
                             <div class="checkloginbox">
-                                <input type="radio" id="stud_i" name="role_login" value="2">
+                                <input type="radio" id="stud_i" name="role_login" value="2" required>
                                 <label for="stud_i" class="small m-0">Estudiante</label><br>
                                 <input type="radio" id="inv_i" name="role_login" value="3">
                                 <label for="inv_i" class="small m-0">Investigador</label><br>
@@ -202,9 +202,11 @@
                 if(op == 0){
                     $("input[name=login_admin]").val("1");
                     $(".checkloginbox").hide();
+                    $("input[name=role_login]").attr("required", false);
                 }else{
                     $("input[name=login_admin]").val("0");
                     $(".checkloginbox").show();
+                    $("input[name=role_login]").attr("required", true);
                 }
                 
 
