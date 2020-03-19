@@ -135,6 +135,9 @@ class UserManager {
       if($role_id){
         $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
         $this->user->setRole($role_s);
+        }else{
+          $role_s = $this->em->getRepository(UsersRoles::class)->find(intval(4));
+          $this->user->setRole($role_s);
         }
     }
     
