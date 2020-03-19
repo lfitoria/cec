@@ -61,8 +61,8 @@ class DefaultController extends AbstractController {
         $role_login = $request->get('role_login');
 
         if ( $objUserServ->checkUserExists($email,$role_login) ) {
-          var_dump("loginDefaultController");
-          die();
+          // var_dump("loginDefaultController");
+          // die();
           if ($encoder->isPasswordValid($objUserServ->getUser($email,$role_login), $password)) {
             $objUserServ->loginAction(array(
               "cedula" => $email,

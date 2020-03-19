@@ -37,6 +37,8 @@ class UserManager {
       // create new user
       $this->createUser($strEmail);      
     }else{
+      var_dump("loginAction");
+      die();
       // $objUser->setCarnet($strEmail["carnet"]);
       if ( isset($strEmail["carnet"]) ) {
         $this->user->setCarnet($strEmail["carnet"]);
