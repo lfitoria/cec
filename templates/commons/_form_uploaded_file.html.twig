@@ -20,7 +20,7 @@
       </div>
     </li>
   {% endif %}
-  {{files|length}}
+  
   {% for file in files if file.questionCode == questionCode %}
 
     <li class="uploaded_files_list_item">{{ file.originalName }} ({{ file.size }})
