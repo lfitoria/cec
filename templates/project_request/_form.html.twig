@@ -128,7 +128,7 @@
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Cédula</th>
-          <th scope="col">Correo institucional</th>
+          {# <th scope="col">Correo institucional</th> #}
           <th scope="col">Acciones</th>
         </tr>
       </thead>
@@ -138,7 +138,7 @@
             <td scope="col">{{ team.name }}
             </td>
             <td scope="col">{{ team.studentId }}</td>
-            <td scope="col">{{ team.studentEmail }}</td>
+            {# <td scope="col">{{ team.studentEmail }}</td> #}
             <td scope="col">
               <a class="uploaded_teamwork_item--delete btn-blue" data-path="{{ path("remove_student_by_id") }}" data-id='{{ team.id }}' href="#">Eliminar</a>
             </td>

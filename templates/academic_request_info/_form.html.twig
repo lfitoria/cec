@@ -4,7 +4,7 @@
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
     <div class="form-group">
         <p>
-            <strong>Resumen del estudio (antecedentes y justificación):</strong>
+            <label>Resumen del estudio (antecedentes y justificación):</label>
         </p>
 
         {% if SipProjectExtraInformation %}
@@ -36,7 +36,7 @@
     </div>
     <div class="form-group">
         <p>
-            <label>Objetivos:</label>
+            <label>Objetivos secundarios:</label>
         </p>
         {% if objetivoPrincipal %}
             <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|default('Sin datos')|striptags|raw}}</textarea>
@@ -48,7 +48,7 @@
     
 {% endif %}
 <div class="d-none">
-{# {{ form_row(form.objetives) }} #}
+    {{ form_row(form.objetives) }} 
 </div>
 {{ form_row(form.questions) }}
 {{ form_row(form.hypothesis) }}
