@@ -31,8 +31,8 @@ class UserManager {
   public function loginAction($strEmail) {
 
     // if (!$this->checkUserExists($strEmail['cedula'], $strEmail['opt_eval_form'] == "0" ? $strEmail['role_login'] : null )) {
-    var_dump($strEmail);
-    die();
+    // var_dump($strEmail);
+    // die();
     if (!$this->checkUserExists($strEmail['cedula'], $strEmail['opt_eval_form'] == "0" ? $strEmail['role_login'] : null )) {
       // create new user
       $this->createUser($strEmail);      
