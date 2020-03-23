@@ -21,11 +21,17 @@
         {% endif %}
     </div>
 {% endif %}
-{{ form_row(form.summaryObserv) }}
+{# {{ form_row(form.summaryObserv) }} #}
+
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
+<div class="form-group">
+    <p>
+        <label>Objetivos:</label>
+    </p>
+</div>
     <div class="form-group">
         <p>
-            <label>Objetivo principal:</label>
+            <label>Objetivo Principal:</label>
         </p>
         {% if objetivoGeneral %}
             <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoGeneral.dsc_objgeneral|striptags|raw|default('Sin datos')}}</textarea>
@@ -36,7 +42,7 @@
     </div>
     <div class="form-group">
         <p>
-            <label>Objetivos secundarios:</label>
+            <label>Objetivos Específicos:</label>
         </p>
         {% if objetivoPrincipal %}
             <textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|default('Sin datos')|striptags|raw}}</textarea>
