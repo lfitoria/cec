@@ -32,63 +32,63 @@ class EthicEvalRequest {
   /**
    * @var string|null
    *
-   * @ORM\Column(name="amount_participants", type="string", length=1000, nullable=true)
+   * @ORM\Column(name="amount_participants", type="text", length=3000, nullable=true)
    */
   private $amountParticipants;
 
   /**
    * @var string|null
    *
-   * @ORM\Column(name="in_ex_criteria", type="string", length=1500, nullable=true)
+   * @ORM\Column(name="in_ex_criteria", type="text", length=2000, nullable=true)
    */
   private $inExCriteria;
 
   /**
    * @var string|null
    *
-   * @ORM\Column(name="recruitment_participants", type="string", length=1500, nullable=true)
+   * @ORM\Column(name="recruitment_participants", type="text", length=2000, nullable=true)
    */
   private $recruitmentParticipants;
 
   /**
    * @var string|null
    *
-   * @ORM\Column(name="collection_information", type="string", length=1500, nullable=true)
+   * @ORM\Column(name="collection_information", type="text", length=5000, nullable=true)
    */
   private $collectionInformation;
 
   /**
    * @var string|null
    *
-   * @ORM\Column(name="risk_declaration", type="string", length=1000, nullable=true)
+   * @ORM\Column(name="risk_declaration", type="text", length=2000, nullable=true)
    */
   private $riskDeclaration;
 
   /**
    * @var string|null
    *
-   * @ORM\Column(name="benefits_for_participant", type="string", length=500, nullable=true)
+   * @ORM\Column(name="benefits_for_participant", type="text", length=1000, nullable=true)
    */
   private $benefitsForParticipant;
 
   /**
    * @var string|null
    *
-   * @ORM\Column(name="benefits_for_population", type="string", length=500, nullable=true)
+   * @ORM\Column(name="benefits_for_population", type="text", length=1000, nullable=true)
    */
   private $benefitsForPopulation;
 
   /**
    * @var string|null
    *
-   * @ORM\Column(name="previsions_privacy", type="string", length=500, nullable=true)
+   * @ORM\Column(name="previsions_privacy", type="text", length=1000, nullable=true)
    */
   private $previsionsPrivacy;
 
   /**
    * @var string|null
    *
-   * @ORM\Column(name="future_use", type="string", length=500, nullable=true)
+   * @ORM\Column(name="future_use", type="text", length=1000, nullable=true)
    */
   private $futureUse;
 
@@ -105,6 +105,13 @@ class EthicEvalRequest {
    * @ORM\Column(name="informed_assent", type="boolean", nullable=true)
    */
   private $informedAssent;
+
+  /**
+   * @var bool|null
+   *
+   * @ORM\Column(name="aditional_files", type="boolean", nullable=true)
+   */
+  private $aditionalFiles;
 
   /**
    * @ORM\ManyToMany(targetEntity="Criterion")
@@ -279,6 +286,17 @@ class EthicEvalRequest {
 
   public function setInformedAssent(?bool $informedAssent): self {
     $this->informedAssent = $informedAssent;
+
+    return $this;
+  }
+
+  //
+  public function getAditionalFiles(): ?bool {
+    return $this->aditionalFiles;
+  }
+
+  public function setAditionalFiles(?bool $aditionalFiles): self {
+    $this->aditionalFiles = $aditionalFiles;
 
     return $this;
   }

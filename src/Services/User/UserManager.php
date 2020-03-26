@@ -160,7 +160,39 @@ class UserManager {
     $objTokenStorage = $this->container->get("security.token_storage")->setToken($objToken);
     $this->session->set('_security_main', serialize($objToken));
   }
+  //test
+  // creates login session test
+  public function createLoginSessionTest($strEmail) {
+    // var_dump($strEmail);
+    // die();
 
+    // $_SESSION["isResearcher"] = false;
+    $this->user = $this->getUser($strEmail["cedula"],$strEmail["role_id"]);
+    $role = $this->user->getRoles();
+    // var_dump($role);
+    
+    // die();
+    if(in_array($role[0],["ROLE_ADMIN"] )){
+      // var_dump("entra");
+      // die();
+      $role_s = $this->em->getRepository(UsersRoles::class)->find($strEmail["role_id"]);
+      // var_dump($role_s);
+      // die();
+      $this->user->setRole($role_s);
+      // $role = ["ROLE_RESEARCHER"];
+      // $_SESSION["isResearcher"] = true;
+    }
+    
+    $this->user->setLastLoginDate(new \Datetime());
+    $this->em->persist($this->user);
+    $this->em->flush();
+    
+    $objToken = new UsernamePasswordToken($this->user, null, 'main', $role);
+    
+    // save token
+    $objTokenStorage = $this->container->get("security.token_storage")->setToken($objToken);
+    $this->session->set('_security_main', serialize($objToken));
+  }
   // logout a user
   public function logOutUser() {
     $this->container->get('security.context')->setToken(null);

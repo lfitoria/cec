@@ -2,7 +2,7 @@
 
 {% if label_question is defined %}<label>{{ label_question }}</label>{% else %}<hr>{% endif %}
 <ul class="collecion_list uploaded_files_list tags" data-list-target='{{ questionCode }}' data-prototype="{{ form_widget(form_prototype)|e('html_attr') }}">
-  <small class="form-text text-muted">Haga clic en "Agregar archivo" y seleccione "Buscar" para agregar un archivo desde su computadora</small>
+  <small class="form-text text-muted">Haga clic en "Agregar nuevo archivo" y oprima el botón gris "Buscar" para agregar un archivo desde su computadora</small>
   {# iterate over each existing tag and render its only field: name #}
   {% if oneItemMinimun|default(false) %}
     <li>
@@ -28,6 +28,6 @@
     </li>
   {% endfor %}
   <li class="add_file_button_cont" data-new-item='{{ questionCode }}'>
-    <button type='button' class='add_file_button btn btn-primary' data-list='{{ questionCode }}'>Agregar archivo</button>
+    <button type='button' class='add_file_button btn btn-primary' data-list='{{ questionCode }}'>Agregar nuevo archivo</button>
   </li>
 </ul>

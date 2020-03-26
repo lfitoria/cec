@@ -19,7 +19,9 @@
 <div id="informedConsentFiles" class="d-none">
     {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.informedConsentFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'informedConsentFiles', 'delete_label': 'Eliminar'}) }}
     <small class="form-text text-muted">
-        <span class="file-advice">*Campo obligatorio.</span>
+        <span>*Subir documento de Consentimiento Informado.</span>
+        <br>
+        <span class="file-advice">*Campo obligatorio.</span> 
         Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
     <hr>
 </div>
@@ -31,6 +33,20 @@
 
     {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.informedAssentFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'informedAssentFiles', 'delete_label': 'Eliminar'}) }}
     <small class="form-text text-muted">
+        <span>*Subir documento de Asentimiento Informado.</span>
+        <br>
+        <span class="file-advice">*Campo obligatorio.</span>
+        Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+    <hr>
+</div>
+<div class="inline-custom-radio">
+    {{ form_row(form.aditionalFiles, {attr: {'data-code': 'aditionalFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+</div>
+<div id="aditionalFiles" class="d-none">
+
+    {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.aditionalFilesFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'aditionalFiles', 'delete_label': 'Eliminar'}) }}
+    <small class="form-text text-muted">
+        <br>
         <span class="file-advice">*Campo obligatorio.</span>
         Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
     <hr>

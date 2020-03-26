@@ -204,28 +204,35 @@ class DefaultController extends AbstractController {
   public function loginTest(ContainerInterface $container, $type,Request $request) {
     $this->container = $container;
     $objUserServ = $this->container->get('user_manager');
+    
     $email = '';
     switch ($type) {
       case "admin":
         $email = "admin@cec.com";
+        $role_id = 1;
         break;
       case "student":
         $email = "student@cec.com";
+        $role_id = 2;
         break;
       case "researcher":
         $email = "researcher@cec.com";
+        $role_id = 3;
         break;
       case "evaluator":
         $email = "evaluator@cec.com";
+        $role_id = 4;
         break;
       default:
         $email = "admin@cec.com";
         break;
     }
-    
-    $objUserServ->loginAction(array(
+    // var_dump($login_admin);
+    // var_dump($role_login);
+    // die();
+    $objUserServ->createLoginSessionTest(array(
         "cedula" => $email,
-        "opt_eval_form" => "0"
+        "role_id" => $role_id,
     ));
 
     return $this->redirectToRoute('project_request_index');

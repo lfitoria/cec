@@ -51,7 +51,7 @@ const $ = require('jquery');
       $collectionHolder.data('index', index + 1);
       // Display the form in the page in an li, before the "Add a tag" link li
       var inputGroup = $('<div class="input-group input-group-cont"></div>').append(newForm);
-      var $newFormLi = $('<li></li>').append(inputGroup);
+      var $newFormLi = $('<li style="cursor: pointer;"></li>').append(inputGroup);
 
 
       $newFormLi.find(".input-group-cont").append('<div class="input-group-append"><a class="selected_files_list_item--delete" href="#">Eliminar</a></div>');

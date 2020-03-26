@@ -247,6 +247,9 @@
 <div class="inline-custom-radio">
   {# {{ form_row(form.category,{label_attr: {class: 'radio-custom'} }) }} #}
   {{ form_row(form.category, {attr: {'data-code': 'categoryBiomedicaFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
+  <small class="form-text text-muted">
+      <span class="file-advice">*Campo obligatorio.</span>
+  </small>
 </div>
 <div id="categoryBiomedicaFiles" class="d-none">
     {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.categoryBiomedicaFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'categoryBiomedicaFiles', 'delete_label': 'Eliminar'}) }}
