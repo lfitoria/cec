@@ -360,7 +360,7 @@ var_dump($projectCode);
       id_formulario = :code
     AND
       id_periodo = :year
-    ');
+        ');
 
     $statement->bindValue('code', $code);
     $statement->bindValue('year', $year);
