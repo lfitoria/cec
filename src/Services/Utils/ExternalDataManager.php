@@ -346,7 +346,8 @@ class ExternalDataManager {
   }
   // shortDescrip
   public function getShortDescripProyect($em, $projectCode) {
-    
+
+var_dump($projectCode);
     try {
 
     $code = explode("-", $projectCode)[0];
@@ -355,26 +356,29 @@ class ExternalDataManager {
     $statement = $connection->prepare('SELECT
         dsc_proyecto
     from spp_formulario
-    where 
+    where
       id_formulario = :code
-    AND 
-      Proy.id_periodo = :year
-    
+    AND
+      id_periodo = :year
     ');
 
     $statement->bindValue('code', $code);
     $statement->bindValue('year', $year);
-    $statement->bindValue('type', 'Pry01');
+    //$statement->bindValue('type', 'Pry01');
 
     $statement->execute();
 
     $results = $statement->fetchAll();
 
     // $results_convert = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $results);
-    return isset($results[0]) ? $results[0] : false;
+var_dump($results);
+die();
+
+    return isset($results) ? $results : false;
 
     } catch (\Exception $e) {
-      // var_dump($e);
+       //var_dump($e);
+	var_dump("error");
       return false;
     }
   }
