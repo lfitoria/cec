@@ -4,16 +4,19 @@
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
     <div class="form-group">
         <p>
-            <label>Resumen del estudio (antecedentes y justificación):</label>
+            <label>Resumen del estudio</label>
+            {# <label>Resumen del estudio (antecedentes y justificación):</label> #}
         </p>
 
-        {% if SipProjectExtraInformation %}
-            {# <textarea class="form-control" name="" id="" rows="12" >{{SipProject.antecedentes|raw|striptags|convert_encoding('UTF-8', 'ISO-8859-1//TRANSLIT')}}{{SipProject.jusitificacion|striptags|raw|default('Sin datos')}}</textarea> #}
+        {% if shortDescripProyect %}
+            {# <textarea class="form-control" name="" id="" rows="12" >{{SipProject.antecedentes|raw|striptags|convert_encoding('UTF-8', 'ISO-8859-1//TRANSLIT')}}{{SipProject.jusitificacion|striptags|raw|default('Sin datos')}}</textarea> dsc_proyecto #}
             <div class="textareas-form">
-            {% autoescape %}
+            {# {% autoescape %}
             {{SipProjectExtraInformation.DSC_ANTECEDENTE|raw}}
             {% endautoescape %}
-            {{SipProjectExtraInformation.DSC_JUSTIFICACION|striptags}}
+            {{SipProjectExtraInformation.DSC_JUSTIFICACION|striptags}} #}
+
+            {{shortDescripProyect}}
 
             </div>
         {% else %}
@@ -21,7 +24,7 @@
         {% endif %}
     </div>
 {% endif %}
-{# {{ form_row(form.summaryObserv) }} #}
+ 
 
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
 <div class="form-group">
@@ -55,6 +58,7 @@
 {% endif %}
 <div class="d-none">
     {{ form_row(form.objetives) }} 
+    {{ form_row(form.summaryObserv) }} 
 </div>
 {{ form_row(form.questions) }}
 {{ form_row(form.hypothesis) }}
@@ -74,8 +78,11 @@
 
     </div>
 {% endif %}
-<p><strong>Otros (especifique):</strong></p>
+{# <p><strong>Otros (especifique):</strong></p> #}
+<div class="form-group">
+<p><label>Descripción resumida de la metodología:</label></p>
 {{ form_row(form.metodologyObserv) }}
+</div>
 {{ form_end(form) }}
 {{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}
 {{ include('commons/_modal_info.html.twig') }}

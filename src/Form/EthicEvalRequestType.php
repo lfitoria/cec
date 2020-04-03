@@ -22,6 +22,13 @@ class EthicEvalRequestType extends AbstractType {
 
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder
+            ->add('devolutionResultShow', TextareaType::class, [
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
+                'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)',
+                'help_html' => true,
+                'label' => 'Describir la forma en la que se realizará la devolución de resultados a los participantes. Indicar qué, quién, cómo y cuándo se hará',
+                'required' => false,
+            ])
             ->add('form_target_input', HiddenType::class, [
                 'attr' => ['class' => 'form_target_input'],
                 'required' => false,

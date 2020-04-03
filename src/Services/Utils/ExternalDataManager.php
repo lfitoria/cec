@@ -344,6 +344,41 @@ class ExternalDataManager {
     // $results_convert = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $results);
     // return isset($results[0]) ? $results[0] : null;
   }
+  // shortDescrip
+  public function getShortDescripProyect($em, $projectCode) {
+    
+    try {
+
+    $code = explode("-", $projectCode)[0];
+    $year = explode("-", $projectCode)[1];
+    $connection = $em->getConnection();
+    $statement = $connection->prepare('SELECT
+        dsc_proyecto
+    from spp_formulario
+    where 
+      id_formulario = :code
+    AND 
+      Proy.id_periodo = :year
+    
+    ');
+
+    $statement->bindValue('code', $code);
+    $statement->bindValue('year', $year);
+    $statement->bindValue('type', 'Pry01');
+
+    $statement->execute();
+
+    $results = $statement->fetchAll();
+
+    // $results_convert = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $results);
+    return isset($results[0]) ? $results[0] : false;
+
+    } catch (\Exception $e) {
+      // var_dump($e);
+      return false;
+    }
+  }
+  // fin shortDescrip
 
   // public function getObjetivoPrincipalByProject($em, $project) {
   //   $connection = $em->getConnection();

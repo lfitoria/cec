@@ -141,6 +141,13 @@ class EthicEvalRequest {
    */
   private $request;
 
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="devolution_result_show", type="text", length=1500, nullable=true)
+   */
+  private $devolutionResultShow;
+
   function getEthicEvalFiles() {
     return $this->ethicEvalFiles;
   }
@@ -196,6 +203,16 @@ class EthicEvalRequest {
 
   public function setInExCriteria(?string $inExCriteria): self {
     $this->inExCriteria = $inExCriteria;
+
+    return $this;
+  }
+  
+  public function getDevolutionResultShow(): ?string {
+    return $this->devolutionResultShow;
+  }
+
+  public function setDevolutionResultShow(?string $devolutionResultShow): self {
+    $this->devolutionResultShow = $devolutionResultShow;
 
     return $this;
   }

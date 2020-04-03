@@ -125,6 +125,7 @@ class RequestFormController extends AbstractController {
       // $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectCode);
       $objetivoPrincipal = $externalDataManager->getProjectInfoByCode($emOracle, $projectCode);
       $objetivoGeneral = $externalDataManager->getProjectInfoByCode($emOracle, $projectCode);
+      $shortDescripProyect = $externalDataManager->getShortDescripProyect($emOracle, $projectCode);
 
       return $this->render($templateRoute, [
                   'academic_request_info' => $academicRequestInfo,
@@ -132,7 +133,8 @@ class RequestFormController extends AbstractController {
                   'SipProject' => $SipProject,
                   'SipProjectExtraInformation' => $SipProjectExtraInformation,
                   'objetivoPrincipal' => $objetivoPrincipal,
-                  'objetivoGeneral' => $objetivoGeneral
+                  'objetivoGeneral' => $objetivoGeneral,
+                  'shortDescripProyect' => $shortDescripProyect
       ]);
     }
     return $this->render($templateRoute, [
