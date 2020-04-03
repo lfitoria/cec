@@ -358,7 +358,7 @@ class ExternalDataManager {
     where 
       id_formulario = :code
     AND 
-      Proy.id_periodo = :year
+      id_periodo = :year
     
     ');
 
