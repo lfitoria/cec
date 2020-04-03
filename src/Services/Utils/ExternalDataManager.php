@@ -364,7 +364,6 @@ var_dump($projectCode);
 
     $statement->bindValue('code', $code);
     $statement->bindValue('year', $year);
-    //$statement->bindValue('type', 'Pry01');
 
     $statement->execute();
 
