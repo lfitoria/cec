@@ -347,7 +347,7 @@ class ExternalDataManager {
   // shortDescrip
   public function getShortDescripProyect($em, $projectCode) {
 
-var_dump($projectCode);
+
     try {
 
     $code = explode("-", $projectCode)[0];
@@ -370,10 +370,7 @@ var_dump($projectCode);
     $results = $statement->fetchAll();
 
     // $results_convert = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $results);
-var_dump($results);
-die();
-
-    return isset($results) ? $results : false;
+    return isset($results[0]) ? $results[0] : false;
 
     } catch (\Exception $e) {
        //var_dump($e);
