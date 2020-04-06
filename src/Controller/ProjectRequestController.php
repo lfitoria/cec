@@ -544,6 +544,9 @@ class ProjectRequestController extends AbstractController {
       $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
       $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
 
+      var_dump($minuteFinalWorkUploadedFiles);
+      var_dump($minuteFinalWorkFiles);
+      var_dump("researcher");
       var_dump($minuteCommissionTFGUploadedFiles);
       var_dump($minuteCommissionTFGFiles);
       die();
