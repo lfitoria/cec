@@ -22,21 +22,21 @@ class AcademicRequestInfoType extends AbstractType {
                 'required' => false,
                 'mapped' => false
             ])
-            ->add('summaryObserv', TextareaType::class, [
-                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
-                'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)' ,
-                'help_html' => true,
-                'label_format' => 'Objetivos:',              
-                'required' => false,
-            ])
-            ->add('objetives', TextareaType::class, [
-                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
-                'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)',
-                'help_html' => true,
-                'label' => 'Objetivos:',
-                'required' => false,
-                'mapped' => false
-            ])
+            // ->add('summaryObserv', TextareaType::class, [
+            //     'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
+            //     'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)' ,
+            //     'help_html' => true,
+            //     'label_format' => 'Objetivos:',              
+            //     'required' => false,
+            // ])
+            // ->add('objetives', TextareaType::class, [
+            //     'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
+            //     'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)',
+            //     'help_html' => true,
+            //     'label' => 'Objetivos:',
+            //     'required' => false,
+            //     'mapped' => false
+            // ])
             ->add('questions', TextareaType::class, [
                 'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
                 'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)',
