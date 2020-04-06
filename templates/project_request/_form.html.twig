@@ -204,7 +204,7 @@
 </div>
 
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
-  {# <div class="form-group">
+  <div class="form-group">
     
     {{ include('commons/_form_uploaded_file.html.twig', 
     {'files': project_request.infoRequestFiles, 
@@ -213,13 +213,6 @@
     'delete_label': 'Eliminar',
     'oneItemMinimun': true,
     'label_question': 'Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:'}) }}
-    <small class="form-text text-muted">
-      <span class="file-advice">*Campo obligatorio.</span>
-      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
-    <hr>
-  </div> #}
-  <div id="minuteCommissionTFGFiles">
-    {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.minuteCommissionTFGFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'minuteCommissionTFGFiles', 'delete_label': 'Eliminar', 'oneItemMinimun': true, 'label_question': 'Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:'}) }}
     <small class="form-text text-muted">
       <span class="file-advice">*Campo obligatorio.</span>
       Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
