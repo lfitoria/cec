@@ -532,11 +532,19 @@ class ProjectRequestController extends AbstractController {
         $uploadedTeamWork = $request->request->get('teamWork');
         $teamWork = $this->arrangeUploadedStudents($uploadedTeamWork);
         $projectRequest->addTeamWork($teamWork);
+
+        var_dump($minuteFinalWorkUploadedFiles);
+        var_dump($minuteFinalWorkFiles);
+
       } else {
         $projectCode = $request->request->get('project_code');
         $projectRequest->setSipProject($projectCode);
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
+
+        var_dump("researcher");
+        var_dump($minuteCommissionTFGUploadedFiles);
+        var_dump($minuteCommissionTFGFiles);
       }
       $categoryBiomedicaFilesCenterUploadedFiles = $form->get("categoryBiomedicaFiles")->getData();
       $categoryBiomedicaFiles = $fileManager->uploadFiles($categoryBiomedicaFilesCenterUploadedFiles, $projectDir, "categoryBiomedicaFiles");
@@ -544,11 +552,8 @@ class ProjectRequestController extends AbstractController {
       $extInstitutionsAuthorizationUploadedFiles = $form->get("extInstitutionsAuthorizationFiles")->getData();
       $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
 
-      var_dump($minuteFinalWorkUploadedFiles);
-      var_dump($minuteFinalWorkFiles);
-      var_dump("researcher");
-      var_dump($minuteCommissionTFGUploadedFiles);
-      var_dump($minuteCommissionTFGFiles);
+      
+      
       die();
 
       $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
