@@ -26,7 +26,9 @@ const $ = require('jquery');
       'application/vnd.ms-powerpoint',
       'application/vnd.oasis.opendocument.text',
       'image/png',
-      'image/jpeg'
+      'image/jpeg',
+      'application/zip',
+      'application/x-rar',
     ];
     var _objectPublic = {};
 
@@ -154,7 +156,7 @@ const $ = require('jquery');
                     type: 'info',
                     title: 'Guardando información',
                     showConfirmButton: false,
-                    timer: 1500
+                    //timer: 1500
                   });
                 }
 
@@ -171,7 +173,7 @@ const $ = require('jquery');
               type: 'info',
               title: 'Guardando información',
               showConfirmButton: false,
-              timer: 1500
+              //timer: 1500
             });
           }
         }

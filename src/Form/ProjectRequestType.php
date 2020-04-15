@@ -69,6 +69,14 @@ class ProjectRequestType extends AbstractType {
                 'required' => true,
                 'label' => false
             ])
+            ->add('applicationLetterFiles', CollectionType::class, [
+                'entry_type' => FileType::class,
+                'entry_options' => ['label' => false],
+                'mapped' => false,
+                'allow_add' => true,
+                'required' => true,
+                'label' => false
+            ])
             ->add('category', EntityType::class, [
                 'class' => Criterion::class,
                 'multiple' => false,

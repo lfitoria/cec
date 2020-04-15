@@ -64,11 +64,10 @@
 {{ form_row(form.hypothesis) }}
 {{ form_row(form.invType, {label_attr: {class: 'checkbox-custom'} }) }}
 {% if app.user.role.description == "ROLE_RESEARCHER" %}
-    <div class="form-group">
+    {# <div class="form-group">
         <label>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de muestras biológicas –si aplica:</label>
         </p>
         {% if SipProjectExtraInformation %}
-            {# <textarea class="form-control" name="" id="" rows="10" disabled>{{SipProject.metodologia|striptags|raw|default('Sin datos')}}</textarea> #}
             <div class="textareas-form">
             {{SipProjectExtraInformation.DSC_METODOLOGIA|striptags|raw}}
             </div>
@@ -76,7 +75,7 @@
             <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
         {% endif %}
 
-    </div>
+    </div> #}
 {% endif %}
 {# <p><strong>Otros (especifique):</strong></p> #}
 <div class="form-group">

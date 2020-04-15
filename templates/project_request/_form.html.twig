@@ -25,6 +25,21 @@
   </div>
   <small id="project_request_project_info_help" class="form-text text-muted">"Use el código de proyecto con el formato completo, por ejemplo XXXX-XXXX. No coloque espacios"</small>
   <hr>
+  <div class="form-group">
+    {{ include('commons/_form_uploaded_file.html.twig', 
+    {'files': project_request.infoRequestFiles, 
+    'questionCode': 'applicationLetterFiles', 
+    'form_prototype': form.applicationLetterFiles.vars.prototype,
+    'delete_label': 'Eliminar',
+    'label_question': 'Adjuntar oficio de solicitud al CEC:',
+    
+    }) }}
+    <small class="form-text text-muted">
+      <span class="file-advice">*Campo obligatorio.</span>
+      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
+    <hr>
+  </div>
+
   {{ form_row(form.title, {attr: {'value': project_request.title|default('')} }) }}
   <div class="form-group" id="project_principal_researchers">
     <label for="project_request_extInstitutions">Nombre del investigador (a) principal:</label>
@@ -192,7 +207,7 @@
   {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.extInstitutionsAuthorizationFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'extInstitutionsAuthorizationFiles', 'delete_label': 'Eliminar'}) }}
   <small class="form-text text-muted">
     <span class="file-advice">*Campo obligatorio.</span>
-    Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+    Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
   <hr>
 </div>
 
@@ -212,10 +227,12 @@
     'form_prototype': form.minuteCommissionTFGFiles.vars.prototype,
     'delete_label': 'Eliminar',
     'oneItemMinimun': true,
-    'label_question': 'Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:'}) }}
+    'label_question': 'Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:',
+    
+    }) }}
     <small class="form-text text-muted">
       <span class="file-advice">*Campo obligatorio.</span>
-      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
     <hr>
   </div>
 {% endif %}
@@ -229,7 +246,7 @@
     {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.minutesResearchCenterFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'minutesResearchCenterFiles', 'delete_label': 'Eliminar'}) }}
     <small class="form-text text-muted">
       <span class="file-advice">*Campo obligatorio.</span>
-      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
     <hr>
   </div>
   <div class="inline-custom-radio">
@@ -239,7 +256,7 @@
     {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.minuteFinalWorkFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'minuteFinalWorkFiles', 'delete_label': 'Eliminar'}) }}
     <small class="form-text text-muted">
       <span class="file-advice">*Campo obligatorio.</span>
-      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
     <hr>
   </div>
   
@@ -252,10 +269,10 @@
   </small>
 </div>
 <div id="categoryBiomedicaFiles" class="d-none">
-    {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.categoryBiomedicaFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'categoryBiomedicaFiles', 'delete_label': 'Eliminar'}) }}
+    {{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.categoryBiomedicaFiles.vars.prototype, 'files': project_request.infoRequestFiles, 'questionCode': 'categoryBiomedicaFiles', 'delete_label': 'Eliminar','optional_label': 'Adjunte acreditaciones CONIS.'}) }}
     <small class="form-text text-muted">
       <span class="file-advice">*Campo obligatorio.</span>
-      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
     <hr>
   </div>
 

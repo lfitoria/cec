@@ -179,6 +179,7 @@ class ProjectRequestController extends AbstractController {
     $minuteFinalWorkFiles = [];
     $minutesResearchCenterFiles = [];
     $categoryBiomedicaFiles = [];
+    $applicationLetterFiles = [];
 
     if ($form->isSubmitted() && $form->isValid()) {
 
@@ -196,6 +197,9 @@ class ProjectRequestController extends AbstractController {
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
       }
+      $applicationLetterUploadedFiles = $form->get("applicationLetterFiles")->getData();
+      $applicationLetterFiles = $fileManager->uploadFiles($applicationLetterUploadedFiles, $projectDir, "applicationLetterFiles");
+
       $categoryBiomedicaFilesCenterUploadedFiles = $form->get("categoryBiomedicaFiles")->getData();
       $categoryBiomedicaFiles = $fileManager->uploadFiles($categoryBiomedicaFilesCenterUploadedFiles, $projectDir, "categoryBiomedicaFiles");
 
@@ -203,7 +207,7 @@ class ProjectRequestController extends AbstractController {
       $extInstitutionsAuthorizationFiles = $fileManager->uploadFiles($extInstitutionsAuthorizationUploadedFiles, $projectDir, "extInstitutionsAuthorizationFiles");
 
 
-      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? [], $applicationLetterFiles ?? []));
 
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       // $projectRequest->setTitle($state);
@@ -546,6 +550,9 @@ class ProjectRequestController extends AbstractController {
         // var_dump($minuteCommissionTFGUploadedFiles);
         // var_dump($minuteCommissionTFGFiles);
       }
+      $applicationLetterUploadedFiles = $form->get("applicationLetterFiles")->getData();
+      $applicationLetterFiles = $fileManager->uploadFiles($applicationLetterUploadedFiles, $projectDir, "applicationLetterFiles");
+
       $categoryBiomedicaFilesCenterUploadedFiles = $form->get("categoryBiomedicaFiles")->getData();
       $categoryBiomedicaFiles = $fileManager->uploadFiles($categoryBiomedicaFilesCenterUploadedFiles, $projectDir, "categoryBiomedicaFiles");
 
@@ -556,7 +563,7 @@ class ProjectRequestController extends AbstractController {
       
       // die();
 
-      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? []));
+      $projectRequest->addInfoRequestFiles(array_merge($minuteCommissionTFGFiles ?? [], $extInstitutionsAuthorizationFiles ?? [], $minuteFinalWorkFiles ?? [], $minutesResearchCenterFiles ?? [], $categoryBiomedicaFiles ?? [],$applicationLetterFiles ?? []));
 
       $state = $this->getDoctrine()->getRepository(Criterion::class)->find(27);
       $projectRequest->setState($state);

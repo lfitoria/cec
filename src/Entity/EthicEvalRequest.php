@@ -46,6 +46,13 @@ class EthicEvalRequest {
   /**
    * @var string|null
    *
+   * @ORM\Column(name="ex_criteria", type="text", length=2000, nullable=true)
+   */
+  private $exCriteria;
+
+  /**
+   * @var string|null
+   *
    * @ORM\Column(name="recruitment_participants", type="text", length=2000, nullable=true)
    */
   private $recruitmentParticipants;
@@ -67,14 +74,14 @@ class EthicEvalRequest {
   /**
    * @var string|null
    *
-   * @ORM\Column(name="benefits_for_participant", type="text", length=1000, nullable=true)
+   * @ORM\Column(name="benefits_for_participant", type="text", length=1500, nullable=true)
    */
   private $benefitsForParticipant;
 
   /**
    * @var string|null
    *
-   * @ORM\Column(name="benefits_for_population", type="text", length=1000, nullable=true)
+   * @ORM\Column(name="benefits_for_population", type="text", length=1500, nullable=true)
    */
   private $benefitsForPopulation;
 
@@ -203,6 +210,16 @@ class EthicEvalRequest {
 
   public function setInExCriteria(?string $inExCriteria): self {
     $this->inExCriteria = $inExCriteria;
+
+    return $this;
+  }
+  
+  public function getExCriteria(): ?string {
+    return $this->exCriteria;
+  }
+
+  public function setExCriteria(?string $exCriteria): self {
+    $this->exCriteria = $exCriteria;
 
     return $this;
   }

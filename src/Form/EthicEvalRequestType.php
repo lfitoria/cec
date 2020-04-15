@@ -50,7 +50,14 @@ class EthicEvalRequestType extends AbstractType {
                 'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 2000, 'maxlength' => 2000],
                 'help' => 'Máximo 2000 caracteres. <span class="count">2000</span> caracter(es) restante(s)',
                 'help_html' => true,
-                'label' => 'Criterios de inclusión y exclusión:',
+                'label' => 'Criterio de inclusión:',
+                'required' => false,
+            ])
+            ->add('exCriteria', TextareaType::class, [
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 2000, 'maxlength' => 2000],
+                'help' => 'Máximo 2000 caracteres. <span class="count">2000</span> caracter(es) restante(s)',
+                'help_html' => true,
+                'label' => 'Criterio de exclusión:',
                 'required' => false,
             ])
             ->add('recruitmentParticipants', TextareaType::class, [
@@ -75,15 +82,15 @@ class EthicEvalRequestType extends AbstractType {
                 'required' => false,
             ])
             ->add('benefitsForParticipant', TextareaType::class, [
-                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1000, 'maxlength' => 1000],
-                'help' => 'Máximo 1000 caracteres. <span class="count">1000</span> caracter(es) restante(s)',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
+                'help' => 'Máximo 1500 caracteres. <span class="count">1000</span> caracter(es) restante(s)',
                 'help_html' => true,
                 'label' => 'Beneﬁcios para la población:',
                 'required' => false,
             ])
             ->add('benefitsForPopulation', TextareaType::class, [
-                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1000, 'maxlength' => 1000],
-                'help' => 'Máximo 1000 caracteres. <span class="count">1000</span> caracter(es) restante(s)',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
+                'help' => 'Máximo 1500 caracteres. <span class="count">1000</span> caracter(es) restante(s)',
                 'help_html' => true,
                 'label' => 'Beneﬁcios para el participante individual:',
                 'required' => false,
@@ -171,6 +178,14 @@ class EthicEvalRequestType extends AbstractType {
                 'label' => false
             ])
             ->add('aditionalFilesFiles', CollectionType::class, [
+                'entry_type' => FileType::class,
+                'entry_options' => ['label' => false],
+                'mapped' => false,
+                'allow_add' => true,
+                'required' => false,
+                'label' => false
+            ])
+            ->add('mtaFiles', CollectionType::class, [
                 'entry_type' => FileType::class,
                 'entry_options' => ['label' => false],
                 'mapped' => false,

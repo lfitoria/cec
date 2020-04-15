@@ -4,15 +4,30 @@
 {{ form_row(form.population, {label_attr: {class: 'checkbox-custom'} }) }}
 {{ form_row(form.amountParticipants) }}
 {{ form_row(form.inExCriteria) }}
+{{ form_row(form.exCriteria) }}
 {{ form_row(form.recruitmentParticipants) }}
 {{ form_row(form.collectionInformation) }}
-{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.collectionInformationFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'collectionInformationFiles', 'delete_label': 'Eliminar'}) }}
+{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.collectionInformationFiles.vars.prototype, 'files': ethic_eval_request.ethicEvalFiles, 'questionCode': 'collectionInformationFiles', 'delete_label': 'Eliminar','optional_label': 'Adjuntar los instrumentos de recolección respectivos (opcional).'}) }}
 {{ form_row(form.dataType, {label_attr: {class: 'checkbox-custom'} }) }}
 {{ form_row(form.riskDeclaration) }}
 {{ form_row(form.benefitsForParticipant) }}
 {{ form_row(form.benefitsForPopulation) }}
 {{ form_row(form.previsionsPrivacy) }}
 {{ form_row(form.futureUse) }}
+<div class="form-group">
+    {{ include('commons/_form_uploaded_file.html.twig', 
+    {'files': ethic_eval_request.ethicEvalFiles, 
+    'questionCode': 'mtaFiles', 
+    'form_prototype': form.mtaFiles.vars.prototype,
+    'delete_label': 'Eliminar',
+    'label_question': 'Adjuntar documento MTA:',
+    
+    }) }}
+    <small class="form-text text-muted">
+      <span class="file-advice">*Campo obligatorio.</span>
+      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
+    <hr>
+  </div>
 {{ form_row(form.devolutionResultShow) }}
 <div class="inline-custom-radio">
     {{ form_row(form.informedConsent, {attr: {'data-code': 'informedConsentFiles', class: 'decision_question'}, label_attr: {class: 'radio-custom'} }) }}
@@ -23,7 +38,7 @@
         <span>*Subir documento de Consentimiento Informado.</span>
         <br>
         <span class="file-advice">*Campo obligatorio.</span> 
-        Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+        Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
     <hr>
 </div>
 
@@ -37,7 +52,7 @@
         <span>*Subir documento de Asentimiento Informado.</span>
         <br>
         <span class="file-advice">*Campo obligatorio.</span>
-        Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+        Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
     <hr>
 </div>
 <div class="inline-custom-radio">
@@ -49,7 +64,7 @@
     <small class="form-text text-muted">
         <br>
         <span class="file-advice">*Campo obligatorio.</span>
-        Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, con un peso máximo de 40MB.</small>
+        Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
     <hr>
 </div>
 
