@@ -3,7 +3,7 @@
 {% if label_question is defined %}<label>{{ label_question }}</label>{% else %}<hr>{% endif %}
 <ul class="collecion_list uploaded_files_list tags" data-list-target='{{ questionCode }}' data-prototype="{{ form_widget(form_prototype)|e('html_attr') }}">
   {% if optional_label is defined %}
-    <small class="form-text text-muted">{{optional_label}}</small>
+    <small class="form-text text-muted" style="font-weight: bold;">{{optional_label}}</small>
   {% endif %}
   <small class="form-text text-muted">
   {% if add_label is defined %}
