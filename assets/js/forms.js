@@ -323,7 +323,7 @@ const $ = require('jquery');
           dataType: 'json',
           success: function (file) {
             if (file.wasDeleted) {
-              _this.parent().remove();
+              _this.parent().parent().remove();
             }
           }
         });

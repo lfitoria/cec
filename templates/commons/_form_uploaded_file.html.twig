@@ -27,9 +27,11 @@
   {% endif %}
   
   {% for file in files if file.questionCode == questionCode %}
+  <div class="boxcompleteinfo">
     <li class="uploaded_files_list_item">{{ file.originalName }} ({{ file.size }})
       <a class="uploaded_files_list_item--delete" data-id='{{ file.id }}' href="#">{{ delete_label }}</a>      
     </li>
+  </div>
     {% if file.filedescription %}<small class="font-italic">{{file.filedescription}}</small>{% endif %}
     <hr>
   {% endfor %}
