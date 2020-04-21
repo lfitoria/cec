@@ -312,7 +312,7 @@ const $ = require('jquery');
       cache.uploaded_item_delete.click(function (e) {
         e.preventDefault();
         var _this = $(this);
-        var path = "/cec/public/file/removeFile";
+        var path = "/file/removeFile";
         $.ajax({
           type: 'POST',
           url: path,
