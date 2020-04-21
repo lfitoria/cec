@@ -32,12 +32,14 @@ const $ = require('jquery');
     ];
     var _objectPublic = {};
 
-    function addTagForm($collectionHolder, $newLinkLi) {
+    function addTagForm($collectionHolder, $newLinkLi, target) {
       // Get the data-prototype explained earlier
       var prototype = $collectionHolder.data('prototype');
 
       // get the new index
       var index = $collectionHolder.data('index');
+
+      console.log(target);
 
       var newForm = prototype;
       // You need this only if you didn't set 'label' => false in your tags field in TaskType
@@ -53,10 +55,13 @@ const $ = require('jquery');
       $collectionHolder.data('index', index + 1);
       // Display the form in the page in an li, before the "Add a tag" link li
       var inputGroup = $('<div class="input-group input-group-cont"></div>').append(newForm);
-      var $newFormLi = $('<li style="cursor: pointer;"></li>').append(inputGroup);
+      var $newFormLi = $('<li class="input-group-list"></li>').append(inputGroup);
 
 
       $newFormLi.find(".input-group-cont").append('<div class="input-group-append"><a class="selected_files_list_item--delete" href="#">Eliminar</a></div>');
+      if(target == "aditionalFiles"){
+        $newFormLi.append(`<input type="text" class="input-filesDes small" placeholder="Nombre o breve descripción del documento (opcional)" name="${target}_fileDescription[${index}]">`);
+      }
       $newLinkLi.before($newFormLi);
 
     }
@@ -376,7 +381,7 @@ const $ = require('jquery');
         var newLinkLi = $('[data-new-item="' + target + '"]');
         cache.fileInputs.off('change');
         cache.selected_item_delete.off('click');
-        addTagForm(collectionHolder, newLinkLi);
+        addTagForm(collectionHolder, newLinkLi, target);
         cache.fileInputs = $('.custom-file-input');
         cache.fileInputs.on('change', function (event) {
           showlabel(event);

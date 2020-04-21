@@ -31,6 +31,13 @@ class File {
   /**
    * @var string
    *
+   * @ORM\Column(name="filedescription", type="string", length=400, nullable=true)
+   */
+  private $filedescription;
+
+  /**
+   * @var string
+   *
    * @ORM\Column(name="original_name", type="string", length=200, nullable=false)
    */
   private $originalName;
@@ -82,6 +89,10 @@ class File {
     return $this->size;
   }
 
+  function getFiledescription() {
+    return $this->filedescription;
+  }
+
   function setId($id) {
     $this->id = $id;
   }
@@ -104,5 +115,8 @@ class File {
 
   function setSize($size) {
     $this->size = $size;
+  }
+  function setFiledescription($filedescription) {
+    $this->filedescription = $filedescription;
   }
 }

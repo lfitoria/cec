@@ -59,7 +59,7 @@ class AcademicRequestInfo
     /**
      * @var string|null
      *
-     * @ORM\Column(name="metodology_observ", type="string", length=1500, nullable=true)
+     * @ORM\Column(name="metodology_observ", type="string", length=2000, nullable=true)
      */
     private $metodologyObserv;
 

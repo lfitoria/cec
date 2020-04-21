@@ -71,9 +71,14 @@ label [for~="project_request_disable_question_ucrInstitutions"] {
 
 form .custom-file,
 form .input-group{
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
-
+li.input-group-list {
+  margin-bottom: 20px;
+}
+input.input-filesDes {
+  width: 93%;
+}
 .custom-file-input.invalid-extension ~ .custom-file-label, .custom-file-input.error ~ .custom-file-label{
   border-color: red;
 }
@@ -115,7 +120,7 @@ form .collecion_list .uploaded_files_list_item{
   display: flex;
   justify-content: space-between;
   padding: 6px 10px;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
   border: 1px solid #ced4da;
   color: var(--A4);
 }

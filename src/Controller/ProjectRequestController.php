@@ -175,6 +175,7 @@ class ProjectRequestController extends AbstractController {
     $form->handleRequest($request);
 
     $minuteCommissionTFGFiles = [];
+    
     $extInstitutionsAuthorizationFiles = [];
     $minuteFinalWorkFiles = [];
     $minutesResearchCenterFiles = [];
@@ -186,10 +187,15 @@ class ProjectRequestController extends AbstractController {
       $projectDir = $this->getParameter('brochures_directory');
 
       if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
+        $minuteFinalWorkFilesDescriptions = $request->request->get('fileDescription');
+        var_dump($minuteFinalWorkFilesDescriptions);
+        var_dump("minuteFinalWorkFilesDescriptions");
+        die();
+
         $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
         $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
 
-        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
+        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles",$minuteFinalWorkFilesDescriptions);
         $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
       } else {
         $projectCode = $request->request->get('project_code');
@@ -197,6 +203,11 @@ class ProjectRequestController extends AbstractController {
         $minuteCommissionTFGUploadedFiles = $form->get("minuteCommissionTFGFiles")->getData();
         $minuteCommissionTFGFiles = $fileManager->uploadFiles($minuteCommissionTFGUploadedFiles, $projectDir, "minuteCommissionTFGFiles");
       }
+      
+      // var_dump($form->get("fileDescription")->getData());
+      // var_dump($minuteFinalWorkFilesDescriptions);
+      // die();
+
       $applicationLetterUploadedFiles = $form->get("applicationLetterFiles")->getData();
       $applicationLetterFiles = $fileManager->uploadFiles($applicationLetterUploadedFiles, $projectDir, "applicationLetterFiles");
 
@@ -524,11 +535,13 @@ class ProjectRequestController extends AbstractController {
       $projectDir = $this->getParameter('brochures_directory');
 
       if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
+        $minuteFinalWorkFilesDescriptions = $request->request->get('fileDescription');
+        
         // var_dump($form->get("minuteFinalWorkFiles")->getData());
         $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
         $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
 
-        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
+        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles",$minuteFinalWorkFilesDescriptions);
         // var_dump($projectDir);
         // die();
         $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");

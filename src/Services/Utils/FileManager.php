@@ -16,7 +16,10 @@ class FileManager {
     $this->em = $em;
   }
 
-  public function upload(UploadedFile $file, $targetDirectory, $questionCode) {
+  public function upload(UploadedFile $file, $targetDirectory, $questionCode, $description ) {
+    // var_dump($description);
+    // die();
+
     $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
     $newFile = new \App\Entity\File();
@@ -26,6 +29,7 @@ class FileManager {
     $newFile->setMime($file->getClientMimeType());
     $newFile->setSize($file->getSize());
     $newFile->setQuestionCode($questionCode);
+    $newFile->setFiledescription($description);
 
     try {
       $file->move($targetDirectory, $fileName);
@@ -38,13 +42,19 @@ class FileManager {
     }
   }
 
-  public function uploadFiles($files, $targetDirectory, $questionCode) {
+  public function uploadFiles($files, $targetDirectory, $questionCode, $descriptions = null) {
     // var_dump($files);
     // die();
     $uploadedFiles = array();
+
+    // foreach($array as $key=>$value) {
     if ($files) {
-      foreach ($files as $file) {
-        $newFile = $this->upload($file, $targetDirectory, $questionCode);
+      foreach ($files as $key=>$file) {
+        // var_dump($descriptions);
+        // var_dump($file);
+        // var_dump($key);
+        // die;
+        $newFile = $this->upload($file, $targetDirectory, $questionCode, $descriptions[$key]);
         if ($newFile) {
           $uploadedFiles[] = $newFile;
         }

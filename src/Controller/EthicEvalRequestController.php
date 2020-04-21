@@ -75,7 +75,8 @@ class EthicEvalRequestController extends AbstractController {
       $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir, "informedAssentFiles");
       $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir, "collectionInformationFiles");
       // aditionalFiles
-      $aditionalFiles = $fileManager->uploadFiles($aditionalFilesUploadedFiles, $projectDir, "aditionalFiles");
+      $aditionalFilesFilesDescriptions = $request->request->get('aditionalFiles_fileDescription');
+      $aditionalFiles = $fileManager->uploadFiles($aditionalFilesUploadedFiles, $projectDir, "aditionalFiles",$aditionalFilesFilesDescriptions);
 
       $mtaUploadedFiles = $form->get("mtaFiles")->getData();
       $mtaFiles = $fileManager->uploadFiles($mtaUploadedFiles, $projectDir, "mtaFiles");
@@ -169,7 +170,8 @@ class EthicEvalRequestController extends AbstractController {
       $informedAssentFiles = $fileManager->uploadFiles($informedAssentUploadedFiles, $projectDir, "informedAssentFiles");
       $collectionInformationFiles = $fileManager->uploadFiles($collectionInformationUploadedFiles, $projectDir, "collectionInformationFiles");
       // aditionalFiles
-      $aditionalFiles = $fileManager->uploadFiles($aditionalFilesUploadedFiles, $projectDir, "aditionalFiles");
+      $aditionalFilesFilesDescriptions = $request->request->get('aditionalFiles_fileDescription');
+      $aditionalFiles = $fileManager->uploadFiles($aditionalFilesUploadedFiles, $projectDir, "aditionalFiles",$aditionalFilesFilesDescriptions);
 
       $mtaUploadedFiles = $form->get("mtaFiles")->getData();
       $mtaFiles = $fileManager->uploadFiles($mtaUploadedFiles, $projectDir, "mtaFiles");

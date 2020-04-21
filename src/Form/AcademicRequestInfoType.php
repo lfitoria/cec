@@ -52,8 +52,8 @@ class AcademicRequestInfoType extends AbstractType {
                 'required' => false,
             ])
             ->add('metodologyObserv', TextareaType::class, [
-                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 1500, 'maxlength' => 1500],
-                'help' => 'Máximo 1500 caracteres. <span class="count">1500</span> caracter(es) restante(s)',
+                'attr' => ['class' => 'form-control letter-counter', 'rows' => '4', 'data-max' => 2000, 'maxlength' => 2000],
+                'help' => 'Máximo 2000 caracteres. <span class="count">2000</span> caracter(es) restante(s)',
                 'help_html' => true,
                 // 'label' => 'Observaciones:',
                 'label' => false,

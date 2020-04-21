@@ -27,10 +27,11 @@
   {% endif %}
   
   {% for file in files if file.questionCode == questionCode %}
-
     <li class="uploaded_files_list_item">{{ file.originalName }} ({{ file.size }})
-      <a class="uploaded_files_list_item--delete" data-id='{{ file.id }}' href="#">{{ delete_label }}</a>
+      <a class="uploaded_files_list_item--delete" data-id='{{ file.id }}' href="#">{{ delete_label }}</a>      
     </li>
+    {% if file.filedescription %}<small class="font-italic">{{file.filedescription}}</small>{% endif %}
+    <hr>
   {% endfor %}
   <li class="add_file_button_cont" data-new-item='{{ questionCode }}'>
     <button type='button' class='add_file_button btn btn-primary' data-list='{{ questionCode }}'>Agregar nuevo archivo</button>
