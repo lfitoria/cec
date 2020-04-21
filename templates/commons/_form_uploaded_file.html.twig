@@ -33,8 +33,9 @@
     </li>
   
     {% if file.filedescription %}<small class="font-italic">{{file.filedescription}}</small>{% endif %}
-  </div>
     <hr>
+  </div>
+    
   {% endfor %}
   <li class="add_file_button_cont" data-new-item='{{ questionCode }}'>
     <button type='button' class='add_file_button btn btn-primary' data-list='{{ questionCode }}'>Agregar nuevo archivo</button>
