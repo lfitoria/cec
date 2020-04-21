@@ -31,8 +31,9 @@
     <li class="uploaded_files_list_item">{{ file.originalName }} ({{ file.size }})
       <a class="uploaded_files_list_item--delete" data-id='{{ file.id }}' href="#">{{ delete_label }}</a>      
     </li>
-  </div>
+  
     {% if file.filedescription %}<small class="font-italic">{{file.filedescription}}</small>{% endif %}
+  </div>
     <hr>
   {% endfor %}
   <li class="add_file_button_cont" data-new-item='{{ questionCode }}'>
