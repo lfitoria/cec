@@ -112,10 +112,12 @@ class RequestFormController extends AbstractController {
     $projectCode = $projectRequest->getSipProject();
 
     if ($loggedUser->getRole()->getDescription() === "ROLE_RESEARCHER") {
+      $entityManager = $this->getDoctrine()->getManager('sip');
+      $emOracle = $this->getDoctrine()->getManager('oracle');
+
       $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
-
-
       $SipProject = $this->getInformationByProject($externalDataManager, $projectCode);
+      $SipProjectObjAndGoals = $externalDataManager->getObjAndGoalsByProject($emOracle, $projectCode);
 
       $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectCode);
 
@@ -134,7 +136,8 @@ class RequestFormController extends AbstractController {
                   'SipProjectExtraInformation' => $SipProjectExtraInformation,
                   'objetivoPrincipal' => $objetivoPrincipal,
                   'objetivoGeneral' => $objetivoGeneral,
-                  'shortDescripProyect' => $shortDescripProyect
+                  'shortDescripProyect' => $shortDescripProyect,
+                  'SipProjectObjAndGoals' => $SipProjectObjAndGoals
       ]);
     }
     return $this->render($templateRoute, [

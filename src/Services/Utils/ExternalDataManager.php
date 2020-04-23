@@ -502,5 +502,64 @@ class ExternalDataManager {
     }
     return $results;
   }
+  //objGoals
+  public function getObjAndGoalsByProject($em, $projectCode) {
+
+    try {
+      $code = explode("-", $projectCode)[0];
+    $year = explode("-", $projectCode)[1];
+
+    $connection = $em->getConnection();
+    $statement = $connection->prepare('SELECT
+           ObjEsp.id_obj_especifico id_objetivo_especifico,
+           ObjEsp.dsc_obj_especifico dsc_objetivo_especifico,
+           t_meta.id_meta,
+           trim(t_meta.DSC_META) dsc_meta,
+           t_meta.id_valor_tipo,
+           can_meta cantidad_cuantitativa,
+           t_indicador.id_indicador,
+           t_indicador.dsc_indicador
+           FROM
+           spp_proyecto Proy INNER join spp_formulario formu
+           ON Proy.id_formulario = Formu.id_formulario AND Proy.id_periodo = Formu.id_periodo AND Proy.id_tipo_proyecto = Formu.id_tipo_proyecto
+           INNER join spp_proyecto_unidad_ejecutora UnidEject
+           ON Proy.id_formulario = UnidEject.id_formulario AND Proy.id_periodo = UnidEject.id_periodo AND Proy.id_tipo_proyecto = UnidEject.id_tipo_proyecto
+           INNER join spp_formulario_origen_fondos fondos
+           ON Proy.id_formulario = fondos.id_formulario AND Proy.id_periodo = fondos.id_periodo AND Proy.id_tipo_proyecto = fondos.id_tipo_proyecto
+           INNER JOIN spp_objetivo_especifico ObjEsp
+           ON Proy.id_formulario = ObjEsp.id_formulario AND Proy.id_periodo = ObjEsp.id_periodo AND Proy.id_tipo_proyecto = ObjEsp.id_tipo_proyecto
+           inner join spp_meta t_meta
+           ON Proy.id_formulario = t_meta.id_formulario AND Proy.id_periodo = t_meta.id_periodo AND Proy.id_tipo_proyecto = t_meta.id_tipo_proyecto and ObjEsp.id_obj_especifico = t_meta.id_obj_especifico
+           inner join spp_indicador t_indicador
+           on t_meta.id_formulario = t_indicador.id_formulario and t_meta.id_periodo = t_indicador.id_periodo and t_meta.id_tipo_proyecto = t_indicador.id_tipo_proyecto and
+           t_meta.id_meta = t_indicador.id_meta and t_meta.id_obj_especifico = t_indicador.id_obj_especifico
+           WHERE
+           Proy.id_formulario = :code  
+           AND Proy.id_periodo = :year
+           AND Proy.id_tipo_proyecto = :type
+           TIPO DE PROYECTO
+           AND fondos.id_act_sustantiva = 2
+           AND UnidEject.ind_base = 1
+           ORDER BY
+           ObjEsp.id_obj_especifico,
+           t_meta.id_meta,
+           t_indicador.id_indicador
+    ');
+
+    $statement->bindValue('code', $code);
+    $statement->bindValue('year', $year);
+    $statement->bindValue('type', 'Pry01');
+
+    $statement->execute();
+
+    $results = $statement->fetchAll();
+    return isset($results[0]) ? $results[0] : null;
+      
+    } catch (\Exception $e) {
+      // var_dump($e);
+      return null;
+    }
+    
+  }
 
 }
