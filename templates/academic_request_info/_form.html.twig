@@ -51,11 +51,10 @@
         {% if SipProjectObjAndGoals %}
             <div class="textareas-form">
                 {% for obj in SipProjectObjAndGoals %}
-                    <p>Objetivo específico {{obj.ID_OBJETIVO_ESPECIFICO}}</p>
+                    <p class="font-weight-bolder">Objetivo específico {{obj.ID_OBJETIVO_ESPECIFICO}}</p>
                     <p>{{obj.DSC_OBJETIVO_ESPECIFICO}}</p>
-                    <p>Meta {{obj.ID_META}} Cantidad: {{obj.CANTIDAD_CUANTITATIVA}}.00</p>
-                    <br>
-                    <p>Indicador {{obj.ID_INDICADOR}}</p>
+                    <p class="font-italic">Meta {{obj.ID_META}} Cantidad: {{obj.CANTIDAD_CUANTITATIVA}}.00</p>                    
+                    <p class="font-weight-bold">Indicador {{obj.ID_INDICADOR}}</p>
                     <p>{{obj.DSC_INDICADOR}}</p>
                     <hr>
                 {% endfor %}
