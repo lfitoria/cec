@@ -44,6 +44,27 @@
 
     </div>
     {{dump(SipProjectObjAndGoals)}}
+    <div class="form-group">
+        <p style="font-weight: bold;">
+            2.2.2 Objetivos Específicos:
+        </p>
+        {% if SipProjectObjAndGoals %}
+            <textarea class="form-control" name="" id="" rows="6" disabled>
+                {% for obj in SipProjectObjAndGoals %}
+                    <p>Objetivo específico {{obj.ID_OBJETIVO_ESPECIFICO}}</p>
+                    <p>{{obj.DSC_OBJETIVO_ESPECIFICO}}</p>
+                    <p>Meta {{obj.ID_META}} Cantidad: {{obj.CANTIDAD_CUANTITATIVA}}.00</p>
+                    <br>
+                    <p>Indicador {{obj.ID_INDICADOR}}</p>
+                    <p>{{obj.DSC_INDICADOR}}</p>
+                    <hr>
+                {% endfor %}
+            </textarea>
+        {% else %}
+            <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+        {% endif %}
+
+    </div>
     {# <div class="form-group">
         <p style="font-weight: bold;">
             2.2.2 Objetivos Específicos:
