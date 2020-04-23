@@ -556,7 +556,7 @@ class ExternalDataManager {
     return isset($results[0]) ? $results[0] : null;
       
     } catch (\Exception $e) {
-      // var_dump($e);
+      var_dump($e);
       return null;
     }
     
