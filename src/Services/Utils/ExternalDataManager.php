@@ -504,8 +504,8 @@ class ExternalDataManager {
   }
   //objGoals
   public function getObjAndGoalsByProject($em, $projectCode) {
-    var_dump($projectCode);
-    die();
+    // var_dump($projectCode);
+    // die();
     try {
       $code = explode("-", $projectCode)[0];
     $year = explode("-", $projectCode)[1];
@@ -540,7 +540,7 @@ class ExternalDataManager {
            AND Proy.id_tipo_proyecto = :type
            TIPO DE PROYECTO
            AND fondos.id_act_sustantiva = 2
-           AND UnidEject.ind_base = 1
+           AND UnidEject.ind_base = :ind_base
            ORDER BY
            ObjEsp.id_obj_especifico,
            t_meta.id_meta,
@@ -550,6 +550,7 @@ class ExternalDataManager {
     $statement->bindValue('code', $code);
     $statement->bindValue('year', $year);
     $statement->bindValue('type', 'Pry01');
+    $statement->bindValue('ind_base', '1');
 
     $statement->execute();
 
