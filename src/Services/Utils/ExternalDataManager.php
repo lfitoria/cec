@@ -504,7 +504,8 @@ class ExternalDataManager {
   }
   //objGoals
   public function getObjAndGoalsByProject($em, $projectCode) {
-
+    var_dump($projectCode);
+    die();
     try {
       $code = explode("-", $projectCode)[0];
     $year = explode("-", $projectCode)[1];
