@@ -537,8 +537,7 @@ class ExternalDataManager {
            WHERE
            Proy.id_formulario = :code  
            AND Proy.id_periodo = :year
-           AND Proy.id_tipo_proyecto = :type
-           TIPO DE PROYECTO
+           AND Proy.id_tipo_proyecto = :type           
            AND fondos.id_act_sustantiva = 2
            AND UnidEject.ind_base = :ind_base
            ORDER BY
