@@ -554,7 +554,7 @@ class ExternalDataManager {
     $statement->execute();
 
     $results = $statement->fetchAll();
-    return isset($results[0]) ? $results[0] : null;
+    return isset($results[0]) ? $results : null;
       
     } catch (\Exception $e) {
       var_dump($e);
