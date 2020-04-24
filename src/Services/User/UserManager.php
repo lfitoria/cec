@@ -124,11 +124,11 @@ class UserManager {
   // creates login session
   public function createLoginSession($opt_eval_form,$role_id) {
     
-    // $_SESSION["isResearcher"] = false;
+    $_SESSION["isResearcher"] = false;
     $role = $this->user->getRoles();
 
-    // var_dump($this->user->getRole()->getDescription());
-    // die();
+    var_dump($this->user->getRole()->getDescription());
+    die();
 
     // var_dump($opt_eval_form);
     // var_dump($role_id);
