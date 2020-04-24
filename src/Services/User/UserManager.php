@@ -123,6 +123,9 @@ class UserManager {
 
   // creates login session
   public function createLoginSession($opt_eval_form,$role_id) {
+    var_dump($this->user->getRole()->getDescription());
+    die();
+
     $_SESSION["isResearcher"] = false;
     $role = $this->user->getRoles();
     // var_dump($opt_eval_form);
@@ -141,8 +144,7 @@ class UserManager {
         $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
         $this->user->setRole($role_s);
         }else{
-          var_dump($this->user->getRole()->getDescription());
-          die();
+          
           if(in_array($this->user->getRole()->getDescription(), ["ROLE_ADMIN"])){
             $role_s = $this->em->getRepository(UsersRoles::class)->find(intval(1));
           }else{
