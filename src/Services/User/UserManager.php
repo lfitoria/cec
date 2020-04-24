@@ -132,32 +132,32 @@ class UserManager {
 
     var_dump($opt_eval_form);
     var_dump($role_id);
-    // die();
+    die();
 
     // if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"]) && $opt_eval_form === "0"){
     //   $role = ["ROLE_RESEARCHER"];
     //   $_SESSION["isResearcher"] = true;
     // }
-    if(in_array($this->user->getRole()->getDescription(), ["ROLE_ADMIN"]) && $opt_eval_form === "0"){
-      $role = ["ROLE_RESEARCHER"];
-      $_SESSION["isResearcher"] = true;
-    }else{
-      if($role_id == "3"){
-        $_SESSION["isResearcher"] = false;
-        var_dump("if role_id");
-        $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
-        $this->user->setRole($role_s);
-        }else{
-          $_SESSION["isResearcher"] = true;
-          if(in_array($this->user->getRole()->getDescription(), ["ROLE_RESEARCHER"])){
-            $role_s = $this->em->getRepository(UsersRoles::class)->find(intval(1));
-          }else{
-            $role_s = $this->em->getRepository(UsersRoles::class)->find(intval(4));
-          }
+    // if(in_array($this->user->getRole()->getDescription(), ["ROLE_ADMIN"]) && $opt_eval_form === "0"){
+    //   $role = ["ROLE_RESEARCHER"];
+    //   $_SESSION["isResearcher"] = true;
+    // }else{
+    //   if($role_id == "3"){
+    //     $_SESSION["isResearcher"] = false;
+    //     var_dump("if role_id");
+    //     $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
+    //     $this->user->setRole($role_s);
+    //     }else{
+    //       $_SESSION["isResearcher"] = true;
+    //       if(in_array($this->user->getRole()->getDescription(), ["ROLE_RESEARCHER"])){
+    //         $role_s = $this->em->getRepository(UsersRoles::class)->find(intval(1));
+    //       }else{
+    //         $role_s = $this->em->getRepository(UsersRoles::class)->find(intval(4));
+    //       }
           
-          $this->user->setRole($role_s);
-        }
-    }
+    //       $this->user->setRole($role_s);
+    //     }
+    // }
     // die();
     // if(in_array($role,["ROLE_ADMIN"] )){
     //   if($role_id){
