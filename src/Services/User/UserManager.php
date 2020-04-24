@@ -157,7 +157,7 @@ class UserManager {
           $this->user->setRole($role_s);
         }
     }
-    die();
+    // die();
     // if(in_array($role,["ROLE_ADMIN"] )){
     //   if($role_id){
     //   $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
