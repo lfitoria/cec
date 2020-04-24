@@ -61,7 +61,7 @@ class DefaultController extends AbstractController {
         $role_login = $request->get('role_login');
 
         if ( $objUserServ->checkUserExists($email,$role_login) ) {
-          // var_dump("loginDefaultController");
+          var_dump("loginDefaultController");
           // die();
           if ($encoder->isPasswordValid($objUserServ->getUser($email,$role_login), $password)) {
             $objUserServ->loginAction(array(
@@ -81,6 +81,8 @@ class DefaultController extends AbstractController {
           
         }
 
+        var_dump("LDAPloginDefaultController");
+          die();
 
         $objLdapServ = $this->get('ldap');
         $arrLoginResult = $objLdapServ->login($login_admin,$role_login);

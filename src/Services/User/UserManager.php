@@ -69,8 +69,12 @@ class UserManager {
 
   // Check if a user exists on database
   public function checkUserExists($strEmail, $role_id = false) {
+    // var_dump($strEmail);
+    // var_dump($role_id);
+    // die();
     $this->user = $this->getUser($strEmail,$role_id);
-  
+    // var_dump($role_id);
+    // die();
     return (!empty($this->user)) ? true : false;
   }
 
