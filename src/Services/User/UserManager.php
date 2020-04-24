@@ -128,11 +128,11 @@ class UserManager {
     $role = $this->user->getRoles();
 
     var_dump($this->user->getRole()->getDescription());
-    die();
+    
 
     var_dump($opt_eval_form);
     var_dump($role_id);
-    // die();
+    die();
 
     // if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"]) && $opt_eval_form === "0"){
     //   $role = ["ROLE_RESEARCHER"];
