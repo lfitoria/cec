@@ -114,7 +114,7 @@ class LdapUser implements UserInterface {
     function getRole() {
       $this->session = $_SESSION;
       var_dump($this->session);
-      if(isset($this->session['isResearcher'])){
+      if($this->session['isResearcher']){
         var_dump("entra");
         var_dump($this->session);
         $role = new UsersRoles();
@@ -123,7 +123,7 @@ class LdapUser implements UserInterface {
         return $role;
 
       }
-
+      var_dump("no-entra");
       return $this->role;
     }
 
