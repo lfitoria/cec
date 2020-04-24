@@ -46,7 +46,7 @@ class UserManager {
       }
     }
 
-    $this->createLoginSession($strEmail['opt_eval_form'],$strEmail['opt_eval_form'] == "0" ? $strEmail['role_login'] : null);
+    $this->createLoginSession($strEmail['opt_eval_form'],$strEmail['opt_eval_form'] == "0" ? $strEmail['role_login'] : false);
   }
 
   // get user data from database
@@ -128,7 +128,7 @@ class UserManager {
     // var_dump($opt_eval_form);
     // var_dump($role_id);
     // die();
-    
+
     // if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR", "ROLE_ADMIN"]) && $opt_eval_form === "0"){
     //   $role = ["ROLE_RESEARCHER"];
     //   $_SESSION["isResearcher"] = true;
