@@ -140,7 +140,12 @@ class UserManager {
         $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
         $this->user->setRole($role_s);
         }else{
-          $role_s = $this->em->getRepository(UsersRoles::class)->find(intval(4));
+          if(in_array($this->user->getRole()->getDescription(), ["ROLE_ADMIN"])){
+            $role_s = $this->em->getRepository(UsersRoles::class)->find(intval(1));
+          }else{
+            $role_s = $this->em->getRepository(UsersRoles::class)->find(intval(4));
+          }
+          
           $this->user->setRole($role_s);
         }
     }
