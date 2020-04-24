@@ -81,8 +81,8 @@ class DefaultController extends AbstractController {
           
         }
 
-        var_dump("LDAPloginDefaultController");
-          die();
+        // var_dump("LDAPloginDefaultController");
+        //   die();
 
         $objLdapServ = $this->get('ldap');
         $arrLoginResult = $objLdapServ->login($login_admin,$role_login);
