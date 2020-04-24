@@ -142,7 +142,7 @@ class UserManager {
       $role = ["ROLE_RESEARCHER"];
       $_SESSION["isResearcher"] = true;
     }else{
-      if($role_id){
+      if($role_id == "3"){
         $_SESSION["isResearcher"] = false;
         var_dump("if role_id");
         $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
