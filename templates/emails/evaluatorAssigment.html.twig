@@ -10,15 +10,13 @@
     <p>Solicitud número: CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</p>
     <p>Proyecto: {{project_request.title}}</p>
     <p>Unidad: {{project_request.projectUnit}}</p>
-    <p>Investigador / Estudiante responsable: {{project_request.owner.name}}</p>
-    <a href="http://formularioscec.ucr.ac.cr{{path('project_request_index')}}" target="_blank">Ver solicitud</a>  
-
+    <p>Investigador / Estudiante responsable: {{project_request.owner.name}}</p> 
     {% if state is defined and state is not empty%}
       <p>Estado: {{state}}</p>
     {% endif %}
     {% if details_eval is not empty %}
       <p>Observación: {{details_eval}}</p>
     {% endif %}
-    
+    <a href="http://formularioscec.ucr.ac.cr{{path('project_request_index')}}" target="_blank">Ver solicitud</a> 
   </div>
 </div>
