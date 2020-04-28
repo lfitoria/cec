@@ -13,7 +13,7 @@
     <p>Investigador / Estudiante responsable: {{project_request.owner.name}}</p>
     <a href="http://formularioscec.ucr.ac.cr{{path('project_request_index')}}" target="_blank">Ver solicitud</a>  
 
-    {% if state is not empty and state is defined %}
+    {% if state is defined and state not empty%}
       <p>Estado: {{state}}</p>
     {% endif %}
     {% if details_eval is not empty %}
