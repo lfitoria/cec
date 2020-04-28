@@ -458,15 +458,22 @@ class ExternalDataManager {
     //   return null;
     // }
     // return $results;
-    $connection = $em->getConnection();
-    $query = "SELECT u.descrip as name, u.director, u.unidad, a.descrip as area, u.uacademica as area_acad, u.gestoru, u.gestoric FROM sip.dbo.unidades u inner join sip.dbo.areas a on u.area = a.area where u.uacademica LIKE '$projectCode%'";
-    // var_dump($query);
+    try {
 
-    $statement = $connection->prepare($query);
-    $statement->execute();
+      $connection = $em->getConnection();
+      $query = "SELECT u.descrip as name, u.director, u.unidad, a.descrip as area, u.uacademica as area_acad, u.gestoru, u.gestoric FROM sip.dbo.unidades u inner join sip.dbo.areas a on u.area = a.area where u.uacademica LIKE '$projectCode%'";
+      // var_dump($query);
 
-    $results = $statement->fetchAll();
-    return $results;
+      $statement = $connection->prepare($query);
+      $statement->execute();
+
+      $results = $statement->fetchAll();
+      return $results;
+    } catch (\Exception $e) {
+      //var_dump($e);
+      //  die();
+      return null;
+    }
   }
   public function getGestoresByID($em, $id) {
     $query = 'SELECT * FROM sip.dbo.sip_usuarios where identificacion = :id';

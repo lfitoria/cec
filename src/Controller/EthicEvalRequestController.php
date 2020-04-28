@@ -15,6 +15,7 @@ use App\Services\Utils\NotificationManager;
 use App\Services\Utils\LogManager;
 use App\Entity\LdapUser;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\PreEvalRequest;
 
 /**
  * @Route("/ethic/eval/request")
@@ -109,7 +110,7 @@ class EthicEvalRequestController extends AbstractController {
             ])
 
         ];
-        // var_dump($emailData);
+        //var_dump($emailData);
         // die();
         $notificationManager->sendEmail($emailData);
         $logData = array(
@@ -180,12 +181,30 @@ class EthicEvalRequestController extends AbstractController {
 
       if ($finish == "1") {
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
-        
+
+        $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
+
+        $emailEvaluators = [];
+        array_push($emailEvaluators, "daihanna.hernandez@ucr.ac.cr");
+
+        if(count($pre_eval_info) > 0){
+          // var_dump("con datos");
+          $usersE = $projectRequest->getUsers();
+          $evaluators = $usersE->getValues();
+          // var_dump($projectRequest->getId());
+          // var_dump("evaluators: ".$evaluators[0]->getEmail());
+          foreach ($evaluators as $key=>$evaluator) {
+            $emailEvaluators[] = $evaluator->getEmail();
+          }
+        }
+        // var_dump($emailEvaluators);
+
         $emailData = [
             "subject" => "Nueva solicitud",
             "from" => "cec@ucr.ac.cr",
             //"from" => "jonathan.rojas@ucr.ac.cr",
-            "to" => "daihanna.hernandez@ucr.ac.cr",
+            //"to" => "daihanna.hernandez@ucr.ac.cr",
+            "to" => $emailEvaluators,
             //"to" => "luisfitoria91@gmail.com",
             "cc" => "lfitoria@eldomo.net",
             "body" => $this->render('emails/evaluatorAssigment.html.twig', [
@@ -193,8 +212,9 @@ class EthicEvalRequestController extends AbstractController {
               'details_eval' => ''
             ])
         ];
-        
-        $notificationManager->sendEmail($emailData);
+        // var_dump($emailData);
+        // die();
+        //$notificationManager->sendEmail($emailData);
 
         $logData = array(
             "description" => "Enviada/Editado por solicitante",

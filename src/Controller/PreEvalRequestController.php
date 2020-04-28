@@ -105,7 +105,7 @@ class PreEvalRequestController extends AbstractController {
        }
 
         array_push($correos, "lfitoria@eldomo.net");
-        array_push($correos, "camacho.le@gmail.com");
+        // array_push($correos, "camacho.le@gmail.com");
 
         $emailData = [
           "subject" => $subjectEmail,
