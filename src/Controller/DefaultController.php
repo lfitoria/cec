@@ -194,14 +194,9 @@ class DefaultController extends AbstractController {
    * @Route("/logout", name="app_logout", methods={"GET"})
    */
   public function logout() {
-    var_dump($_SESSION);
-    // die();
-    session_destroy();
     // controller can be blank: it will never be executed!
     $objUserServ = $this->container->get('user_manager');
     $objUserServ->logOutUser();
-    $this->container->get('security.context')->setToken(null);
-    $this->container->get('request')->getSession()->invalidate();
     throw new \Exception('Don\'t forget to activate logout in security.yaml'); 
   }
 

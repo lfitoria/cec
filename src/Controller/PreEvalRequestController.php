@@ -61,10 +61,10 @@ class PreEvalRequestController extends AbstractController {
         // $projectRequest->setState($preEvalRequest->getStatus());
 
         switch ($status) {
-          // case '31':
-          //     $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
-          //     $projectRequest->setState($preEvalRequest->getStatus());
-          //   break;
+          case '31':
+              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
           case '32':
               $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId()."-".$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
@@ -89,7 +89,7 @@ class PreEvalRequestController extends AbstractController {
         $entityManager = $this->getDoctrine()->getManager('sip');
         $emOracle = $this->getDoctrine()->getManager('oracle');
 
-        $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
+        // $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
 
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
@@ -98,11 +98,13 @@ class PreEvalRequestController extends AbstractController {
         
         $correos = array();
 
-        if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
-          array_push($correos, trim($gestor2["0"]["correo"]));
-       }else{
-          array_push($correos, trim($gestor1["0"]["correo"]));
-       }
+      //   if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
+      //     array_push($correos, trim($gestor2["0"]["correo"]));
+      //  }else{
+      //     array_push($correos, trim($gestor1["0"]["correo"]));
+      //  }
+       array_push($correos, trim($gestor2["0"]["correo"]));
+       array_push($correos, trim($gestor1["0"]["correo"]));
 
         array_push($correos, "lfitoria@eldomo.net");
         // array_push($correos, "camacho.le@gmail.com");
@@ -120,8 +122,10 @@ class PreEvalRequestController extends AbstractController {
           'state' => $preEvalRequest->getStatus()->getDescription()
           ])
         ];
-      
-        $notificationManager->sendEmail($emailData);
+        
+        if($status !== '31'){
+          $notificationManager->sendEmail($emailData);
+        }
         $logData = array(
           "description" => $preEvalRequest->getStatus()->getDescription(),
           "request" => $projectRequest,

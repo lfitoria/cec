@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Utils\LogManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use App\Services\Utils\NotificationManager;
+use App\Services\Utils\ExternalDataManager;
 
 /**
  * @Route("/eval/request")
@@ -35,7 +36,7 @@ class EvalRequestController extends AbstractController {
     /**
      * @Route("/new/{id}", name="eval_request_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FileManager $fileManager,ProjectRequest $projectRequest, LogManager $log, NotificationManager $notificationManager): Response {
+    public function new(Request $request, FileManager $fileManager,ProjectRequest $projectRequest, LogManager $log, NotificationManager $notificationManager,ExternalDataManager $externalDataManager ): Response {
         $evalRequest = new EvalRequest();
         $form = $this->createForm(EvalRequestType::class, $evalRequest);
         $form->handleRequest($request);
@@ -103,7 +104,7 @@ class EvalRequestController extends AbstractController {
                 $entityManager = $this->getDoctrine()->getManager('sip');
                 $emOracle = $this->getDoctrine()->getManager('oracle');
 
-                $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
+                // $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
 
                 $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
                 
@@ -112,11 +113,13 @@ class EvalRequestController extends AbstractController {
                 
                 $correos = array();
 
-                if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
-                    array_push($correos, trim($gestor2["0"]["correo"]));
-                }else{
-                    array_push($correos, trim($gestor1["0"]["correo"]));
-                }
+                // if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
+                //     array_push($correos, trim($gestor2["0"]["correo"]));
+                // }else{
+                //     array_push($correos, trim($gestor1["0"]["correo"]));
+                // }
+                array_push($correos, trim($gestor2["0"]["correo"]));
+                array_push($correos, trim($gestor1["0"]["correo"]));
 
                     array_push($correos, "lfitoria@eldomo.net");
                     array_push($correos, "camacho.le@gmail.com");
