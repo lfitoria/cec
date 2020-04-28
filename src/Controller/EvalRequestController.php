@@ -68,30 +68,30 @@ class EvalRequestController extends AbstractController {
                     case '36':
                         // var_dump("entra");
                         // die();
-                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId(); $evalRequest->getStatus()->getDescription();
+                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId()."-". $evalRequest->getStatus()->getDescription();
                         $projectRequest->setState($evalRequest->getStatus());
                     break;
                     case '37':
-                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId(); $evalRequest->getStatus()->getDescription();
+                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId()."-". $evalRequest->getStatus()->getDescription();
                         $projectRequest->setState($evalRequest->getStatus());
                     break;
                     case '38':
-                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId(); $evalRequest->getStatus()->getDescription();
+                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId()."-". $evalRequest->getStatus()->getDescription();
                         $projectRequest->setState($evalRequest->getStatus());
                     break;
                     case '39':
-                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId(); $evalRequest->getStatus()->getDescription();
+                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId()."-". $evalRequest->getStatus()->getDescription();
                         $projectRequest->setState($evalRequest->getStatus());
                     break;
                     case '40':
-                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId(); $evalRequest->getStatus()->getDescription();
+                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId()."-". $evalRequest->getStatus()->getDescription();
                         $projectRequest->setState($evalRequest->getStatus());
                     break;
                     case '41':
-                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId(); $evalRequest->getStatus()->getDescription(); $projectRequest->setState($evalRequest->getStatus());
+                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId()."-". $evalRequest->getStatus()->getDescription(); $projectRequest->setState($evalRequest->getStatus());
                     break;
                     case '42':
-                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId(); $evalRequest->getStatus()->getDescription();
+                        $subjectEmail = "Estado de solicitud: ".$evalRequest->getStatus()->getId()."-". $evalRequest->getStatus()->getDescription();
                         $projectRequest->setState($evalRequest->getStatus());
                     break;
                     

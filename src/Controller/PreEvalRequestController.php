@@ -66,19 +66,19 @@ class PreEvalRequestController extends AbstractController {
           //     $projectRequest->setState($preEvalRequest->getStatus());
           //   break;
           case '32':
-              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId();$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId()."-".$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '33':
-              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId();$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId()."-".$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '34':
-              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId();$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId()."-".$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '35':
-              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId();$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId()."-".$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           
