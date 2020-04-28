@@ -61,24 +61,24 @@ class PreEvalRequestController extends AbstractController {
         // $projectRequest->setState($preEvalRequest->getStatus());
 
         switch ($status) {
-          case '31':
-              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
-              $projectRequest->setState($preEvalRequest->getStatus());
-            break;
+          // case '31':
+          //     $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+          //     $projectRequest->setState($preEvalRequest->getStatus());
+          //   break;
           case '32':
-              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId();$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '33':
-              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId();$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '34':
-              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId();$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '35':
-              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId();$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           
@@ -117,6 +117,7 @@ class PreEvalRequestController extends AbstractController {
           "body" => $this->render('emails/evaluatorAssigment.html.twig', [
           'project_request' => $projectRequest,
           'details_eval' => $preEvalRequest->getObservations(),
+          'state' => $preEvalRequest->getStatus()->getDescription()
           ])
         ];
       
