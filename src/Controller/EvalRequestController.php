@@ -118,8 +118,8 @@ class EvalRequestController extends AbstractController {
                 // }else{
                 //     array_push($correos, trim($gestor1["0"]["correo"]));
                 // }
-                array_push($correos, trim($gestor2["0"]["correo"]));
-                array_push($correos, trim($gestor1["0"]["correo"]));
+                // array_push($correos, trim($gestor2["0"]["correo"]));
+                // array_push($correos, trim($gestor1["0"]["correo"]));
 
                     array_push($correos, "lfitoria@eldomo.net");
                     array_push($correos, "camacho.le@gmail.com");
