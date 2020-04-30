@@ -530,6 +530,11 @@ a.toolbox {
   color: #000;
 }
 
+@media (max-width: 576px) { 
+  .header img{
+    width: 100%;
+  }
+} /*fin*/
 @media (min-width: 576px) { 
 } /*fin*/
 
