@@ -1,7 +1,9 @@
 body{
   font-family: Arial;
 }
-
+img{
+  max-width: 100%;
+}
 body .main-container{
   background-color: var(--white);
   padding-bottom: 25px;
