@@ -53,10 +53,10 @@ class ProjectRequestController extends AbstractController {
         $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
         break;
       case "ROLE_STUDENT":
-        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,31,42]);
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,38,31,42]);
         break;
       case "ROLE_RESEARCHER":
-        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,31,42]);
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,31,38,42]);
         break;
       case "ROLE_EVALUATOR":
 
