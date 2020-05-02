@@ -265,16 +265,23 @@ class EthicEvalRequestController extends AbstractController {
     
     $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(3);
     // var_dump($projectRequest);
-    die();
+    // die();
     $correos = array();
 
         array_push($correos, "lfitoria@eldomo.net");
         array_push($correos, "icamacho@eldomo.net");
+
+    $fecha = $projectRequest->getDate();
+    $f = date_format($fecha,"Y");
+    $fYear = substr($f,-2);
+    $subject = "Estado de solicitud: CEC-".$projectRequest->getId()."-".$fYear;
+    var_dump($subject.$f);
+    die();
     $emailData = [
       "subject" => "Estado de solicitud: 38-Devuelto con observaciones",
       "from" => "cec@ucr.ac.cr",
       // "from" => "jonathan.rojas@ucr.ac.cr",
-      "to" => "rodrigo.morarodriguez@ucr.ac.cr",
+      "to" => "",
       // "to" => "camacho.le@gmail.com",
       "cc" => $correos,
       "body" => $this->render('emails/evaluatorAssigment.html.twig', [

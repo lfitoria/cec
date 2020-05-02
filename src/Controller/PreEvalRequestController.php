@@ -59,26 +59,30 @@ class PreEvalRequestController extends AbstractController {
       if ($finish == "1") {
         $preEvalRequest->setCurrent(true);
         // $projectRequest->setState($preEvalRequest->getStatus());
+        $fecha = $projectRequest->getDate();
+        $f = date_format($fecha,"Y");
+        $fYear = substr($f,-2);
+        $subject = "Estado de solicitud: CEC-".$projectRequest->getId()."-".$fYear.": ";
 
         switch ($status) {
           case '31':
-              $subjectEmail = "Solicitud: ".$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '32':
-              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId()."-".$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '33':
-              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId()."-".$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '34':
-              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId()."-".$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           case '35':
-              $subjectEmail = "Estado de solicitud: ".$preEvalRequest->getStatus()->getId()."-".$preEvalRequest->getStatus()->getDescription();
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
               $projectRequest->setState($preEvalRequest->getStatus());
             break;
           
