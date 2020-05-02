@@ -263,17 +263,26 @@ class EthicEvalRequestController extends AbstractController {
   public function emailTestSend(Request $request, NotificationManager $notificationManager ): Response {
     echo "entra";
     
-    //$projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(53);
+    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(3);
     // var_dump($projectRequest);
-    // die();
+    die();
+    $correos = array();
+
+        array_push($correos, "lfitoria@eldomo.net");
+        array_push($correos, "icamacho@eldomo.net");
     $emailData = [
-      "subject" => "Nueva solicitud",
+      "subject" => "Estado de solicitud: 38-Devuelto con observaciones",
       "from" => "cec@ucr.ac.cr",
       // "from" => "jonathan.rojas@ucr.ac.cr",
-      "to" => "lfitoria@eldomo.net",
+      "to" => "rodrigo.morarodriguez@ucr.ac.cr",
       // "to" => "camacho.le@gmail.com",
-      //"cc" => "camacho.le@gmail.com",
-      "body" => "body"
+      "cc" => $correos,
+      "body" => $this->render('emails/evaluatorAssigment.html.twig', [
+        'project_request' => $projectRequest,
+        'details_eval' => 'Rodrigo, por favor nos envía un correo para saber los detalles de este paso. Esto es una prueba del sistema. Lo estoy devolviendo con observaciones.
+        '
+      ]),
+      
     ];
     // var_dump($emailData);
     // 
