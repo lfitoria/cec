@@ -81,7 +81,7 @@
                 {% endif %}
               {% endif %}
             {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
-              {% if project_request.state.id in [27, 35, 42] %}
+              {% if project_request.state.id in [27, 35, 42,38] %}
                 <a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
               {% endif %}
               
