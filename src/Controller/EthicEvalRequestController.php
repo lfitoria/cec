@@ -185,7 +185,7 @@ class EthicEvalRequestController extends AbstractController {
         $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
 
         $emailEvaluators = [];
-        array_push($emailEvaluators, "daihanna.hernandez@ucr.ac.cr");
+        //array_push($emailEvaluators, "daihanna.hernandez@ucr.ac.cr");
 
         if(count($pre_eval_info) > 0){
           // var_dump("con datos");
@@ -203,10 +203,11 @@ class EthicEvalRequestController extends AbstractController {
             "subject" => "Nueva solicitud",
             "from" => "cec@ucr.ac.cr",
             //"from" => "jonathan.rojas@ucr.ac.cr",
-            //"to" => "daihanna.hernandez@ucr.ac.cr",
-            "to" => $emailEvaluators,
+            "to" => "daihanna.hernandez@ucr.ac.cr",
+            //"to" => $emailEvaluators,
             //"to" => "luisfitoria91@gmail.com",
-            "cc" => "lfitoria@eldomo.net",
+            "cc" => $emailEvaluators,
+            "bcc" => "lfitoria@eldomo.net",
             "body" => $this->render('emails/evaluatorAssigment.html.twig', [
               'project_request' => $projectRequest,
               'details_eval' => ''

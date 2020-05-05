@@ -61,7 +61,7 @@ class NotificationManager {
       $message->setBcc($emailData["bcc"]);
     }
     if (isset($emailData["cc"])) {
-      $message->setBcc($emailData["cc"]);
+      $message->setCc($emailData["cc"]);
     }
     if (isset($emailData["attatchments"])) {
       $this->attatchFiles($emailData["attatchments"], $message);
