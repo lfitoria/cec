@@ -184,7 +184,8 @@ class EthicEvalRequestController extends AbstractController {
 
         $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
 
-        $emailEvaluators = [];
+        // $emailEvaluators = [];
+        $emailEvaluators = array();
         //array_push($emailEvaluators, "daihanna.hernandez@ucr.ac.cr");
 
         if(count($pre_eval_info) > 0){
@@ -194,7 +195,8 @@ class EthicEvalRequestController extends AbstractController {
           // var_dump($projectRequest->getId());
           // var_dump("evaluators: ".$evaluators[0]->getEmail());
           foreach ($evaluators as $key=>$evaluator) {
-            $emailEvaluators[] = $evaluator->getEmail();
+            // $emailEvaluators[] = $evaluator->getEmail();
+            array_push($emailEvaluators, $evaluator->getEmail());
           }
         }
         // var_dump($emailEvaluators);
@@ -206,7 +208,7 @@ class EthicEvalRequestController extends AbstractController {
             "to" => "daihanna.hernandez@ucr.ac.cr",
             //"to" => $emailEvaluators,
             //"to" => "luisfitoria91@gmail.com",
-            "cc" => $emailEvaluators,
+            "cc" => $emailEvaluators?$emailEvaluators:"", 
             "bcc" => "lfitoria@eldomo.net",
             "body" => $this->render('emails/evaluatorAssigment.html.twig', [
               'project_request' => $projectRequest,
@@ -269,8 +271,8 @@ class EthicEvalRequestController extends AbstractController {
     // die();
     $correos = array();
 
-        array_push($correos, "lfitoria@eldomo.net");
-        array_push($correos, "icamacho@eldomo.net");
+        array_push($correos, "luisfitoria91@gmail.com");
+        array_push($correos, "fitoria_15@hotmail.com");
 
     $fecha = $projectRequest->getDate();
     $f = date_format($fecha,"Y");
@@ -282,9 +284,10 @@ class EthicEvalRequestController extends AbstractController {
       "subject" => "Estado de solicitud: 38-Devuelto con observaciones",
       "from" => "cec@ucr.ac.cr",
       // "from" => "jonathan.rojas@ucr.ac.cr",
-      "to" => "",
+      "to" => "lfitoria@eldomo.net",
       // "to" => "camacho.le@gmail.com",
       "cc" => $correos,
+      // "bcc" => "fitoria_15@hotmail.com",
       "body" => $this->render('emails/evaluatorAssigment.html.twig', [
         'project_request' => $projectRequest,
         'details_eval' => 'Rodrigo, por favor nos envía un correo para saber los detalles de este paso. Esto es una prueba del sistema. Lo estoy devolviendo con observaciones.
