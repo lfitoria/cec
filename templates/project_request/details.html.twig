@@ -394,7 +394,9 @@ ul {
 		</p>
 
 		{% if SipProject.projectData %}
-			<textarea class="form-control" name="" id="" rows="6" disabled>{{SipProject.projectData.dsc_proyecto|striptags|raw|default('Sin datos')}}</textarea>
+			<div class="textareas-form text-muted">
+            {{SipProject.projectData.dsc_proyecto|striptags|raw|default('Sin datos')}}
+            </div>
 		{% else %}
 			<textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
 		{% endif %}
@@ -405,7 +407,9 @@ ul {
 			<strong>2.2.2 Objetivos Específicos:</strong>
 		</p>
 		{% if objetivoPrincipal %}
-			<textarea class="form-control" name="" id="" rows="6" disabled>{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos')}}</textarea>
+			<div class="textareas-form text-muted">
+            {{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos')}}
+            </div>
 		{% else %}
 			<textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
 		{% endif %}
