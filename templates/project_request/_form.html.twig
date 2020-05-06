@@ -2,7 +2,7 @@
 {{ include('commons/_form_header.html.twig', {'current_nav_item': 'info'}) }}
 {{ form_start(form, {attr: {class: 'form-request', 'data-number': '1'}}) }}
 
-{% if app.user.role.description == "ROLE_RESEARCHER" %}
+{% if app.user.role.description == "ROLE_RESEARCHER" or app.user.role.description == "ROLE_ADMIN" %}
   <p>
     {# <strong>Para cargar la información de un proyecto, digite el código del proyecto y presione el botón "Cargar información".</strong> #}
     <strong>Digite el código del proyecto y presione el botón "Cargar información"</strong>
@@ -218,7 +218,7 @@
   {{ form_row(form.docHumanInformation,{label_attr: {class: 'radio-custom'} }) }}
 </div>
 
-{% if app.user.role.description == "ROLE_RESEARCHER" %}
+{% if app.user.role.description == "ROLE_RESEARCHER" or app.user.role.description == "ROLE_ADMIN" %}
   <div class="form-group">
     
     {{ include('commons/_form_uploaded_file.html.twig', 

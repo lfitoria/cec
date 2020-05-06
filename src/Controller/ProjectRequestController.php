@@ -327,7 +327,7 @@ class ProjectRequestController extends AbstractController {
             ->getRepository(WorkLog::class)
             ->findBy(array("request" => $projectRequest));
 
-    if ($projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER") {
+    if ($projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER" || $projectRequest->getOwner()->getRole()->getDescription() == "ROLE_ADMIN") {
       $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());

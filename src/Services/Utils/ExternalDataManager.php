@@ -374,7 +374,7 @@ class ExternalDataManager {
 
     } catch (\Exception $e) {
        //var_dump($e);
-	var_dump("error");
+	//var_dump("error");
       return false;
     }
   }
@@ -564,7 +564,7 @@ class ExternalDataManager {
     return isset($results[0]) ? $results : null;
       
     } catch (\Exception $e) {
-      var_dump($e);
+      //var_dump($e);
       return null;
     }
     

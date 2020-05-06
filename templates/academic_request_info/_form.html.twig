@@ -1,7 +1,7 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ include('commons/_form_header.html.twig', {'current_nav_item': 'academic'}) }}
 {{ form_start(form, {attr: {class: 'form-request', 'data-number': '2'}}) }}
-{% if app.user.role.description == "ROLE_RESEARCHER" %}
+{% if app.user.role.description == "ROLE_RESEARCHER" or app.user.role.description == "ROLE_ADMIN" %}
     <div class="form-group">
         <p>
             <label>Resumen del estudio</label>
@@ -26,7 +26,7 @@
 {% endif %}
  
 
-{% if app.user.role.description == "ROLE_RESEARCHER" %}
+{% if app.user.role.description == "ROLE_RESEARCHER" or app.user.role.description == "ROLE_ADMIN" %}
 <div class="form-group">
     <p>
         <label>Objetivos:</label>
@@ -84,7 +84,7 @@
 {{ form_row(form.questions) }}
 {{ form_row(form.hypothesis) }}
 {{ form_row(form.invType, {label_attr: {class: 'checkbox-custom'} }) }}
-{% if app.user.role.description == "ROLE_RESEARCHER" %}
+{% if app.user.role.description == "ROLE_RESEARCHER" or app.user.role.description == "ROLE_ADMIN" %}
     {# <div class="form-group">
         <label>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de muestras biológicas –si aplica:</label>
         </p>

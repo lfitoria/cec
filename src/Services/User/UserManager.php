@@ -51,15 +51,19 @@ class UserManager {
 
   // get user data from database
   public function getUser($strEmail,$role_id) {
+    // var_dump($role_id);
+    // die();
     $array_search = array('email' => $strEmail);
     
-    // if($role_id){
+    if($role_id){
+      // die();
+      $role = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
       
-    //   $role = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));
-      
-    //   $array_search['role'] = $role;
-    // } 
-    
+      $array_search['role'] = $role;
+    } 
+    // var_dump($this->em->getRepository(LdapUser::class)->findOneBy(array('email' => "admin@forms.com")));
+    // die();
+
     // return $this->em->getRepository(LdapUser::class)->findOneBy(array('email' => $strEmail,'role' => $role));
     return $this->em->getRepository(LdapUser::class)->findOneBy($array_search);
   }
@@ -73,7 +77,7 @@ class UserManager {
     // var_dump($role_id);
     // die();
     $this->user = $this->getUser($strEmail,$role_id);
-    // var_dump($role_id);
+    // var_dump($this->user);
     // die();
     return (!empty($this->user)) ? true : false;
   }
@@ -127,11 +131,11 @@ class UserManager {
     $_SESSION["isResearcher"] = false;
     $role = $this->user->getRoles();
 
-    var_dump($this->user->getRole()->getDescription());
+    // var_dump($this->user->getRole()->getDescription());
     
 
-    var_dump($opt_eval_form);
-    var_dump($role_id);
+    // var_dump($opt_eval_form);
+    // var_dump($role_id);
     // die();
 
     if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR"])){

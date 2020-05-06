@@ -111,7 +111,7 @@ class RequestFormController extends AbstractController {
 
     $projectCode = $projectRequest->getSipProject();
 
-    if ($loggedUser->getRole()->getDescription() === "ROLE_RESEARCHER") {
+    if ($loggedUser->getRole()->getDescription() === "ROLE_RESEARCHER" || $loggedUser->getRole()->getDescription() === "ROLE_ADMIN") {
       $entityManager = $this->getDoctrine()->getManager('sip');
       $emOracle = $this->getDoctrine()->getManager('oracle');
 
