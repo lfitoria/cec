@@ -187,6 +187,79 @@ class PreEvalRequestController extends AbstractController {
       if ($finish == "1") {
         $preEvalRequest->setCurrent(true);
         $projectRequest->setState($preEvalRequest->getStatus());
+        // --
+        $fecha = $projectRequest->getDate();
+        $f = date_format($fecha,"Y");
+        $fYear = substr($f,-2);
+        $subject = "Estado de solicitud: CEC-".$projectRequest->getId()."-".$fYear.": ";
+
+        switch ($status) {
+          case '31':
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          case '32':
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          case '33':
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          case '34':
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          case '35':
+              $subjectEmail = $subject.$preEvalRequest->getStatus()->getDescription();
+              $projectRequest->setState($preEvalRequest->getStatus());
+            break;
+          
+          default:
+  
+            break;
+        }
+        $entityManager = $this->getDoctrine()->getManager('sip');
+        $emOracle = $this->getDoctrine()->getManager('oracle');
+
+        // $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
+
+        $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
+        
+        $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
+        $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
+        
+        $correos = array();
+
+      //   if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
+      //     array_push($correos, trim($gestor2["0"]["correo"]));
+      //  }else{
+      //     array_push($correos, trim($gestor1["0"]["correo"]));
+      //  }
+       array_push($correos, trim($gestor2["0"]["correo"]));
+       array_push($correos, trim($gestor1["0"]["correo"]));
+
+        array_push($correos, "lfitoria@eldomo.net");
+        // array_push($correos, "camacho.le@gmail.com");
+
+        $emailData = [
+          "subject" => $subjectEmail,
+          "from" => "cec@ucr.ac.cr",
+          //"from" => "jonathan.rojas@ucr.ac.cr",
+          "to" => $projectRequest->getOwner()->getEmail(),
+          //"to" => "luisfitoria91@gmail.com",
+          "cc" => $correos,
+          "body" => $this->render('emails/evaluatorAssigment.html.twig', [
+          'project_request' => $projectRequest,
+          'details_eval' => $preEvalRequest->getObservations(),
+          'state' => $preEvalRequest->getStatus()->getDescription()
+          ])
+        ];
+        
+        if($status !== '31'){
+          $notificationManager->sendEmail($emailData);
+        }
+        // ----------
         $logData = array(
             "description" => $preEvalRequest->getStatus()->getDescription(),
             "request" => $projectRequest,
