@@ -266,36 +266,39 @@ class EthicEvalRequestController extends AbstractController {
   public function emailTestSend(Request $request, NotificationManager $notificationManager ): Response {
     echo "entra";
     
-    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(3);
+    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(7);
     // var_dump($projectRequest);
     // die();
     $correos = array();
 
-        array_push($correos, "luisfitoria91@gmail.com");
-        array_push($correos, "fitoria_15@hotmail.com");
+        // array_push($correos, "luisfitoria91@gmail.com");
+        // array_push($correos, "fitoria_15@hotmail.com");
+        array_push($correos, "lfitoria@eldomo.net");
 
-    $fecha = $projectRequest->getDate();
-    $f = date_format($fecha,"Y");
-    $fYear = substr($f,-2);
-    $subject = "Estado de solicitud: CEC-".$projectRequest->getId()."-".$fYear;
-    var_dump($subject.$f);
-    die();
+    // $fecha = $projectRequest->getDate();
+    // $f = date_format($fecha,"Y");
+    // $fYear = substr($f,-2);
+    // $subject = "Estado de solicitud: CEC-".$projectRequest->getId()."-".$fYear;
+    // var_dump($subject.$f);
+
+    // echo "entra2";
+    // die();
     $emailData = [
-      "subject" => "Estado de solicitud: 38-Devuelto con observaciones",
+      "subject" => "Estado de solicitud: CEC-7-20: Devuelto con observaciones",
       "from" => "cec@ucr.ac.cr",
       // "from" => "jonathan.rojas@ucr.ac.cr",
-      "to" => "lfitoria@eldomo.net",
+      "to" => "MARIA.CARPIOULLOA@ucr.ac.cr",
       // "to" => "camacho.le@gmail.com",
       "cc" => $correos,
       // "bcc" => "fitoria_15@hotmail.com",
       "body" => $this->render('emails/evaluatorAssigment.html.twig', [
         'project_request' => $projectRequest,
-        'details_eval' => 'Rodrigo, por favor nos envía un correo para saber los detalles de este paso. Esto es una prueba del sistema. Lo estoy devolviendo con observaciones.
+        'details_eval' => '1- Falta el acta de aprobación por parte de Trabajos Finales de graduación y en la misma que nos indiquen el nombre del tutor/asesores (si los tiene) y que es la última versión de la propuesta 2-Si se hace uso del Consentimiento Informado, cada sección del documento, se debe llenar de acuerdo a lo que se va a realizar en el proyecto de investigación 3- Falta la guía de lo que se preguntará o se discutirá en el grupo focal
         '
       ]),
       
     ];
-    // var_dump($emailData);
+    var_dump("envió email");
     // 
     $notificationManager->sendEmail($emailData);
 

@@ -177,7 +177,7 @@ class EvalRequestController extends AbstractController {
      * @Route("/{id}/edit/{id_request}", name="eval_request_edit", methods={"GET","POST"})
      * @Entity("projectRequest", expr="repository.find(id_request)")
      */
-    public function edit(Request $request, EvalRequest $evalRequest, ProjectRequest $projectRequest,LogManager $log, FileManager $fileManager): Response {
+    public function edit(Request $request, EvalRequest $evalRequest, ProjectRequest $projectRequest,LogManager $log, FileManager $fileManager,ExternalDataManager $externalDataManager,NotificationManager $notificationManager): Response {
         $form = $this->createForm(EvalRequestType::class, $evalRequest);
         $form->handleRequest($request);
 
@@ -204,6 +204,82 @@ class EvalRequestController extends AbstractController {
             if ($finish == "1") {
                 $evalRequest->setCurrent(true);
                 $projectRequest->setState($evalRequest->getStatus());
+                // -------------
+                $fecha = $projectRequest->getDate();
+                $f = date_format($fecha,"Y");
+                $fYear = substr($f,-2);
+                $subject = "Estado de solicitud: CEC-".$projectRequest->getId()."-".$fYear.": ";
+
+                switch ($status) {
+                    case '36':
+                        // var_dump("entra");
+                        // die();
+                        $subjectEmail = $subject.$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '37':
+                        $subjectEmail = $subject.$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '38':
+                        $subjectEmail = $subject.$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '39':
+                        $subjectEmail = $subject.$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '40':
+                        $subjectEmail = $subject.$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '41':
+                        $subjectEmail = $subject.$evalRequest->getStatus()->getDescription(); $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    case '42':
+                        $subjectEmail = $subject.$evalRequest->getStatus()->getDescription();
+                        $projectRequest->setState($evalRequest->getStatus());
+                    break;
+                    
+                    default:
+            
+                    break;
+                }
+                // more
+                $entityManager = $this->getDoctrine()->getManager('sip');
+                $emOracle = $this->getDoctrine()->getManager('oracle');
+
+                // $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
+
+                $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
+                
+                $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
+                $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
+                
+                $correos = array();
+                
+                if ( isset($gestor1["0"]["correo"])){
+                    array_push($correos, trim($gestor1["0"]["correo"]));
+                }
+                if ( isset($gestor2["0"]["correo"])){
+                    array_push($correos, trim($gestor2["0"]["correo"]));
+                }
+                    array_push($correos, "lfitoria@eldomo.net");
+                    //array_push($correos, "camacho.le@gmail.com");
+            
+                $emailData = [
+                "subject" => $subjectEmail,
+                "from" => "cec@ucr.ac.cr",
+                "to" => $projectRequest->getOwner()->getEmail(),
+                "cc" => $correos,
+                "body" => $this->render('emails/evaluatorAssigment.html.twig', [
+                'project_request' => $projectRequest,
+                'details_eval' => $evalRequest->getObservations(),
+                ])
+                ];
+            
+                $notificationManager->sendEmail($emailData);
+                // --------
                 $logData = array(
                     "description" => $evalRequest->getStatus()->getDescription(),
                     "request" => $projectRequest,
