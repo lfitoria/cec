@@ -268,7 +268,7 @@ class EthicEvalRequestController extends AbstractController {
     
     $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(7);
     // var_dump($projectRequest);
-    // die();
+    die();
     $correos = array();
 
         // array_push($correos, "luisfitoria91@gmail.com");
