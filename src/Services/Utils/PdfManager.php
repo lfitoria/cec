@@ -20,7 +20,7 @@ class PdfManager{
 
         return new PdfResponse(
             $this->pdf->getOutputFromHtml($html,array(
-                'size.pageSize' => 'Letter',
+                'pageSize' => 'Letter',
                 
                 )),
             $filename 
