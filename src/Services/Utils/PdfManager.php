@@ -20,24 +20,8 @@ class PdfManager{
 
         return new PdfResponse(
             $this->pdf->getOutputFromHtml($html,array(
-                'orientation' => 'portrait',
-                'enable-javascript' => true,
-                'javascript-delay' => 1000,
-                'no-stop-slow-scripts' => true,
-                'no-background' => false,
-                'lowquality' => false,
-                'page-width' => '8cm',
-                'page-height' => '12.40cm',
-                'margin-left'=>0,
-                'margin-right'=>0,
-                'margin-top'=>0,
-                'margin-bottom'=>0,
-                'encoding' => 'utf-8',
-                'images' => true,
-                'cookie' => array(),
-                'dpi' => 300,
-                'enable-external-links' => true,
-                'enable-internal-links' => true,
+                'size-pageSize' => 'Letter',
+                
                 )),
             $filename 
         );
