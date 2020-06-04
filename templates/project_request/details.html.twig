@@ -22,72 +22,92 @@
 	--green: #73C167;
 	--white: #FFFFFF;
 }
-* {
-	font-family: Arial;
+*
+{
+	font-family: Arial, Helvetica;
 }
-.table thead th {
+.table
+{
+	width: 100%;
+}
+.table thead th
+{
 	line-height: 1em;
 }
-table thead {
+table thead
+{
 	background-color: var(--A3);
 	color: var(--white);
 }
 
-table thead th {
+table thead th
+{
 	border-bottom: none;
 }
 
-table tbody tr:nth-of-type(odd) {
+table tbody tr:nth-of-type(odd)
+{
 	background-color: var(--A9);
 }
 
-table tbody tr:nth-of-type(even) {
+table tbody tr:nth-of-type(even)
+{
 	background-color: var(--A8);
 }
 table td,
-table th {
+table th
+{
 	align-items: center;
 	border-right: 2px solid var(--white);
 }
-.login-box-body-admin {
+.login-box-body-admin
+{
 	margin: 0 auto !important;
 }
-a.ingreso-admin-home {
+a.ingreso-admin-home
+{
 	color: var(--G2);
 	font-size: 0.9em;
 	margin-top: 10px;
 }
-a.ingreso-admin-home:after {
+a.ingreso-admin-home:after
+{
 	content: '\f0a9';
 	font-family: FontAwesome;
 	color: var(--green);
 	margin: 5px;
 }
-.ingreso-general-box-text-admin h3 {
+.ingreso-general-box-text-admin h3
+{
 	text-align: center;
 	font-weight: bold;
 	color: var(--G2);
 }
-.textareas-form {
+.textareas-form
+{
 	background-color: var(--A9);
 	padding: 15px;
 	border: 1px solid #cecece;
 }
 
-#feedback_modal .modal-dialog {
+#feedback_modal .modal-dialog
+{
 	min-height: calc(100vh - 60px);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	overflow: auto;
 }
-.text-box {
+.text-box
+{
 	margin-bottom: 20px;
 }
-.text-box p {
+.text-box p
+{
 	margin-bottom: 5px;
 }
-.step-view .nav_step {
+.step-view .nav_step
+{
 	border-radius: 50%;
 	color: var(--A4);
 	border: var(--A3) 2px solid;
@@ -100,7 +120,8 @@ a.ingreso-admin-home:after {
 	font-weight: 700;
 	margin: auto;
 }
-.step-view a.form_header_nav_item_link {
+.step-view a.form_header_nav_item_link
+{
 	text-align: center;
 	text-transform: uppercase;
 	font-size: 1.3em;
@@ -111,256 +132,383 @@ a.ingreso-admin-home:after {
 	cursor: unset;
 	font-weight: bold;
 }
-ul {
+ul
+{
 	list-style: none;
-}</style>
-{# {{dump(project_request)}} #}
+}
+.title-table-index{
+	font-weight: bold;
+}
+</style>
+
+<h2>{{project_request.title}}</h2>
 <ul class="nav justify-content-center nav-pills step-view">
 <li>
-	<span class="nav_step">1</span>
-	<a class="form_header_nav_item_link" href="#">Información del proyecto</a>
-</li></ul>
-<div class="text-box">
-    <p><strong>1.1 Título del estudio o investigación:</strong></p>
-    <p class="text-muted font-italic">{{project_request.title}}</p>
-</div>
-<div class="text-box">
-    
-<p><strong>1.2 Oficio de solicitud al CEC:</strong>
+	<span class="nav_step">
+		1
+	</span>
+	<a class="form_header_nav_item_link" href="#">
+		Información del proyecto
+	</a>
+</li></ul><div class="text-box">
+<p>
+	<strong>
+		Título del estudio o investigación:
+	</strong>
 </p>
-
-    <ul>
+<p class="text-muted font-italic">
+	{{project_request.title}}
+</p></div>
+{% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
+<div class="text-box">
+	<p>
+		<strong>
+			1.1 Oficio de solicitud al CEC:
+		</strong>
+	</p>
+	<ul>
 		{% for file in project_request.infoRequestFiles if file.questionCode is same as("applicationLetterFiles")  %}
 			<li>
-				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
+				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+					{{file.originalName}}
+				</a>
 			</li>
 		{% endfor %}
 	</ul>
 </div>
-{% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
+<div class="text-box">
+	<p>
+		<strong>
+			1.3 Nombre del investigador (a) principal:
+		</strong>
+	</p>
 
-    <div class="text-box">
-        <p>
-            <strong>1.3 Nombre del investigador (a) principal:</strong>
-        </p>
-
-        {% if project_info is not null and project_info.researchers|length > 0 %}
-            <ul>
-                {% for researcher in project_info.researchers if researcher.dsc_tipo_participacion|trim is same as('Investigador principal / Responsable') or researcher.dsc_tipo_participacion|trim is same as('PRINCIPAL')  %}
-                    <li class="text-muted">{{ researcher.NOMBRE }}
-                        {{ researcher.APELLIDO1 }}
-                        {{ researcher.APELLIDO2 }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <input type="text" readonly class="form-control no-data test" name="" value="No hay datos">
-        {% endif %}
-    </div>
-
-    <div class="text-box">
-        <p>
-            <strong>1.4 Unidad base del proyecto:</strong>
-        </p>
-        <p class="text-muted font-italic">
-            {{project_request.projectUnit}}
-        </p>
-    </div>
-    <div class="text-box">
-        <p>
-            <strong>1.5 Otras unidades e instituciones de la UCR participantes:</strong>
-        </p>
-        <ul id="project_ucr_units">
-            {% if project_info is not null and project_info.externalCollaboration|length > 0 %}
-                {% for external in project_info.externalCollaboration  %}
-                    <li scope="col">{{ external.nombre }}
-                    </li>
-                {% endfor %}
-            {% else %}
-                <li class="text-muted">
-                    No hay unidades
-                </li>
-            {% endif %}
-        </ul>
+	{% if project_info is not null and project_info.researchers|length > 0 %}
+		<ul>
+			{% for researcher in project_info.researchers if researcher.dsc_tipo_participacion|trim is same as('Investigador principal / Responsable') or researcher.dsc_tipo_participacion|trim is same as('PRINCIPAL')  %}
+				<li class="text-muted">
+					{{ researcher.NOMBRE }}
+					{{ researcher.APELLIDO1 }}
+					{{ researcher.APELLIDO2 }}
+				</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<input type="text" readonly class="form-control no-data test" name="" value="No hay datos">
+	{% endif %}
 </div>
-{% else %}
-    <div class="tutor_information_container">
-        <p>
-            <strong>1.3 Director(a) del trabajo final de graduación:</strong>
-        </p>
-        <ul>
-            <li class="text-muted">
-                <strong>Nombre del tutor:</strong>
-                {{project_request.tutorName}}</li>
-            <li class="text-muted">
-                <strong>Cédula:</strong>
-                {{project_request.tutorId}}</li>
-            <li class="text-muted">
-                <strong>Correo institucional:</strong>
-                {{project_request.tutorEmail}}</li>
-        </ul>
-    </div>
 
-    {% if project_request.teamWork is not null %}
-        <p>
-            <strong>1.4 Miembros de proyecto</strong>
-        </p>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Cédula</th>
-                    <th scope="col">Correo institucional</th>
+<div class="text-box">
+	<p>
+		<strong>
+			1.4 Unidad base del proyecto:
+		</strong>
+	</p>
+	<p class="text-muted font-italic">
+		{{project_request.projectUnit}}
+	</p>
+</div>
+<div class="text-box">
+	<p>
+		<strong>
+			1.5 Otras unidades e instituciones de la UCR participantes:
+		</strong>
+	</p>
+	<ul id="project_ucr_units">
+		{% if project_info is not null and project_info.externalCollaboration|length > 0 %}
+			{% for external in project_info.externalCollaboration  %}
+				<li scope="col">
+					{{ external.nombre }}
+				</li>
+			{% endfor %}
+		{% else %}
+			<li class="text-muted">
+				No hay unidades
+			</li>
+		{% endif %}
+	</ul>
+</div>{% else %}
+<div class="tutor_information_container">
+	<p>
+		<strong>
+			1.2 Director(a) del trabajo final de graduación:
+		</strong>
+	</p>
+	<ul>
+		<li class="text-muted">
+			<strong>
+				Nombre del tutor:
+			</strong>
+			{{project_request.tutorName}}
+		</li>
 
-                </tr>
-            </thead>
-            <tbody class="team_work_table">
-                {% if project_request.teamWork|length > 0 %}
+		<li class="text-muted">
+			<strong>
+				Correo institucional:
+			</strong>
+			{{project_request.tutorEmail}}
+		</li>
+	</ul>
+</div>
 
-                    {% for team in project_request.teamWork %}
-                        <tr>
-                            <td scope="col" class="text-muted">{{ team.name }}
-                            </td>
-                            <td scope="col" class="text-muted">{{ team.studentId }}</td>
-                            <td scope="col" class="text-muted">{{ team.studentEmail }}</td>
+{% if project_request.teamWork is not null %}
+	<p>
+		<strong>
+			1.3 Miembros de proyecto
+		</strong>
+	</p>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">
+					Nombre
+				</th>
+				<th scope="col">
+					Cédula
+				</th>
+				<th scope="col">
+					Correo institucional
+				</th>
 
-                        </tr>
-                    {% endfor %}
+			</tr>
+		</thead>
+		<tbody class="team_work_table">
+			{% if project_request.teamWork|length > 0 %}
 
-                {% else %}
-                    <tr class="no-data">
-                        <td scope="col" colspan="3" class="text-muted">No hay miembros de grupo
-                        </td>
-                    </tr>
-                {% endif %}
-            </tbody>
-        </table>
-    {% endif %}
-    <div class="text-box">
-        <p>
-            <strong>1.5 Unidad de adscripción del proyecto:</strong>
-        </p>
-        <p class="text-muted font-italic">{{project_request.ascriptionUnit|default("Sin dato")}}</p>
-    </div>
-    <div class="text-box">
-        <p>
-            <strong>1.6 Otras unidades e instituciones de la UCR participantes:</strong>
-        </p>
-        <p class="text-muted font-italic">{{project_request.extInstitutions}}</p>
-    </div>
+				{% for team in project_request.teamWork %}
+					<tr>
+						<td scope="col" class="text-muted">
+							{{ team.name }}
+						</td>
+						<td scope="col" class="text-muted">
+							{{ team.studentId }}
+						</td>
+						<td scope="col" class="text-muted">
+							{{ team.studentEmail }}
+						</td>
+
+					</tr>
+				{% endfor %}
+
+			{% else %}
+				<tr class="no-data">
+					<td scope="col" colspan="3" class="text-muted">
+						No hay miembros de grupo
+					</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
 {% endif %}
 <div class="text-box">
+	<p>
+		<strong>
+			1.4 Unidad de adscripción del proyecto:
+		</strong>
+	</p>
+	<p class="text-muted font-italic">
+		{{project_request.ascriptionUnit|default("Sin dato")}}
+	</p>
+</div>
+<div class="text-box">
+	<p>
+		<strong>
+			1.5 Otras unidades e instituciones de la UCR participantes:
+		</strong>
+	</p>
+	<p class="text-muted font-italic">
+		{{project_request.extInstitutions}}
+	</p>
+</div>{% endif %}<div class="text-box">
 <p>
-	<strong>1.7 Otras instituciones externas públicas o privadas:</strong>
+	<strong>
+		1.6 Otras instituciones externas públicas o privadas:
+	</strong>
 </p>
-<p class="text-muted font-italic">{{ project_request.extInstitutions|default("Sin dato") }}</p></div><div class="text-box">
+<p class="text-muted font-italic">
+	{{ project_request.extInstitutions|default("Sin dato") }}
+</p></div><div class="text-box">
 <p>
-	<strong>1.8 Lugar donde se realizará el estudio (indique la ubicación geográfica):</strong>
+	<strong>
+		1.7 Lugar donde se realizará el estudio (indique la ubicación geográfica):
+	</strong>
 </p>
-<p class="text-muted font-italic">{{ project_request.placeOfStudy }}</p></div><div class="text-box">
+<p class="text-muted font-italic">
+	{{ project_request.placeOfStudy }}
+</p></div><div class="text-box">
 <p>
-	<strong>1.9 Autorización de la institución externa pública o privada:</strong>
+	<strong>
+		1.8 Autorización de la institución externa pública o privada:
+	</strong>
 </p>
 {% if project_request.extInstitutionsAuthorization is empty %}
-	<p class="text-muted font-italic">No</p>
+	<p class="text-muted font-italic">
+		No
+	</p>
 {% else %}
 	<ul>
 		{% for file in project_request.infoRequestFiles if file.questionCode is same as("extInstitutionsAuthorizationFiles")  %}
 			<li>
-				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
+				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+					{{file.originalName}}
+				</a>
 			</li>
 		{% endfor %}
 	</ul>
 {% endif %}</div><div class="text-box">
 <p>
-	<strong>1.10 ¿La investigación involucra participantes humanos?:</strong>
+	<strong>
+		1.9 ¿La investigación involucra participantes humanos?:
+	</strong>
 </p>
 {% if project_request.involvesHumans is empty %}
-	<p class="text-muted font-italic">No</p>
+	<p class="text-muted font-italic">
+		No
+	</p>
 {% else %}
-	<p class="text-muted font-italic">Sí</p>
+	<p class="text-muted font-italic">
+		Sí
+	</p>
 {% endif %}</div><div class="text-box">
 <p>
-	<strong>1.11 ¿La investigación requiere revisar información documental de seres humanos?</strong>
+	<strong>
+		1.10 ¿La investigación requiere revisar información documental de seres humanos?
+	</strong>
 </p>
 {% if project_request.involvesHumans is empty %}
-	<p class="text-muted font-italic">No</p>
+	<p class="text-muted font-italic">
+		No
+	</p>
 {% else %}
-	<p class="text-muted font-italic">Sí</p>
-{% endif %}</div>
+	<p class="text-muted font-italic">
+		Sí
+	</p>
+{% endif %}
+</div>
 {% if project_request.owner.role.description is same as("ROLE_STUDENT") %}
 
 <p>
-	<strong>1.12 Acta de la comisión científica del instituto o centro de investigaciones:</strong>
+	<strong>
+		1.11 Acta de la comisión científica del instituto o centro de investigación:
+	</strong>
 </p>
 
-    {% if project_request.minutesResearchCenter is empty %}
-        <p class="text-muted font-italic">No</p>
-    {% else %}
-        <ul>
-            {% for file in project_request.infoRequestFiles if file.questionCode is same as("minutesResearchCenterFiles")  %}
-                <li>
-                    <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+	{% if project_request.minutesResearchCenter is empty %}
+		<p class="text-muted font-italic">
+			No
+		</p>
+	{% else %}
+		<ul>
+			{% for file in project_request.infoRequestFiles if file.questionCode is same as("minutesResearchCenterFiles")  %}
+				<li>
+					<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+						{{file.originalName}}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+<p>
+	<strong>
+		1.12 Acta de la comisión de trabajos finales de graduación:
+	</strong>
+</p>
+
+		<ul>
+			{% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteFinalWorkFiles")  %}
+				<li>
+					<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+						{{file.originalName}}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	
 {% endif %}
+
 {% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
 <p>
-	<strong>1.12 Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:</strong>
+	<strong>
+		1.11 Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:
+	</strong>
 </p>
 
 
-	<ul>
-		{% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteCommissionTFGFiles")  %}
-			<li>
-				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
-			</li>
-		{% endfor %}
-	</ul>
-
+<ul>
+	{% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteCommissionTFGFiles")  %}
+		<li>
+			<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+				{{file.originalName}}
+			</a>
+		</li>
+	{% endfor %}
+</ul>
+{% endif %}
 
 {% if project_request.category is null %}
-	<p class="text-muted font-italic">No</p>
+	<p class="text-muted font-italic">
+		No
+	</p>
 {% else %}
 	<p>
-		<strong>1.13 La presente propuesta es de tipo:</strong>
+		<strong>
+		{% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
+			1.12 
+		{% else %}
+			1.13
+		{% endif %}
+			La presente propuesta es de tipo:
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{project_request.category|default("Sin dato")}}</p>
+	<p class="text-muted font-italic">
+		{{project_request.category|default("Sin dato")}}
+	</p>
 	<ul>
 		{% for file in project_request.infoRequestFiles if file.questionCode is same as("categoryBiomedicaFiles")  %}
 			<li>
-				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
-			</li>
-		{% endfor %}
-	</ul>
-{% endif %}{% else %}
-<p>
-	<strong>1.14 Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:</strong>
-</p>
-{% if project_request.minuteCommissionTFG is null %}
-	<p class="text-muted font-italic">No</p>
-{% else %}
-	<ul>
-		{% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteCommissionTFGFiles")  %}
-			<li>
-				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
+				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+					{{file.originalName}}
+				</a>
 			</li>
 		{% endfor %}
 	</ul>
 {% endif %}
-<p>
-	<strong>1.15 La presente propuesta es de tipo:</strong>
+{# {% else %} #}
+{# <p>
+	<strong>
+		1.14 Acta u oficio de la comisión científica o de la Comisión de TFG de grado o posgrado:
+	</strong>
 </p>
-<p class="text-muted font-italic">{{project_request.category|default("Sin dato")}}</p>{% endif %}<hr><ul class="nav justify-content-center nav-pills step-view">
+{% if project_request.minuteCommissionTFG is null %}
+	<p class="text-muted font-italic">
+		No
+	</p>
+{% else %}
+	<ul>
+		{% for file in project_request.infoRequestFiles if file.questionCode is same as("minuteCommissionTFGFiles")  %}
+			<li>
+				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+					{{file.originalName}}
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %} #}
+
+<hr><ul class="nav justify-content-center nav-pills step-view">
 <li>
-	<span class="nav_step">2</span>
-	<a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
+	<span class="nav_step">
+		2
+	</span>
+	<a class="form_header_nav_item_link" href="#">
+		Descripción académica y científica
+	</a>
 </li></ul><div class="text-box">
 {% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
 	<p>
-		<strong>2.1 Resumen del estudio:</strong>
+		<strong>
+			2.1 Resumen del estudio:
+		</strong>
 	</p>
 
 	{% if SipProjectExtraInformation %}
@@ -373,69 +521,94 @@ ul {
 
 		</div>
 	{% else %}
-		<textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+		<textarea class="form-control" name="" id="" rows="2" disabled>
+			{{"Sin datos"}}
+		</textarea>
 	{% endif %}
-    <br>
+	<br>
 	<div class="text-box">
-    <p>
-			<strong>2.2 Objetivos:</strong>
-		</p>
-    </div>
-	
-	{# <div class="text-box">
 		<p>
-			<strong>2.1 Observaciones:</strong>
+			<strong>
+				2.2 Objetivos:
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{ academicRequestInfo.summaryObserv|default("Sin dato") }}</p>
-	</div> #}
+	</div>
+
+	{# <div class="text-box">
+																													<p>
+																														<strong>2.1 Observaciones:</strong>
+																													</p>
+																													<p class="text-muted font-italic">{{ academicRequestInfo.summaryObserv|default("Sin dato") }}</p>
+																												</div> #}
 	<div class="form-group">
 		<p>
-			<strong>2.2.1 Objetivo Principal:</strong>
+			<strong>
+				2.2.1 Objetivo Principal:
+			</strong>
 		</p>
 
 		{% if SipProject.projectData %}
 			<div class="textareas-form text-muted">
-            {{SipProject.projectData.dsc_proyecto|striptags|raw|default('Sin datos')}}
-            </div>
+				{{SipProject.projectData.dsc_proyecto|striptags|raw|default('Sin datos')}}
+			</div>
 		{% else %}
-			<textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+			<textarea class="form-control" name="" id="" rows="2" disabled>
+				{{"Sin datos"}}
+			</textarea>
 		{% endif %}
 
 	</div>
 	<div class="form-group">
 		<p>
-			<strong>2.2.2 Objetivos Específicos:</strong>
+			<strong>
+				2.2.2 Objetivos Específicos:
+			</strong>
 		</p>
 		{% if objetivoPrincipal %}
 			<div class="textareas-form text-muted">
-            {{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos')}}
-            </div>
+				{{objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos')}}
+			</div>
 		{% else %}
-			<textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+			<textarea class="form-control" name="" id="" rows="2" disabled>
+				{{"Sin datos"}}
+			</textarea>
 		{% endif %}
 
 	</div>
 {% endif %}</div><div class="text-box">
 <p>
-	<strong>2.3 Preguntas de investigación (opcional):</strong>
+	<strong>
+		2.3 Preguntas de investigación (opcional):
+	</strong>
 </p>
-<p class="text-muted font-italic">{{ academicRequestInfo.questions|default("Sin dato") }}</p></div><div class="text-box">
+<p class="text-muted font-italic">
+	{{ academicRequestInfo.questions|default("Sin dato") }}
+</p></div><div class="text-box">
 <p>
-	<strong>2.4 Hipótesis:</strong>
+	<strong>
+		2.4 Hipótesis:
+	</strong>
 </p>
-<p class="text-muted font-italic">{{ academicRequestInfo.hypothesis|default("Sin dato") }}</p></div><div class="text-box">
+<p class="text-muted font-italic">
+	{{ academicRequestInfo.hypothesis|default("Sin dato") }}
+</p></div><div class="text-box">
 <p>
-	<strong>2.5 Tipo de investigación:</strong>
+	<strong>
+		2.5 Tipo de investigación:
+	</strong>
 </p>
 {% if academicRequestInfo.invType is defined %}
 
 	{% if academicRequestInfo.invType|length == 0 %}
-		<p class="text-muted font-italic">Sin dato</p>
+		<p class="text-muted font-italic">
+			Sin dato
+		</p>
 	{% else %}
 		<ul>
 			{% for type in academicRequestInfo.invType %}
 				<li>
-					- {{type}}
+					-
+					{{type}}
 				</li>
 			{% endfor %}
 		</ul>
@@ -445,55 +618,65 @@ ul {
 {% endif %}
 {% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
 	{# <div class="form-group">
-		<p>
-			<strong>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de muestras biológicas –si aplica:</strong>
-		</p>
-		{% if SipProjectExtraInformation %}
-			
-			<div class="textareas-form">
-				{{SipProjectExtraInformation.DSC_METODOLOGIA|striptags|raw}}
-			</div>
-		{% else %}
-			<textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
-		{% endif %}
-
-	</div>
+																													<p>
+																														<strong>Descripción resumida de la metodología del estudio incluyendo la interacción con participantes humanos y toma de muestras biológicas –si aplica:</strong>
+																													</p>
+																													{% if SipProjectExtraInformation %}
+																														
+																														<div class="textareas-form">
+																															{{SipProjectExtraInformation.DSC_METODOLOGIA|striptags|raw}}
+																														</div>
+																													{% else %}
+																														<textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+																													{% endif %}
+																											
+																												</div>
+																												<div class="text-box">
+																													<p>
+																														<strong>2.5 Observaciones:</strong>
+																													</p>
+																													<p class="text-muted font-italic">{{ academicRequestInfo.metodologyObserv|default("Sin dato") }}</p>
+																												</div> #}
 	<div class="text-box">
 		<p>
-			<strong>2.5 Observaciones:</strong>
+			<strong>
+				2.6 Descripción resumida de la metodología::
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{ academicRequestInfo.metodologyObserv|default("Sin dato") }}</p>
-	</div> #}
-    <div class="text-box">
-		<p>
-			<strong>2.6 Descripción resumida de la metodología::</strong>
+		<p class="text-muted font-italic">
+			{{ academicRequestInfo.metodologyObserv|default("Sin dato") }}
 		</p>
-		<p class="text-muted font-italic">{{ academicRequestInfo.metodologyObserv|default("Sin dato") }}</p>
 	</div>
-{% endif %}
-</div>
-{# <div class="text-box">
-<p>
-	<strong>2.6 Objetivos:</strong>
-</p>
-<p class="text-muted font-italic">{{ academicRequestInfo.objetives|default("Sin dato") }}</p></div> #}
-<hr><ul class="nav justify-content-center nav-pills step-view">
+{% endif %}</div>{# <div class="text-box">
+																											<p>
+																												<strong>2.6 Objetivos:</strong>
+																											</p>
+																											<p class="text-muted font-italic">{{ academicRequestInfo.objetives|default("Sin dato") }}</p></div> #}<hr><ul class="nav justify-content-center nav-pills step-view">
 <li>
-	<span class="nav_step">3</span>
-	<a class="form_header_nav_item_link" href="#">Evaluación ética</a>
+	<span class="nav_step">
+		3
+	</span>
+	<a class="form_header_nav_item_link" href="#">
+		Evaluación ética
+	</a>
 </li></ul><div class="text-box">
 {% if ethicEvalRequest %}
 	<p>
-		<strong>3.1 Participación de población vulnerable:</strong>
+		<strong>
+			3.1 Participación de población vulnerable:
+		</strong>
 	</p>
 
 	{% if ethicEvalRequest.population|length == 0 %}
-		<p class="text-muted font-italic">Sin dato</p>
+		<p class="text-muted font-italic">
+			Sin dato
+		</p>
 	{% else %}
 		<ul>
 			{% for population in ethicEvalRequest.population %}
 				<li class="text-muted">
-					- {{population}}
+					-
+					{{population}}
 				</li>
 			{% endfor %}
 		</ul>
@@ -502,54 +685,81 @@ ul {
 <div class="text-box">
 
 	<p>
-		<strong>3.2 Cantidad de participantes necesaria para lograr los objetivos, determinación estadística o justiﬁcación teórica:</strong>
+		<strong>
+			3.2 Cantidad de participantes necesaria para lograr los objetivos, determinación estadística o justiﬁcación teórica:
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.amountParticipants|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.amountParticipants|default("Sin dato") }}
+	</p>
 </div>
 <div class="text-box">
 
 	<p>
-		<strong>3.3 Criterio de inclusión:</strong>
+		<strong>
+			3.3 Criterio de inclusión:
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.inExCriteria|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.inExCriteria|default("Sin dato") }}
+	</p>
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.4 Criterios de exclusión:</strong>
+		<strong>
+			3.4 Criterios de exclusión:
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.inExCriteria|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.inExCriteria|default("Sin dato") }}
+	</p>
 </div>
 
 <div class="text-box">
 	<p>
-		<strong>3.5 Reclutamiento de los participantes (indicar cómo, quién, y cuándo se hará):</strong>
+		<strong>
+			3.5 Reclutamiento de los participantes (indicar cómo, quién, y cuándo se hará):
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.recruitmentParticipants|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.recruitmentParticipants|default("Sin dato") }}
+	</p>
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.6 Recolección de información. Análisis de laboratorio, imágenes, pruebas psicológicas, cuestionarios, entrevistas u otros medios para generar datos o colectar información (Si aplica)</strong>
+		<strong>
+			3.6 Recolección de información. Análisis de laboratorio, imágenes, pruebas psicológicas, cuestionarios, entrevistas u otros medios para generar datos o colectar información (Si aplica)
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.collectionInformation|default("Sin dato") }}</p>
-    <ul>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.collectionInformation|default("Sin dato") }}
+	</p>
+	<ul>
 		{% for file in project_request.infoRequestFiles if file.questionCode is same as("collectionInformationFiles")  %}
 			<li>
-				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
+				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+					{{file.originalName}}
+				</a>
 			</li>
 		{% endfor %}
 	</ul>
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.7 Indicar qué tipos de datos se recopilarán en la investigación y marcar los que aplican:</strong>
+		<strong>
+			3.7 Indicar qué tipos de datos se recopilarán en la investigación y marcar los que aplican:
+		</strong>
 	</p>
 	{% if ethicEvalRequest.dataType|length == 0 %}
-		<p class="text-muted font-italic">Sin dato</p>
+		<p class="text-muted font-italic">
+			Sin dato
+		</p>
 	{% else %}
 		<ul>
 			{% for dataType in ethicEvalRequest.dataType %}
 				<li class="text-muted">
-					- {{dataType}}
+					-
+					{{dataType}}
 				</li>
 			{% endfor %}
 		</ul>
@@ -557,107 +767,166 @@ ul {
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.8 Declaración de riesgos de la investigación</strong>
+		<strong>
+			3.8 Declaración de riesgos de la investigación
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.riskDeclaration|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.riskDeclaration|default("Sin dato") }}
+	</p>
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.9 Beneﬁcios para la población:</strong>
+		<strong>
+			3.9 Beneﬁcios para la población:
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.benefitsForParticipant|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.benefitsForParticipant|default("Sin dato") }}
+	</p>
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.10 Beneﬁcios para el participante individual:</strong>
+		<strong>
+			3.10 Beneﬁcios para el participante individual:
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.benefitsForPopulation|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.benefitsForPopulation|default("Sin dato") }}
+	</p>
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.11 Previsiones para resguardar la privacidad, conﬁdencialidad y almacenamiento de los datos, tiempo de resguardo, detalle de la anonimización de los datos de los participantes:</strong>
+		<strong>
+			3.11 Previsiones para resguardar la privacidad, conﬁdencialidad y almacenamiento de los datos, tiempo de resguardo, detalle de la anonimización de los datos de los participantes:
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.previsionsPrivacy|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.previsionsPrivacy|default("Sin dato") }}
+	</p>
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.12 Indique el uso futuro de las muestras biológicas y de los datos del participante:</strong>
+		<strong>
+			3.12 Indique el uso futuro de las muestras biológicas y de los datos del participante:
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.futureUse|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.futureUse|default("Sin dato") }}
+	</p>
 </div>
 <div class="text-box">
-    
-<p><strong>3.13 Documento(s) MTA:</strong></p>
-    <ul>
+
+	<p>
+		<strong>
+			3.13 Documento(s) MTA:
+		</strong>
+	</p>
+	<ul>
 		{% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("mtaFiles")  %}
 			<li>
-				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
+				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+					{{file.originalName}}
+				</a>
 			</li>
 		{% endfor %}
 	</ul>
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.14 Forma en la que se realizará la devolución de resultados a los participantes. Indicar qué, quién, cómo y cuándo se hará:</strong>
+		<strong>
+			3.14 Forma en la que se realizará la devolución de resultados a los participantes. Indicar qué, quién, cómo y cuándo se hará:
+		</strong>
 	</p>
-	<p class="text-muted font-italic">{{ ethicEvalRequest.devolutionResultShow|default("Sin dato") }}</p>
+	<p class="text-muted font-italic">
+		{{ ethicEvalRequest.devolutionResultShow|default("Sin dato") }}
+	</p>
 </div>
 {# ------ #}
 <div class="text-box">
 	<p>
-		<strong>3.15 Requiere consentimiento informado:</strong>
+		<strong>
+			3.15 Requiere consentimiento informado:
+		</strong>
 	</p>
-{# {{dump(ethicEvalRequest.ethicEvalFiles)}} #}
-		<ul>
-			{% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedConsentFiles")  %}            
-                <li>
-                    <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
-                </li>
-            {% else %}
-                <p class="text-muted font-italic">No requerido.</p>
-			{% endfor %}
-		</ul>
-	
+	{# {{dump(ethicEvalRequest.ethicEvalFiles)}} #}
+	<ul>
+		{% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedConsentFiles")  %}
+			<li>
+				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+					{{file.originalName}}
+				</a>
+			</li>
+		{% else %}
+			<p class="text-muted font-italic">
+				No requerido.
+			</p>
+		{% endfor %}
+	</ul>
+
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.16 Asentimiento informado:</strong>
+		<strong>
+			3.16 Asentimiento informado:
+		</strong>
 	</p>
-{# {{dump(ethicEvalRequest.ethicEvalFiles)}} #}
-		<ul>
-			{% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedAssentFiles")  %}            
-                <li>
-                    <a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
-                </li>
-            {% else %}
-                <p class="text-muted font-italic">No requerido.</p>
-			{% endfor %}
-		</ul>
-	
+	{# {{dump(ethicEvalRequest.ethicEvalFiles)}} #}
+	<ul>
+		{% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("informedAssentFiles")  %}
+			<li>
+				<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+					{{file.originalName}}
+				</a>
+			</li>
+		{% else %}
+			<p class="text-muted font-italic">
+				No requerido.
+			</p>
+		{% endfor %}
+	</ul>
+
 </div>
 <div class="text-box">
 	<p>
-		<strong>3.17 Documentos adicionales:</strong>
+		<strong>
+			3.17 Documentos adicionales:
+		</strong>
 	</p>
 	{% if ethicEvalRequest.ethicEvalFiles is empty %}
-		<p class="text-muted font-italic">Sin Documento</p>
+		<p class="text-muted font-italic">
+			Sin Documento
+		</p>
 	{% else %}
 		<ul>
 			{% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("aditionalFiles")  %}
 				<li>
-					<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">{{file.originalName}}</a>
+					<a href="{{ asset('uploads/files/') }}{{file.FileName}}" download="{{file.originalName}}">
+						{{file.originalName}}
+					</a>
 				</li>
 			{% endfor %}
 		</ul>
 	{% endif %}
-</div>{% endif %}<hr><p class="title-table-index">Registro de acciones relacionadas con la solicitud</p><table class="table">
+</div>{% endif %}<hr><p class="title-table-index">
+Registro de acciones relacionadas con la solicitud</p><table class="table">
 <thead>
 	<tr>
-		<th>Fecha</th>
-		<th>Acción</th>
-		<th>Usuario</th>
-		<th>Rol</th>
-		<th>Observaciones</th>
+		<th>
+			Fecha
+		</th>
+		<th>
+			Acción
+		</th>
+		<th>
+			Usuario
+		</th>
+		<th>
+			Rol
+		</th>
+		<th>
+			Observaciones
+		</th>
 	</tr>
 </thead>
 <tbody>
@@ -667,95 +936,140 @@ ul {
 				<td class="text-bold">
 					{{ requestLog.date|date("d/m/Y g:ia") }}
 				</td>
-				<td>{{ requestLog.description }}</td>
-				<td>{{ requestLog.user.name }}</td>
+				<td>
+					{{ requestLog.description }}
+				</td>
+				<td>
+					{{ requestLog.user.name }}
+				</td>
 				<td>
 					{{ requestLog.user.role.label }}
 				{# <pre>
-																                        {{ dump(requestLog) }}
-																                    </pre> #}
+																																																																																																																												                        {{ dump(requestLog) }}
+																																																																																																																												                    </pre> #}
 					{# {% if requestLog.user.role.description == "ROLE_ADMIN" %}
-																				                        Administrador
-																				                    {% elseif requestLog.user.role.description == "ROLE_STUDENT" %}
-																				                        Estudiante
-																				                    {% elseif requestLog.user.role.description == "ROLE_RESEARCHER" %}
-																				                        Investigador
-																				                    {% elseif requestLog.user.role.description == "ROLE_EVALUATOR" %}
-																				                        Evaluador
-																				                    {% endif %} #}
+																																																																																																																																																											                        Administrador
+																																																																																																																																																											                    {% elseif requestLog.user.role.description == "ROLE_STUDENT" %}
+																																																																																																																																																											                        Estudiante
+																																																																																																																																																											                    {% elseif requestLog.user.role.description == "ROLE_RESEARCHER" %}
+																																																																																																																																																											                        Investigador
+																																																																																																																																																											                    {% elseif requestLog.user.role.description == "ROLE_EVALUATOR" %}
+																																																																																																																																																											                        Evaluador
+																																																																																																																																																											                    {% endif %} #}
 				</td>
-				<td>{{ requestLog.observations|default('N/A') }}</td>
+				<td>
+					{{ requestLog.observations|default('N/A') }}
+				</td>
 			</tr>
 		{% else %}
 			<tr>
-				<td colspan="11">No hay evaluaciones previas</td>
+				<td colspan="11">
+					No hay evaluaciones previas
+				</td>
 			</tr>
 		{% endfor %}
 	{% endif %}
 </tbody></table>{% if pre_eval_info %}
-<p class="title-table-index">{{'RESULTADOS DE EVALUACIÓN DE LA SOLICITUD'|upper}}</p>
+<p class="title-table-index">
+	{{'RESULTADOS DE EVALUACIÓN DE LA SOLICITUD'|upper}}
+</p>
 <p class="label">
-	<strong>Revisión de solicitud</strong>
+	<strong>
+		Revisión de solicitud
+	</strong>
 </p>
 {% for pei in pre_eval_info %}
 	<div class="text-box">
 		<p>
-			<strong>Fecha:</strong>
+			<strong>
+				Fecha:
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{pei.date|date("d/m/Y g:ia")}}</p>
+		<p class="text-muted font-italic">
+			{{pei.date|date("d/m/Y g:ia")}}
+		</p>
 	</div>
 	<div class="text-box">
 		<p>
-			<strong>Estado de la revisión:</strong>
+			<strong>
+				Estado de la revisión:
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{pei.status}}</p>
+		<p class="text-muted font-italic">
+			{{pei.status}}
+		</p>
 	</div>
 	<div class="text-box">
 		<p>
-			<strong>Observaciones:</strong>
+			<strong>
+				Observaciones:
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{pei.observations}}</p>
+		<p class="text-muted font-italic">
+			{{pei.observations}}
+		</p>
 	</div>
 	<hr>
 
 {% endfor %}{% endif %}{% if eval_info %}
+<hr>
+<p class="title-table-index">
+RESULTADOS DE EVALUACIÓN DE LA SOLICITUD</p>
 <p class="label">
-	<strong>Dictamen de solicitud</strong>
+	<strong>
+		Dictamen de solicitud
+	</strong>
 </p>
 {% for pei in eval_info %}
 
 	{# 
-				    <h3>Evaluación CEC-{{project_request.id}}-{{pei.date|date("Y")[2:3]}}
-				        | Fecha:
-				        {{pei.date|date("d/m/Y g:ia")}}
-				    </h3>
-				    <p>{{pei.observations}}</p> #}
+																															    <h3>Evaluación CEC-{{project_request.id}}-{{pei.date|date("Y")[2:3]}}
+																															        | Fecha:
+																															        {{pei.date|date("d/m/Y g:ia")}}
+																															    </h3>
+																															    <p>{{pei.observations}}</p> #}
 
 
 	<div class="text-box">
 		<p>
-			<strong>Fecha:</strong>
+			<strong>
+				Fecha:
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{pei.date|date("d/m/Y g:ia")}}</p>
+		<p class="text-muted font-italic">
+			{{pei.date|date("d/m/Y g:ia")}}
+		</p>
 	</div>
 	<div class="text-box">
 		<p>
-			<strong>La presente propuesta es de tipo:</strong>
+			<strong>
+				La presente propuesta es de tipo:
+			</strong>
 		</p>
 
-		<p class="text-muted font-italic">{{pei.category}}</p>
+		<p class="text-muted font-italic">
+			{{pei.category}}
+		</p>
 	</div>
 	<div class="text-box">
 		<p>
-			<strong>Estado de la revisión:</strong>
+			<strong>
+				Estado de la revisión:
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{pei.status}}</p>
+		<p class="text-muted font-italic">
+			{{pei.status}}
+		</p>
 	</div>
 	<div class="text-box">
 		<p>
-			<strong>Observaciones:</strong>
+			<strong>
+				Observaciones:
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{pei.observations}}</p>
+		<p class="text-muted font-italic">
+			{{pei.observations}}
+		</p>
 	</div>
 	<hr>
 

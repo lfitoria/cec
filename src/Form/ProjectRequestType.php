@@ -197,15 +197,15 @@ class ProjectRequestType extends AbstractType {
                     'required' => false,
                 ]);
 
-                $form->add('minuteFinalWork', ChoiceType::class, array(
-                    'choices' => array(
-                        'No' => '0',
-                        'Sí' => '1',
-                    ),
-                    'data' => $projectRequest->getMinuteFinalWork() ? $projectRequest->getMinuteFinalWork() : '0',
-                    'expanded' => true,
-                    'label' => 'Acta de la comisión de trabajos finales de graduación:',
-                ));
+                // $form->add('minuteFinalWork', ChoiceType::class, array(
+                //     'choices' => array(
+                //         'No' => '0',
+                //         'Sí' => '1',
+                //     ),
+                //     'data' => $projectRequest->getMinuteFinalWork() ? $projectRequest->getMinuteFinalWork() : '0',
+                //     'expanded' => true,
+                //     'label' => 'Acta de la comisión de trabajos finales de graduación:',
+                // ));
 
                 $form->add('minuteFinalWorkFiles', CollectionType::class, [
                     'entry_type' => FileType::class,
@@ -216,15 +216,15 @@ class ProjectRequestType extends AbstractType {
                     'label' => false
                 ]);
 
-                $form->add('minutesResearchCenter', ChoiceType::class, array(
-                    'choices' => array(
-                        'No' => '0',
-                        'Sí' => '1',
-                    ),
-                    'data' => $projectRequest->getMinutesResearchCenter() ? $projectRequest->getMinutesResearchCenter() : '0',
-                    'expanded' => true,
-                    'label' => 'Acta de la comisión científica del instituto o centro de investigaciones:',
-                ));
+                // $form->add('minutesResearchCenter', ChoiceType::class, array(
+                //     'choices' => array(
+                //         'No' => '0',
+                //         'Sí' => '1',
+                //     ),
+                //     'data' => $projectRequest->getMinutesResearchCenter() ? $projectRequest->getMinutesResearchCenter() : '0',
+                //     'expanded' => true,
+                //     'label' => 'Acta de la comisión científica del instituto o centro de investigaciones:',
+                // ));
 
                 $form->add('minutesResearchCenterFiles', CollectionType::class, [
                     'entry_type' => FileType::class,
@@ -233,6 +233,11 @@ class ProjectRequestType extends AbstractType {
                     'allow_add' => true,
                     'required' => true,
                     'label' => false
+                ]);
+                $form->add('emailComisionNotification', TextType::class, [
+                    'label' => 'Correo electrónico para notificaciones sobre el dictamen a la comisión de trabajos finales de graduación:',
+                    'required' => false,
+                    'help' => 'Ingrese una sola dirección de correo electrónico, no use espacios ni caracteres especiales',
                 ]);
               } else {
                 $form->add('title', TextType::class, [

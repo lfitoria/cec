@@ -1,203 +1,211 @@
 {% extends 'base.html.twig' %}
 
 {% block specific_stylesheets %}
-  {{ encore_entry_link_tags('evaluator') }}
+	{{ encore_entry_link_tags('evaluator') }}
 {% endblock %}
 {% block body %}
 
-  <p class="title-table-index">SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</p>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nº de solicitud</th>
-        <th>
-          {% if app.user.role.description == "ROLE_RESEARCHER" %}
-            Título de proyecto
-          {% elseif app.user.role.description == "ROLE_STUDENT" %}
-            Título de Trabajo final de graduación
-          {% else %}
-            Título de proyecto
-          {% endif %}
-        </th>
-        {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Investigador / estudiante</th>{% endif %}
-        {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Unidad</th>{% endif %}
-        {# <th colspan="2">Estado</th> #}
-        <th>Estado</th>
-        {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<th>Evaluadores asignados</th>{% endif %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for project_request in project_requests %}
-      {# <pre>
-        {{ dump(project_request) }}
-        <td>
-                  <ul>
-                  {% for evaluator in evaluators %}
-                    <li>{{ evaluator.name }}</li>
-                    {% if evaluator.id in project_requests_users[project_request.id] %}
-                    <li>{{ evaluator.name }}</li>
-                    {% endif %}
-                  {% endfor %}
-          </td>
-      </pre> #}
-        <tr>
-          <td class="text-bold">
-            <span>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</span>
-          </td>
-          <td>
-            <span>{{ project_request.title }}</span>
-          </td>
-          {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<td>{{ project_request.owner.name }}</td>{% endif %}
-          {% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}<td>{{ project_request.projectUnit }}</td>{% endif %}
-          <td class="d-flex justify-content-between">
-          
-            <span class="st-eval" for="eval_request_status_{{ project_request.state.id }}">{{ project_request.state.description }}</span>
-            <a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
+	<p class="title-table-index">SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</p>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Nº de solicitud</th>
+				<th>
+					{% if app.user.role.description == "ROLE_RESEARCHER" %}
+						Título de proyecto
+					{% elseif app.user.role.description == "ROLE_STUDENT" %}
+						Título de Trabajo final de graduación
+					{% else %}
+						Título de proyecto
+					{% endif %}
+				</th>
+				{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
+					<th>Investigador / estudiante</th>
+				{% endif %}
+				{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
+					<th>Unidad</th>
+				{% endif %}
+				{# <th colspan="2">Estado</th> #}
+				<th>Estado</th>
+				{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
+					<th>Evaluadores asignados</th>
+				{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for project_request in project_requests %}
+				{# <pre>
+								        {{ dump(project_request) }}
+								        <td>
+								                  <ul>
+								                  {% for evaluator in evaluators %}
+								                    <li>{{ evaluator.name }}</li>
+								                    {% if evaluator.id in project_requests_users[project_request.id] %}
+								                    <li>{{ evaluator.name }}</li>
+								                    {% endif %}
+								                  {% endfor %}
+								          </td>
+								      </pre> #}
+				<tr>
+					<td class="text-bold">
+						<span>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</span>
+					</td>
+					<td>
+						<span>{{ project_request.title }}</span>
+					</td>
+					{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
+						<td>{{ project_request.owner.name }}</td>
+					{% endif %}
+					{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
+						<td>{{ project_request.projectUnit }}</td>
+					{% endif %}
+					<td class="d-flex justify-content-between">
 
-            {% if app.user.role.description == "ROLE_ADMIN" %}
-              {% if project_request.state.id not in [36,27] %}
-                <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Asignar
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu checkbox-menu allow-focus evaluator_list_assigment">
-                    {% for evaluator in evaluators %}
-                      <li>
-                        <label>
-                          <input type="checkbox" name="evaluators" value="{{ evaluator.id }}" {% if evaluator.id in project_requests_users[project_request.id] %}checked{% endif %}>
-                          {{ evaluator.name }}
-                        </label>
-                      </li>
-                    {% endfor %}
-                    <li>
-                      <button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">Confirmar</button>
-                    </li>
-                  </ul>
-                </div>
-              {% else %}
-                {% if app.user.role.description not in ["ROLE_ADMIN"] %}
-                <a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
-                {% endif %}
-                {# borrar #}
-                {# {% if project_request.state.id in [27, 35, 42,38] %}
-                <a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
-                {% endif %} #}
-              {% endif %}
-            {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
-              {% if project_request.state.id in [27, 35, 42,38] %}
-                <a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
-              {% endif %}
-              
-              
+						<span class="st-eval" for="eval_request_status_{{ project_request.state.id }}">{{ project_request.state.description }}</span>
+						<a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
 
-            {% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_EVALUATOR"%}
-              {% if project_request.state.id == 28 %}
-                <a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
-              {% endif %}
-              {% if project_request.state.id == 31 %}
-                <a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
-              {% endif %}
-              
-              {# {% if project_request.state.id == 36 %}
-                <a href="{{ path('eval_request_show', {'id': eval_request.id}) }}">show</a>
-              {% endif %} #}
-              
-            {% endif %}
+						{% if app.user.role.description == "ROLE_ADMIN" %}
+							{% if project_request.state.id not in [36,27] %}
+								<div class="dropdown">
+									<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										Asignar
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu checkbox-menu allow-focus evaluator_list_assigment">
+										{% for evaluator in evaluators %}
+											<li>
+												<label>
+													<input type="checkbox" name="evaluators" value="{{ evaluator.id }}" {% if evaluator.id in project_requests_users[project_request.id] %} checked {% endif %}>
+													{{ evaluator.name }}
+												</label>
+											</li>
+										{% endfor %}
+										<li>
+											<button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">Confirmar</button>
+										</li>
+									</ul>
+								</div>
+								{% if project_request.state.id == 28 %}
+									<a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+								{% endif %}
+								{% if project_request.state.id == 31 %}
+									<a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+								{% endif %}
+							{% else %}
+								{% if app.user.role.description not in ["ROLE_ADMIN"] %}
+									<a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
+								{% endif %}
+							{% endif %}
+						{% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
+							{% if project_request.state.id in [27, 35, 42,38] %}
+								<a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
+							{% endif %}
+						{% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_EVALUATOR"%}
+							{% if project_request.state.id == 28 %}
+								<a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+							{% endif %}
+							{% if project_request.state.id == 31 %}
+								<a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+							{% endif %}
 
-          </td>
+							{# {% if project_request.state.id == 36 %}
+														                <a href="{{ path('eval_request_show', {'id': eval_request.id}) }}">show</a>
+														              {% endif %} #}
 
-          {% if app.user.role.description in ["ROLE_ADMIN"] %}
-          <td>
-            <ul style="padding: 0 0 0 15px;">
-                {% if evaluators is defined %}
-                
-                  {% for evaluator in evaluators %}
-                    {% if evaluator.id in project_requests_users[project_request.id] %}
-                    <li>{{ evaluator.name }}</li>
-                    {% endif %}
-                  {% endfor %}
-                  {% endif %}
-            </ul>
-          </td>
-          {% endif %}
-        </tr>
-      {% else %}
-        <tr>
-          <td colspan="11">Solicitudes no encontradas</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% if app.user.role.description == "ROLE_ADMIN" or app.user.role.description == "ROLE_EVALUATOR" %}
+						{% endif %}
 
-  {% else %}
-    <button type="button" class="btn btn-primary btn-lg btn-open-modalnew" data-toggle="modal" data-target="#new_project">
-      NUEVA SOLICITUD DE REVISIÓN
-    </button>
-  {% endif %}
-  <!-- Modal -->
-  <div class="modal fade" id="new_project" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div
-        class="modal-content">
-        <div class="modal-body">
-          <h4>Instrucciones</h4>
-          <p>Lea con detenimiento esta información antes de completar la solicitud.</p>
-          <p>Este formulario se compone de 3 bloques:</p>
+					</td>
 
-          <hr>
-          <ul class="nav justify-content-center nav-pills">
-            <li class="d-flex align-items-center form_header_nav_item  form_header_nav_item--active " data-target="info">
-              <span class="nav_step">1</span>
-              <a class="form_header_nav_item_link" href="#">Información del proyecto</a>
-            </li>
-            <li class="d-flex align-items-center form_header_nav_item " data-target="academic">
-              <span class="nav_step">2</span>
-              <a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
-            </li>
-            <li class="d-flex align-items-center form_header_nav_item " data-target="ethic">
-              <span class="nav_step">3</span>
-              <a class="form_header_nav_item_link" href="#">Evaluación ética</a>
-            </li>
-          </ul>
-          <hr>
-          <p>Podrá guardar el formulario en cualquier momento usando el botón
-            <span class="text-color-green">“GUARDAR”</span>. Podrá avanzar al siguiente bloque usando el botón
-            <span class="text-color-green">“GUARDAR Y CONTINUAR”</span>
-            o navegar a través del formulario usando la navegación superior.
-            Al terminar el tercer bloque, podrá enviar su solicitud.</p>
-          <a class="btn btn-primary" href="{{ path('tab_general_info_request_new') }}">Empezar</a>
-        </div>
+					{% if app.user.role.description in ["ROLE_ADMIN"] %}
+						<td>
+							<ul style="padding: 0 0 0 15px;">
+								{% if evaluators is defined %}
 
-        <button type="button" class="btn btn-close-modalnew" data-dismiss="modal">Cancelar</button>
-      </div>
-    </div>
-  </div>
+									{% for evaluator in evaluators %}
+										{% if evaluator.id in project_requests_users[project_request.id] %}
+											<li>{{ evaluator.name }}</li>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</ul>
+						</td>
+					{% endif %}
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="11">Solicitudes no encontradas</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% if app.user.role.description == "ROLE_ADMIN" or app.user.role.description == "ROLE_EVALUATOR" %}
 
-  <script>
-    console.log('readi index_project');
-    jQuery("[for='eval_request_status_27']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="La solicitud se encuentra en proceso de llenado">?</a>');
-    jQuery("[for='eval_request_status_28']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="La solicitud fue enviada al CEC para su revisión y evaluación">?</a>');
-    jQuery("[for='eval_request_status_31']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="El proceso de evaluación continúa para ser evaluada en una sesión ordinaria o extraordinaria del CEC">?</a>');
-    jQuery("[for='eval_request_status_32']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
-    jQuery("[for='eval_request_status_33']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="No implica ningún peligro ni comprometen a los participantes">?</a>');
-    jQuery("[for='eval_request_status_34']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Por su naturaleza no están diseñadas para contribuir con nuevos conocimientos que sean generalizables (Ver “Lineamientos del Comité Ético Científico de la Universidad de Costa Rica para Investigaciones con Seres Humanos, Biomédicas y No Biomédicas”, numeral 9.3)">?</a>');
-    jQuery("[for='eval_request_status_35']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Revisión de esta solicitud no compete al CEC">?</a>');
-    jQuery("[for='eval_request_status_36']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se aprueban sin ningún tipo de objeción, en el marco de una sesión ordinaria o extraordinaria del CEC">?</a>');
-    jQuery("[for='eval_request_status_37']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Solicitud cuya aprobación definitiva, depende del cumplimiento de un requisito o requisitos mínimos">?</a>');
-    jQuery("[for='eval_request_status_38']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
-    jQuery("[for='eval_request_status_39']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="No implica ningún peligro ni comprometen a los participantes">?</a>');
-    jQuery("[for='eval_request_status_40']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Incumple con requisitos de las consideraciones éticas, previstos en la Ley 9234, el Reglamento UCR y los Lineamientos del CEC">?</a>');
-    jQuery("[for='eval_request_status_42']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
+		{% else %}
+			<button type="button" class="btn btn-primary btn-lg btn-open-modalnew" data-toggle="modal" data-target="#new_project">
+				NUEVA SOLICITUD DE REVISIÓN
+			</button>
+	{% endif %}
+	<!-- Modal -->
+	<div class="modal fade" id="new_project" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h4>Instrucciones</h4>
+					<p>Lea con detenimiento esta información antes de completar la solicitud.</p>
+					<p>Este formulario se compone de 3 bloques:</p>
+
+					<hr>
+					<ul class="nav justify-content-center nav-pills">
+						<li class="d-flex align-items-center form_header_nav_item  form_header_nav_item--active " data-target="info">
+							<span class="nav_step">1</span>
+							<a class="form_header_nav_item_link" href="#">Información del proyecto</a>
+						</li>
+						<li class="d-flex align-items-center form_header_nav_item " data-target="academic">
+							<span class="nav_step">2</span>
+							<a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
+						</li>
+						<li class="d-flex align-items-center form_header_nav_item " data-target="ethic">
+							<span class="nav_step">3</span>
+							<a class="form_header_nav_item_link" href="#">Evaluación ética</a>
+						</li>
+					</ul>
+					<hr>
+					<p>Podrá guardar el formulario en cualquier momento usando el botón
+						<span class="text-color-green">“GUARDAR”</span>. Podrá avanzar al siguiente bloque usando el botón
+						<span class="text-color-green">“GUARDAR Y CONTINUAR”</span>
+						o navegar a través del formulario usando la navegación superior.
+												            Al terminar el tercer bloque, podrá enviar su solicitud.</p>
+					<a class="btn btn-primary" href="{{ path('tab_general_info_request_new') }}">Empezar</a>
+				</div>
+
+				<button type="button" class="btn btn-close-modalnew" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		console.log('readi index_project');
+jQuery("[for='eval_request_status_27']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="La solicitud se encuentra en proceso de llenado">?</a>');
+jQuery("[for='eval_request_status_28']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="La solicitud fue enviada al CEC para su revisión y evaluación">?</a>');
+jQuery("[for='eval_request_status_31']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="El proceso de evaluación continúa para ser evaluada en una sesión ordinaria o extraordinaria del CEC">?</a>');
+jQuery("[for='eval_request_status_32']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
+jQuery("[for='eval_request_status_33']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="No implica ningún peligro ni comprometen a los participantes">?</a>');
+jQuery("[for='eval_request_status_34']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Por su naturaleza no están diseñadas para contribuir con nuevos conocimientos que sean generalizables (Ver “Lineamientos del Comité Ético Científico de la Universidad de Costa Rica para Investigaciones con Seres Humanos, Biomédicas y No Biomédicas”, numeral 9.3)">?</a>');
+jQuery("[for='eval_request_status_35']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Revisión de esta solicitud no compete al CEC">?</a>');
+jQuery("[for='eval_request_status_36']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se aprueban sin ningún tipo de objeción, en el marco de una sesión ordinaria o extraordinaria del CEC">?</a>');
+jQuery("[for='eval_request_status_37']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Solicitud cuya aprobación definitiva, depende del cumplimiento de un requisito o requisitos mínimos">?</a>');
+jQuery("[for='eval_request_status_38']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
+jQuery("[for='eval_request_status_39']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="No implica ningún peligro ni comprometen a los participantes">?</a>');
+jQuery("[for='eval_request_status_40']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Incumple con requisitos de las consideraciones éticas, previstos en la Ley 9234, el Reglamento UCR y los Lineamientos del CEC">?</a>');
+jQuery("[for='eval_request_status_42']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
 
 
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
+$(document).ready(function () {
+$('[data-toggle="tooltip"]').tooltip();
+});
+	</script>
 
 {% endblock %}
 {% block specific_javascripts %}
-  {{ encore_entry_script_tags('evaluator') }}
+	{{ encore_entry_script_tags('evaluator') }}
 {% endblock %}

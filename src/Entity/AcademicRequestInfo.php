@@ -31,35 +31,35 @@ class AcademicRequestInfo
     /**
      * @var string|null
      *
-     * @ORM\Column(name="summary_observ", type="string", length=1500, nullable=true)
+     * @ORM\Column(name="summary_observ", type="text", length=1500, nullable=true)
      */
     private $summaryObserv;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="objetives", type="string", length=1500, nullable=true)
+     * @ORM\Column(name="objetives", type="text", length=1500, nullable=true)
      */
     private $objetives;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="questions", type="string", length=1500, nullable=true)
+     * @ORM\Column(name="questions", type="text", length=1500, nullable=true)
      */
     private $questions;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="hypothesis", type="string", length=1500, nullable=true)
+     * @ORM\Column(name="hypothesis", type="text", length=1500, nullable=true)
      */
     private $hypothesis;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="metodology_observ", type="string", length=2000, nullable=true)
+     * @ORM\Column(name="metodology_observ", type="text", length=2000, nullable=true)
      */
     private $metodologyObserv;
 

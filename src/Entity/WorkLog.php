@@ -40,7 +40,7 @@ class WorkLog
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="observations", type="string", length=200, nullable=true)
+     * @ORM\Column(name="observations", type="string", length=1000, nullable=true)
      */
     private $observations;
 

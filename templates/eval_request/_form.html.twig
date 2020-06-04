@@ -28,7 +28,12 @@
                 {{ form_row(form.fakeFiles, {label_attr: {class: 'no-label'} }) }}
                 {# <button class="btn">{{ button_label|default('Save') }}</button> #}
                 {{ form_end(form) }}
-                {{ include('commons/_form_footer.html.twig', {'button_label':'Enviar dictamen', 'button_label_save': 'Guardar sin enviar', 'finish': 1}) }}
+
+                {% set active_btn_admin = false %}
+                {% if app.user.role.description == "ROLE_ADMIN" %}
+                    {% set active_btn_admin = true %}
+                {% endif %}
+                {{ include('commons/_form_footer.html.twig', {'button_label':'Enviar dictamen', 'button_label_save': 'Guardar sin enviar', 'finish': 1,'active_btn_admin': active_btn_admin}) }}
                 {{ include('commons/_modal_validate_user.html.twig') }}
             </div>
         </div>
@@ -40,11 +45,8 @@
 <!-- Accordion wrapper -->
 {% if eval %}
 <p class="title-table-index">{{'Resumen de evaluaciones previas'|upper}}</p>
-<div id="accordion">
+{# <div id="accordion">
 {% for pei in eval %}
-    {# <pre>
-        {{ dump(pei) }}
-    </pre> #}
     <div class="card">
     <div class="card-header" id="head-{{pei.id}}">
       <h5 class="mb-0">
@@ -61,7 +63,47 @@
     </div>
   </div>
 {% endfor %}
-</div>
+</div> #}
+{% for pei in eval %}
+
+	{# 
+				    <h3>Evaluación CEC-{{project_request.id}}-{{pei.date|date("Y")[2:3]}}
+				        | Fecha:
+				        {{pei.date|date("d/m/Y g:ia")}}
+				    </h3>
+				    <p>{{pei.observations}}</p> #}
+
+
+	<div class="text-box">
+		<p>
+			<strong>Fecha:</strong>
+		</p>
+		<p class="text-muted font-italic">{{pei.date|date("d/m/Y g:ia")}}</p>
+	</div>
+	<div class="text-box">
+		<p>
+			<strong>La presente propuesta es de tipo:</strong>
+		</p>
+
+		<p class="text-muted font-italic">{{pei.category}}</p>
+	</div>
+	<div class="text-box">
+		<p>
+			<strong>Estado de la revisión:</strong>
+		</p>
+		<p class="text-muted font-italic">{{pei.status}}</p>
+	</div>
+	<div class="text-box">
+		<p>
+			<strong>Observaciones:</strong>
+		</p>
+		<p class="text-muted font-italic">{{pei.observations}}</p>
+	</div>
+	<hr>
+
+{% endfor %}
+{% else %} 
+    <p>Sin datos</p>
 {% endif %} 
 
 <script>

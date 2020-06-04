@@ -220,6 +220,13 @@ class ProjectRequest {
      */
     private $uacademica;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="emailComisionNotification", type="string", length=500, nullable=true)
+     */
+    private $emailComisionNotification;
+
     public function getCategory(): ?Criterion {
       return $this->category;
     }
@@ -481,6 +488,14 @@ class ProjectRequest {
 
   function setSipProject($sipProject) {
     $this->sipProject = $sipProject;
+  }
+
+  public function getEmailComisionNotification(): Collection {
+    return $this->users;
+  }
+
+  function setEmailComisionNotification($emailComisionNotification) {
+    $this->emailComisionNotification = $emailComisionNotification;
   }
 
 
