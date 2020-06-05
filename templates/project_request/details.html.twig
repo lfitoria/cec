@@ -142,7 +142,7 @@ ul
 </style>
 {% if time is defined and time %}
 	<p>Consultado el: {{date}} a las {{time}}</p>
-	<h2>{{project_request.title}}</h2>
+	<h2>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}: {{project_request.title}}</h2>
 {% endif %}
 
 
