@@ -530,6 +530,9 @@ a.toolbox {
   color: #000;
 }
 
+.state-column {
+  padding: 17px!important;
+}
 @media (max-width: 576px) { 
   .header img{
     width: 100%;
