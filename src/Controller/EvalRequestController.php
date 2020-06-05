@@ -123,7 +123,10 @@ class EvalRequestController extends AbstractController {
                 if ( isset($gestor2["0"]["correo"])){
                     array_push($correos, trim($gestor2["0"]["correo"]));
                 }
-                    array_push($correos, "lfitoria@eldomo.net");
+                if ( $projectRequest->getEmailComisionNotification() !== "" ){
+                    array_push($correos, $projectRequest->getEmailComisionNotification() );
+                }
+                    // array_push($correos, "lfitoria@eldomo.net");
                     //array_push($correos, "camacho.le@gmail.com");
             
                 $emailData = [
@@ -131,6 +134,7 @@ class EvalRequestController extends AbstractController {
                 "from" => "cec@ucr.ac.cr",
                 "to" => $projectRequest->getOwner()->getEmail(),
                 "cc" => $correos,
+                "bcc" => "lfitoria@eldomo.net",
                 "body" => $this->render('emails/evaluatorAssigment.html.twig', [
                 'project_request' => $projectRequest,
                 'details_eval' => $evalRequest->getObservations(),
@@ -264,7 +268,10 @@ class EvalRequestController extends AbstractController {
                 if ( isset($gestor2["0"]["correo"])){
                     array_push($correos, trim($gestor2["0"]["correo"]));
                 }
-                    array_push($correos, "lfitoria@eldomo.net");
+                if ( $projectRequest->getEmailComisionNotification() !== "" ){
+                    array_push($correos, $projectRequest->getEmailComisionNotification() );
+                }
+                    // array_push($correos, "lfitoria@eldomo.net");
                     //array_push($correos, "camacho.le@gmail.com");
             
                 $emailData = [
@@ -272,6 +279,7 @@ class EvalRequestController extends AbstractController {
                 "from" => "cec@ucr.ac.cr",
                 "to" => $projectRequest->getOwner()->getEmail(),
                 "cc" => $correos,
+                "bcc" => "lfitoria@eldomo.net",
                 "body" => $this->render('emails/evaluatorAssigment.html.twig', [
                 'project_request' => $projectRequest,
                 'details_eval' => $evalRequest->getObservations(),

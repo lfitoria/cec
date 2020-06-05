@@ -491,7 +491,7 @@ class ProjectRequest {
   }
 
   public function getEmailComisionNotification(): Collection {
-    return $this->users;
+    return $this->emailComisionNotification;
   }
 
   function setEmailComisionNotification($emailComisionNotification) {
