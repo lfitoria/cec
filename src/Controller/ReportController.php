@@ -91,7 +91,7 @@ class ReportController extends AbstractController {
         'pre_eval_info' => $pre_eval_info,
         'eval_info' => $eval_info,
         'date' => $actual_date,
-        'time' => $time
+        'time' => $time,
     ]);
     
     $fecha = $projectRequest->getDate();
