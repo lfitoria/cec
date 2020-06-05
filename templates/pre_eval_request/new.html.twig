@@ -2,6 +2,20 @@
 
 
 {% block body %}
+<a class="btn-pdf btn btn-danger" href="{{path('pdf', {'id': project_request.id} )}}">Descargar PDF</a>
+    {{ include('project_request/details.html.twig', 
+    {'project_request': project_request,
+    'project_info': project_info,
+    'projectId_getMinuteCommissionTFG': projectId_getMinuteCommissionTFG,
+    'academicRequestInfo': academicRequestInfo,
+    'ethicEvalRequest': ethicEvalRequest,
+    'SipProjectExtraInformation': SipProjectExtraInformation,
+    'SipProject': SipProject,
+    'objetivoPrincipal': objetivoPrincipal,
+    'requestLogs': requestLogs,
+    'pre_eval_info':pre_eval_info,
+    'eval_info':eval_info,
+    }) }}
   {{ include('project_request/details.html.twig', 
     {'project_request': project_request,
     'project_info': project_info,
