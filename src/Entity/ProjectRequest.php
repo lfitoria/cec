@@ -127,7 +127,7 @@ class ProjectRequest {
   /**
    * @var string|null
    *
-   * @ORM\Column(name="project_unit", type="string", length=45, nullable=true)
+   * @ORM\Column(name="project_unit", type="text", length=3000, nullable=true)
    */
   private $projectUnit;
   
