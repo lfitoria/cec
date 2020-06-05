@@ -4,8 +4,7 @@ knp_snappy:
     pdf:
         enabled:    true
         binary:     /usr/bin/wkhtmltopdf.sh #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\"" for Windows users
-        options:
-            page-size: A4
+        options:    []
     image:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
