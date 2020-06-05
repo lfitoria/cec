@@ -35,10 +35,10 @@
                 <th>Última visita</th>
                 <td>{{ ldap_user.lastLoginDate ? ldap_user.lastLoginDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
-            <tr>
+            {# <tr>
                 <th>Fecha de creación</th>
                 <td>{{ ldap_user.creationDate ? ldap_user.creationDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+            </tr> #}
             {# <tr>
                 <th>DeletionDate</th>
                 <td>{{ ldap_user.deletionDate ? ldap_user.deletionDate|date('Y-m-d H:i:s') : '' }}</td>
