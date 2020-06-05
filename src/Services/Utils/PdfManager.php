@@ -30,6 +30,7 @@ class PdfManager{
                 'images' => true,
                 'enable-external-links' => true,
                 'enable-internal-links' => true,
+                
                 )),
             $filename 
         );

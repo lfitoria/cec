@@ -73,6 +73,9 @@ class ReportController extends AbstractController {
             ->getRepository(WorkLog::class)
             ->findBy(array("request" => $projectRequest));
 
+    $time = time();
+    $actual_time = date("Y-m-d",$time);
+
     $html = $this->renderView('project_request/details.html.twig', [
         'project_request' => $projectRequest,
         'project_info' => $projectInfo,
@@ -84,7 +87,8 @@ class ReportController extends AbstractController {
         'objetivoPrincipal' => $objetivoPrincipal,
         'requestLogs' => $requestLogs,
         'pre_eval_info' => $pre_eval_info,
-        'eval_info' => $eval_info
+        'eval_info' => $eval_info,
+        'time' => $actual_time
     ]);
     
     $fecha = $projectRequest->getDate();

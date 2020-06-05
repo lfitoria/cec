@@ -140,6 +140,9 @@ ul
 	font-weight: bold;
 }
 </style>
+{% if time is defined and time %}
+	{{time}}
+{% endif %}
 
 <h2>{{project_request.title}}</h2>
 <ul class="nav justify-content-center nav-pills step-view">
