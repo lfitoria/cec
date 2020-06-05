@@ -521,8 +521,8 @@ a.ingreso-admin-home:after {
 a.toolbox {
   position: absolute;
   font-size: 0.6em;
-  top: 5px;
-  right: -18px;
+  top: 2px;
+  right: -15px;
   background-color: var(--N1);
   border-radius: 50%;
   padding: 0px 4px;

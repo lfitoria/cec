@@ -59,13 +59,17 @@
 					{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
 						<td>{{ project_request.projectUnit }}</td>
 					{% endif %}
-					<td class="d-flex justify-content-between">
+					<td class="justify-content-between state-column">
 
-						<span class="st-eval" for="eval_request_status_{{ project_request.state.id }}">{{ project_request.state.description }}</span>
+						<span class="td-st-col"><span class="st-eval" for="eval_request_status_{{ project_request.state.id }}">{{ project_request.state.description }}</span>
+						</span>
+						<span class="td-st-col">
 						<a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
+						</span>
 
 						{% if app.user.role.description == "ROLE_ADMIN" %}
 							{% if project_request.state.id not in [36,27] %}
+								<span class="td-st-col">
 								<div class="dropdown">
 									<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 										Asignar
@@ -85,27 +89,40 @@
 										</li>
 									</ul>
 								</div>
+								</span>
 								{% if project_request.state.id == 28 %}
-									<a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+									<span class="td-st-col">
+										<a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+									</span>
 								{% endif %}
 								{% if project_request.state.id == 31 %}
-									<a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+									<span class="td-st-col">
+										<a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+									</span>
 								{% endif %}
 							{% else %}
 								{% if app.user.role.description not in ["ROLE_ADMIN"] %}
-									<a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
+									<span class="td-st-col">
+										<a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
+									</span>
 								{% endif %}
 							{% endif %}
 						{% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
 							{% if project_request.state.id in [27, 35, 42,38] %}
+								<span class="td-st-col">
 								<a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
+								</span>
 							{% endif %}
 						{% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_EVALUATOR"%}
 							{% if project_request.state.id == 28 %}
+								<span class="td-st-col">
 								<a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+								</span>
 							{% endif %}
 							{% if project_request.state.id == 31 %}
+								<span class="td-st-col">
 								<a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+								</span>
 							{% endif %}
 
 							{# {% if project_request.state.id == 36 %}

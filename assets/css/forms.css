@@ -169,3 +169,8 @@ form .collecion_list .selected_files_list_item--delete{
 .checkbox-menu li.active label:focus {
   background-color: #b8b8ff;
 }
+span.td-st-col {
+  display: block;
+  text-align: center;
+  margin-bottom: 5px;
+}
