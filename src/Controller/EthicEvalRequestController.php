@@ -286,7 +286,7 @@ class EthicEvalRequestController extends AbstractController {
     
     $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find(7);
     // var_dump($projectRequest);
-    die();
+    //die();
     $correos = array();
 
         // array_push($correos, "luisfitoria91@gmail.com");
@@ -302,17 +302,16 @@ class EthicEvalRequestController extends AbstractController {
     // echo "entra2";
     // die();
     $emailData = [
-      "subject" => "Estado de solicitud: CEC-7-20: Devuelto con observaciones",
+      "subject" => "Nueva solicitud: CEC-8-20: Percepción de los y las profesionales del sistema estatal universitario que laboran en las oficinas de orientación, promoción y atención en salud sobre la violencia de pareja en estudiantes universitarios",
       "from" => "cec@ucr.ac.cr",
       // "from" => "jonathan.rojas@ucr.ac.cr",
-      "to" => "MARIA.CARPIOULLOA@ucr.ac.cr",
+      "to" => "daihanna.hernandez@ucr.ac.cr",
       // "to" => "camacho.le@gmail.com",
       "cc" => $correos,
-      // "bcc" => "fitoria_15@hotmail.com",
+      "bcc" => "fitoria_15@hotmail.com",
       "body" => $this->render('emails/evaluatorAssigment.html.twig', [
         'project_request' => $projectRequest,
-        'details_eval' => '1- Falta el acta de aprobación por parte de Trabajos Finales de graduación y en la misma que nos indiquen el nombre del tutor/asesores (si los tiene) y que es la última versión de la propuesta 2-Si se hace uso del Consentimiento Informado, cada sección del documento, se debe llenar de acuerdo a lo que se va a realizar en el proyecto de investigación 3- Falta la guía de lo que se preguntará o se discutirá en el grupo focal
-        '
+        'details_eval' => ''
       ]),
       
     ];
