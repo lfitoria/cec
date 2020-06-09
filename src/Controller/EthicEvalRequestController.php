@@ -93,8 +93,8 @@ class EthicEvalRequestController extends AbstractController {
         
         $correos = array();
 
-        // array_push($correos, "lfitoria@eldomo.net");
-        array_push($correos, "camacho.le@gmail.com");
+        array_push($correos, "lfitoria@eldomo.net");
+        // array_push($correos, "camacho.le@gmail.com");
         $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
 
         // $emailEvaluators = [];
