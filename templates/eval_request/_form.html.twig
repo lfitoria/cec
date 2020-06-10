@@ -32,8 +32,11 @@
                 {% set active_btn_admin = false %}
                 {% if app.user.role.description == "ROLE_ADMIN" %}
                     {% set active_btn_admin = true %}
+                    {{ include('commons/_form_footer.html.twig', {'button_label':'Enviar dictamen', 'button_label_save': 'Guardar sin enviar', 'finish': 1,'active_btn_admin': active_btn_admin, 'flag': 1 }) }}
+                {% else %}
+                    {{ include('commons/_form_footer.html.twig', {'button_label':'Enviar dictamen', 'button_label_save': 'Guardar sin enviar', 'finish': 1,'active_btn_admin': active_btn_admin,'flag': 0}) }}
                 {% endif %}
-                {{ include('commons/_form_footer.html.twig', {'button_label':'Enviar dictamen', 'button_label_save': 'Guardar sin enviar', 'finish': 1,'active_btn_admin': active_btn_admin}) }}
+                
                 {{ include('commons/_modal_validate_user.html.twig') }}
             </div>
         </div>
@@ -43,68 +46,102 @@
 
 </div>
 <!-- Accordion wrapper -->
-{% if eval %}
-<p class="title-table-index">{{'Resumen de evaluaciones previas'|upper}}</p>
-{# <div id="accordion">
-{% for pei in eval %}
-    <div class="card">
-    <div class="card-header" id="head-{{pei.id}}">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{pei.id}}" aria-expanded="true" aria-controls="collapseOne">
-            Evaluación CEC-{{project_request.id}}-{{pei.date|date("Y")[2:3]}} | Fecha: {{pei.date|date("d/m/Y g:ia")}}
-        </button>
-      </h5>
-    </div>
-
-    <div id="collapse-{{pei.id}}" class="collapse" aria-labelledby="head-{{pei.id}}" data-parent="#accordion">
-      <div class="card-body">
-        <p>{{pei.observations}}</p>
-      </div>
-    </div>
-  </div>
-{% endfor %}
-</div> #}
-{% for pei in eval %}
-
-	{# 
-				    <h3>Evaluación CEC-{{project_request.id}}-{{pei.date|date("Y")[2:3]}}
-				        | Fecha:
-				        {{pei.date|date("d/m/Y g:ia")}}
-				    </h3>
-				    <p>{{pei.observations}}</p> #}
-
-
+{% if pre_eval_info %}
+<p class="title-table-index">
+	{{'RESULTADOS DE EVALUACIÓN DE LA SOLICITUD'|upper}}
+</p>
+<p class="label">
+	<strong>
+		Revisión de solicitud
+	</strong>
+</p>
+{% for pei in pre_eval_info %}
 	<div class="text-box">
 		<p>
-			<strong>Fecha:</strong>
+			<strong>
+				Fecha:
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{pei.date|date("d/m/Y g:ia")}}</p>
+		<p class="text-muted font-italic">
+			{{pei.date|date("d/m/Y g:ia")}}
+		</p>
 	</div>
 	<div class="text-box">
 		<p>
-			<strong>La presente propuesta es de tipo:</strong>
+			<strong>
+				Estado de la revisión:
+			</strong>
 		</p>
-
-		<p class="text-muted font-italic">{{pei.category}}</p>
+		<p class="text-muted font-italic">
+			{{pei.status}}
+		</p>
 	</div>
 	<div class="text-box">
 		<p>
-			<strong>Estado de la revisión:</strong>
+			<strong>
+				Observaciones:
+			</strong>
 		</p>
-		<p class="text-muted font-italic">{{pei.status}}</p>
-	</div>
-	<div class="text-box">
-		<p>
-			<strong>Observaciones:</strong>
+		<p class="text-muted font-italic">
+			{{pei.observations}}
 		</p>
-		<p class="text-muted font-italic">{{pei.observations}}</p>
 	</div>
 	<hr>
 
-{% endfor %}
-{% else %} 
-    <p>Sin datos</p>
-{% endif %} 
+{% endfor %}{% endif %}{% if eval_info %}
+<hr>
+<p class="title-table-index">
+RESULTADOS DE EVALUACIÓN DE LA SOLICITUD</p>
+<p class="label">
+	<strong>
+		Dictamen de solicitud
+	</strong>
+</p>
+{% for pei in eval_info %}
+	<div class="text-box">
+		<p>
+			<strong>
+				Fecha:
+			</strong>
+		</p>
+		<p class="text-muted font-italic">
+			{{pei.date|date("d/m/Y g:ia")}}
+		</p>
+	</div>
+	<div class="text-box">
+		<p>
+			<strong>
+				La presente propuesta es de tipo:
+			</strong>
+		</p>
+
+		<p class="text-muted font-italic">
+			{{pei.category}}
+		</p>
+	</div>
+	<div class="text-box">
+		<p>
+			<strong>
+				Estado de la revisión:
+			</strong>
+		</p>
+		<p class="text-muted font-italic">
+			{{pei.status}}
+		</p>
+	</div>
+	<div class="text-box">
+		<p>
+			<strong>
+				Observaciones:
+			</strong>
+		</p>
+		<p class="text-muted font-italic">
+			{{pei.observations}}
+		</p>
+	</div>
+	<hr>
+
+{% endfor %}{% endif %}
 
 <script>
     console.log('readi');

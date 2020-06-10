@@ -24,6 +24,7 @@ class ProjectRequestRepository extends ServiceEntityRepository {
     return $this->createQueryBuilder('ProjectRequest')
                     ->andWhere(':user MEMBER OF ProjectRequest.users')
                     ->andWhere('ProjectRequest.state IN (:state)')
+                    ->orderBy('ProjectRequest.id', 'DESC')
                     ->setParameter('user', $evaluator)
                     ->setParameter('state', $state)
                     ->getQuery()

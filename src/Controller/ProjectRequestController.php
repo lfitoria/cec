@@ -48,7 +48,8 @@ class ProjectRequestController extends AbstractController {
     switch ($role) {
       case "ROLE_ADMIN":
         $requestsFilter = array();
-        $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
+        // $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
+        $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->findBy(array("id" => [1,4]));
         
         $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
         break;
@@ -68,7 +69,11 @@ class ProjectRequestController extends AbstractController {
         break;
     }
     if (isset($requestsFilter)) {
-      $projectRequests = $projectRequests ? $projectRequests : $this->getDoctrine()->getRepository(ProjectRequest::class)->findBy($requestsFilter);
+      // var_dump($requestsFilter);
+      // array_push($requestsFilter,['id' => 'ASC']);
+      // var_dump($requestsFilter);
+      // die();
+      $projectRequests = $projectRequests ? $projectRequests : $this->getDoctrine()->getRepository(ProjectRequest::class)->findBy($requestsFilter,['id' => 'DESC']);
     }
 
     $data['project_requests'] = $projectRequests;
@@ -451,6 +456,7 @@ class ProjectRequestController extends AbstractController {
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
     }
     $eval_info = $this->getDoctrine()->getRepository(EvalRequest::class)->getAllEvalInfo($projectRequest->getId());
+    $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
 
     return $this->render('eval_request/new.html.twig', [
                 'project_request' => $projectRequest,
@@ -465,7 +471,7 @@ class ProjectRequestController extends AbstractController {
                 'form' => $form->createView(),
                 'eval_info' => false,
                 'eval' => $eval_info,
-                'pre_eval_info' => false
+                'pre_eval_info' => $pre_eval_info,
     ]);
   }
 

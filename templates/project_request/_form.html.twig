@@ -24,7 +24,8 @@
 
 	</div>
 	<small id="project_request_project_info_help" class="form-text text-muted">Use el código de propuesta en SIPPRES con el formato completo, por ejemplo XXXX-XXXX. No coloque espacios.</small>
-	<small id="project_request_project_info_help" class="form-text text-muted">Recuerde que para llevar a cabo este proceso de solicitud, su propuesta de proyecto debe haber sido aprobada por la Comisión o el Consejo Científico y debidamente aprobada en SIPPRES por el director de la unidad correspondiente.</small>
+	<small id="project_request_project_info_help" class="form-text text-muted">Recuerde que para llevar a cabo este proceso de solicitud, su propuesta de proyecto debe haber sido aprobada por la Comisión o el Consejo Científico y con el estado "Aprobado" debidamente asignado en SIPPRES por el director de la unidad correspondiente.</small>
+	
 	<hr>
 	<div class="form-group">
 		{{ include('commons/_form_uploaded_file.html.twig', 
@@ -38,7 +39,7 @@
     }) }}
 		<small
 			class="form-text text-muted">
-			{# <span class="file-advice">*Campo obligatorio.</span> #}
+			<span class="file-advice">*Campo obligatorio.</span>
 			Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 40MB.</small>
 		<hr>
 	</div>
@@ -297,7 +298,7 @@
 
 
 {{ form_end(form) }}
-{{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar'}) }}
+{{ include('commons/_form_footer.html.twig', {'button_label':'Guardar y continuar','active_btn_admin': false, 'flag': 1}) }}
 {{ include('commons/_modal_info.html.twig') }}
 
 

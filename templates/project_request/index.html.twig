@@ -133,7 +133,7 @@
 
 					</td>
 
-					{% if app.user.role.description in ["ROLE_ADMIN"] %}
+					{% if app.user.role.description in ["ROLE_ADMIN","ROLE_EVALUATOR"] %}
 						<td>
 							<ul style="padding: 0 0 0 15px;">
 								{% if evaluators is defined %}

@@ -30,7 +30,7 @@
         <div class="row menu-user-box">
           <div class="col">
             <h2>COMITÉ ÉTICO CIENTÍFICO</h2>
-            <p style="margin: 0 0 10px 0;">Sistema de evaluación ética para la investigación con seres humanos</p>
+            <p style="margin: 0 0 10px 0;">Sistema de evaluación ética-científica para la investigación con seres humanos</p>
           </div>
           {% if app.user %}
             <div class="dropdown menu-user">
@@ -71,9 +71,9 @@
                     {% if app.user.role.description == "ROLE_ADMIN" %}
                       Administrador
                     {% elseif app.user.role.description == "ROLE_STUDENT" %}
-                      Estudiante                                  
+                      Estudiante investigador                               
                     {% elseif app.user.role.description == "ROLE_RESEARCHER" %}
-                      Investigador
+                      Persona investigadora
                     {% elseif app.user.role.description == "ROLE_EVALUATOR" %}
                       Evaluador
                     {% endif %}

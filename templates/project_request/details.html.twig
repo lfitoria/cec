@@ -1,5 +1,6 @@
 <head>
 	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 </head>
 <style>:root
 {
@@ -22,10 +23,7 @@
 	--green: #73C167;
 	--white: #FFFFFF;
 }
-*
-{
-	font-family: Arial, Helvetica;
-}
+
 .table
 {
 	width: 100%;
@@ -141,7 +139,18 @@ ul
 }
 </style>
 {% if time is defined and time %}
+<style>	
+	body{
+	font-family: 'Lato', sans-serif;
+	}
+</style>
 	<p>Consultado el: {{date}} a las {{time}}</p>
+	<div class="email_template_header">
+    <img src="http://formularioscec.ucr.ac.cr/images/logo_header_ucr.png" alt="CEC"/>
+    <br>
+    <img src="http://formularioscec.ucr.ac.cr/images/logo_notificacion.png" alt="CEC"/>
+    <hr>
+  </div>
 	<h2>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}: {{project_request.title}}</h2>
 {% endif %}
 
@@ -948,18 +957,7 @@ Registro de acciones relacionadas con la solicitud</p><table class="table">
 				</td>
 				<td>
 					{{ requestLog.user.role.label }}
-				{# <pre>
-																																																																																																																												                        {{ dump(requestLog) }}
-																																																																																																																												                    </pre> #}
-					{# {% if requestLog.user.role.description == "ROLE_ADMIN" %}
-																																																																																																																																																											                        Administrador
-																																																																																																																																																											                    {% elseif requestLog.user.role.description == "ROLE_STUDENT" %}
-																																																																																																																																																											                        Estudiante
-																																																																																																																																																											                    {% elseif requestLog.user.role.description == "ROLE_RESEARCHER" %}
-																																																																																																																																																											                        Investigador
-																																																																																																																																																											                    {% elseif requestLog.user.role.description == "ROLE_EVALUATOR" %}
-																																																																																																																																																											                        Evaluador
-																																																																																																																																																											                    {% endif %} #}
+				
 				</td>
 				<td>
 					{{ requestLog.observations|default('N/A') }}
@@ -1025,15 +1023,6 @@ RESULTADOS DE EVALUACIÓN DE LA SOLICITUD</p>
 	</strong>
 </p>
 {% for pei in eval_info %}
-
-	{# 
-																															    <h3>Evaluación CEC-{{project_request.id}}-{{pei.date|date("Y")[2:3]}}
-																															        | Fecha:
-																															        {{pei.date|date("d/m/Y g:ia")}}
-																															    </h3>
-																															    <p>{{pei.observations}}</p> #}
-
-
 	<div class="text-box">
 		<p>
 			<strong>

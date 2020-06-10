@@ -20,9 +20,9 @@
                 {# <th>Password</th> #}
                 <th>Externo</th>
                 <th>Última visita</th>
-                <th>Creación</th>
+                {# <th>Creación</th> #}
                 {# <th>DeletionDate</th> #}
-                <th>Carné</th>
+                <th>Perfil</th>
                 <th>Cédula</th>
                 <th>Acciones</th>
             </tr>
@@ -41,7 +41,7 @@
                 <td>{{ ldap_user.external ? 'Yes' : 'No' }}</td>
                 
                 <td>{{ ldap_user.lastLoginDate ? ldap_user.lastLoginDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ ldap_user.creationDate ? ldap_user.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+                {# <td>{{ ldap_user.creationDate ? ldap_user.creationDate|date('Y-m-d H:i:s') : '' }}</td> #}
                 {# <td>{{ ldap_user.deletionDate ? ldap_user.deletionDate|date('Y-m-d H:i:s') : '' }}</td> #}
                 {# <td>
                 {% if ldap_user.deletionDate is defined %}
@@ -50,7 +50,8 @@
                     {{ldap_user.deletionDate|date('Y-m-d H:i:s')}}
                 {% endif %}
                 </td> #}
-                <td>{{ ldap_user.carnet }}</td>
+                {# <td>{{ ldap_user.carnet }}</td> #}
+                <td>{{ ldap_user.role.label }}</td>
                 <td>{{ ldap_user.cedulausuario }}</td>
                 <td class="d-flex justify-content-between">
                     <a class="btn-blue" href="{{ path('ldap_user_show', {'id': ldap_user.id}) }}">Mostrar </a>

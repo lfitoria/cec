@@ -490,7 +490,7 @@ class ProjectRequest {
     $this->sipProject = $sipProject;
   }
 
-  public function getEmailComisionNotification(): Collection {
+  public function getEmailComisionNotification() {
     return $this->emailComisionNotification;
   }
 
