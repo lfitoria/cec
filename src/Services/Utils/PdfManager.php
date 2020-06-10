@@ -31,6 +31,7 @@ class PdfManager{
                 'enable-external-links' => true,
                 'enable-internal-links' => true,
                 'lowquality' => true,
+                'dpi' => 100,
                 )),
             $filename 
         );
