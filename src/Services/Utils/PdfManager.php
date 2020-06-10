@@ -19,7 +19,7 @@ class PdfManager{
         $filename = "Proyecto-CEC-".$id."-".$year.".pdf";
 
         return new PdfResponse(
-            $this->pdf->generateFromHtml($html,array(
+            $this->pdf->generateFromHtml($html,$filename,array(
                 'page-width' => '21.59cm',
                 'page-height' => '27.94cm',
                 'margin-left'=>'1.9cm',
@@ -34,7 +34,8 @@ class PdfManager{
                 'dpi' => 80,
                 'image-quality' => 80,
                 'no-outline' => true
-                )),
+            ),
+            ),
             $filename 
         );
     }
