@@ -20,7 +20,7 @@ class PdfManager{
 
         return new PdfResponse(
             $this->pdf->getOutputFromHtml($html,array(
-                'lowquality' => 'true',
+                'lowquality' => true,
                 
                 'page-width' => '21.59cm',
                 'page-height' => '27.94cm',
