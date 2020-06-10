@@ -8,6 +8,7 @@ knp_snappy:
             no-outline: true
             page-size: LETTER
             encoding: UTF-8
+            lowquality: true
     image:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
