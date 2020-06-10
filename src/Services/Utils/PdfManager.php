@@ -27,7 +27,7 @@ class PdfManager{
                 'margin-top'=>'1.9cm',
                 'margin-bottom'=>'1.9cm',
                 'encoding' => 'utf-8',
-                'images' => true,
+                'images' => false,
                 'enable-external-links' => true,
                 'enable-internal-links' => true,
                 'lowquality' => true,
