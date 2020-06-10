@@ -20,8 +20,8 @@ class PdfManager{
 
         return new PdfResponse(
             $this->pdf->getOutputFromHtml($html,array(
-                'lowquality' => false,
-                'dpi' => 1000,
+                'lowquality' => true,
+                'dpi' => 10,
                 'page-width' => '21.59cm',
                 'page-height' => '27.94cm',
                 'margin-left'=>'1.9cm',
@@ -32,7 +32,7 @@ class PdfManager{
                 'images' => true,
                 'enable-external-links' => true,
                 'enable-internal-links' => true,
-                
+                'no-background' => true, 
                 
                 )),
             $filename 
