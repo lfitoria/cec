@@ -31,7 +31,7 @@
 table thead
 {
 	background-color: #41ADE7;
-	color: var(--white);
+	color: #FFFFFF;
 }
 
 table thead th
@@ -41,18 +41,18 @@ table thead th
 
 table tbody tr:nth-of-type(odd)
 {
-	background-color: var(--A9);
+	background-color: #F0F5FB;
 }
 
 table tbody tr:nth-of-type(even)
 {
-	background-color: var(--A8);
+	background-color: #CFE0F3;
 }
 table td,
 table th
 {
 	align-items: center;
-	border-right: 2px solid var(--white);
+	border-right: 2px solid #FFFFFF;
 }
 .login-box-body-admin
 {
@@ -60,7 +60,7 @@ table th
 }
 a.ingreso-admin-home
 {
-	color: var(--G2);
+	color: #666666;
 	font-size: 0.9em;
 	margin-top: 10px;
 }
@@ -68,18 +68,18 @@ a.ingreso-admin-home:after
 {
 	content: '\f0a9';
 	font-family: FontAwesome;
-	color: var(--green);
+	color: #73C167;
 	margin: 5px;
 }
 .ingreso-general-box-text-admin h3
 {
 	text-align: center;
 	font-weight: bold;
-	color: var(--G2);
+	color: #666666;
 }
 .textareas-form
 {
-	background-color: var(--A9);
+	background-color: #F0F5FB;
 	padding: 15px;
 	border: 1px solid #cecece;
 }
@@ -103,7 +103,7 @@ a.ingreso-admin-home:after
 .step-view .nav_step
 {
 	border-radius: 50%;
-	color: var(--A4);
+	color: #005DAA;
 	border: #41ADE7 2px solid;
 	width: 50px;
 	height: 50px;
@@ -119,7 +119,7 @@ a.ingreso-admin-home:after
 	text-align: center;
 	text-transform: uppercase;
 	font-size: 1.3em;
-	color: var(--A4);
+	color: #005DAA;
 	margin-top: 15px;
 	display: block;
 	text-decoration: none;
