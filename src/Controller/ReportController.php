@@ -115,7 +115,7 @@ class ReportController extends AbstractController {
       $pdfOptions->set('defaultFont', 'Arial');
       $pdfOptions->setIsRemoteEnabled(true);
       $pdfOptions->setDebugCss(true);
-      $pdfOptions->setDebugLayoutPaddingBox(true);
+      
       $pdfOptions->setIsHtml5ParserEnabled(true);
       $pdfOptions->setDefaultMediaType("print");
       
