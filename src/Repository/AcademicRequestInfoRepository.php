@@ -15,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AcademicRequestInfoRepository extends ServiceEntityRepository {
 
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, AcademicRequestInfo::class);
     }
 
