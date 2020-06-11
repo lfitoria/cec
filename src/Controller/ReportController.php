@@ -107,7 +107,7 @@ class ReportController extends AbstractController {
     }
     // new
     /**
-    * @Route("/pdf-new/{id}", name="pdf", methods={"GET","POST"})
+    * @Route("/pdf-new/{id}", name="pdf-new", methods={"GET","POST"})
     */
     public function pdfnewProjectById(Request $request,ExternalDataManager $externalDataManager,PdfManager $pdf): Response {
       // Configure Dompdf according to your needs
