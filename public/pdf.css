@@ -9,7 +9,7 @@
 }
 table thead
 {
-	background-color: #41ADE7;
+	background-position-y: #41ADE7;
 	color: #FFFFFF;
 }
 
@@ -20,12 +20,12 @@ table thead th
 
 table tbody tr:nth-of-type(odd)
 {
-	background-color: #F0F5FB;
+	background: #F0F5FB;
 }
 
 table tbody tr:nth-of-type(even)
 {
-	background-color: #CFE0F3;
+	background: #CFE0F3;
 }
 table td,
 table th
@@ -58,7 +58,7 @@ a.ingreso-admin-home:after
 }
 .textareas-form
 {
-	background-color: #F0F5FB;
+	background: #F0F5FB;
 	padding: 15px;
 	border: 1px solid #cecece;
 }
