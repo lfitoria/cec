@@ -97,18 +97,29 @@ class PreEvalRequestController extends AbstractController {
 
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
-        $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
-        $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
+        // $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
+        // $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
         
         $correos = array();
+        $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
+                $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
+                
+                $correos = array();
+                
+                if ( isset($gestor1["0"]["correo"])){
+                    array_push($correos, trim($gestor1["0"]["correo"]));
+                }
+                if ( isset($gestor2["0"]["correo"])){
+                    array_push($correos, trim($gestor2["0"]["correo"]));
+                }
 
       //   if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
       //     array_push($correos, trim($gestor2["0"]["correo"]));
       //  }else{
       //     array_push($correos, trim($gestor1["0"]["correo"]));
       //  }
-       array_push($correos, trim($gestor2["0"]["correo"]));
-       array_push($correos, trim($gestor1["0"]["correo"]));
+      //  array_push($correos, trim($gestor2["0"]["correo"]));
+      //  array_push($correos, trim($gestor1["0"]["correo"]));
 
         array_push($correos, "lfitoria@eldomo.net");
         // array_push($correos, "camacho.le@gmail.com");
