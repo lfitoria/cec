@@ -113,10 +113,7 @@ class ReportController extends AbstractController {
       // Configure Dompdf according to your needs
       $pdfOptions = new Options();
       $pdfOptions->set('defaultFont', 'Arial');
-      $pdfOptions->setIsRemoteEnabled(true);
-      
-      
-      $pdfOptions->setIsHtml5ParserEnabled(true);
+      $pdfOptions->setIsRemoteEnabled(true);  
       
       
       // Instantiate Dompdf with our options
