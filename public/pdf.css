@@ -1,24 +1,3 @@
-:root
-{
-	--A1: #4AA9CE;
-	--A2: #5194DC;
-	--A3: #41ADE7;
-	--A4: #005DAA;
-	--A5: #3A6C99;
-	--A6: #50C8E8;
-	--A7: #80A1B6;
-	--A8: #CFE0F3;
-	--A9: #F0F5FB;
-	--G1: #262626;
-	--G2: #666666;
-	--G3: #6D7172;
-	--R1: #CF1919;
-	--R2: #A01036;
-	--N1: #E7A614;
-	--light-green: #D4EDDA;
-	--green: #73C167;
-	--white: #FFFFFF;
-}
 
 .table
 {
@@ -133,4 +112,3 @@ ul
 .title-table-index{
 	font-weight: bold;
 }
-</style>
