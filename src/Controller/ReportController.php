@@ -113,6 +113,11 @@ class ReportController extends AbstractController {
       // Configure Dompdf according to your needs
       $pdfOptions = new Options();
       $pdfOptions->set('defaultFont', 'Arial');
+      $pdfOptions->setIsRemoteEnabled(true);
+      $pdfOptions->setDebugCss(true);
+      $pdfOptions->setDebugLayoutPaddingBox(true);
+      $pdfOptions->setIsHtml5ParserEnabled(true);
+      $pdfOptions->setDefaultMediaType("print");
       
       // Instantiate Dompdf with our options
       $dompdf = new Dompdf($pdfOptions);
@@ -165,7 +170,7 @@ class ReportController extends AbstractController {
         
       // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
       $dompdf->setPaper('A4', 'portrait');
-      $dompdf->setIsRemoteEnabled(true);
+      
 
       // Render the HTML as PDF
       $dompdf->render();
