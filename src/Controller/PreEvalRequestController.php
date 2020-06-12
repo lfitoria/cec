@@ -97,6 +97,7 @@ class PreEvalRequestController extends AbstractController {
 
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
+        var_dump($unit);
         // $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
         // $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
         
