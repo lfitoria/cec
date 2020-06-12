@@ -170,7 +170,7 @@ class PreEvalRequestController extends AbstractController {
     return $this->render('pre_eval_request/new.html.twig', [
                 'pre_eval_request' => $preEvalRequest,
                 'form' => $form->createView(),
-                'project_requst' => $projectRequest
+                'project_request' => $projectRequest
     ]);
   }
 
