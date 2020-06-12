@@ -43,22 +43,13 @@ class PreEvalRequestController extends AbstractController {
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-
       $finish = $form->get("form_finish_input")->getData();
-
-      // object
       $status = $form->get("status")->getData()->getId();
-
-      // var_dump($finish);
-      // var_dump($preEvalRequest->getStatus());
-      // die();
-      
       $preEvalRequest->setRequest($projectRequest);
       $preEvalRequest->setDate(new \DateTime());
       
       if ($finish == "1") {
         $preEvalRequest->setCurrent(true);
-        // $projectRequest->setState($preEvalRequest->getStatus());
         $fecha = $projectRequest->getDate();
         $f = date_format($fecha,"Y");
         $fYear = substr($f,-2);
@@ -92,41 +83,25 @@ class PreEvalRequestController extends AbstractController {
         }
         $entityManager = $this->getDoctrine()->getManager('sip');
         $emOracle = $this->getDoctrine()->getManager('oracle');
-
-        // $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
-        //var_dump($projectRequest->getUacademica());
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
-        //var_dump($unit);
-        // $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
-        // $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
-        
-        
         $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
-                $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
-                
-                $correos = array();
-                
-                if ( isset($gestor1["0"]["correo"])){
-                    array_push($correos, trim($gestor1["0"]["correo"]));
-                }
-                if ( isset($gestor2["0"]["correo"])){
-                  if( $gestor1["0"]["correo"] !== $gestor2["0"]["correo"] ){
-                    array_push($correos, trim($gestor2["0"]["correo"]));
-                  }
-                }
-
-      //   if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
-      //     array_push($correos, trim($gestor2["0"]["correo"]));
-      //  }else{
-      //     array_push($correos, trim($gestor1["0"]["correo"]));
-      //  }
-      //  array_push($correos, trim($gestor2["0"]["correo"]));
-      //  array_push($correos, trim($gestor1["0"]["correo"]));
+        $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
+        
+        $correos = array();
+        
+        if ( isset($gestor1["0"]["correo"])){
+            array_push($correos, trim($gestor1["0"]["correo"]));
+        }
+        if ( isset($gestor2["0"]["correo"])){
+          if( $gestor1["0"]["correo"] !== $gestor2["0"]["correo"] ){
+            array_push($correos, trim($gestor2["0"]["correo"]));
+          }
+        }
 
         array_push($correos, "lfitoria@eldomo.net");
         // array_push($correos, "camacho.le@gmail.com");
-        var_dump($correos);
+        // var_dump($correos);
         $emailData = [
           "subject" => $subjectEmail,
           "from" => "cec@ucr.ac.cr",
@@ -142,7 +117,7 @@ class PreEvalRequestController extends AbstractController {
         ];
         
         if($status !== '31'){
-          //$notificationManager->sendEmail($emailData);
+          $notificationManager->sendEmail($emailData);
         }
         $logData = array(
           "description" => $preEvalRequest->getStatus()->getDescription(),
@@ -159,7 +134,7 @@ class PreEvalRequestController extends AbstractController {
       }
 
       //var_dump($preEvalRequest);
-      die();
+      //die();
 
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($preEvalRequest);
@@ -172,7 +147,6 @@ class PreEvalRequestController extends AbstractController {
     return $this->render('pre_eval_request/new.html.twig', [
                 'pre_eval_request' => $preEvalRequest,
                 'form' => $form->createView(),
-                'project_request' => $projectRequest
     ]);
   }
 
@@ -236,36 +210,22 @@ class PreEvalRequestController extends AbstractController {
         }
         $entityManager = $this->getDoctrine()->getManager('sip');
         $emOracle = $this->getDoctrine()->getManager('oracle');
-
-        // $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
-
-        $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
-        
-        // $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
-        // $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
-        
+        $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());        
         
         $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
-                $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
-                
-                $correos = array();
-                
-                if ( isset($gestor1["0"]["correo"])){
-                    array_push($correos, trim($gestor1["0"]["correo"]));
-                }
-                if ( isset($gestor2["0"]["correo"])){
-                    array_push($correos, trim($gestor2["0"]["correo"]));
-                }
-
-
-      //   if ($vinculo["IND_VINCULO_EXTERNO"] == "1") {
-      //     array_push($correos, trim($gestor2["0"]["correo"]));
-      //  }else{
-      //     array_push($correos, trim($gestor1["0"]["correo"]));
-      //  }
-       array_push($correos, trim($gestor2["0"]["correo"]));
-       array_push($correos, trim($gestor1["0"]["correo"]));
-
+        $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
+        
+        $correos = array();
+        
+        if ( isset($gestor1["0"]["correo"])){
+            array_push($correos, trim($gestor1["0"]["correo"]));
+        }
+        if ( isset($gestor2["0"]["correo"])){
+          if( $gestor1["0"]["correo"] !== $gestor2["0"]["correo"] ){
+            array_push($correos, trim($gestor2["0"]["correo"]));
+          }
+        }
+        
         array_push($correos, "lfitoria@eldomo.net");
         // array_push($correos, "camacho.le@gmail.com");
 
