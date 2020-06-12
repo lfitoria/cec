@@ -50,8 +50,8 @@ class PreEvalRequestController extends AbstractController {
       $status = $form->get("status")->getData()->getId();
 
       // var_dump($finish);
-      // var_dump($preEvalRequest->getStatus());
-      // die();
+      var_dump($preEvalRequest->getStatus());
+      die();
       
       $preEvalRequest->setRequest($projectRequest);
       $preEvalRequest->setDate(new \DateTime());
