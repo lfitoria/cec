@@ -462,18 +462,19 @@ class ExternalDataManager {
 
       $connection = $em->getConnection();
       $query = "SELECT u.descrip as name, u.director, u.unidad, a.descrip as area, u.uacademica as area_acad, u.gestoru, u.gestoric FROM sip.dbo.unidades u inner join sip.dbo.areas a on u.area = a.area where u.uacademica LIKE '$projectCode%'";
-      var_dump($query);
+      // var_dump($query);
 
       $statement = $connection->prepare($query);
       $statement->execute();
 
       $results = $statement->fetchAll();
-      return $results;
+      
     } catch (\Exception $e) {
       //var_dump($e);
       //  die();
       return null;
     }
+    return $results;
   }
   public function getGestoresByID($em, $id) {
     $query = 'SELECT * FROM sip.dbo.sip_usuarios where identificacion = :id';
