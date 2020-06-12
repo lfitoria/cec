@@ -36,8 +36,8 @@ class PreEvalRequestController extends AbstractController {
    * @Route("/new/{id}", name="pre_eval_request_new", methods={"GET","POST"})
    */
   public function new(Request $request, ProjectRequest $projectRequest, LogManager $log,NotificationManager $notificationManager,ExternalDataManager $externalDataManager): Response {
-    // var_dump($projectRequest->getOwner()->getEmail());
-    // die();
+    var_dump($projectRequest->getOwner()->getEmail());
+    die();
     $preEvalRequest = new PreEvalRequest();
     $form = $this->createForm(PreEvalRequestType::class, $preEvalRequest);
     $form->handleRequest($request);
@@ -50,8 +50,8 @@ class PreEvalRequestController extends AbstractController {
       $status = $form->get("status")->getData()->getId();
 
       // var_dump($finish);
-      var_dump($preEvalRequest->getStatus());
-      die();
+      // var_dump($preEvalRequest->getStatus());
+      // die();
       
       $preEvalRequest->setRequest($projectRequest);
       $preEvalRequest->setDate(new \DateTime());
