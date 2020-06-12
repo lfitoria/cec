@@ -36,8 +36,8 @@ class PreEvalRequestController extends AbstractController {
    * @Route("/new/{id}", name="pre_eval_request_new", methods={"GET","POST"})
    */
   public function new(Request $request, ProjectRequest $projectRequest, LogManager $log,NotificationManager $notificationManager,ExternalDataManager $externalDataManager): Response {
-    var_dump($projectRequest->getOwner()->getEmail());
-    die();
+    //var_dump($projectRequest->getOwner()->getEmail());
+    //die();
     $preEvalRequest = new PreEvalRequest();
     $form = $this->createForm(PreEvalRequestType::class, $preEvalRequest);
     $form->handleRequest($request);
@@ -170,6 +170,7 @@ class PreEvalRequestController extends AbstractController {
     return $this->render('pre_eval_request/new.html.twig', [
                 'pre_eval_request' => $preEvalRequest,
                 'form' => $form->createView(),
+                'project_requst' => $projectRequest
     ]);
   }
 
