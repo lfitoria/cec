@@ -94,7 +94,7 @@ class PreEvalRequestController extends AbstractController {
         $emOracle = $this->getDoctrine()->getManager('oracle');
 
         // $vinculo = $externalDataManager->getProjectInfoByCode($emOracle, $projectRequest->getSipProject());
-        var_dump($projectRequest->getUacademica());
+        //var_dump($projectRequest->getUacademica());
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
         var_dump($unit);
