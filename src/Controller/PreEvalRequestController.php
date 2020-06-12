@@ -139,7 +139,7 @@ class PreEvalRequestController extends AbstractController {
         ];
         
         if($status !== '31'){
-          $notificationManager->sendEmail($emailData);
+          //$notificationManager->sendEmail($emailData);
         }
         $logData = array(
           "description" => $preEvalRequest->getStatus()->getDescription(),
@@ -155,8 +155,8 @@ class PreEvalRequestController extends AbstractController {
         
       }
 
-      // var_dump($preEvalRequest);
-      // die();
+      var_dump($preEvalRequest);
+      die();
 
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($preEvalRequest);
