@@ -478,7 +478,7 @@ class ExternalDataManager {
   }
   public function getGestoresByID($em, $id) {
     $query = 'SELECT * FROM sip.dbo.sip_usuarios where identificacion = :id';
-
+    var_dump($query);
     try {
 
       $connection = $em->getConnection();
@@ -488,7 +488,8 @@ class ExternalDataManager {
 
       $results = $statement->fetchAll();
     } catch (\Exception $e) {
-      // var_dump($e);
+      var_dump($e);
+      
       return null;
     }
     return $results;
