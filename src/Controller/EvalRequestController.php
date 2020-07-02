@@ -198,6 +198,7 @@ class EvalRequestController extends AbstractController {
 
         $evalRequest->setFiles($files);
 
+        $status = $form->get("status")->getData()->getId();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
