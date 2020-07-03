@@ -266,10 +266,10 @@ class EvalRequestController extends AbstractController {
                 if ( isset($gestor1["0"]["correo"])){
                     array_push($correos, trim($gestor1["0"]["correo"]));
                 }
-                if ( isset($gestor2["0"]["correo"])){
+                if ( isset($gestor2["0"]["correo"]) && $gestor2["0"]["correo"] !== $gestor1["0"]["correo"] ){
                     array_push($correos, trim($gestor2["0"]["correo"]));
                 }
-                if ( $projectRequest->getEmailComisionNotification() !== "" ){
+                if ( $projectRequest->getEmailComisionNotification() !== "" && $projectRequest->getEmailComisionNotification() !== null ){
                     array_push($correos, $projectRequest->getEmailComisionNotification() );
                 }
                     // array_push($correos, "lfitoria@eldomo.net");
