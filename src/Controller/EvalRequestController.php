@@ -274,7 +274,7 @@ class EvalRequestController extends AbstractController {
                 }
                     // array_push($correos, "lfitoria@eldomo.net");
                     //array_push($correos, "camacho.le@gmail.com");
-            
+                var_dump($correos);
                 $emailData = [
                 "subject" => $subjectEmail,
                 "from" => "cec@ucr.ac.cr",
