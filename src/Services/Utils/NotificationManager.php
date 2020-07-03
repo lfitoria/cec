@@ -99,10 +99,10 @@ class NotificationManager {
 
     $message = $this->configureEmail($emailData);
     
-    echo "------<pre>";
-    var_dump($message);
-    echo "------</pre>";
-    die();
+    // echo "------<pre>";
+    // var_dump($message);
+    // echo "------</pre>";
+    // die();
     try {
       return $this->mailer->send($message);
     } catch (Exception $ex) {
