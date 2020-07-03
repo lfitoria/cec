@@ -60,7 +60,9 @@ class NotificationManager {
     if (isset($emailData["bcc"])) {
       $message->setBcc($emailData["bcc"]);
     }
+    echo "------<pre>";
     var_dump($emailData["cc"]);
+    echo "------</pre>";
     die();
     if (isset($emailData["cc"])) {
       $message->setCc($emailData["cc"]);
