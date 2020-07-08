@@ -839,7 +839,7 @@ Registro de acciones relacionadas con la solicitud</p><table class="table">
 		{% endfor %}
 	{% endif %}
 </tbody></table>
-{# {% if pre_eval_info %}
+{% if pre_eval_info %}
 <p class="title-table-index">
 	{{'RESULTADOS DE EVALUACIÓN DE LA SOLICITUD'|upper}}
 </p>
@@ -881,16 +881,20 @@ Registro de acciones relacionadas con la solicitud</p><table class="table">
 	</div>
 	<hr>
 
-{% endfor %}{% endif %}{% if eval_info %}
+{% endfor %}{% endif %}
+{% if eval_info %}
 <hr>
-<p class="title-table-index">
-RESULTADOS DE EVALUACIÓN DE LA SOLICITUD</p>
+{# <p class="title-table-index">
+RESULTADOS DE EVALUACIÓN DE LA SOLICITUD</p> #}
 <p class="label">
 	<strong>
 		Dictamen de solicitud
 	</strong>
 </p>
-{% for pei in eval_info %}
+
+
+
+{% for pei in eval_info %}	
 	<div class="text-box">
 		<p>
 			<strong>
@@ -932,6 +936,17 @@ RESULTADOS DE EVALUACIÓN DE LA SOLICITUD</p>
 			{{pei.observations}}
 		</p>
 	</div>
+	{% if pei.files and pei.files is not empty %}
+		<p><strong>Documento relacionado:</strong></p>
+		{% for file in pei.files  %}
+			<li>
+				<a href="{{ 'http://formularioscec.ucr.ac.cr/uploads/files/' }}{{file.FileName}}" download="{{file.originalName}}" target="_blank">
+					{{file.originalName}}
+				</a>
+			</li>
+		{% endfor %}
+	{% endif %}
 	<hr>
 
-{% endfor %}{% endif %} #}
+{% endfor %} 
+{% endif %}

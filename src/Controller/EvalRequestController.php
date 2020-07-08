@@ -128,12 +128,14 @@ class EvalRequestController extends AbstractController {
                 }
                     // array_push($correos, "lfitoria@eldomo.net");
                     //array_push($correos, "camacho.le@gmail.com");
-            
+                // var_dump($correos);
+                // die();
+
                 $emailData = [
                 "subject" => $subjectEmail,
                 "from" => "cec@ucr.ac.cr",
                 "to" => $projectRequest->getOwner()->getEmail(),
-                "cc" => $correos,
+                "cc" => ($correos!==NULL?$correos:""),
                 "bcc" => "lfitoria@eldomo.net",
                 "body" => $this->render('emails/evaluatorAssigment.html.twig', [
                 'project_request' => $projectRequest,
@@ -199,6 +201,9 @@ class EvalRequestController extends AbstractController {
         $evalRequest->setFiles($files);
 
         $status = $form->get("status")->getData()->getId();
+
+        // var_dump($files);
+        // die();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -279,12 +284,13 @@ class EvalRequestController extends AbstractController {
                 // var_dump($gestor2["0"]["correo"]);
                 // var_dump($projectRequest->getEmailComisionNotification());
                 // var_dump($correos);
+                // die();
                 // echo "</pre>";
                 $emailData = [
                 "subject" => $subjectEmail,
                 "from" => "cec@ucr.ac.cr",
                 "to" => $projectRequest->getOwner()->getEmail(),
-                "cc" => $correos,
+                "cc" => ($correos!=""?$correos:""),
                 "bcc" => "lfitoria@eldomo.net",
                 "body" => $this->render('emails/evaluatorAssigment.html.twig', [
                 'project_request' => $projectRequest,

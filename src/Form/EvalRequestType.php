@@ -13,6 +13,7 @@ use App\Repository\CriterionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class EvalRequestType extends AbstractType {
 
@@ -62,9 +63,9 @@ class EvalRequestType extends AbstractType {
                     'label' => 'La presente propuesta es de tipo: '
                 ])
                 ->add('fakeFiles', FileType::class, array(
-                    'multiple' => true, 
+                    'multiple' => false, 
                     'mapped' => false,
-                    'label' => 'Documentos relacionados con este dictamen',
+                    'label' => 'Documento relacionado con este dictamen',
                     'required' => false,
                 ))
         ;
