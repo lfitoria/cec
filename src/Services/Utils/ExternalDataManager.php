@@ -12,9 +12,9 @@ class ExternalDataManager {
   private $transport;
   private $mailer;
 
-  public function __construct() {
+  // public function __construct() {
     
-  }
+  // }
 
   public function getProjectInfoByCode($em, $projectCode) {
 
