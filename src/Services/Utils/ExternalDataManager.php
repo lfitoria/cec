@@ -15,6 +15,9 @@ class ExternalDataManager {
   // public function __construct() {
     
   // }
+  function __construct(EntityManagerInterface $em) {
+    $this->em = $em;
+  }
 
   public function getProjectInfoByCode($em, $projectCode) {
 
