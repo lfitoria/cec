@@ -61,8 +61,13 @@ class FileManager {
         echo "<hr>";
         var_dump($key);
         echo "<pre>";
-        die;
-        $newFile = $this->upload($file, $targetDirectory, $questionCode, $descriptions[$key]);
+        // die;
+        // $newFile = $this->upload($file, $targetDirectory, $questionCode, $descriptions[$key]);
+        if ($descriptions == null) {
+          $newFile = $this->upload($file, $targetDirectory, $questionCode, $descriptions);
+        }else{
+          $newFile = $this->upload($file, $targetDirectory, $questionCode, $descriptions[$key]);
+        }
         if ($newFile) {
           $uploadedFiles[] = $newFile;
         }
