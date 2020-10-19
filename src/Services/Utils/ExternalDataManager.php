@@ -244,7 +244,7 @@ class ExternalDataManager {
 
       $results = $statement->fetchAll();
     } catch (\Exception $e) {
-      // var_dump($e);
+      var_dump($e);
       return null;
     }
     return $results;
