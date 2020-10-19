@@ -201,7 +201,7 @@ class ProjectRequestController extends AbstractController {
         $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
         $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
 
-        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles",$minuteFinalWorkFilesDescriptions);
+        $minuteFinalWorkFiles = $fileManager->uploadFiles($minuteFinalWorkUploadedFiles, $projectDir, "minuteFinalWorkFiles");
         $minutesResearchCenterFiles = $fileManager->uploadFiles($minutesResearchCenterUploadedFiles, $projectDir, "minutesResearchCenterFiles");
       } else {
         $projectCode = $request->request->get('project_code');
