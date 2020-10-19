@@ -50,13 +50,18 @@ class FileManager {
     // foreach($array as $key=>$value) {
     if ($files) {
       foreach ($files as $key=>$file) {
-        
+        echo "<pre>";
         var_dump($file);
+        echo "<hr>";
         var_dump($targetDirectory);
+        echo "<hr>";
         var_dump($questionCode);
+        echo "<hr>";
         var_dump($descriptions);
-        // var_dump($key);
-        // die;
+        echo "<hr>";
+        var_dump($key);
+        echo "<pre>";
+        die;
         $newFile = $this->upload($file, $targetDirectory, $questionCode, $descriptions[$key]);
         if ($newFile) {
           $uploadedFiles[] = $newFile;
