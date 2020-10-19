@@ -56,7 +56,7 @@ class FileManager {
         var_dump($questionCode);
         var_dump($descriptions);
         // var_dump($key);
-        die;
+        // die;
         $newFile = $this->upload($file, $targetDirectory, $questionCode, $descriptions[$key]);
         if ($newFile) {
           $uploadedFiles[] = $newFile;

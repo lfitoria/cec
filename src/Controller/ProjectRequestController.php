@@ -193,10 +193,10 @@ class ProjectRequestController extends AbstractController {
       $projectDir = $this->getParameter('brochures_directory');
 
       if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
-        $minuteFinalWorkFilesDescriptions = $request->request->get('minuteFinalWorkFiles');
+        $minuteFinalWorkFilesDescriptions = "minuteFinalWorkFiles";
         var_dump($minuteFinalWorkFilesDescriptions);
         var_dump("minuteFinalWorkFilesDescriptions");
-        die();
+        // die();
 
         $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
         $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
