@@ -196,7 +196,7 @@ class ProjectRequestController extends AbstractController {
         $minuteFinalWorkFilesDescriptions = $request->request->get('fileDescription');
         var_dump($minuteFinalWorkFilesDescriptions);
         var_dump("minuteFinalWorkFilesDescriptions");
-        // die();
+        die();
 
         $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
         $minutesResearchCenterUploadedFiles = $form->get("minutesResearchCenterFiles")->getData();
