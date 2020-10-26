@@ -120,7 +120,9 @@ class EthicEvalRequestController extends AbstractController {
             "from" => "cec@ucr.ac.cr",
             //"from" => "jonathan.rojas@ucr.ac.cr",
             "to" => "daihanna.hernandez@ucr.ac.cr",
-            // "cc" => $evaluators,
+            if (!empty($emailEvaluators)) {
+              "cc" => $emailEvaluators,
+            }
             "bcc" => $correos,
             //"body" => "body"
             "body" => $this->render('emails/evaluatorAssigment.html.twig', [
