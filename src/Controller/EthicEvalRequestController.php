@@ -112,15 +112,15 @@ class EthicEvalRequestController extends AbstractController {
             array_push($emailEvaluators, $evaluator->getEmail());
           }
         }
-        var_dump($emailEvaluators);
-        die();
+        // var_dump($emailEvaluators);
+        // die();
         
         $emailData = [
             "subject" => "Nueva solicitud",
             "from" => "cec@ucr.ac.cr",
             //"from" => "jonathan.rojas@ucr.ac.cr",
             "to" => "daihanna.hernandez@ucr.ac.cr",
-            "cc" => $evaluators,
+            // "cc" => $evaluators,
             "bcc" => $correos,
             //"body" => "body"
             "body" => $this->render('emails/evaluatorAssigment.html.twig', [
