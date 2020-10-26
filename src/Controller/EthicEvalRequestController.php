@@ -112,7 +112,8 @@ class EthicEvalRequestController extends AbstractController {
             array_push($emailEvaluators, $evaluator->getEmail());
           }
         }
-        // var_dump($emailEvaluators);
+        var_dump($emailEvaluators);
+        die();
         
         $emailData = [
             "subject" => "Nueva solicitud",
