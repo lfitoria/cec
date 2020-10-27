@@ -132,7 +132,7 @@ class EthicEvalRequestController extends AbstractController {
 
         ];
       }else{
-        if (!empty($emailEvaluators)) {
+      
           $emailData = [
               "subject" => "Nueva solicitud",
               "from" => "cec@ucr.ac.cr",
