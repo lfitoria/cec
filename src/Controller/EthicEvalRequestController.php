@@ -114,15 +114,15 @@ class EthicEvalRequestController extends AbstractController {
         }
         // var_dump($emailEvaluators);
         // die();
-        
+        if (!empty($emailEvaluators)) {
         $emailData = [
             "subject" => "Nueva solicitud",
             "from" => "cec@ucr.ac.cr",
             //"from" => "jonathan.rojas@ucr.ac.cr",
             "to" => "daihanna.hernandez@ucr.ac.cr",
-            if (!empty($emailEvaluators)) {
+            
               "cc" => $emailEvaluators,
-            }
+            
             "bcc" => $correos,
             //"body" => "body"
             "body" => $this->render('emails/evaluatorAssigment.html.twig', [
@@ -131,6 +131,25 @@ class EthicEvalRequestController extends AbstractController {
             ])
 
         ];
+      }else{
+        if (!empty($emailEvaluators)) {
+          $emailData = [
+              "subject" => "Nueva solicitud",
+              "from" => "cec@ucr.ac.cr",
+              //"from" => "jonathan.rojas@ucr.ac.cr",
+              "to" => "daihanna.hernandez@ucr.ac.cr",
+              
+              
+              
+              "bcc" => $correos,
+              //"body" => "body"
+              "body" => $this->render('emails/evaluatorAssigment.html.twig', [
+                'project_request' => $projectRequest,
+                'details_eval' => ''
+              ])
+  
+          ];
+      }
         //var_dump($emailData);
         // die();
         $notificationManager->sendEmail($emailData);
