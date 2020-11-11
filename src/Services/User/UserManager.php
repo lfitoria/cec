@@ -141,6 +141,8 @@ class UserManager {
     if(in_array($this->user->getRole()->getDescription(), ["ROLE_EVALUATOR"])){
 
     }else if(in_array($this->user->getRole()->getDescription(), ["ROLE_ADMIN"])){
+    
+    }else if(in_array($this->user->getRole()->getDescription(), ["ROLE_VISOR"])){
 
     }else{
       $role_s = $this->em->getRepository(UsersRoles::class)->find(intval($role_id));

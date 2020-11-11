@@ -76,6 +76,8 @@
                       Persona investigadora
                     {% elseif app.user.role.description == "ROLE_EVALUATOR" %}
                       Evaluador
+                    {% elseif app.user.role.description == "ROLE_VISOR" %}
+                      Usuario visor
                     {% endif %}
                   </strong>
                 </p>
