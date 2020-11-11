@@ -66,7 +66,7 @@ class ProjectRequestController extends AbstractController {
         $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, array(27, 28, 35, 36,31,42));
         break;
       default:
-        $requestsFilter = array("state" => 2);
+        $requestsFilter = array("state" => array(27, 28, 35, 36,31,42));
         break;
     }
     if (isset($requestsFilter)) {
