@@ -5,11 +5,15 @@
 {% endblock %}
 {% block body %}
 
-	<p class="title-table-index">SEGUIMIENTO DE SOLICITUDES DE REVISIÓN</p>
+	<p class="title-table-index">
+		SEGUIMIENTO DE SOLICITUDES DE REVISIÓN
+	</p>
 	<table class="table table-responsive">
 		<thead>
 			<tr>
-				<th>Nº de solicitud</th>
+				<th>
+					Nº de solicitud
+				</th>
 				<th>
 					{% if app.user.role.description == "ROLE_RESEARCHER" %}
 						Título de proyecto
@@ -20,128 +24,161 @@
 					{% endif %}
 				</th>
 				{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
-					<th>Investigador / estudiante</th>
+					<th>
+						Investigador / estudiante
+					</th>
 				{% endif %}
-				{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
-					<th>Unidad</th>
+				{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR","ROLE_VISOR"] %}
+					<th>
+						Unidad
+					</th>
 				{% endif %}
 				{# <th colspan="2">Estado</th> #}
-				<th>Estado</th>
+				<th>
+					Estado
+				</th>
 				{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
-					<th>Evaluadores asignados</th>
+					<th>
+						Evaluadores asignados
+					</th>
 				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
 			{% for project_request in project_requests %}
 				{# <pre>
-								        {{ dump(project_request) }}
-								        <td>
-								                  <ul>
-								                  {% for evaluator in evaluators %}
-								                    <li>{{ evaluator.name }}</li>
-								                    {% if evaluator.id in project_requests_users[project_request.id] %}
-								                    <li>{{ evaluator.name }}</li>
-								                    {% endif %}
-								                  {% endfor %}
-								          </td>
-								      </pre> #}
+					{{ dump(project_request) }}
+					<td>
+						<ul>
+						{% for evaluator in evaluators %}
+						<li>{{ evaluator.name }}</li>
+						{% if evaluator.id in project_requests_users[project_request.id] %}
+						<li>{{ evaluator.name }}</li>
+						{% endif %}
+						{% endfor %}
+						</td>
+				</pre> #}
 				<tr>
 					<td class="text-bold">
-						<span>CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</span>
+						<span>
+							CEC-
+							{{ project_request.id }}
+							-
+							{{ project_request.date|date("Y")[2:3] }}
+						</span>
 					</td>
 					<td>
-						<span>{{ project_request.title }}</span>
+						<span>
+							{{ project_request.title }}
+						</span>
 					</td>
 					{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
-						<td>{{ project_request.owner.name }}</td>
+						<td>
+							{{ project_request.owner.name }}
+						</td>
 					{% endif %}
 					{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
-						<td>{{ project_request.projectUnit }}</td>
+						<td>
+							{{ project_request.projectUnit }}
+						</td>
 					{% endif %}
 					<td class="justify-content-between state-column">
 
-						<span class="td-st-col"><span class="st-eval" for="eval_request_status_{{ project_request.state.id }}">{{ project_request.state.description }}</span>
+						<span class="td-st-col">
+							<span class="st-eval" for="eval_request_status_{{ project_request.state.id }}">
+								{{ project_request.state.description }}
+							</span>
 						</span>
 						<span class="td-st-col">
-						<a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
+							<a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">
+								Mostrar
+							</a>
 						</span>
 
 						{% if app.user.role.description == "ROLE_ADMIN" %}
 							{% if project_request.state.id not in [36,27] %}
 								<span class="td-st-col">
-								<div class="dropdown">
-									<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										Asignar
-										<span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu checkbox-menu allow-focus evaluator_list_assigment">
-										{% for evaluator in evaluators %}
+									<div class="dropdown">
+										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+											Asignar
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu checkbox-menu allow-focus evaluator_list_assigment">
+											{% for evaluator in evaluators %}
+												<li>
+													<label>
+														<input type="checkbox" name="evaluators" value="{{ evaluator.id }}" {% if evaluator.id in project_requests_users[project_request.id] %} checked {% endif %}>
+														{{ evaluator.name }}
+													</label>
+												</li>
+											{% endfor %}
 											<li>
-												<label>
-													<input type="checkbox" name="evaluators" value="{{ evaluator.id }}" {% if evaluator.id in project_requests_users[project_request.id] %} checked {% endif %}>
-													{{ evaluator.name }}
-												</label>
+												<button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">
+													Confirmar
+												</button>
 											</li>
-										{% endfor %}
-										<li>
-											<button class="btn btn-primary btn-sm mx-auto d-block evaluator_list_assigment--btn-complete" data-request="{{ project_request.id }}" data-path="{{ path("assigment_evaluator_to_request") }}">Confirmar</button>
-										</li>
-									</ul>
-								</div>
+										</ul>
+									</div>
 								</span>
 								{% if project_request.state.id == 28 %}
 									<span class="td-st-col">
-										<a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+										<a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">
+											Evaluar
+										</a>
 									</span>
 								{% endif %}
 								{% if project_request.state.id == 31 %}
 									<span class="td-st-col">
-										<a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+										<a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">
+											Evaluar
+										</a>
 									</span>
 								{% endif %}
 							{% else %}
 								{% if app.user.role.description not in ["ROLE_ADMIN"] %}
 									<span class="td-st-col">
-										<a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">Mostrar</a>
+										<a class="btn-blue" href="{{ path('project_request_show', {'id': project_request.id}) }}">
+											Mostrar
+										</a>
 									</span>
 								{% endif %}
 							{% endif %}
 						{% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
 							{% if project_request.state.id in [27, 35, 42,38] %}
 								<span class="td-st-col">
-								<a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">Completar</a>
+									<a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">
+										Completar
+									</a>
 								</span>
 							{% endif %}
 						{% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_EVALUATOR"%}
 							{% if project_request.state.id == 28 %}
 								<span class="td-st-col">
-								<a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+									<a class="btn-blue" href="{{ path('project_request_pre_evaluate', {'id': project_request.id}) }}">
+										Evaluar
+									</a>
 								</span>
 							{% endif %}
 							{% if project_request.state.id == 31 %}
 								<span class="td-st-col">
-								<a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">Evaluar</a>
+									<a class="btn-blue" href="{{ path('project_request_evaluate', {'id': project_request.id}) }}">
+										Evaluar
+									</a>
 								</span>
 							{% endif %}
-
-							{# {% if project_request.state.id == 36 %}
-														                <a href="{{ path('eval_request_show', {'id': eval_request.id}) }}">show</a>
-														              {% endif %} #}
-
 						{% endif %}
-
 					</td>
-					
+
 					{% if app.user.role.description in ["ROLE_ADMIN","ROLE_EVALUATOR"] %}
-					
 						<td>
 							<ul style="padding: 0 0 0 15px;">
 								{% if evaluators is defined %}
 
 									{% for evaluator in evaluators %}
 										{% if evaluator.id in project_requests_users[project_request.id] %}
-											<li>{{ evaluator.name }}</li>
+											<li>
+												{{ evaluator.name }}
+											</li>
 										{% endif %}
 									{% endfor %}
 								{% endif %}
@@ -151,12 +188,14 @@
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="11">Solicitudes no encontradas</td>
+					<td colspan="11">
+						Solicitudes no encontradas
+					</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-	{% if app.user.role.description == "ROLE_ADMIN" or app.user.role.description == "ROLE_EVALUATOR" %}
+	{% if app.user.role.description == "ROLE_ADMIN" or app.user.role.description == "ROLE_EVALUATOR" or app.user.role.description == "ROLE_VISOR" %}
 
 		{% else %}
 			<button type="button" class="btn btn-primary btn-lg btn-open-modalnew" data-toggle="modal" data-target="#new_project">
@@ -168,35 +207,64 @@
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-body">
-					<h4>Instrucciones</h4>
-					<p>Lea con detenimiento esta información antes de completar la solicitud.</p>
-					<p>Este formulario se compone de 3 bloques:</p>
+					<h4>
+						Instrucciones
+					</h4>
+					<p>
+						Lea con detenimiento esta información antes de completar la solicitud.
+					</p>
+					<p>
+						Este formulario se compone de 3 bloques:
+					</p>
 
 					<hr>
 					<ul class="nav justify-content-center nav-pills">
 						<li class="d-flex align-items-center form_header_nav_item  form_header_nav_item--active " data-target="info">
-							<span class="nav_step">1</span>
-							<a class="form_header_nav_item_link" href="#">Información del proyecto</a>
+							<span class="nav_step">
+								1
+							</span>
+							<a class="form_header_nav_item_link" href="#">
+								Información del proyecto
+							</a>
 						</li>
 						<li class="d-flex align-items-center form_header_nav_item " data-target="academic">
-							<span class="nav_step">2</span>
-							<a class="form_header_nav_item_link" href="#">Descripción académica y científica</a>
+							<span class="nav_step">
+								2
+							</span>
+							<a class="form_header_nav_item_link" href="#">
+								Descripción académica y científica
+							</a>
 						</li>
 						<li class="d-flex align-items-center form_header_nav_item " data-target="ethic">
-							<span class="nav_step">3</span>
-							<a class="form_header_nav_item_link" href="#">Evaluación ética</a>
+							<span class="nav_step">
+								3
+							</span>
+							<a class="form_header_nav_item_link" href="#">
+								Evaluación ética
+							</a>
 						</li>
 					</ul>
 					<hr>
-					<p>Podrá guardar el formulario en cualquier momento usando el botón
-						<span class="text-color-green">“GUARDAR”</span>. Podrá avanzar al siguiente bloque usando el botón
-						<span class="text-color-green">“GUARDAR Y CONTINUAR”</span>
+					<p>
+						Podrá guardar el formulario en cualquier momento usando el botón
+						<span class="text-color-green">
+							“GUARDAR”
+						</span>
+						. Podrá avanzar al siguiente bloque usando el botón
+						<span class="text-color-green">
+							“GUARDAR Y CONTINUAR”
+						</span>
 						o navegar a través del formulario usando la navegación superior.
-												            Al terminar el tercer bloque, podrá enviar su solicitud.</p>
-					<a class="btn btn-primary" href="{{ path('tab_general_info_request_new') }}">Empezar</a>
+																		            Al terminar el tercer bloque, podrá enviar su solicitud.
+					</p>
+					<a class="btn btn-primary" href="{{ path('tab_general_info_request_new') }}">
+						Empezar
+					</a>
 				</div>
 
-				<button type="button" class="btn btn-close-modalnew" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-close-modalnew" data-dismiss="modal">
+					Cancelar
+				</button>
 			</div>
 		</div>
 	</div>
@@ -218,8 +286,11 @@ jQuery("[for='eval_request_status_40']").append('<a class="toolbox" href="#" dat
 jQuery("[for='eval_request_status_42']").append('<a class="toolbox" href="#" data-placement="right" data-toggle="tooltip" title="Se devuelve al solicitante para subsane o corrección">?</a>');
 
 
-$(document).ready(function () {
+$(document).ready(function ()
+{
+
 $('[data-toggle="tooltip"]').tooltip();
+
 });
 	</script>
 
