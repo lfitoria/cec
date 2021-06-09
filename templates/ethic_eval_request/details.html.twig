@@ -41,24 +41,24 @@
     <p class="text-muted font-italic">
         {{ project_request.title }}
     </p></div>
-<div class="text-box">
-    <p>
-        <strong>
-            1.1 Oficio de solicitud al CEC:
-        </strong>
-    </p>
-    <ul>
-        {% for file in project_request.infoRequestFiles if file.questionCode is same as("applicationLetterFiles") %}
-            <li>
-                <a href="{{ 'http://formularioscec.ucr.ac.cr/uploads/files/' }}{{ file.FileName }}"
-                   download="{{ file.originalName }}" target="_blank">
-                    {{ file.originalName }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
 {% if project_request.owner.role.description is same as("ROLE_RESEARCHER") %}
+    <div class="text-box">
+        <p>
+            <strong>
+                1.1 Oficio de solicitud al CEC:
+            </strong>
+        </p>
+        <ul>
+            {% for file in project_request.infoRequestFiles if file.questionCode is same as("applicationLetterFiles") %}
+                <li>
+                    <a href="{{ 'http://formularioscec.ucr.ac.cr/uploads/files/' }}{{ file.FileName }}"
+                       download="{{ file.originalName }}" target="_blank">
+                        {{ file.originalName }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
     <div class="text-box">
         <p>
             <strong>
@@ -411,10 +411,9 @@
             {# <textarea class="form-control" name="" id="" rows="12" >{{SipProject.antecedentes|raw|striptags|convert_encoding('UTF-8', 'ISO-8859-1//TRANSLIT')}}{{SipProject.jusitificacion|striptags|raw|default('Sin datos')}}</textarea> #}
             <div class="textareas-form text-muted">
                 {% autoescape %}
-                    {{ SipProjectExtraInformation.DSC_JUSTIFICACION|striptags }}
+                    {{ SipProjectExtraInformation.DSC_ANTECEDENTE|raw }}
                 {% endautoescape %}
-                <hr>
-                {{ SipProjectExtraInformation.DSC_ANTECEDENTE|raw }}
+                {{ SipProjectExtraInformation.DSC_JUSTIFICACION|striptags }}
 
             </div>
         {% else %}
@@ -476,7 +475,7 @@
 <div class="text-box">
     <p>
         <strong>
-           {{ project_request.owner.role.description is same as("ROLE_RESEARCHER") ? "2.3 " : "2.1 " }}Preguntas de investigación (opcional):
+            2.3 Preguntas de investigación (opcional):
         </strong>
     </p>
     <p class="text-muted font-italic">
@@ -485,7 +484,7 @@
 <div class="text-box">
     <p>
         <strong>
-            {{ project_request.owner.role.description is same as("ROLE_RESEARCHER") ? "2.4 " : "2.2 " }}Hipótesis:
+            2.4 Hipótesis:
         </strong>
     </p>
     <p class="text-muted font-italic">
@@ -494,7 +493,7 @@
 <div class="text-box">
     <p>
         <strong>
-            {{ project_request.owner.role.description is same as("ROLE_RESEARCHER") ? "2.5 " : "2.3 " }} Tipo de investigación:
+            2.5 Tipo de investigación:
         </strong>
     </p>
     {% if academicRequestInfo.invType is defined %}
@@ -537,19 +536,17 @@
 																													</p>
 																													<p class="text-muted font-italic">{{ academicRequestInfo.metodologyObserv|default("Sin dato") }}</p>
 																												</div> #}
-        
-    {% endif %}</div>
-    <div class="text-box">
+        <div class="text-box">
             <p>
                 <strong>
-                    {{ project_request.owner.role.description is same as("ROLE_RESEARCHER") ? "2.6 " : "2.4 " }} Descripción resumida de la metodología::
+                    2.6 Descripción resumida de la metodología::
                 </strong>
             </p>
             <p class="text-muted font-italic">
                 {{ academicRequestInfo.metodologyObserv|default("Sin dato") }}
             </p>
         </div>
-    {# <div class="text-box">
+    {% endif %}</div>{# <div class="text-box">
 																											<p>
 																												<strong>2.6 Objetivos:</strong>
 																											</p>
@@ -618,7 +615,7 @@
             </strong>
         </p>
         <p class="text-muted font-italic">
-            {{ ethicEvalRequest.exCriteria|default("Sin dato") }}
+            {{ ethicEvalRequest.inExCriteria|default("Sin dato") }}
         </p>
     </div>
 
@@ -642,19 +639,14 @@
         <p class="text-muted font-italic">
             {{ ethicEvalRequest.collectionInformation|default("Sin dato") }}
         </p>
-        <small class="form-text text-muted" style="font-weight: bold;">Instrumentos de recolección respectivos (opcional).</small>
         <ul>
-            {% for file in ethicEvalRequest.ethicEvalFiles if file.questionCode is same as("collectionInformationFiles") %}
+            {% for file in project_request.infoRequestFiles if file.questionCode is same as("collectionInformationFiles") %}
                 <li>
                     <a href="{{ 'http://formularioscec.ucr.ac.cr/uploads/files/' }}{{ file.FileName }}"
                        download="{{ file.originalName }}" target="_blank">
                         {{ file.originalName }}
                     </a>
                 </li>
-            {% else %}
-                <p class="text-muted font-italic">
-                    -- Sin documentos
-                </p>
             {% endfor %}
         </ul>
     </div>

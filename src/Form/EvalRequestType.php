@@ -63,7 +63,7 @@ class EvalRequestType extends AbstractType {
                     'label' => 'La presente propuesta es de tipo: '
                 ])
                 ->add('fakeFiles', FileType::class, array(
-                    'multiple' => false, 
+                    'multiple' => true,
                     'mapped' => false,
                     'label' => 'Documento relacionado con este dictamen',
                     'required' => false,

@@ -37,38 +37,49 @@ use Symfony\Component\HttpClient\NativeHttpClient;
 class ProjectRequestController extends AbstractController {
 
   /**
-   * @Route("es/", name="project_request_index", methods={"GET"})
+   * @Route("es/", name="project_request_index", methods={"GET","POST"})
    */
-  public function index(Security $security): Response {
+  public function index(Security $security, Request $request): Response {
+    $statesToSearch = $request->get('statesToSearch');
+    $statesToSearchActionsInitial = array(28, 38, 31);
+    $statesToSearchIds = $statesToSearch ? array_map('intval', $statesToSearch) : null;
     $loggedUser = $security->getUser();
     $projectRequests = null;
     $role = $loggedUser->getRole()->getDescription();
     $data = [];
+    $data['statesToSearch'] = $statesToSearch ? $statesToSearch : $statesToSearchActionsInitial;
 
     switch ($role) {
       case "ROLE_ADMIN":
         $requestsFilter = array();
+        // $requestsFilter = $statesToSearchIds ? array("state" => $statesToSearchIds) : array("state" => array(28, 35, 36,31,42));
+        $requestsFilter = $statesToSearchIds ? array("state" => $statesToSearchIds) : array("state" => $statesToSearchActionsInitial);
         // $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->find(4);
         $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->findBy(array("id" => [1,4]));
         
         $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
         break;
       case "ROLE_STUDENT":
-        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,38,31,42]);
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,38,31,32,42]);
         break;
       case "ROLE_RESEARCHER":
-        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,31,38,42]);
+        $requestsFilter = array("owner" => $loggedUser, "state" => [27, 28, 35, 36,31,32,38,42]);
         break;
       case "ROLE_EVALUATOR":
         $role = $this->getDoctrine()->getRepository(\App\Entity\UsersRoles::class)->findBy(array("id" => [1,4]));
         $data['evaluators'] = $this->getDoctrine()->getRepository(LdapUser::class)->findBy(array("role" => $role));
         // $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, 28);
-        $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, array(27, 28, 35, 36,31,42));
+        // $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, array(27, 28, 35, 36,31,42));
+        $projectRequests = $this->getDoctrine()->getRepository(ProjectRequest::class)->getProjectByEvaluator($loggedUser, $statesToSearchActionsInitial);
+        //F
+        $requestsFilter = $statesToSearchIds ? array("state" => $statesToSearchIds) : array("state" => array(27, 28, 35, 36,31,42));
         break;
       default:
         $requestsFilter = array("state" => array(27, 28, 35, 36,31,42));
         break;
     }
+
+
     if (isset($requestsFilter)) {
       // var_dump($requestsFilter);
       // array_push($requestsFilter,['id' => 'ASC']);

@@ -220,6 +220,7 @@ class EthicEvalRequestController extends AbstractController {
       $ethicEvalRequest->addEthicEvalFiles(array_merge($informedConsentFiles, $informedAssentFiles, $collectionInformationFiles, $aditionalFiles,$mtaFiles));
 
       if ($finish == "1") {
+        $subjectEmail = "Nueva solicitud";
         $state = $this->getDoctrine()->getRepository(Criterion::class)->find(28);
 
         $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
@@ -238,11 +239,13 @@ class EthicEvalRequestController extends AbstractController {
             // $emailEvaluators[] = $evaluator->getEmail();
             array_push($emailEvaluators, $evaluator->getEmail());
           }
+          //cambiar subject de reenvio
+          $subjectEmail = "Re-envío de solicitud";
         }
         // var_dump($emailEvaluators);
 
         $emailData = [
-            "subject" => "Nueva solicitud",
+            "subject" => $subjectEmail,
             "from" => "cec@ucr.ac.cr",
             //"from" => "jonathan.rojas@ucr.ac.cr",
             "to" => "daihanna.hernandez@ucr.ac.cr",

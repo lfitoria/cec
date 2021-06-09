@@ -26,7 +26,7 @@
                 {{ form_row(form.status, {label_attr: {class: 'radio-custom no-label'} }) }}
                 {{ form_row(form.observations, {label_attr: {class: 'no-label'} }) }}
                 {{ form_row(form.fakeFiles, {label_attr: {class: 'no-label'} }) }}
-
+				
                 {# <button class="btn">{{ button_label|default('Save') }}</button> #}
                 {{ form_end(form) }}
 

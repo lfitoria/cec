@@ -15,7 +15,7 @@ $port = '1521';
 // Oracle service name (instance)
 $db_name     = 'UCR';
 $db_username = "APVI_SISTEMA_INFORM_PROYECTOS";
-$db_password = '$VI_1820_DB#UCR';
+$db_password = '$VI_1920_DB#ucr';
 
 $tns = "(DESCRIPTION =
 	(CONNECT_TIMEOUT=3)(RETRY_COUNT=0)

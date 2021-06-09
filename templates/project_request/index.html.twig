@@ -8,7 +8,7 @@
 	<p class="title-table-index">
 		SEGUIMIENTO DE SOLICITUDES DE REVISIÓN
 	</p>
-	<table class="table table-responsive">
+	<table class="table table-responsive" style="min-height: 400px;">
 		<thead>
 			<tr>
 				<th>
@@ -34,8 +34,97 @@
 					</th>
 				{% endif %}
 				{# <th colspan="2">Estado</th> #}
-				<th>
-					Estado
+				<th class="position-relative">
+					{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
+						<a class="dropdown-toggle text-white" href="#" id="navbarDropdownStates" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Estado
+						</a>
+					{% else %}
+
+						Estado
+
+					{% endif %}
+
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownStates">
+						<form action={{ path('project_request_index')}} method="post" class="p-3 font-weight-normal">
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="27" id="st27" {% if "27" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st27">
+									En edición
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="28" id="st28" {% if "28" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st28">
+									Solicitud completada
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="31" id="st31" {% if "31" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st31">
+									Revisión preliminar completa
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="32" id="st32" {% if "32" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st32">
+									Devuelto con observaciones (en revisión preliminar)
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="33" id="st33" {% if "33" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st33">
+									Exenta
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="34" id="st34" {% if "34" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st34">
+									No requiere revisión
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="35" id="st35" {% if "35" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st35">
+									Devuelta (no compete) (en revisión preliminar)
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="36" id="st36" {% if "36" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st36">
+									Solicitud aprobada
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="37" id="st37" {% if "37" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st37">
+									Aprobada condicionada
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="38" id="st38" {% if "38" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st38">
+									Devuelto con observaciones (en dictamen)
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="41" id="st41" {% if "41" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st41">
+									No requiere revisión (en dictamen)
+								</label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input mt-0" type="checkbox" name='statesToSearch[]' value="42" id="st42" {% if "42" in statesToSearch %} checked {% endif %}>
+								<label class="form-check-label" for="st42">
+									Devuelta (no compete) (en dictamen)
+								</label>
+							</div>
+							<br>
+							<button type="submit" class="btn btn-primary">
+								Filtrar
+							</button>
+						</form>
+					</div>
 				</th>
 				{% if app.user.role.description in ["ROLE_ADMIN", "ROLE_EVALUATOR"] %}
 					<th>
@@ -46,21 +135,23 @@
 		</thead>
 		<tbody>
 			{% for project_request in project_requests %}
+				{#				<pre>#}
+				{#					{{ dump(project_request) }}#}
+				{#				</pre>#}
 				{# <pre>
-					{{ dump(project_request) }}
-					<td>
-						<ul>
-						{% for evaluator in evaluators %}
-						<li>{{ evaluator.name }}</li>
-						{% if evaluator.id in project_requests_users[project_request.id] %}
-						<li>{{ evaluator.name }}</li>
-						{% endif %}
-						{% endfor %}
-						</td>
-				</pre> #}
-				<tr>
-					<td class="text-bold">
-						<span>
+									{{ dump(project_request) }}
+									<td>
+										<ul>
+										{% for evaluator in evaluators %}
+										<li>{{ evaluator.name }}</li>
+										{% if evaluator.id in project_requests_users[project_request.id] %}
+										<li>{{ evaluator.name }}</li>
+										{% endif %}
+										{% endfor %}
+										</td>
+								</pre> #}
+					<tr>
+						<td class="text-bold"> <span>
 							CEC-
 							{{ project_request.id }}
 							-
@@ -96,7 +187,7 @@
 						</span>
 
 						{% if app.user.role.description == "ROLE_ADMIN" %}
-							{% if project_request.state.id not in [36,27] %}
+							{% if project_request.state.id not in [36,27,33,34] %}
 								<span class="td-st-col">
 									<div class="dropdown">
 										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -144,7 +235,7 @@
 								{% endif %}
 							{% endif %}
 						{% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}
-							{% if project_request.state.id in [27, 35, 42,38] %}
+							{% if project_request.state.id in [27, 32, 35, 42,38] %}
 								<span class="td-st-col">
 									<a class="btn-blue" href="{{ path('project_request_edit', {'id': project_request.id}) }}">
 										Completar
@@ -255,7 +346,7 @@
 							“GUARDAR Y CONTINUAR”
 						</span>
 						o navegar a través del formulario usando la navegación superior.
-																		            Al terminar el tercer bloque, podrá enviar su solicitud.
+																								            Al terminar el tercer bloque, podrá enviar su solicitud.
 					</p>
 					<a class="btn btn-primary" href="{{ path('tab_general_info_request_new') }}">
 						Empezar
@@ -289,7 +380,11 @@ jQuery("[for='eval_request_status_42']").append('<a class="toolbox" href="#" dat
 $(document).ready(function ()
 {
 
+
+
 $('[data-toggle="tooltip"]').tooltip();
+
+
 
 });
 	</script>

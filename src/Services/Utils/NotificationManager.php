@@ -9,14 +9,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Services\Utils\FileManager;
 use Exception;
 
-class NotificationManager {
+class NotificationManager
+{
 
   private $em;
   private $fileManager;
   private $transport;
   private $mailer;
 
-  public function __construct(EntityManagerInterface $em, FileManager $fileManager) {
+  public function __construct(EntityManagerInterface $em, FileManager $fileManager)
+  {
     $this->em = $em;
     $this->fileManager = $fileManager;
 
@@ -32,14 +34,15 @@ class NotificationManager {
     //         ->setUsername('jonathan.rojas@ucr.ac.cr')
     //         ->setPassword('Gxs1607V***');
     $this->transport = (new \Swift_SmtpTransport('smtp.ucr.ac.cr', 465, 'ssl'))
-            ->setUsername('cec@ucr.ac.cr')
-            ->setPassword('CECUCR.20');
+      ->setUsername('cec@ucr.ac.cr')
+      ->setPassword('$CEC_UCR_2021');
 
     $this->mailer = (new \Swift_Mailer($this->transport));
   }
 
-  private function validateEmails($emails) {
-    
+  private function validateEmails($emails)
+  {
+
     foreach ($emails as $email) {
       // var_dump($email);
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -48,24 +51,25 @@ class NotificationManager {
     }
   }
 
-  private function configureEmail($emailData) {
+  private function configureEmail($emailData)
+  {
     $message = (new \Swift_Message())
-            ->setSubject($emailData["subject"] ?? 'No subject')
-            ->setFrom($emailData["from"])
-            ->setContentType($emailData["contentType"] ?? 'text/html')
-            ->setTo($emailData["to"])
-            // ->addCc( ($emailData["cc"]?$emailData["cc"]:null ) )
-            ->setBody($emailData["body"] ?? 'No body');
+      ->setSubject($emailData["subject"] ?? 'No subject')
+      ->setFrom($emailData["from"])
+      ->setContentType($emailData["contentType"] ?? 'text/html')
+      ->setTo($emailData["to"])
+      // ->addCc( ($emailData["cc"]?$emailData["cc"]:null ) )
+      ->setBody($emailData["body"] ?? 'No body');
 
     if (isset($emailData["bcc"])) {
       $message->setBcc($emailData["bcc"]);
     }
-    // echo "------<pre>";
-    // var_dump($emailData["cc"]);
-    // echo "------</pre>";
-    // die();
-    if (isset($emailData["cc"])) {
-      $message->setCc($emailData["cc"]);
+   
+    $ccEmails = is_array($emailData["cc"]) ? array_unique($emailData["cc"]) : $emailData["cc"] ;
+    $ccEmailsCheckArray = is_array($ccEmails) ? array_filter($ccEmails) : $ccEmails ;
+    if (isset($ccEmailsCheckArray)) {
+
+      $message->setCc($ccEmails);
     }
     if (isset($emailData["attatchments"])) {
       $this->attatchFiles($emailData["attatchments"], $message);
@@ -74,7 +78,8 @@ class NotificationManager {
     return $message;
   }
 
-  private function attatchFiles($attatchments, $message) {
+  private function attatchFiles($attatchments, $message)
+  {
     $fileDir = $this->getParameter('email_attatchments_directory');
     $files = $this->fileManager->uploadFiles($attatchments, $fileDir);
 
@@ -85,7 +90,8 @@ class NotificationManager {
     $this->em->flush();
   }
 
-  public function sendEmail($emailData) {
+  public function sendEmail($emailData)
+  {
     // var_dump($emailData);
     // die();
     // if ( isset($emailData["cc"]) ) {
@@ -95,10 +101,10 @@ class NotificationManager {
     //   $this->validateEmails(array_merge(is_array($emailData["to"])? $emailData["to"] : [$emailData["to"]], [$emailData["from"] ]));
     // }
     // die();
-    
+
 
     $message = $this->configureEmail($emailData);
-    
+
     // echo "------<pre>";
     // var_dump($message);
     // echo "------</pre>";
@@ -112,8 +118,8 @@ class NotificationManager {
     }
   }
 
-  public function getTemplate($bodyData, $emailCode) {
+  public function getTemplate($bodyData, $emailCode)
+  {
     return "";
   }
-
 }

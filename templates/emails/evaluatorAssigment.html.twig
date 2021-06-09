@@ -9,7 +9,7 @@
   <div class="email_template_body">
     <p>Solicitud número: CEC-{{ project_request.id }}-{{ project_request.date|date("Y")[2:3] }}</p>
     <p>Proyecto: {{project_request.title}}</p>
-    <p>Unidad: {{project_request.projectUnit}}</p>
+    <p>Unidad: {{project_request.projectUnit ? project_request.projectUnit : project_request.ascriptionUnit }}</p>
     <p>Investigador / Estudiante responsable: {{project_request.owner.name}}</p> 
     {% if state is defined and state is not empty%}
       <p>Estado: {{state}}</p>
