@@ -980,8 +980,18 @@ RESULTADOS DE EVALUACIÓN DE LA SOLICITUD</p> #}
             </p>
         </div>
         {% if pei.files and pei.files is not empty %}
-            <p><strong>Documento relacionado:</strong></p>
-            {% for file in pei.files %}
+            <p><strong>Documentos relacionados:</strong></p>
+            {% for file in pei.files  if file.questionCode is same as("evalFiles") %}
+                <li>
+                    <a href="{{ 'http://formularioscec.ucr.ac.cr/uploads/files/' }}{{ file.FileName }}"
+                       download="{{ file.originalName }}" target="_blank">
+                        {{ file.originalName }}
+                    </a>
+                </li>
+            {% endfor %}
+            <br>
+            <p><strong>Hojas de evaluación:</strong></p>
+            {% for file in pei.files  if file.questionCode is same as("evalFilesHojasEval") %}
                 <li>
                     <a href="{{ 'http://formularioscec.ucr.ac.cr/uploads/files/' }}{{ file.FileName }}"
                        download="{{ file.originalName }}" target="_blank">

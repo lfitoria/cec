@@ -62,12 +62,23 @@ class EvalRequestType extends AbstractType {
                     },
                     'label' => 'La presente propuesta es de tipo: '
                 ])
-                ->add('fakeFiles', FileType::class, array(
-                    'multiple' => true,
+                ->add('fakeFiles', CollectionType::class, [
+                    'entry_type' => FileType::class,
+                    'entry_options' => ['label' => false],
                     'mapped' => false,
-                    'label' => 'Documento relacionado con este dictamen',
+                    'allow_add' => true,
                     'required' => false,
-                ))
+                    'label' => false
+                ])
+
+                ->add('fakeFilesHojasEval', CollectionType::class, [
+                    'entry_type' => FileType::class,
+                    'entry_options' => ['label' => false],
+                    'mapped' => false,
+                    'allow_add' => true,
+                    'required' => false,
+                    'label' => false
+                ])
         ;
     }
 

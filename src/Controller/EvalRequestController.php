@@ -49,17 +49,21 @@ class EvalRequestController extends AbstractController {
             $em = $this->getDoctrine()->getManager();
 
             $tempFiles = $form->get("fakeFiles")->getData();
+            $fakeFilesHojasEval = $form->get("fakeFilesHojasEval")->getData();
 
             $projectDir = $this->getParameter('brochures_directory');
             
             $files = $fileManager->uploadFiles($tempFiles, $projectDir,"evalFiles");
+            $filesHojasEval = $fileManager->uploadFiles($fakeFilesHojasEval, $projectDir,"evalFilesHojasEval");
+
+            $evalRequest->addEvalFiles(array_merge($files,$filesHojasEval));
 
             $finish = $form->get("form_finish_input")->getData();
 
             $evalRequest->setRequest($projectRequest);
             $evalRequest->setDate(new \DateTime());
 
-            $evalRequest->setFiles($files);
+            // $evalRequest->setFiles($files);
 
             if ($finish == "1") {
                 $evalRequest->setCurrent(true);
@@ -188,17 +192,26 @@ class EvalRequestController extends AbstractController {
         $form->handleRequest($request);
 
         $tempFiles = $form->get("fakeFiles")->getData();
+        $fakeFilesHojasEval = $form->get("fakeFilesHojasEval")->getData();
 
         $projectDir = $this->getParameter('brochures_directory');
         
         $files = $fileManager->uploadFiles($tempFiles, $projectDir,"evalFiles");
+
+        $filesHojasEval = $fileManager->uploadFiles($fakeFilesHojasEval, $projectDir,"evalFilesHojasEval");
+
+        $evalRequest->addEvalFiles(array_merge($files,$filesHojasEval));
+        // echo '---';
+        // var_dump($files);
+
+        //     die();
 
         $finish = $form->get("form_finish_input")->getData();
 
         $evalRequest->setRequest($projectRequest);
         $evalRequest->setDate(new \DateTime());
 
-        $evalRequest->setFiles($files);
+        // $evalRequest->setFiles($files);
 
         $status = $form->get("status")->getData()->getId();
 

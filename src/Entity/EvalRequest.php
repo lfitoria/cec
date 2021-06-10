@@ -126,7 +126,7 @@ class EvalRequest
         return $this->user;
     }
 
-    public function getFiles(): Collection
+    public function getFiles()
     {
         return $this->files;
     }
@@ -135,6 +135,17 @@ class EvalRequest
     {
         $this->files = $files;
     }
+
+    public function addEvalFiles($files): self {
+        foreach ($files as &$file) {
+          if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+          }
+        }
+    
+    
+        return $this;
+      }
 
     function setId($id) {
         $this->id = $id;
