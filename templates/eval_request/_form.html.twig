@@ -29,16 +29,23 @@
 
 				<div class="form-group " id="project_principal_researchers">
 					<label class="no-label" for="project_request_extInstitutions">Documentos relacionados con este dictamen</label>
+				{% if eval is not empty %}
+					{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.fakeFiles.vars.prototype, 'files': eval[0].files, 'questionCode': 'evalFiles', 'delete_label': 'Eliminar'}) }}
+				{% else %}
+					{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.fakeFiles.vars.prototype, 'files': '', 'questionCode': 'evalFiles', 'delete_label': 'Eliminar'}) }}
+				{% endif %}
 				
-
-				{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.fakeFiles.vars.prototype, 'files': eval[0].files, 'questionCode': 'evalFiles', 'delete_label': 'Eliminar'}) }}
 				</div>
 				<br>
 				<div class="form-group " id="project_principal_researchers">
 					<label class="no-label" for="project_request_extInstitutions">Hojas de evaluación</label>
 				
+				{% if eval is not empty %}
+					{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.fakeFilesHojasEval.vars.prototype, 'files': eval[0].files, 'questionCode': 'evalFilesHojasEval', 'delete_label': 'Eliminar'}) }}
+				{% else %}
+					{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.fakeFilesHojasEval.vars.prototype, 'files': '', 'questionCode': 'evalFilesHojasEval', 'delete_label': 'Eliminar'}) }}
+				{% endif %}
 
-				{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.fakeFilesHojasEval.vars.prototype, 'files': eval[0].files, 'questionCode': 'evalFilesHojasEval', 'delete_label': 'Eliminar'}) }}
 				</div>
 
                 {# <button class="btn">{{ button_label|default('Save') }}</button> #}

@@ -59,7 +59,7 @@ class DefaultController extends AbstractController {
         $password = $request->get('password');
         $login_admin = $request->get('login_admin');
         $role_login = $request->get('role_login');
-        var_dump("loginDefaultController");
+        //var_dump("loginDefaultController");
         // var_dump($email);
         // var_dump($role_login);
         // var_dump("----");

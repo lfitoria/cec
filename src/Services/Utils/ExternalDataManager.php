@@ -76,8 +76,7 @@ class ExternalDataManager {
       return isset($results[0]) ? $results[0] : null;
         
       } catch (\Exception $e) {
-        var_dump($e);
-        die();
+        var_dump($e->getMessage()." ExternalDataManager-oracle");
         return null;
       }
 
@@ -244,7 +243,7 @@ class ExternalDataManager {
 
       $results = $statement->fetchAll();
     } catch (\Exception $e) {
-      var_dump($e);
+      var_dump($e->getMessage()." ExternalDataManager-oracle");
       return null;
     }
     return $results;

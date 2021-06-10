@@ -205,8 +205,8 @@ class ProjectRequestController extends AbstractController {
 
       if ($loggedUser->getRole()->getDescription() === "ROLE_STUDENT") {
         $minuteFinalWorkFilesDescriptions = "minuteFinalWorkFiles";
-        var_dump($minuteFinalWorkFilesDescriptions);
-        var_dump("minuteFinalWorkFilesDescriptions");
+        //var_dump($minuteFinalWorkFilesDescriptions);
+        //var_dump("minuteFinalWorkFilesDescriptions");
         // die();
 
         $minuteFinalWorkUploadedFiles = $form->get("minuteFinalWorkFiles")->getData();
