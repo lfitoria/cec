@@ -988,6 +988,10 @@ RESULTADOS DE EVALUACIÓN DE LA SOLICITUD</p> #}
                         {{ file.originalName }}
                     </a>
                 </li>
+            {% else %}
+            <p class="text-muted font-italic">
+                Sin documentos relacionados
+            </p>
             {% endfor %}
             <br>
             <p><strong>Hojas de evaluación:</strong></p>
@@ -998,6 +1002,10 @@ RESULTADOS DE EVALUACIÓN DE LA SOLICITUD</p> #}
                         {{ file.originalName }}
                     </a>
                 </li>
+            {% else %}
+            <p class="text-muted font-italic">
+                Sin hojas de evaluación
+            </p>
             {% endfor %}
         {% endif %}
         <hr>
