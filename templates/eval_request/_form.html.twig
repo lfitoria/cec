@@ -34,6 +34,9 @@
 				{% else %}
 					{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.fakeFiles.vars.prototype, 'files': '', 'questionCode': 'evalFiles', 'delete_label': 'Eliminar'}) }}
 				{% endif %}
+				<small class="form-text text-muted">
+      {# <span class="file-advice">*Campo obligatorio.</span> #}
+      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 10MB.</small>
 				
 				</div>
 				<br>
@@ -45,6 +48,9 @@
 				{% else %}
 					{{ include('commons/_form_uploaded_file.html.twig', {'form_prototype': form.fakeFilesHojasEval.vars.prototype, 'files': '', 'questionCode': 'evalFilesHojasEval', 'delete_label': 'Eliminar'}) }}
 				{% endif %}
+				<small class="form-text text-muted">
+      {# <span class="file-advice">*Campo obligatorio.</span> #}
+      Permite la subida de archivos en formatos PDF, DOC/DOCX, ODT, PNG, JPG, PPT/PPTX, ZIP, con un peso máximo de 10MB.</small>
 
 				</div>
 
