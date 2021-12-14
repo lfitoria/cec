@@ -67,6 +67,9 @@ class NotificationManager
    
     $ccEmails = is_array($emailData["cc"]) ? array_unique($emailData["cc"]) : $emailData["cc"] ;
     $ccEmailsCheckArray = is_array($ccEmails) ? array_filter($ccEmails) : $ccEmails ;
+    var_dump('ccEmails');
+    var_dump($ccEmails);
+    die();
     if (isset($ccEmailsCheckArray)) {
 
       $message->setCc($ccEmails);
