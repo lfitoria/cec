@@ -74,10 +74,10 @@ class NotificationManager
     var_dump($ccEmails);
     var_dump($ccEmailsCheckArray);
     echo "<pre>";
-    die();
+    // die();
     if (isset($ccEmailsCheckArray)) {
 
-      $message->setCc($ccEmails);
+      $message->setCc($ccEmailsCheckArray);
     }
     if (isset($emailData["attatchments"])) {
       $this->attatchFiles($emailData["attatchments"], $message);
