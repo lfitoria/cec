@@ -72,6 +72,7 @@ class NotificationManager
     $ccEmailsCheckArray = is_array($ccEmails) ? array_filter($ccEmails) : $ccEmails ;
     var_dump('ccEmails');
     var_dump($ccEmails);
+    var_dump($ccEmailsCheckArray);
     echo "<pre>";
     die();
     if (isset($ccEmailsCheckArray)) {
