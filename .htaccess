@@ -1,0 +1,6 @@
+  RewriteBase /
+  RewriteCond %{HTTP_HOST} ^163\.178\.170\.108$
+  RewriteRule ^(.*)$ https://formularioscec.ucr.ac.cr/$1 [L,R=301]
+
+  RewriteCond %{HTTP_HOST} www.formularioscec.ucr.ac.cr
+  RewriteRule ^(.*)$ https://formularioscec.ucr.ac.cr/$1 [L,R=301]  
