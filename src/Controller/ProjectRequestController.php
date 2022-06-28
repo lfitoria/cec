@@ -757,4 +757,30 @@ var_dump($result);
   }*/
   return $this->render('project_request/rest-api.html.twig');
   }
+
+  /**
+   * @Route("/project_request_soft_delete", name="project_request_soft_delete", methods={"POST"})
+   */
+  public function projectRequestSoftDelete(Request $request, LogManager $log): Response {
+    $projectId = $request->request->get('project_id');
+
+    $entityManager = $this->getDoctrine()->getManager();
+
+    $projectRequest = $this->getDoctrine()->getRepository(ProjectRequest::class)->find($projectId);
+
+    $state = $this->getDoctrine()->getRepository(Criterion::class)->find(53);
+
+    $projectRequest->setState($state);
+
+    $entityManager->flush();
+
+    $logData = array( 
+      "description" => "Eliminado de la lista",
+      "request" => $projectRequest,
+    );
+    $log->insertLog($logData);
+
+    return new JsonResponse(['wasSoftDeleted' => true]);
+
+  }
 }

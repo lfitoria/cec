@@ -560,9 +560,49 @@ const $ = require('jquery');
         });
         
       });
+      cache.btn_soft_delete.click(function (e) {
+        e.preventDefault();
+        var _this = $(this);
+        var path = _this[0].dataset.path;
+        var project_id = _this[0].dataset.request;
+        
+        $.ajax({
+          type: 'POST',
+          url: path,
+          context: _this,
+          data: {
+            project_id: project_id
+          },
+          dataType: 'json',
+          success: function (file) {
+
+            if (file.wasSoftDeleted){
+              Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: `El proyecto ${project_id} ha sido eliminado de la lista`,
+                showConfirmButton: false,
+                timer: 5000
+              })
+              sleep(5300).then(() => { location.reload(); });
+            }else{
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: `El proyecto ${project_id} no se ha sido eliminado de la lista`,
+                showConfirmButton: false,
+                timer: 2200
+              })
+              sleep(5300).then(() => { location.reload(); });
+            }
+          }
+        });
+      });
     }
 
-
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     function showlabel(event) {
       var inputFile = event.currentTarget;
@@ -606,6 +646,7 @@ const $ = require('jquery');
       cache.uploaded_student_delete = $(".uploaded_teamwork_item--delete");
       cache.addProjectInfoButton = $(".add_project_info_button");
       cache.getObtenerNumeroDeEmpleado = $(".getObtenerNumeroDeEmpleado");
+      cache.btn_soft_delete = $('.project_request_soft_delete--btn-softDelete');
 
       var collectionFileHolder = $('.collecion_list');
       for (var i = 0; i < collectionFileHolder.length; i++) {
