@@ -234,7 +234,7 @@
 									</span>
 								{% endif %}
 							{% endif %}
-							<button class="btn btn-danger btn-sm mx-auto d-block project_request_soft_delete--btn-softDelete" data-request="{{ project_request.id }}" data-path="{{ path("project_request_soft_delete") }}">
+							<button class="btn btn-danger btn-sm mx-auto d-block project_request_soft_delete--btn-softDelete" data-request="{{ project_request.id }}" data-path="{{ path("project_request_soft_delete") }}" data-year="{{ project_request.date|date("Y")[2:3] }}">
 								Eliminar
 							</button>
 						{% elseif app.user.role.description == "ROLE_STUDENT" or  app.user.role.description == "ROLE_RESEARCHER"%}

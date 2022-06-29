@@ -565,6 +565,7 @@ const $ = require('jquery');
         var _this = $(this);
         var path = _this[0].dataset.path;
         var project_id = _this[0].dataset.request;
+        var project_year = _this[0].dataset.year;
         
         $.ajax({
           type: 'POST',
@@ -580,7 +581,7 @@ const $ = require('jquery');
               Swal.fire({
                 position: 'center',
                 type: 'success',
-                title: `El proyecto ${project_id} ha sido eliminado de la lista`,
+                title: `La solicitud CEC-${project_id}-${project_year} ha sido eliminada de la lista`,
                 showConfirmButton: false,
                 timer: 5000
               })
@@ -589,7 +590,7 @@ const $ = require('jquery');
               Swal.fire({
                 position: 'center',
                 type: 'error',
-                title: `El proyecto ${project_id} no se ha sido eliminado de la lista`,
+                title: `La solicitud CEC-${project_id}-${project_year} no se ha sido eliminada de la lista`,
                 showConfirmButton: false,
                 timer: 2200
               })
