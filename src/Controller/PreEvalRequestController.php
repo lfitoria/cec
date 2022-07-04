@@ -85,8 +85,8 @@ class PreEvalRequestController extends AbstractController {
         $emOracle = $this->getDoctrine()->getManager('oracle');
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());
         
-        $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
-        $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
+        //$gestor1 =$externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
+        //$gestor2 =$externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
         
         $correos = array();
         
@@ -213,8 +213,8 @@ class PreEvalRequestController extends AbstractController {
         $emOracle = $this->getDoctrine()->getManager('oracle');
         $unit = $externalDataManager->getUnitInfoByIDA($entityManager, $projectRequest->getUacademica());        
         
-        $gestor1 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
-        $gestor2 = $externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
+        //$gestor1 =$externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoru"]);
+        //$gestor2 =$externalDataManager->getGestoresByID($entityManager, $unit["0"]["gestoric"]);
         
         $correos = array();
         
