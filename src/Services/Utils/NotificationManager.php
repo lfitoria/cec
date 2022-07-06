@@ -65,9 +65,11 @@ class NotificationManager
       $message->setBcc($emailData["bcc"]);
     }
     echo "<pre>";
+    echo "test email";
     var_dump($emailData["cc"]);
     $ccEmails = is_array($emailData["cc"]) ? array_unique($emailData["cc"]) : $emailData["cc"] ;
     var_dump($ccEmails);
+    echo "----";
     var_dump(is_array($ccEmails));
     $ccEmailsCheckArray = is_array($ccEmails) ? array_filter($ccEmails) : $ccEmails ;
     echo "---------<br>";
