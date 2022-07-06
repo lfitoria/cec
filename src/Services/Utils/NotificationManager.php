@@ -78,9 +78,9 @@ class NotificationManager
     // var_dump($ccEmails);
     var_dump($ccEmailsCheckArray);
     echo "---------5<br>";
-    var_dump(empty($ccEmailsCheckArray))
+    var_dump(empty($ccEmailsCheckArray));
     echo "---------6<br>";
-    var_dump(isset($ccEmailsCheckArray))
+    var_dump(isset($ccEmailsCheckArray));
     // echo "<pre>";
     die();
     if (isset($ccEmails)) {
