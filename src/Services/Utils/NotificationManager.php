@@ -64,17 +64,17 @@ class NotificationManager
     if (isset($emailData["bcc"])) {
       $message->setBcc($emailData["bcc"]);
     }
-    // echo "<pre>";
-    // var_dump($emailData["cc"]);
+    echo "<pre>";
+    var_dump($emailData["cc"]);
     $ccEmails = is_array($emailData["cc"]) ? array_unique($emailData["cc"]) : $emailData["cc"] ;
-    // var_dump($ccEmails);
-    // var_dump(is_array($ccEmails));
+    var_dump($ccEmails);
+    var_dump(is_array($ccEmails));
     $ccEmailsCheckArray = is_array($ccEmails) ? array_filter($ccEmails) : $ccEmails ;
-    // var_dump('ccEmails');
+    echo "---------<br>";
     // var_dump($ccEmails);
-    // var_dump($ccEmailsCheckArray);
+    var_dump($ccEmailsCheckArray);
     // echo "<pre>";
-    // die();
+    die();
     if (isset($ccEmails)) {
 
       $message->setCc($ccEmails);
