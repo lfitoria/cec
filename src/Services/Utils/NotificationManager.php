@@ -68,7 +68,7 @@ class NotificationManager
     $ccEmails = is_array($emailData["cc"]) ? array_unique($emailData["cc"]) : $emailData["cc"] ;
     $ccEmailsCheckArray = is_array($ccEmails) ? array_filter($ccEmails) : $ccEmails ;
 
-    // echo "<pre>";
+     echo "<pre>";
     // echo "test email";
     // echo "---------1<br>";
     // var_dump($emailData["cc"]);
@@ -86,8 +86,9 @@ class NotificationManager
     // echo "---------6<br>";
     // var_dump(!isset($ccEmailsCheckArray));
     // var_dump($emailData["to"]);
-    // echo "</pre>";
-    // die();
+    var_dump($emailData["attatchments"]);
+    echo "</pre>";
+    die();
     if (!isset($ccEmails)) {
 
       $message->setCc($ccEmails);
