@@ -68,31 +68,31 @@ class NotificationManager
     $ccEmails = is_array($emailData["cc"]) ? array_unique($emailData["cc"]) : $emailData["cc"] ;
     $ccEmailsCheckArray = is_array($ccEmails) ? array_filter($ccEmails) : $ccEmails ;
 
-    echo "<pre>";
-    echo "test email";
-    echo "---------1<br>";
-    var_dump($emailData["cc"]);
-    echo "---------2<br>";
+    // echo "<pre>";
+    // echo "test email";
+    // echo "---------1<br>";
+    // var_dump($emailData["cc"]);
+    // echo "---------2<br>";
     
-    var_dump($ccEmails);
-    echo "---------3<br>";
-    var_dump(is_array($ccEmails));
+    // var_dump($ccEmails);
+    // echo "---------3<br>";
+    // var_dump(is_array($ccEmails));
     
-    echo "---------4<br>";
+    // echo "---------4<br>";
     
-    var_dump($ccEmailsCheckArray);
-    echo "---------5<br>";
-    var_dump(empty($ccEmailsCheckArray));
-    echo "---------6<br>";
-    var_dump(!isset($ccEmailsCheckArray));
-    var_dump($emailData["to"]);
-    echo "</pre>";
-    die();
-    if (isset($ccEmails)) {
+    // var_dump($ccEmailsCheckArray);
+    // echo "---------5<br>";
+    // var_dump(empty($ccEmailsCheckArray));
+    // echo "---------6<br>";
+    // var_dump(!isset($ccEmailsCheckArray));
+    // var_dump($emailData["to"]);
+    // echo "</pre>";
+    // die();
+    if (!isset($ccEmails)) {
 
       $message->setCc($ccEmails);
     }
-    if (isset($emailData["attatchments"])) {
+    if (!isset($emailData["attatchments"])) {
       $this->attatchFiles($emailData["attatchments"], $message);
     }
 
