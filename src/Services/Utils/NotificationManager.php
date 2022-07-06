@@ -66,15 +66,21 @@ class NotificationManager
     }
     echo "<pre>";
     echo "test email";
+    echo "---------1<br>";
     var_dump($emailData["cc"]);
+    echo "---------2<br>";
     $ccEmails = is_array($emailData["cc"]) ? array_unique($emailData["cc"]) : $emailData["cc"] ;
     var_dump($ccEmails);
-    echo "----";
+    echo "---------3<br>";
     var_dump(is_array($ccEmails));
     $ccEmailsCheckArray = is_array($ccEmails) ? array_filter($ccEmails) : $ccEmails ;
-    echo "---------<br>";
+    echo "---------4<br>";
     // var_dump($ccEmails);
     var_dump($ccEmailsCheckArray);
+    echo "---------5<br>";
+    var_dump(empty($ccEmailsCheckArray))
+    echo "---------6<br>";
+    var_dump(isset($ccEmailsCheckArray))
     // echo "<pre>";
     die();
     if (isset($ccEmails)) {
