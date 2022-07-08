@@ -39,8 +39,8 @@ class EvalRequestType extends AbstractType {
                     'mapped' => false
                 ])
                 ->add('observations', TextareaType::class, [
-                    'attr' => ['class' => 'form-control', 'rows' => '4','data-max' => 2000, 'maxlength' => 2000],
-                    'help' => 'Máximo 2000 caracteres.',
+                    'attr' => ['class' => 'form-control', 'rows' => '4','data-max' => 3000, 'maxlength' => 3000],
+                    'help' => 'Máximo 3000 caracteres.',
                     'label' => 'Observaciones',
                     'required' => false,
                 ])

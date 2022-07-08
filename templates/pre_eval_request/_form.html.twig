@@ -72,5 +72,27 @@
 
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
+
+        
+        
+        //console.log( characterCounter );
+        const countCharacters = () => {
+            let pre_eval_text_area = $('#pre_eval_request_observations').data('max');
+            //console.log( pre_eval_text_area );pre_eval_request_observations_help
+            let textArea = document.getElementById("pre_eval_request_observations");
+            let characterCounter = document.getElementById('pre_eval_request_observations_help');
+            //
+            let numOfEnteredChars = document.getElementById("pre_eval_request_observations").value.length;
+            let counter = pre_eval_text_area - numOfEnteredChars;
+            characterCounter.textContent = `Máximo ${counter}/${pre_eval_text_area} caracteres.`;
+
+            if (counter == 0) {
+                textArea.style.border = "solid red";
+            }else{
+                textArea.style.border = "solid #80bdff";
+            }
+        };
+        
+        document.getElementById("pre_eval_request_observations").addEventListener("input", countCharacters);
     });
 </script>
