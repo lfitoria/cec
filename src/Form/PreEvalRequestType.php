@@ -29,8 +29,8 @@ class PreEvalRequestType extends AbstractType
                 'mapped' => false
             ])
             ->add('observations', TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'rows' => '4','data-max' => 3500, 'maxlength' => 3500, 'data-char' => 'pre_eval_text_area'],
-                'help' => 'Máximo 3500 caracteres.',
+                'attr' => ['class' => 'form-control', 'rows' => '4','data-max' => 3000, 'maxlength' => 3000, 'data-char' => 'pre_eval_text_area'],
+                'help' => 'Máximo 3000 caracteres.',
                 'label' => 'Observaciones',
                 'required' => false,
             ])
