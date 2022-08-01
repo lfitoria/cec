@@ -254,7 +254,7 @@ class LdapUserController extends AbstractController {
     if ($this->isCsrfTokenValid('delete' . $ldapUser->getId(), $request->request->get('_token'))) {
       $email_deleted = $ldapUser->getEmail();
       $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->remove($ldapUser->getId());
+      $entityManager->remove($ldapUser);
       $entityManager->flush();
 
       $logData = array(
