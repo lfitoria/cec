@@ -132,9 +132,9 @@ class NotificationManager
     // echo "------</pre>";
     // die();
     try {
-      //return $this->mailer->send($message);
-      echo "se envia";
-      sleep(10);
+      return $this->mailer->send($message);
+      //echo "se envia";
+      //sleep(10);
     } catch (Exception $ex) {
       echo $ex;
       die();
