@@ -463,7 +463,7 @@
             </p>
             {{dump(objetivoPrincipal)}}
             {{dump(SipProjectObjAndGoals)}}
-            {% if objetivoPrincipal %}
+            {# {% if objetivoPrincipal %}
                 <div class="textareas-form text-muted">
                     {{ objetivoPrincipal.DSC_OBJETIVO_ESPECIFICO|striptags|raw|default('Sin datos') }}
                 </div>
@@ -471,7 +471,23 @@
                 <textarea class="form-control" name="" id="" rows="2" disabled>
 				{{ "Sin datos" }}
 			</textarea>
-            {% endif %}
+            {% endif %} #}
+            {% if SipProjectObjAndGoals %}
+            <div class="textareas-form">
+                {% for obj in SipProjectObjAndGoals %}
+                    {% if obj.ID_OBJETIVO_ESPECIFICO == loop.index %}
+                        <p class="font-weight-bolder">Objetivo específico {{obj.ID_OBJETIVO_ESPECIFICO}}</p>
+                        <p>{{obj.DSC_OBJETIVO_ESPECIFICO}}</p>
+                        <p class="font-italic">Meta {{obj.ID_META}} Cantidad: {{obj.CANTIDAD_CUANTITATIVA}}.00</p>                    
+                        <p class="font-weight-bold">Indicador {{obj.ID_INDICADOR}}</p>
+                        <p>{{obj.DSC_INDICADOR}}</p>
+                        <hr>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <textarea class="form-control" name="" id="" rows="2" disabled>{{"Sin datos"}}</textarea>
+        {% endif %}
 
         </div>
     {% endif %}</div>
