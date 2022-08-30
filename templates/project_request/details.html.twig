@@ -475,11 +475,9 @@
             {% if SipProjectObjAndGoals %}
             <div class="textareas-form">
                 {% for key,obj in SipProjectObjAndGoals %}
-                    {% if obj.ID_OBJETIVO_ESPECIFICO in loop.length %}
-                        <p class="font-weight-bolder">Objetivo específico {{obj.ID_OBJETIVO_ESPECIFICO}}</p>
-                        <p>{{obj.DSC_OBJETIVO_ESPECIFICO}}</p>
-                        <hr>
-                    {% endif %}
+                    <p class="font-weight-bolder">Objetivo específico {{obj.ID_OBJETIVO_ESPECIFICO}}</p>
+                    <p>{{obj.DSC_OBJETIVO_ESPECIFICO}}</p>
+                    <hr>
                 {% endfor %}
             </div>
         {% else %}
