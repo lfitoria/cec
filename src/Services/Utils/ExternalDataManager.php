@@ -524,7 +524,7 @@ class ExternalDataManager {
 
     $connection = $em->getConnection();
     $statement = $connection->prepare('SELECT
-           ObjEsp.id_obj_especifico id_objetivo_especifico,
+           DISTINCT ObjEsp.id_obj_especifico,
            ObjEsp.dsc_obj_especifico dsc_objetivo_especifico,
            t_meta.id_meta,
            trim(t_meta.DSC_META) dsc_meta,
