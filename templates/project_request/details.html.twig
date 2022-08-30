@@ -475,7 +475,7 @@
             {% if SipProjectObjAndGoals %}
             <div class="textareas-form">
                 {% for key,obj in SipProjectObjAndGoals %}
-                    {% if obj.ID_OBJETIVO_ESPECIFICO == key %}
+                    {% if obj.ID_OBJETIVO_ESPECIFICO in key %}
                         <p class="font-weight-bolder">Objetivo específico {{obj.ID_OBJETIVO_ESPECIFICO}}</p>
                         <p>{{obj.DSC_OBJETIVO_ESPECIFICO}}</p>
                         <p class="font-italic">Meta {{obj.ID_META}} Cantidad: {{obj.CANTIDAD_CUANTITATIVA}}.00</p>                    
