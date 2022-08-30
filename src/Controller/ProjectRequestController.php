@@ -515,12 +515,15 @@ class ProjectRequestController extends AbstractController {
     $SipProject = null;
     $objetivoPrincipal = null;
 
+    $projectCode = $projectRequest->getSipProject();
+
     if ($projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER") {
       $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
+      $SipProjectObjAndGoals = $externalDataManager->getObjAndGoalsByProject($emOracle, $projectCode);
     }
 
     // var_dump($SipProject);
@@ -535,6 +538,7 @@ class ProjectRequestController extends AbstractController {
                 'SipProjectExtraInformation' => $SipProjectExtraInformation,
                 'SipProject' => $SipProject,
                 'objetivoPrincipal' => $objetivoPrincipal,
+                'SipProjectObjAndGoals' => $SipProjectObjAndGoals
     ]);
   }
 
