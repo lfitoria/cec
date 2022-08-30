@@ -353,7 +353,7 @@ class ProjectRequestController extends AbstractController {
       $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
-      $SipProjectObjAndGoals = $externalDataManager->getObjAndGoalsByProject($emOracle, $projectCode);
+      $SipProjectObjAndGoals = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectCode);
     }
     $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
     $eval_info = $this->getDoctrine()->getRepository(EvalRequest::class)->getAllEvalInfo($projectRequest->getId());
