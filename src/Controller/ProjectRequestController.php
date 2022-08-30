@@ -345,13 +345,15 @@ class ProjectRequestController extends AbstractController {
             ->getRepository(WorkLog::class)
             ->findBy(array("request" => $projectRequest));
 
+    $projectCode = $projectRequest->getSipProject();
+
     if ($projectRequest->getOwner()->getRole()->getDescription() == "ROLE_RESEARCHER" || $projectRequest->getOwner()->getRole()->getDescription() == "ROLE_ADMIN") {
       $projectInfo = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $SipProjectExtraInformation = $this->getExtraInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $SipProject = $this->getInformationByProject($externalDataManager, $projectRequest->getSipProject());
       $emOracle = $this->getDoctrine()->getManager('oracle');
       $objetivoPrincipal = $externalDataManager->getObjetivoPrincipalByProject($emOracle, $projectRequest->getSipProject());
-      $SipProjectObjAndGoals = $externalDataManager->getObjAndGoalsByProject($emOracle, $projectRequest);
+      $SipProjectObjAndGoals = $externalDataManager->getObjAndGoalsByProject($emOracle, $projectCode);
     }
     $pre_eval_info = $this->getDoctrine()->getRepository(PreEvalRequest::class)->getAllPreEvalInfo($projectRequest->getId());
     $eval_info = $this->getDoctrine()->getRepository(EvalRequest::class)->getAllEvalInfo($projectRequest->getId());
