@@ -472,7 +472,7 @@
 				{{ "Sin datos" }}
 			</textarea>
             {% endif %} #}
-            {% if SipProjectObjAndGoals and SipProjectObjAndGoals is defined %}
+            {% if SipProjectObjAndGoals is defined and SipProjectObjAndGoals %}
             <div class="textareas-form">
                 {% for key,obj in SipProjectObjAndGoals %}
                     <p class="font-weight-bolder">Objetivo específico {{obj.ID_OBJETIVO_ESPECIFICO}}</p>
