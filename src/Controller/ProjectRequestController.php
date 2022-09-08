@@ -370,7 +370,7 @@ class ProjectRequestController extends AbstractController {
                 'requestLogs' => $requestLogs,
                 'pre_eval_info' => $pre_eval_info,
                 'eval_info' => $eval_info,
-                'SipProjectObjAndGoals' => $SipProjectObjAndGoals
+                'SipProjectObjAndGoals' => $SipProjectObjAndGoals ?? null
     ]);
   }
 
